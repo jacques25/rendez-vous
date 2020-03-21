@@ -1,0 +1,20 @@
+ {% if items == 0 %}
+<li class="nav-item menu-item">
+  
+       <a class="nav-link {% if is_granted("ROLE_ADMIN") %} nav-item-admin {% endif %}" href="{{path('app_homepage')}}">
+
+    <i class="fa fa-shopping-basket"></i> vide</a>
+ <li>
+  {% elseif  items != 1 %}
+  <li class="nav-item menu-item">
+          <a  class="nav-link{% if is_granted("ROLE_ADMIN") %} nav-item-admin {% endif %}  uppercase" href="{{ path('panier')}}"> <i class="fas fa-shopping-basket"></i> {{ items }} articles </a> 
+       </li>
+        {% else %} 
+        <li class="nav-item menu-item">
+         <a  class="nav-link {% if is_granted("ROLE_ADMIN") %} nav-item-admin {% endif %} uppercase" href="{{ path('panier')}}"> <i class="fas fa-shopping-basket"></i> 1 article </a>
+   </li>       
+      {% endif %}
+      
+  
+
+

@@ -1,0 +1,33 @@
+fm_elfinder:
+    instances:
+        default:
+            relative_path: true
+            locale: 'kernel.default_locale'
+            editor_template: smoothness
+            editor: ckeditor
+            path_prefix: /
+            connector:
+                debug: true
+                roots:
+                    images:
+                        driver: LocalFileSystem
+                        path: images
+                        upload_allow:
+                            [
+                                'image/png',
+                                'image/jpg',
+                                'image/jpeg',
+                                'video/mp4',
+                                'application/pdf',
+                            ]
+                        upload_deny: ['all']
+                        upload_max_size: 2M # also file upload sizes restricted in php.ini
+                        attributes: #example of setting attributes permission
+                            - {
+                                  pattern: '/(.*?)/',
+                                  read: true,
+                                  write: true,
+                                  locked: false,
+                              }
+
+               

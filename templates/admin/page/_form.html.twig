@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+     {% if form.imageFile %}
+  <div class="col-4">
+  <img width="150" class="img img-responsive" src="{{ vich_uploader_asset(page, 'imageFile')}}">
+                    
+  </div>   
+  
+
+{% endif %}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

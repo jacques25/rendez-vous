@@ -1,0 +1,71 @@
+<ul class="navbar-nav accordion">
+			<li class="nav-item">
+
+
+				<div class="mb-3">
+					<h6>
+						Choisir une boutique
+					</h6>
+					{{ form_widget(form.boutiques, {'id': 'multiple'} ) }}
+				</div>
+
+				<div class="mb-3">
+					<h6>
+						Choisir un produit
+					</h6>
+					{{ form_widget(form.produits, {'id': 'optgroup'})}}
+				</div>
+
+			</li>
+			<li class="nav-item">
+				{{ form_row(form.imageFile)}}
+			</li>
+			<li class="nav-item " id="option_bijou_list" data-prototype="{{form_widget(form.option_bijou.vars.prototype)|e('html_attr')}}">
+			   <div class="row flex-row">
+			
+					{% for row in form.option_bijou %}	
+					<div class="col-6 float-right">
+						<div class="card m-3">
+							<div class="card-header bg-card">
+								<a class="text-dark" href="#item-{{row.children.reference.vars.value}}" data-toggle="collapse">
+									{{row.children.reference.vars.name|capitalize}}
+									:
+									{{row.children.reference.vars.value}}
+								</a>
+							</div>
+							<div class="card-body collapse" id="item-{{row.children.reference.vars.value}}">
+								{{form_widget(row)}}
+							</div>
+						</div>
+							</div>
+					{% endfor %}
+			
+				</div>
+			</li>
+
+			<li class="nav-item">
+				<div class="card">
+					<div class="row flex justify-content-start flex-wrap">
+
+						{% for picture in bijou.pictures %}
+							<div class="col" style="flex:none; margin:5px; width:100px;">
+								<img class="img-thumb border-warning" width="100" src="{{vich_uploader_asset(picture, 'imageFile')}}" alt="">
+								<a href="{{path('admin_picture_delete', {'id': picture.id}) }}" class="btn btn-danger" data-delete data-token="{{csrf_token('delete' ~ picture.id)}}">
+									<i class="fas fa-trash"></i>
+									Supprimer
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+
+					<div class="col mt-5">
+						<h4 class="justify-content-center">
+							Ajouter des images
+						</h4>
+						{{ form_row(form.pictureFiles)}}
+					</div>
+				</div>
+
+
+			</li>
+</ul>

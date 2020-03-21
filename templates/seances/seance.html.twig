@@ -1,0 +1,41 @@
+  {% for seance in seances %} 
+    <div class="jumbotron" style="background-image: url({{ vich_uploader_asset(seance, 'imageFile')}})"> </div>
+    <div class="row">
+  
+    
+    <div class="col mb-4">
+      <div class="card p-3">
+       {#  <a class="nav-link" href="{{path('seance.show', {'id': seance.id} )}}"> 
+         <div class="card-img">
+          {% if boutique.photo %}
+          <img class="img card-img-top" src="{{ vich_uploader_asset(boutique.photo, 'imageFile')}}">
+          {% endif %}
+        </div> #}
+        <div class="card-body">
+          <h4 class="card-title text-center">
+          
+              {{ seance.title }}
+            
+          </h4>
+           
+          <div class="card-text">
+           
+           <p>{{seance.description}}</p>
+           {% for option in seance.seanceOptions %}
+            <table class="table">
+             <tr>
+             <td>{{ option.genre}}</td> 
+             <td> {{option.dureeSeance}}</td>
+             <td> {{option.prix}} € </td>
+             </tr>
+             </table>
+           {% endfor %}
+           </div>
+        
+        </div>
+       {#  </a> #}
+      </div>
+    </div>
+    
+  </div>
+{% endfor %}

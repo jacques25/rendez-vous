@@ -1,0 +1,45 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Bijou{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="row">
+<h1>Bijou</h1>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ bijou.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ bijou.title }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ bijou.description|raw }}</td>
+        </tr>
+        <tr>
+            <th>CreatedAt</th>
+            <td>{{ bijou.createdAt ? bijou.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>UpdatedAt</th>
+            <td>{{ bijou.updatedAt ? bijou.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<div class="row flex-row">
+<div class="col-3">
+<a class="btn btn-primary" href="{{ path('admin_bijou_index') }}"> <i class="fas fa-chevron-left"> </i> Retour vers la liste</a>
+</div>
+<div class="col-3">
+<a class="btn btn-info" href="{{ path('admin_bijou_edit', {'id': bijou.id}) }}"><i class="fas fa-edit"></i> Editer</a>
+</div>
+{{ include('admin/bijou/_delete_form.html.twig') }}
+</div>
+</div>
+{% endblock %}

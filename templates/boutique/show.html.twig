@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+		{% block body %}
+
+
+			<div class="jumbotron" style="{% if boutique.photo %} background-image:url({{vich_uploader_asset(boutique.photo, 'imageFile') }}) {% endif %}">
+				<div class="container mt-4">
+					<h1>
+						{{boutique.title }}
+					</h1>
+				</div>
+			</div>
+
+<div class="container">
+			
+				<div class="row">
+
+					{% for produit in boutique.produits %}
+
+						<div class="col-3 mb-3">
+							<div class="card">
+								<a class="nav-link" href="{{ path('produit_show', {'slug': produit.slug}) }}">
+
+
+									{% if produit.photo.filename is defined %}
+										<img class="card-img" id="img-container" src="{{vich_uploader_asset(produit.photo, 'imageFile')}}">
+									{% endif %}
+								</a>
+								<div class="card-body">
+									<h5 class="card-title text-center">
+										{{produit.title}}
+									</h5>
+									<p class="card-text">
+										{{produit.description}}
+									</p>
+								</div>
+								<div class="card-footer"></div>
+							</div>
+
+
+						</div>
+
+					{% endfor %}
+
+				</div>
+			</div>
+		{% endblock %}

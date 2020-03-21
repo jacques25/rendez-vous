@@ -1,0 +1,7 @@
+image_url_to_base64:
+    path: '/url_to_base64'
+    defaults:
+        _controller: ImageBundle:Default:urlToBase64
+    methods: ['POST']
+    options:
+        expose: true

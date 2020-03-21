@@ -1,0 +1,261 @@
+{% extends 'base.html.twig' %}
+		{% block body %}
+			<div class="container mt-4">
+
+				<div class="row flex-auto justify-content-center">
+
+					<div class="col-md-6">
+						<div class="col">
+						<div class="column-left">
+							{% if bijou.filename %} 
+							 	{% if bijou.promo %}
+		<div class="bijou-promo">
+										<span class="promo">Promo</span>
+										<span class="percent"> 15 %</span>
+									
+									</div>
+										{% endif %}
+								<img id="myImg" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" class="img-modal img" data-toggle="tooltip" title="Agrandir l'image">
+             
+							
+									
+									
+							
+
+								<div class="modal" id="myModal">
+									<span class="close" class="btn btn-danger">
+										<i class="fas fa-times"></i>
+										FERMER
+									</span>
+									<img class="modal-content-body" id="modal-img">
+									<div id="caption"></div>
+								</div>
+
+							{% endif %}
+						</div>
+
+						<div class="col">
+
+							<div id="option" class="carousel slide carousel-fade" data-ride="carousel">
+								<h5>
+									Autres Modèles
+								</h5>
+								<ol class="carousel-indicators">
+									{% for picture in bijou.pictures %}
+
+										<li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}" {% if loop.first %} class="active" {% endif %}></li>
+									{% endfor %}
+								</ol>
+								<div class="carousel-inner">
+									{% for picture in bijou.pictures %}
+										<div class="carousel-item {% if loop.first %}active{% endif %}" width="220">
+											<img class="d-block w-50" src="{{ vich_uploader_asset(picture, 'imageFile')}}" alt="First slide">
+											<div class="carousel-caption d-none d-md-block">
+
+												<p>
+													{{picture.filename }}
+												</p>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+
+
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+
+						<div class="detail-bijou-container">
+
+							<div class="bijou-attributes content">
+								<h1 class="bijou_name">
+									{{ bijou.title|upper }}
+								</h1>
+							</div>
+
+							<div class="prix-bijou row align-content-bottom">
+								<div id="option-prix"></div>
+
+
+								<div id="option-disponible" style="font-size:12px;"></div>
+						
+								<p class="livraison m-1"></p>
+							</div>
+
+							<form class="form mb-5 mx-4" id="form-panier" method="get">
+
+								<select class="span1" name="qte" onchange="this.form.submit()">
+									{% for i in 1..10 %}
+										<option value="{{ i }}">
+											{{i }}
+										</option>
+									{% endfor %}
+								</select>
+								<select id="select-taille" class="taille" name="taille"></select>
+								<button id="btn-submit-panier" class="btn btn-info btn-lg mx-2" type="submit">
+									<i class="fa fa-shopping-bag"></i>
+									Ajouter au panier
+								</button>
+
+
+							</form>
+
+							<div>
+								{#  
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                              {% if bijou.popuptailles is not empty %}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                               <a class="btn btn-default btn-sm" href="#" id="open">Trouvez votre taille</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                             <div class="modal-popup" id="modal1">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                <div class="modal-wrapper">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                              {% for popuptaille in bijou.popuptailles %}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                               <div class="modal-header">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                               <h4 class="modal-title" id="titlemodal">{{popuptaille.title}}</h4>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                                <a class="close-modal" href="#"><i class="fa fa-close"></i>FERMER</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                                 </div>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                              <div class="modal-dialog">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                            {{ popuptaille.popup|raw}}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                               </div>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                             {% endfor %}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                            </div>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                              </div>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                        {% endif %} 
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                        #}
+							</div>
+
+
+							{% if bijou.propertiesBijou  %}
+								<div class=" accordion-content accordion-heading" id="produit-details">
+									<div class="panel-heading">
+										<a aria-controls="#collapseOne" aria-expanded="false" class="accordion-toggle active" data-toggle="collapse" href="#collapseOne" id="accordion">
+											{{'Détail du produit'|upper}}
+										</a>
+									</div>
+									<div aria-labelledby="#headingOne" class="collapse show" id="collapseOne">
+										<div class="body-text">
+											<ul style="color:#000;">
+
+												{% if bijou.propertiesBijou.aimant  is not empty %}
+													<li>
+														<strong>
+															Nombre d'aimants:
+														</strong>
+														{{ bijou.propertiesBijou.aimant}}
+													</li>
+												{% endif %}
+												{% if bijou.propertiesBijou  is not empty %}
+													<li>
+														<strong>
+															Puissance de l'aimant:
+														</strong>
+														{{bijou.propertiesBijou.puissanceAimant }}
+														tesla
+													</li>
+												{% endif %}
+
+												{% if bijou.propertiesBijou.revetement is not empty %}
+													<li>
+														<strong>
+															{{bijou.propertiesBijou.revetement}}
+														</strong>
+													</li>
+												{% endif %}
+												{% if bijou.propertiesBijou.couleurPierre is not empty %}
+													<li>
+														<strong>
+															Couleur de la pierre:
+														</strong>
+														{{bijou.propertiesBijou.couleurPierre}}
+													</li>
+												{% endif %}
+
+												{% if bijou.propertiesBijou.couleur is not empty %}
+													<li>
+														<strong>
+															Couleur
+														</strong>
+														{{bijou.propertiesBijou.couleur}}
+													</li>
+												{% endif %}
+
+												{% if bijou.propertiesBijou.finition is not empty  %}
+													<li>
+														<strong>
+															Finition de Surface :
+														</strong>
+														{{ bijou.propertiesBijou.finition }}
+													</li>
+
+												{% endif %}
+
+
+												{% if bijou.propertiesBijou.autrepropriete is not empty %}
+													<li>
+														<strong>
+															Autres propriètés:
+														</strong>
+														{{ bijou.propertiesBijou.autrepropriete }}
+													</li>
+												{% endif %}
+
+
+												<li id="option-dimensions"></li>
+
+												<li id="option-taille"></li>
+
+												<li id="option-reference"></li>
+												<li>
+
+
+													{% for boutique in bijou.boutiques %}
+														<strong>
+															{{ boutique.title|capitalize }}
+															,
+														</strong>
+													{% endfor %}
+												</li>
+
+											</ul>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+							<div class="accordion-content accordion-heading" id="accordion">
+								<div class="panel-heading-two">
+									<a aria-controls="#collapseTwo" aria-expanded="false" class="accordion-toggle active" data-toggle="collapse" href="#collapseTwo">
+										{{'Description du produit'|upper }}
+									</a>
+
+								</div>
+								<div aria-labelledby="headingTwo" class="collapse show" id="collapseTwo">
+									<div class="body-text">
+										{{ bijou.description|raw }}
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+
+	
+{% endblock %}
+{% block javascripts %}
+
+	{{ parent() }}
+
+	<script>
+
+		/* <![DATA[ */
+var context = {{ options|raw }};
+var bijou = {{ bijou.id }};
+
+/*]]>*/
+	</script>
+	{{ encore_entry_script_tags('option')}}
+
+
+{% endblock %}

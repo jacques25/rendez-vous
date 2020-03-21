@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="user.registration.form.factory" class="App\User\Form\Factory\FormFactory">
+            <argument type="service" id="form.factory" />
+            <argument>%user.registration.form.name%</argument>
+            <argument>%user.registration.form.type%</argument>
+            <argument>%user.registration.form.validation_groups%</argument>
+        </service>
+
+        <service id="user.registration.form.type" class="App\User\Form\Type\RegistrationFormType">
+            <tag name="form.type" alias="fos_user_registration" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+
+        <service id="user.registration.controller" class="App\Controller\RegistrationController" public="true">
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="user.registration.form.factory" />
+            <argument type="service" id="user.user_manager" />
+            <argument type="service" id="security.token_storage" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+    </services>
+
+</container>

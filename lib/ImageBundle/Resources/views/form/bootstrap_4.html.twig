@@ -1,0 +1,97 @@
+{% trans_default_domain 'ImageBundle' %}
+		{% block image_widget %}
+			{% apply spaceless %}
+			<div class="row cropper ml-5" data-cropper-options="{{ form.vars.cropper_options }}" data-max-width="{{max_width}}" data-max-height="{{max_height}}" data-mimetype="{{ upload_mimetype }}" data-quality="{{ upload_quality }}">
+				<div class="row mt-4 float-right">
+			
+			<div class="col-md-12  mt-0 ml-4">
+					<div class="cropper-canvas-container mt-2
+					{% if form.delete is defined %} cropper-canvas-has-delete{% endif %}"
+					 data-preview-width="250" data-preview-height="250">
+						{% if form.vars.download_uri is defined and form.vars.download_uri %}
+					 <img id="image" class="img img-responsive" src="{{ asset(form.vars.download_uri) }}" style="max-width: {{ '480px' }}; max-height: {{ '295px' }};">
+						{% endif %}
+						{% if form.delete is defined %}
+							   <div class="form-check-inline"></div>
+								   {{ form_row(form.delete) }}
+						  </div>
+					    	{% endif %}
+					</div>
+	<div class="col-md-12 ml-4"> 
+					{% if enable_locale %}
+						<div class="cropper-local  p-2">
+							<input class="d-none" name="file" type="file"/>
+							<button type="button" class="{{ upload_button_class }} p-2">
+								<span class="{{ upload_button_icon }}"></span>
+								{{ 'btn_import_image_local'|trans }}
+							</button>
+						</div>
+					{% endif %}
+					
+					
+				{% if enable_remote %}
+						{% endif %}
+			</div>
+
+					    
+		   </div>
+					{{ form_row(form.base64) }}
+					{% set show_aspect_ratios = aspect_ratios|length > 1 %}
+					<div class="modal fade">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title">
+										{{ 'resize_image'|trans }}
+									</h4>
+									<button class="close" data-dismiss="modal" type="button">
+										<span>
+											&times;
+										</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="{% if show_aspect_ratios %}col-10{% else %}col-12{% endif %}">
+											<div class="cropper-preview"></div>
+										</div>
+										{% if show_aspect_ratios %}
+											<div class="col-2">
+												<div class="btn-group-vertical float-right">
+													{% for aspect_ratio in aspect_ratios %}
+														<label class="btn btn-primary mb-0{% if aspect_ratio.checked %} active{% endif %}">
+															<input type="radio" name="cropperAspectRatio" class="d-none" value="{{ aspect_ratio.value }}" {% if aspect_ratio.checked %} checked="checked" {% endif %}>
+															{{ aspect_ratio.label }}
+														</label>
+													{% endfor %}
+												</div>
+											</div>
+										</div>
+									{% else %}
+										{% for aspect_ratio in aspect_ratios %}
+											<input type="hidden" name="cropperAspectRatio" value="{{ aspect_ratio.value }}" {% if aspect_ratio.checked %} checked="checked" {% endif %}>
+										{% endfor %}
+									{% endif %}
+								</div>
+								{% if enable_rotation %}
+									<div class="row">
+										<div class="toolbar {% if show_aspect_ratios %}col-10{% else %}col-12{% endif %}">
+											<button class="btn btn-default rotate" data-rotate="90"></button>
+											<button class="btn btn-default rotate anti-rotate" data-rotate="-90"></button>
+										</div>
+									</div>
+								{% endif %}
+								<div class="modal-footer">
+									<button type="button" class="{{ cancel_button_class }}" data-dismiss="modal">
+										{{ 'btn_cancel'|trans }}
+									</button>
+									<button type="button" class="{{ save_button_class }}" data-method="getCroppedCanvas">
+										{{ 'btn_validate'|trans }}
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endapply %}
+			{% endblock %}

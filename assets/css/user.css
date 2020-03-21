@@ -1,0 +1,56 @@
+ .user-connect {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh;
+ }
+
+
+ .alert-success {
+   box-shadow: 4px 5px 15px 0px #b1cec3;
+   background: #11a9788a;
+   color: #084425;
+   border-color: #39a718d1;
+   height: auto;
+
+ }
+
+
+ .alert-danger {
+   box-shadow: 2px 4px 6px 0px #dc3546b4;
+   background-color: #dc3545;
+   color: #fff;
+   border-color: #dc3545;
+ }
+
+ .user h1 {
+   font-style: italic;
+   font-size: 16px;
+   text-transform: uppercase;
+
+ }
+
+ input {
+   font-size: 14px !important;
+ }
+
+ button[type=submit] {
+   font-size: inherit;
+ }
+
+ a.btn-link {
+   font-size: 1.3rem;
+   font-weight: 400;
+   color: #007bff;
+ }
+
+ a.btn-link:hover {
+   text-decoration-line: none;
+   color: #073f7a;
+ }
+
+ /* Button Color */
+
+ .bg-blue-light {
+   background-color: #02b9d6;
+ }

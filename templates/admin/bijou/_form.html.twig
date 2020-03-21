@@ -1,0 +1,30 @@
+
+
+						{{ form_row(form.title) }}  
+						
+      
+           
+						{{form_row(form.promo)}}
+						
+						{{ form_row(form.description) }}
+            
+
+						<div class="card">
+							<div class="card-header bg-card">
+								<a href="#item2" class="card-link text-color">
+									Autres propriétés
+									<i class="fas fa-chevron-down float-right"></i>
+								</a>
+							</div>
+
+							<div class="card-body">
+								{{form_widget((form.properties_bijou))}}
+							</div>
+							{# <div class="card-footer"></div> #}
+
+
+				
+
+
+					  </div>
+

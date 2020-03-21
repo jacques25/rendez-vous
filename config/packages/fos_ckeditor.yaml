@@ -1,0 +1,73 @@
+fos_ck_editor:
+    input_sync: true
+    auto_inline: false
+    configs:
+        my_config:
+            toolbar: 'my_toolbar'
+            colorButton_colors: 'C4f2f2,91715b,CF5D4E,454545,FFF,CCC,DDD,CCEAEE,66AB16,C01800'
+            # contentsCss : 'build/css/font-awesome.min.css'
+            font_names: 'Arial;Times New Roman;Verdana; Calibri; Scheherazade; Junge'
+            extraPlugins: 'lineheight, html5video, lineutils, youtube'
+            filebrowsers:
+                - VideoBrowse
+                - VideoUpload
+
+            filebrowserBrowseRoute: elfinder
+
+            filebrowserBrowseRouteParameters: []
+            filebrowserBrowseRouteType: 0
+            height: 400
+            width: 100%
+
+        config2:
+            toolbar: 'toolbar2'
+            colorButton_colors: 'c4f2f2,91715b,CF5D4E,454545,FFF,CCC,DDD,CCEAEE,66AB16'
+            filebrowsers:
+                - VideoBrowse
+                - VideoUpload
+
+            filebrowserBrowseRoute: elfinder
+
+            filebrowserBrowseRouteParameters: []
+            filebrowserBrowseRouteType: 0
+            height: 300
+            width: 400
+
+        contact:
+           
+           toolbar: 'contact'
+           colorButton_colors: 'c4f2f2,91715b,CF5D4E,454545,FFF,CCC,DDD,CCEAEE,66AB16'
+
+    toolbars:
+        configs:
+            my_toolbar:
+                [ ['Undo','Redo','Source','Lineutils'],['Link', 'Unlink', 'Anchor', 'Table', 'Scayt'],['Maximize'], '/',['Bold', 'Italic', 'Underline', 'CkeditorFa'], ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],['JustifyLeft','JustifyRight','JustifyCenter','JustifyBlock'], ['Image','Html5video','Iframe', 'Youtube'] , ['Format','Font','FontSize','lineheight','TextColor','BGColor' ] ]
+
+            toolbar2:
+                [ ['Table'],['Bold', 'Italic', 'Underline',  'Image'],['Link', 'Unlink'], ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],['JustifyLeft','JustifyRight','JustifyCenter','JustifyBlock'],['TextColor','BGColor'] ]
+            
+            contact:
+                [ ['Bold', 'Italic', 'Underline'], ['JustifyLeft','JustifyRight','JustifyCenter','JustifyBlock'],['TextColor','BGColor'] ]
+            
+    plugins:
+        lineheight:
+            path: '/ckeditor/plugins/lineheight/'
+            filename: 'plugin.js'
+
+        html5video:
+            path: '/ckeditor/plugins/html5video/'
+            filename: 'plugin.js'
+
+        lineutils:
+            path: '/ckeditor/plugins/lineutils/'
+            filename: 'plugin.js'
+        
+        youtube: 
+            path: '/ckeditor/plugins/youtube/'
+            filename: 'plugin.js'
+        
+        ckeditorfa:
+            path: '/ckeditor/plugins/ckeditorfa/'
+            filename: 'plugin.js'
+
+        

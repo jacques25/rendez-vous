@@ -1,0 +1,49 @@
+{% extends 'admin_base.html.twig' %}
+{% block title  'Liste des articles' %}
+  {% block body %}
+    <div class="container">
+      <div class="row">
+        <h1>
+          Liste des articles
+        </h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Title</th>
+             
+              <th>Description</th>
+               <th> image</th>
+              <th>actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for article in articles %}
+              <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.title }}</td>
+               
+                <td>{{article.description|u.truncate(380)|raw}}</td>
+           
+                <td>
+                {% if article.filename %}
+ 
+                <img width="150" class="img-first img-fluid" src="{{ vich_uploader_asset(article, 'imageFile')}}">
+                {% endif %} 
+                  </td>
+                  <td>
+                    <a class="btn btn-primary" href="{{ path('admin.article.edit', {'id': article.id}) }}">edit</a>
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="4">no records found</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <a class="btn btn-secondary" href="{{ path('admin.article.new') }}">Create new</a>
+        </div>
+      </div>
+    {% endblock %}
+  

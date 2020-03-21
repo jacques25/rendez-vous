@@ -1,0 +1,59 @@
+{% extends 'admin_base.html.twig' %}
+{% block title 'Liste des Boutiques'%}
+{% block body %}
+<div class="container">
+<div class="row">
+  <h1>Liste des Boutiques</h1>
+  <div class="col-12">
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+      {{ message }}</div>
+    {% endfor %}
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Updated_at</th>
+        <th>actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for boutique in boutiques %}
+      <tr>
+        <td>
+          {{ boutique.id }}</td>
+        <td>
+          {{ boutique.title }}</td>
+        <td>
+          {{ boutique.description }}</td>
+        <td>
+          {% if boutique.photo %}
+          <img src="{{ vich_uploader_asset(boutique.photo, 'imageFile')}}" width="100">
+          {% endif %}
+          </td>
+        <td>
+          {{ boutique.updatedAt ? boutique.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+        <td>
+          <a class="btn btn-primary" href="{{ path('admin_boutique_edit', {'id': boutique.id}) }}">edit</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6">no records found</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <a class="btn btn-secondary" href="{{ path('admin_boutique_new') }}">Create new</a>
+  </div>
+</div>
+
+</div>
+{% endblock %}

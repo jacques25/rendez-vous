@@ -1,0 +1,42 @@
+<!DOCTYPE html lang="fr">
+<html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   
+    <meta charset="UTF-8">
+    <title>
+      {% block title '' %}
+    </title>
+    {% block stylesheets %}
+    <link rel="icon" type="image/png" href="{{asset('/build/img/rdv.png')}}" />
+    {{ encore_entry_link_tags('admin')}}
+    {% endblock %}
+  </head>
+
+  <body id="page-top">
+  
+    {{ include('admin/menu/admin_menu.html.twig') }}
+    <div class="page-content" id="content">
+     {% for label, messages in app.flashes %}
+         <div class="container" >
+           <div class="alert alert-{{ label }}">
+           {% for message in messages %}
+             <p> {{ message}} </p>
+           {% endfor %}
+           </div>
+         </div>
+      {% endfor %}
+
+      
+      {% block body %}{% endblock %}
+   </div>
+  
+    {% block javascripts %}
+<script src="https://kit.fontawesome.com/b0b2638830.js" crossorigin="anonymous"></script>
+    {{ encore_entry_script_tags('admin' )}}
+    
+    {% endblock %}
+  </body>
+
+</html>

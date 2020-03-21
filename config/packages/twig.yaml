@@ -1,2 +1,10 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    form_themes:
+        - 'bootstrap_4_layout.html.twig'
+        - '@Image/form/bootstrap_4.html.twig'
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+        
+    
+    globals:
+       logo_site: '/build/img/rdv.png'

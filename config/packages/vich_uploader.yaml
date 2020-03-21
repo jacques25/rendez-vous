@@ -1,0 +1,36 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        produits:
+            uri_prefix: /images/produits
+            upload_destination: '%kernel.project_dir%/public/images/produits'
+        bijoux:
+            uri_prefix: /images/bijoux
+            upload_destination: '%kernel.project_dir%/public/images/bijoux'
+        boutiques:
+            uri_prefix: /images/boutiques
+            upload_destination: '%kernel.project_dir%/public/images/boutiques'
+        
+        articles:
+            uri_prefix: /images/articles
+            upload_destination: '%kernel.project_dir%/public/images/articles'
+        pages:
+            uri_prefix: /images/pages
+            upload_destination: '%kernel.project_dir%/public/images/pages'
+        
+        photos:
+            uri_prefix: /images/photos
+            upload_destination: '%kernel.project_dir%/public/images/photos'
+        
+        seance_images:
+            uri_prefix: /images/seances
+            upload_destination: '%kernel.project_dir%/public/images/seances'
+        
+        category_images:
+            uri_prefix: /images/category
+            upload_destination: '%kernel.project_dir%/public/images/category'
+        
+        users_images:
+            uri_prefix: /images/users
+            upload_destination: '%kernel.project_dir%/public/images/users'

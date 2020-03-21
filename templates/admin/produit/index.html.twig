@@ -1,0 +1,50 @@
+{% extends 'admin_base.html.twig' %}
+{% block title %}Liste des Produits
+{% endblock %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <h1>Liste des Produits</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Filename</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produit in produits %}
+        <tr>
+          <td>
+            {{ produit.id }}</td>
+          <td>
+            {{ produit.title }}</td>
+          <td>
+            {{ produit.description }}</td>
+          <td>
+            {% if produit.photo.filename is defined %}
+            <img src="{{ vich_uploader_asset(produit.photo, 'imageFile') }}" width="150">
+
+            {% else %}
+            <p> not image </p>
+
+            {% endif %}
+          </td>
+          <td>
+            <a class="btn btn-primary" href="{{ path('admin_produit_edit', {'id': produit.id}) }}">edit</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5">no records found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a class="btn btn-secondary" href="{{ path('admin_produit_new') }}">Create new</a>
+  </div>
+</div>
+{% endblock %}

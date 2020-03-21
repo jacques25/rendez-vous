@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+
+
+/* 
+    Created on : 29 déc. 2018, 10:03:45
+    Author     : jacques
+*/
+
+@font-face {
+    font-family: "Scheherazade";
+    src: local("Scheherazade-Regular.woff"), url("../fonts/Scheherazade-Regular.woff") format("truetype");
+}
+
+@font-face {
+    font-family: "Junge";
+    src: local("Junge-Regular.ttf"), url("../fonts/Junge-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "glyphicons-halflings-regular.woff2";
+    src: local("glyphicons-halfings-regular.woff2"), url("../fonts/glyphicons-halflings-regular.woff2")
+}
+
+@font-face {
+    font-family: "glyphicons-halflings-regular.woff";
+    src: local("glyphicons-halfings-regular.woff"), url("../fonts/glyphicons-halflings-regular.woff")
+}
+
+@font-face {
+    font-family: "glyphicons-halflings-regular.eot";
+    src: local("glyphicons-halfings-regular.eot"), url("../fonts/glyphicons-halflings-regular.eot")
+}
+
+@font-face {
+    font-family: "glyphicons-halflings-regular.ttf";
+    src: local("glyphicons-halfings-regular.ttf"), url("../fonts/glyphicons-halflings-regular.ttf")
+}

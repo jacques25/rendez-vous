@@ -1,0 +1,28 @@
+{{ form_start(form) }}
+<div class="row flex-row">
+  <div class="col">
+    {{ form_row(form.title) }}
+   </div>
+   <div class="col">
+    {{ form_row(form.description) }}
+  </div>
+</div>
+<div class="row flex-row">
+  <div class="col">
+    {{ form_row(form.imageFile)}}
+  </div>
+<div class="col">
+ 
+    {{ form_row(form.boutiques, {'id':'multiple'} ) }}
+  
+</div>
+</div>
+<div class="row ">
+  <button class="btn btn-success"><i class="fas fa-floppy-o"></i>
+    {{ button_label|default('Enregistrer') }}</button>
+</div>
+{{ form_end(form) }}
+
+
+
+

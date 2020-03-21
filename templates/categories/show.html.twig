@@ -1,0 +1,81 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="jumbotron" style="background-image: url({{vich_uploader_asset(category, 'imageFile')}})">
+ <div class="container mt-4">
+     <h1>{{ category.title}}</h1>
+</div>
+</div>
+<div class="container mt-4">
+  <div class="row">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{path('accueil')}}">page d'accueil</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a class="" href="{{path('category_show', {'slug': category.slug})}}">
+            {{category.title}}</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+   <div class="row">
+  {% if category.articles is defined %}
+ 
+    {% for article in category.articles %}
+    <div class="col-4 mb-4">
+      <a id="link" class="nav-link" href="{{ path('article_show', { 'id': article.id , 'slug': article.slug}) }}">
+        <div class="card shadow p-3 mb-5 bg-white rounded">
+          <div class="card-img">
+            {% if article.filename %}
+            <img class="img card-img-top" src="{{ vich_uploader_asset(article, 'imageFile')}}">
+            {% endif %}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ article.title }}
+            </h5>
+            <div class="card-text">
+              {{ article.description|u.truncate(40, '...') }}
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+ 
+  {% endif %}
+   </div>
+  {% if category.boutiques %}
+  <div class="row">
+    {% for boutique in category.boutiques %} 
+    
+    <div class="col-4 mb-4">
+      <div class="card p-3">
+       <a class="nav-link" href="{{path('boutique.show', {'slug': boutique.slug} )}}">
+        <div class="card-img">
+          {% if boutique.photo %}
+          <img class="img card-img-top" src="{{ vich_uploader_asset(boutique.photo, 'imageFile')}}">
+          {% endif %}
+        </div>
+        <div class="card-body">
+          <h4 class="card-title text-center">
+          
+              {{ boutique.title }}
+            
+          </h4>
+        </div>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if category.seances %}
+     {{ include('seances/seance.html.twig', {'seances': category.seances})}}
+  {% endif %}
+</div>
+{% endblock %}

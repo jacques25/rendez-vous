@@ -1,0 +1,114 @@
+{% extends "base.html.twig" %}
+
+
+		{% block title %}	Panier	{% endblock %}
+			{% set totalBijou = 0 %}
+				{% set totalPrix = 0 %}
+
+		{% block body %}
+
+		  <div class="row mt-4">
+
+		  	<h1> Votre Panier</h1>
+	
+		 {% for label, messages in app.flashes %}
+         
+           <div class="alert alert-{{ label }}">
+              {% for message in messages %}
+                     <p> {{ message}} </p>
+              {% endfor %}
+           </div>
+        
+       {% endfor %}
+
+    
+			</div>
+	  
+			{% if items|length  == 0 %} 
+			  <div class="main-panier">
+				<div class="alert alert-success w-100 text-center uppercase"> Aucun article dans votre panier</div>
+						
+   
+			</div>		
+     {% else %}
+			 
+			<div class="row"> 
+        				<table class="table-panier m-2">
+        						<thead class="table-thead ">
+        								<tr colspan="row" class="text-uppercase">
+        
+        									<th>Référence</th>
+        	                 <th> designation </th>
+        									 <th> Promo </th>
+        									<th>  taille </th>
+        									<th>	prix	</th>
+        									<th>	quantité </th>
+        									<th>  Total	</th>
+        									<th> action </th>
+        
+        								</tr>
+        						</thead>
+        			      <tbody class="table-tbody">
+         		    {% for item in items %}
+				      <tr>
+						    <td>	{{item.reference}}	</td>
+					      <td>
+						     	{% if item.bijou.filename %}
+								 <img class="img-responsive" src="{{vich_uploader_asset(item.bijou, 'imageFile')}}" width="60">
+							
+							   {% endif %}
+
+						    </td>
+	
+                <td>
+						      {% if item.bijou.promo %}
+							    	<span class=" mt-5 p-2 bg-warning rounded-pill text-dark font-weight-bold">
+								     	Promo !
+								    </span>
+							    {% endif %}
+							  </td>
+						    <td>	{{item.taille}}	</td>
+    
+						    <td>	{{item.prix}}</td>
+						    <td>
+						     	<form action={{path('panier_add', {'id': item.id} )}}>
+							   	 <select class="span1" name="qte" onchange="this.form.submit()">
+								  	 {% for i in 1..10 %}
+									  	<option value="{{ i }}" {% if i == panier[item.id] %} selected="selected" {% endif %}>
+											  {{i }}
+										  </option>
+									   {% endfor %}
+							  	 </select>
+						 	   </form>
+						    </td>
+                <td> {{item.prix * panier[item.id]}}
+					         	{% set  totalBijou = totalBijou + ( item.prix * panier[item.id] )%}
+										 </td>
+						    <td>
+						    	<a href="{{ path('panier_remove', {'id': item.id})}}" class="btn btn-sm btn-danger">
+							    	<i class="fas fa-trash"></i>
+							    </a>
+						    </td>
+				    	</tr>
+				
+					     {% endfor %}
+			
+               {% if items |length != 0 %}
+					    <tr>
+				     	  {% set Total = 0 %}	
+			  	      {% set Total = totalBijou %}
+				 	       <td colspan="12" class="font-weight-bold text-uppercase">
+					         <span class="float-lg-right">Total : {{ Total }}€</span>
+					      </td>
+				      </tr>
+		   
+			        {% endif %}
+			   
+		
+        					  </tbody>
+        		  </table>	
+
+      </div>
+			{% endif %}
+
+{% endblock %}

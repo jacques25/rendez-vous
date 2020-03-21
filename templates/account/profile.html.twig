@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modification du profil  {% endblock %}
+
+{% block body %}
+ <div class="user-connect">
+ 
+ {{form_start(form)}}
+ <div class="form-connect bg-light mb-5"> 
+ 
+  <h1 class="p-4">Modification du profil </h1>
+     <div class="row">
+     
+         <div class="col-5 mx-5"> 
+          {{form_row(form.imageFile)}}
+         </div>
+      
+     
+          <div class="col-5 p-4"> 
+            
+             {{form_row(form.firstName, {'attr': {'class': 'mb-3'}})}}
+             {{form_row(form.lastName, {'attr': {'class': 'mb-3'}})}}
+              {{form_row(form.email, {'attr': {'class': 'mb-3'}})}} 
+            {{form_row(form.introduction, {'attr': {'class': 'mb-3'}})}}
+          {{form_row(form.description,  {'attr': {'class': 'mb-3'}})}}
+          </div>
+      </div>
+
+  
+      <div class="row justify-content-center">
+      <div class="col-7 p-3">
+         <button type="submit" class="btn btn-success"> Mettre à jour</button>
+       </div>
+     </div> 
+  {{form_end(form)}}
+</div>
+
+</div>
+{% endblock %}
