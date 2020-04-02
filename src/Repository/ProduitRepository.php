@@ -23,14 +23,14 @@ class ProduitRepository extends ServiceEntityRepository
     }
 
 
-    public function findByBoutique($slug)
-    {
-        $qb = $this->createQueryBuilder('p');
-        $qb
-            ->leftJoin('p.boutiques', 'b')
-            ->select('p, b')
-            ->where('b.slug = :slug')
-            ->setParameter('slug', $slug);
-        return $qb->getQuery()->getResult();
-    }
+    // public function findByBoutique($slug)
+    // {
+    //     $qb = $this->createQueryBuilder('p');
+    //     $qb
+    //         ->leftJoin('p.boutiques', 'b')
+    //         ->select('p, b')
+    //         ->where('b.slug = :slug')
+    //         ->setParameter('slug', $slug);
+    //     return $qb->getQuery()->getResult();
+    // }
 }

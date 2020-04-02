@@ -3,14 +3,15 @@
 {% block body %}
  
     <div class="row"> 
-         <img class="img-fluid img-top images-page" src="{{ vich_uploader_asset(article, 'imageFile')}}" alt="{{article.filename}}">
+         <img class="img-top img-fluid" src="{{ vich_uploader_asset(article, 'imageFile')}}" alt="{{article.filename}}">
     </div>
-    <div class="row content-page">
-        <div class="col-md-12 ">
+    <div class="row">
+        <div class="col-md-6 col-md-12">
            <h1 class="mt-3">{{article.title }}</h1>
          </div>
-      
-       <div class="paragraph">  {{ article.description|raw }}   </div>
+       <div class="col-md-6 col-md-12">
+        <article class="p-4"> {{ article.description|raw }}   </article>
+         </div>
     </div>
 {% endblock %}
 

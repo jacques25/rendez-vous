@@ -31,12 +31,12 @@ class Boutique
      */
     private $description;
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Photo", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="App\Entity\Photo", cascade={"persist", "remove"})
      */
     private $photo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="boutiques", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="boutiques")
      */
     private $category;
 
@@ -46,13 +46,13 @@ class Boutique
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", mappedBy="boutiques", fetch="LAZY")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", mappedBy="boutiques",  fetch="EXTRA_LAZY")
      */
 
     private $produits;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bijou", mappedBy="boutiques", indexBy="slug", fetch="LAZY")
+     * @ORM\ManyToMany(targetEntity="Bijou", mappedBy="boutiques", indexBy="slug",  fetch="EXTRA_LAZY")
      * 
      */
     private $bijous;

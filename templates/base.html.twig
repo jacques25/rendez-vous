@@ -20,15 +20,15 @@
   </head>
 
   <body>
-    
+   
   {{ render(controller('App\\Controller\\FrontEnd\\MenuController::menu', {'limit' : 6})) }}
-
+  
    <div class="container">
-          
           <a id="button" style="display:block;">
 						<i class="fa fa-chevron-up"></i>
 						Haut de page
 					</a>
+        
       {% block body %}
       {% for label, messages in app.flashes %}
          <div class="container" >
@@ -41,12 +41,14 @@
       {% endfor %}
         {% endblock %}
    </div>
+  
    {% include 'partials/footer.html.twig' %} 
  
  
 
  
     {% block javascripts %} 
+   
     <script src="{{asset('/build/fontawesome/js/all.js')}}"></script>
     {{ encore_entry_script_tags('app' )}}
     {% endblock %}

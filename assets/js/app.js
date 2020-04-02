@@ -56,12 +56,8 @@ window.onload = function () {
 
     }
 
+
 };
-
-
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function (event) {
@@ -117,6 +113,7 @@ $(document).ready(function () {
     }, function () {
         $(this).removeClass('animate');
     })
+
 
 })
 

@@ -79,6 +79,8 @@ class BijouRepository extends ServiceEntityRepository
             ->addSelect('p')
             ->leftJoin('b.option_bijou', 'ob')
             ->addSelect('ob')
+            ->leftJoin('b.pictures', 'pic')
+            ->addSelect('pic')
             ->andWhere('p.id = :id')
             ->setParameter('id', $produit);
 

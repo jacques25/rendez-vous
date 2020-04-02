@@ -68,7 +68,7 @@ class Bijou
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Produit",inversedBy="bijous")
+     * @ORM\ManyToMany(targetEntity="Produit",inversedBy="bijous",  fetch="EXTRA_LAZY")
      * )
      * 
      */
@@ -76,13 +76,13 @@ class Bijou
 
     /**
      * @var array
-     * @ORM\ManyToMany(targetEntity="Boutique", inversedBy="bijous")
+     * @ORM\ManyToMany(targetEntity="Boutique", inversedBy="bijous",  fetch="EXTRA_LAZY")
      * 
      */
     private $boutiques;
 
     /**
-     * @ORM\OneToMany(targetEntity="OptionBijou", mappedBy="bijou", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="OptionBijou", mappedBy="bijou", cascade={"persist"}, fetch="EAGER")
      * @ORM\OrderBy({"taille"="ASC"})
      */
     private $option_bijou;
@@ -90,14 +90,14 @@ class Bijou
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="PropertiesBijou", inversedBy="bijous",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PropertiesBijou", inversedBy="bijous",cascade={"persist"},  fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="properties_bijou", referencedColumnName="id", )
      */
     private $properties_bijou;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="bijou", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="bijou", cascade={"persist"}, orphanRemoval=true,  fetch="EXTRA_LAZY")
      */
     private $pictures;
 

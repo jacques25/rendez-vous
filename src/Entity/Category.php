@@ -48,17 +48,17 @@ class Category
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
      */
     private $articles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Boutique", mappedBy="category",fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Boutique", mappedBy="category")
      */
     private $boutiques;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Seance", mappedBy="category", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Seance", mappedBy="category")
      */
     private $seances;
 

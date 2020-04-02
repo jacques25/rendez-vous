@@ -59,12 +59,12 @@ class Produit
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Boutique", inversedBy="produits")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Boutique", inversedBy="produits", fetch="EXTRA_LAZY")
      */
     private $boutiques;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Bijou", mappedBy="produits", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Bijou", mappedBy="produits")
      * 
      */
 
