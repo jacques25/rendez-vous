@@ -3,6 +3,9 @@
 namespace App\Controller\FrontEnd;
 
 
+use App\Entity\UserAdress;
+use App\Form\UserAdressType;
+use App\Form\FormAccount\UserType;
 use App\Repository\OptionBijouRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,5 +108,82 @@ class PanierController extends AbstractController
 
 
     return $this->redirectToRoute('panier');
+  }
+
+  /**
+   * @Route("/panier/livraison", name="panier_livraison")
+   */
+
+  public function livraison(Request $request)
+  {
+    $role = ['ROLE_CLIENT'];
+
+    $user = $user = $this->container->get('security.token_storage')->getToken()->getUser();
+    $userAddresss = new UserAdress();
+    $form = $this->createForm(UserAdressType::class, $userAddresss);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $manager = $this->getDoctrine()->getManager();
+
+      $user->addRoles($role);
+      $userAddresss->setUser($user);
+      $manager->persist($userAddresss);
+      $manager->flush();
+
+      $this->addFlash('notice', "L'adresse a bien été ajouter");
+      return $this->redirectToRoute('panier_livraison');
+    }
+
+    return $this->render('panier/livraison.html.twig', ['form' => $form->createView(), 'user' => $user]);
+  }
+
+
+  /**
+   *
+   * @Route("panier/validation/", name="panier_validation", requirements={"user"="\d+"} )
+   * 
+   */
+  public function validationAction(Request $request)
+  {
+
+
+    if ($request == null) {
+      $this->addFlash('warning', 'Votre panier est vide');
+      $this->redirectToRoute('app_homepage');
+    }
+
+    if ($request->isMethod('POST'))
+      $this->setLivraisonOnSession($request);
+
+    $em = $this->getDoctrine()->getManager();
+
+    $prepareCommande = $this->forward('Commandes:prepareCommande');
+
+    $commande = $em->getRepository('App:Commandes')->find($prepareCommande->getContent());
+
+
+    return $this->render('Panier:validation.html.twig', [
+      'commande' => $commande
+
+    ]);
+  }
+
+  /**
+   * @Route("livraison/adresse/suppression/{id}",name="livraisonadressesuppression")
+   */
+  public function suppressionAdresseAction($id)
+  {
+    $em = $this->getDoctrine()->getManager();
+    $entity = $em->getRepository(UserAdress::class)->find($id);
+    if ($this->container->get('security.token_storage')->getToken()->getUser() != $entity->getUser() || !$entity) {
+      return $this->redirectToRoute('panier_livraison');
+    }
+
+    $em->remove($entity);
+    $em->flush();
+
+    return $this->redirectToRoute('panier_livraison');
   }
 }
