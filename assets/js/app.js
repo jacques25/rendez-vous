@@ -18,6 +18,7 @@ require('bootstrap-hover-dropdown');
 require('./bootstrap-tagsinput.js');
 require('./typeahead.js');
 require('./select');
+require('./menu_responsive')
 
 
 
@@ -56,6 +57,26 @@ window.onload = function () {
 
     }
 
+    var modal1 = document.getElementById('modal1');
+
+    var open = document.getElementById('open');
+
+
+    if (modal1 !== null) {
+        open.onclick = function () {
+            modal1.style.display = "block";
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close-modal")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal1.style.display = "none";
+        }
+
+
+    }
 
 };
 
@@ -75,20 +96,20 @@ window.onclick = function (event) {
 
 $(document).ready(function () {
 
-    function footerAlwayInBottom(footerSelector) {
-        var docHeight = $(window).height();
-        var footerTop = footerSelector.position().top + footerSelector.height();
-        if (footerTop < docHeight) {
-            footerSelector.css("margin-top", (docHeight - footerTop) + "px");
-        }
-    }
+    // function footerAlwayInBottom(footerSelector) {
+    //     var docHeight = $(window).height();
+    //     var footerTop = footerSelector.position().top + footerSelector.height();
+    //     if (footerTop < docHeight) {
+    //         footerSelector.css("margin-top", (docHeight - footerTop) + "px");
+    //     }
+    // }
 
-    // Apply when page is loading
-    footerAlwayInBottom($("#footer"));
-    // Apply when page is resizing
-    $(window).resize(function () {
-        footerAlwayInBottom($("#footer"));
-    });
+    // // Apply when page is loading
+    // footerAlwayInBottom($("#footer"));
+    // // Apply when page is resizing
+    // $(window).resize(function () {
+    //     footerAlwayInBottom($(".footer"));
+    // });
 
 
     var scroll = $('#button');
@@ -118,6 +139,36 @@ $(document).ready(function () {
 })
 
 
+var element = $(".panel-heading a");
+var btn = $(".panel-heading-two a");
+
+element.on('click', function () {
+
+    if (element.hasClass('active')) {
+        element.removeClass('active');
+
+
+    } else {
+
+        element.addClass(' active');
+        element.append('<img src="/build/images/chevron-down.png" class="img-right>');
+    }
+
+});
+
+
+btn.on('click', function () {
+
+    if (btn.hasClass('active')) {
+        btn.removeClass('active');
+
+    } else {
+
+        btn.addClass(' active');
+        btn.append('<img src="/build/images/chevron-down.png" class="img-right>');
+    }
+
+});
 
 
 

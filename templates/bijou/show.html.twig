@@ -1,68 +1,67 @@
 {% extends 'base.html.twig' %}
 		{% block body %}
-			<div class="container mt-4">
-
+			<div class="container mt-5">
 				<div class="row flex-auto justify-content-center">
 
 					<div class="col-md-6">
 						<div class="col">
-						<div class="column-left">
-							{% if bijou.filename %} 
-							 	{% if bijou.promo %}
-		<div class="bijou-promo">
-										<span class="promo">Promo</span>
-										<span class="percent"> 15 %</span>
-									
-									</div>
-										{% endif %}
-								<img id="myImg" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" class="img-modal img" data-toggle="tooltip" title="Agrandir l'image">
-             
-							
-									
-									
-							
+							<div class="column-left">
+								{% if bijou.filename %}
+									{% if bijou.promo %}
+										<div class="bijou-promo">
+											<span class="promo">
+												Promo
+											</span>
+											<span class="percent">
+												15 %
+											</span>
 
-								<div class="modal" id="myModal">
-									<span class="close" class="btn btn-danger">
-										<i class="fas fa-times"></i>
-										FERMER
-									</span>
-									<img class="modal-content-body" id="modal-img">
-									<div id="caption"></div>
-								</div>
-
-							{% endif %}
-						</div>
-
-						<div class="col">
-
-							<div id="option" class="carousel slide carousel-fade" data-ride="carousel">
-								<h5>
-									Autres Modèles
-								</h5>
-								<ol class="carousel-indicators">
-									{% for picture in bijou.pictures %}
-
-										<li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}" {% if loop.first %} class="active" {% endif %}></li>
-									{% endfor %}
-								</ol>
-								<div class="carousel-inner">
-									{% for picture in bijou.pictures %}
-										<div class="carousel-item {% if loop.first %}active{% endif %}" width="220">
-											<img class="d-block w-50" src="{{ vich_uploader_asset(picture, 'imageFile')}}" alt="First slide">
-											<div class="carousel-caption d-none d-md-block">
-
-												<p>
-													{{picture.filename }}
-												</p>
-											</div>
 										</div>
-									{% endfor %}
-								</div>
+									{% endif %}
+									<img id="myImg" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" class="img-modal img" data-toggle="tooltip" title="Agrandir l'image">
 
 
+									<div class="modal" id="myModal">
+										<span class="close" class="btn btn-danger">
+											<i class="fas fa-times"></i>
+											FERMER
+										</span>
+										<img class="modal-content-body" id="modal-img">
+										<div id="caption"></div>
+									</div>
+
+								{% endif %}
 							</div>
-						</div>
+
+							<div class="col">
+
+								<div id="option" class="carousel slide carousel-fade" data-ride="carousel">
+									<h5>
+										Autres Modèles
+									</h5>
+									<ol class="carousel-indicators">
+										{% for picture in bijou.pictures %}
+
+											<li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}" {% if loop.first %} class="active" {% endif %}></li>
+										{% endfor %}
+									</ol>
+									<div class="carousel-inner">
+										{% for picture in bijou.pictures %}
+											<div class="carousel-item {% if loop.first %}active{% endif %}" width="220">
+												<img class="d-block w-50" src="{{ vich_uploader_asset(picture, 'imageFile')}}" alt="First slide">
+												<div class="carousel-caption d-none d-md-block">
+
+													<p>
+														{{picture.filename }}
+													</p>
+												</div>
+											</div>
+										{% endfor %}
+									</div>
+
+
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -80,7 +79,7 @@
 
 
 								<div id="option-disponible" style="font-size:12px;"></div>
-						
+
 								<p class="livraison m-1"></p>
 							</div>
 
@@ -103,25 +102,32 @@
 							</form>
 
 							<div>
-								{#  
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                              {% if bijou.popuptailles is not empty %}
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                               <a class="btn btn-default btn-sm" href="#" id="open">Trouvez votre taille</a>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                             <div class="modal-popup" id="modal1">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                <div class="modal-wrapper">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                              {% for popuptaille in bijou.popuptailles %}
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                               <div class="modal-header">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                               <h4 class="modal-title" id="titlemodal">{{popuptaille.title}}</h4>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                                <a class="close-modal" href="#"><i class="fa fa-close"></i>FERMER</a>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                                 </div>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                              <div class="modal-dialog">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                            {{ popuptaille.popup|raw}}
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                               </div>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                                                                                                             {% endfor %}
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                            </div>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                              </div>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                        {% endif %} 
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							                                                        #}
+
+								{% if bijou.popuptailles is not empty %}
+									<a class="btn btn-secondary" href="#" id="open">
+										Trouvez votre taille
+									</a>
+									<div class="modal-popup" id="modal1">
+										<div class="modal-wrapper">
+											{% for popuptaille in bijou.popuptailles %}
+												<div class="modal-header">
+													<h4 class="modal-title" id="titlemodal">
+														{{popuptaille.title}}
+													</h4>
+													<a class="close-modal" href="#">
+														<i class="fas fa-times-circle"></i>
+														FERMER
+													</a>
+												</div>
+												<div class="modal-dialog">
+													{{ popuptaille.popup|raw}}
+												</div>
+
+											{% endfor %}
+										</div>
+									</div>
+								{% endif %}
+
 							</div>
 
 
@@ -130,6 +136,7 @@
 									<div class="panel-heading">
 										<a aria-controls="#collapseOne" aria-expanded="false" class="accordion-toggle active" data-toggle="collapse" href="#collapseOne" id="accordion">
 											{{'Détail du produit'|upper}}
+										
 										</a>
 									</div>
 									<div aria-labelledby="#headingOne" class="collapse show" id="collapseOne">
@@ -222,9 +229,11 @@
 								</div>
 							{% endif %}
 							<div class="accordion-content accordion-heading" id="accordion">
-								<div class="panel-heading-two">
+								<div class="panel-heading-two">		
+								
 									<a aria-controls="#collapseTwo" aria-expanded="false" class="accordion-toggle active" data-toggle="collapse" href="#collapseTwo">
 										{{'Description du produit'|upper }}
+							
 									</a>
 
 								</div>
@@ -238,24 +247,22 @@
 						</div>
 					</div>
 				</div>
-			
-			</div>
+</div>
 
-	
-{% endblock %}
-{% block javascripts %}
+		{% endblock %}
+		{% block javascripts %}
 
-	{{ parent() }}
+			{{ parent() }}
 
-	<script>
+			<script>
 
-		/* <![DATA[ */
+				/* <![DATA[ */
 var context = {{ options|raw }};
 var bijou = {{ bijou.id }};
 
 /*]]>*/
-	</script>
-	{{ encore_entry_script_tags('option')}}
+			</script>
+			{{ encore_entry_script_tags('option')}}
 
 
-{% endblock %}
+		{% endblock %}

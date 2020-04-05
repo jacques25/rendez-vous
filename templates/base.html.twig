@@ -1,57 +1,63 @@
 <!DOCTYPE html lang="fr">
-<html>
+		<html>
 
-  <head>
-    <meta name="viewport"  content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   
-    <meta charset="UTF-8">
-    
-    <title>
-      {% block title %}{% endblock %}
-    </title>
-    
-    {% block stylesheets %}
-     <link rel="icon" type="image/png" href="{{asset('/build/img/rdv.png')}}" />
-     <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
-     <link rel="stylesheet" href="{{asset('/build/fontawesome/css/all.css')}}">
-    {{ encore_entry_link_tags('app')}}
-    {% endblock %}
-     
-  </head>
+			<head>
+				<meta name="viewport" content="width=device-width, user-scalable=no"/>
 
-  <body>
-   
-  {{ render(controller('App\\Controller\\FrontEnd\\MenuController::menu', {'limit' : 6})) }}
-  
-   <div class="container">
-          <a id="button" style="display:block;">
-						<i class="fa fa-chevron-up"></i>
-						Haut de page
-					</a>
-        
-      {% block body %}
-      {% for label, messages in app.flashes %}
-         <div class="container" >
-           <div class="alert alert-{{ label }}">
-           {% for message in messages %}
-             <p> {{ message}} </p>
-           {% endfor %}
-           </div>
-         </div>
-      {% endfor %}
-        {% endblock %}
-   </div>
-  
-   {% include 'partials/footer.html.twig' %} 
- 
- 
+				<meta charset="UTF-8">
 
- 
-    {% block javascripts %} 
-   
-    <script src="{{asset('/build/fontawesome/js/all.js')}}"></script>
-    {{ encore_entry_script_tags('app' )}}
-    {% endblock %}
-  </body>
+				<title>
+					{% block title %}
+					{% endblock %}
+				</title>
 
-</html>
+				{% block stylesheets %}
+					<link
+					rel="icon" type="image/png" href="{{asset('/build/img/rdv.png')}}"/>
+					<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
+					<link rel="stylesheet" href="{{asset('/build/fontawesome/css/all.css')}}">
+					{{ encore_entry_link_tags('app')}}
+				{% endblock %}
+
+			</head>
+
+			<body>
+				<div class="site-container">
+					<div class="site-pusher">
+						{{ render(controller('App\\Controller\\FrontEnd\\MenuController::menu', {'limit' : 6})) }}
+				
+		  			<div class="site-content container-fluid">
+							
+								<a id="button" style="display:block;">
+									<i class="fa fa-chevron-up"></i>
+									Haut de page
+								</a>
+
+								{% block body %}
+									{% for label, messages in app.flashes %}
+										<div class="container">
+											<div class="alert alert-{{ label }}">
+												{% for message in messages %}
+													<p>
+														{{ message}}
+													</p>
+												{% endfor %}
+											</div>
+										</div>
+									{% endfor %}
+								{% endblock %}
+						
+						</div>	
+  {% include 'partials/footer.html.twig' %}
+				 <div class="site-cache" id="site-cache"></div>	
+		     
+				</div>
+	      </div>
+				{% block javascripts %}
+
+					<script src="{{asset('/build/fontawesome/js/all.js')}}"></script>
+					{{ encore_entry_script_tags('app' )}}
+				{% endblock %}
+			</body>
+
+		</html>

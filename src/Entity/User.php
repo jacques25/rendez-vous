@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use Serializable;
+use App\Entity\UserAdress;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -120,9 +123,23 @@ class User implements UserInterface, Serializable
      */
     protected $confirmToken;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserAdress", mappedBy="user", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $addresses;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commandes", mappedBy="user")
+     */
+    private $commandes;
+
     public function __construct()
     {
         $this->enabled = true;
+
+        $this->addresses = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -312,6 +329,7 @@ class User implements UserInterface, Serializable
             $this->confirmToken
 
 
+
         ));
     }
 
@@ -322,7 +340,8 @@ class User implements UserInterface, Serializable
             $this->email,
             $this->password,
             $this->enabled,
-            $this->confirmToken
+            $this->confirmToken,
+
 
         ) = unserialize($serialized, array('allowed_classes' => false));
     }
@@ -359,6 +378,67 @@ class User implements UserInterface, Serializable
     public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserAdress[]
+     */
+    public function getAddresses(): Collection
+    {
+        return $this->addresses;
+    }
+
+    public function addAddress(UserAdress $address): self
+    {
+
+        $this->addresses[] = $address;
+        $address->setUser($this);
+
+        return $this;
+    }
+
+    public function removeAddress(UserAdress $address): self
+    {
+        if ($this->addresses->contains($address)) {
+            $this->addresses->removeElement($address);
+            // set the owning side to null (unless already changed)
+            if ($address->getUser() === $this) {
+                $address->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->contains($commande)) {
+            $this->commandes->removeElement($commande);
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
 
         return $this;
     }

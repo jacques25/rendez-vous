@@ -1,0 +1,16 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Edit PopupTaille{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Edition de {{popup_taille.title}}</h1>
+
+    {{ include('admin/popup_taille/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-info" href="{{ path('admin_popup_taille_index') }}"><i class="fa fa-chevron-left"></i> Retour</a>
+
+    {{ include('admin/popup_taille/_delete_form.html.twig') }}
+    
+    </div>
+{% endblock %}

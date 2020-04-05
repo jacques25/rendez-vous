@@ -1,9 +1,11 @@
   {% for seance in seances %} 
-    <div class="jumbotron" style="background-image: url({{ vich_uploader_asset(seance, 'imageFile')}})"> </div>
-    <div class="row">
+  <div class="row-fluid">
+  
+    <div class="jumbotron" style="background-image: url({{ vich_uploader_asset(seance, 'imageFile')}}); width:100%;"> </div>
+   
   
     
-    <div class="col mb-4">
+    <div class="col-md-12 mb-4">
       <div class="card p-3">
        {#  <a class="nav-link" href="{{path('seance.show', {'id': seance.id} )}}"> 
          <div class="card-img">
@@ -36,6 +38,6 @@
        {#  </a> #}
       </div>
     </div>
-    
-  </div>
+    </div>
+  
 {% endfor %}

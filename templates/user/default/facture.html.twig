@@ -1,0 +1,114 @@
+{% extends '::layout.html.twig' %}
+
+		{% block body %}
+<div class="row mt-5">
+<h2>
+						Factures
+					</h2>
+</div>
+			<div class="row ">
+			
+				<div class="col-md-4 mb-3">
+					{% include 'UserBundle:Default:modulesUsed/utilisateursConnecte.html.twig' %}
+				
+					{% for flashMessage in app.session.flashbag.get('success' )%}
+						<div class="alert alert-success">
+							{{flashMessage }}
+						</div>
+					{% endfor %}
+
+					{% for flashMessage in app.session.flashbag.get('warning' )%}
+						<div class="alert alert-warning">
+							{{flashMessage }}
+						</div>
+					{% endfor %}
+						</div>
+					<div class"col-md-8">
+					 <table class="table">
+					  <thead>
+            
+						{% if factures|length ==  0 %}
+              <tr>
+							
+								<td scope="row">
+									<center>
+										Aucune facture actuellement.
+									</center>
+								</td>
+						
+              </tr>
+						{% endif %}
+            
+						
+						{% for facture in factures %}
+
+
+							<tr scope="row">
+								<th>
+									Facture n°
+								</th>
+								<th>
+									Date
+								</th>
+								
+							
+								{# {% if facture.commande.totalPromo is defined %}
+																																																																										                <th class="col-2">Promo</th>
+																																																																										                <th class="col-2">Port</th>
+																																																																										               {% endif %} 
+																																																																										            #}
+
+								<th>
+									Total
+								</th>
+								<th>
+									Téléchargement
+								</th>
+
+							</tr>
+            </thead>
+						<tbody>
+							<tr scope="row">
+
+								<td>
+									{{facture.reference}}
+								</td>
+								<td>
+									{{ facture.date|date('d/m/Y') }}
+								</td>
+							
+								{% if  facture.commande.totalPromo is defined and facture.commande.totalPromo is not null %}
+									<td class="col">
+										{{facture.commande.totalPromo }}
+										€
+									</td>
+									<td class="col">
+										{{facture.commande.fraisPort }}
+										€
+									</td>
+
+
+								{% endif %}
+
+								<td>
+									{{facture.commande.totalCommande}} €
+								</td>
+
+								<td>
+									<a class="mx-3" href="{{ path('facture-pdf',{'id': facture.id}) }}" target="_blank">
+										<i class="fas fa-upload"></i>
+									</a>
+									<a href="{{ path('show_facture',{'id': facture.id}) }}" >
+										<i class="fas fa-edit"></i>
+									</a>
+								</td>
+
+							</tr>
+					
+           </tbody>	
+					 {% endfor %}
+					</table>
+        	</div>
+
+		</div>
+	{% endblock %}

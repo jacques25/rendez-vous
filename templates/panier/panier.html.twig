@@ -8,12 +8,13 @@
 		{% block body %}
 
 		  <div class="row mt-4">
-
+       <div class="col-12">
 		  	<h1> Votre Panier</h1>
+	    </div>
 	
 		 {% for label, messages in app.flashes %}
          
-           <div class="alert alert-{{ label }}">
+           <div class="col-12 alert alert-{{ label }}">
               {% for message in messages %}
                      <p> {{ message}} </p>
               {% endfor %}
@@ -25,26 +26,26 @@
 			</div>
 	  
 			{% if items|length  == 0 %} 
-			  <div class="main-panier">
-				<div class="alert alert-success w-100 text-center uppercase"> Aucun article dans votre panier</div>
+			 
+				<div class="col-12 alert alert-success w-100 text-center uppercase"> Aucun article dans votre panier</div>
 						
    
-			</div>		
+			
      {% else %}
-			 
-			<div class="row"> 
-        				<table class="table-panier m-2">
-        						<thead class="table-thead ">
-        								<tr colspan="row" class="text-uppercase">
+			 <div class="table-responsive-sm table-responsive-xl table-responsive-md">
+			   
+        				<table class="table table-fixed m-2">
+        						<thead class="table-thead">
+        								<tr>
         
-        									<th>Référence</th>
-        	                 <th> designation </th>
-        									 <th> Promo </th>
-        									<th>  taille </th>
-        									<th>	prix	</th>
-        									<th>	quantité </th>
-        									<th>  Total	</th>
-        									<th> action </th>
+        									<th class="th-sm">Référence</th>
+        	                 <th class="th-sm"> designation </th>
+        									 <th class="th-sm"> Promo </th>
+        									<th class="th-sm">  taille </th>
+        									<th class="th-sm">	prix	</th>
+        									<th class="th-sm">	quantité </th>
+        									<th class="th-sm">  Total	</th>
+        									<th class="th-sm"> action </th>
         
         								</tr>
         						</thead>
@@ -109,6 +110,17 @@
         		  </table>	
 
       </div>
+			<div class="col-12 mt-4">
+			 <a href="{{path('app_homepage')}}" class="btn btn-secondary mt-2"> Poursuivre vos achats</a>
+			 	{% if  items is not empty %}
+									<a href="{{path('panier_livraison')}}" class="btn btn-panier btn-lg m-2">
+										<i class="fa fa-shopping-basket"></i>
+									Commander
+									</a>
+								{% endif %}
+			</div>
+
+			
 			{% endif %}
 
 {% endblock %}

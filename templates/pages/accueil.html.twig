@@ -3,18 +3,19 @@
 {% block title %} {{page.title}} {% endblock %}
 
 {% block body %}
- 
-    <div class="row"> 
-         <img class="img-top img-fluid" src="{{ vich_uploader_asset(page, 'imageFile')}}" alt="{{page.filename}}">
-      </div>
-      <div class="row">
-      <div class="col-sm-12 col-md-12">
+ <div class="row-fluid">
+    <div class="jumbotron" style="background: url({{ vich_uploader_asset(page, 'imageFile')}});" ></div>
+         
+   
+     
+      <div class="col-sm-12 col-md-12 col-lg-12">
            <h1 class="mt-3">{{page.title }}</h1>
-       </div>
-      <div class="col-sm-12 col-md-12">
+      </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
          <article class="p-4 w-100">{{ page.description|raw }}</article>
-    </div>
-   </div
+   
+   </div>
+   </div>
 {% endblock %}
 
 

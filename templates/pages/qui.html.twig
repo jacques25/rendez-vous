@@ -6,9 +6,8 @@
  
     <div class="row"> 
       
-    
 
-         <img class="images-top img-fluid mt-4" src="{{ vich_uploader_asset(page, 'imageFile')}}" alt="{{page.filename}}">
+         <img class="img-left mt-4" src="{{ vich_uploader_asset(page, 'imageFile')}}" alt="{{page.filename}}">
       </div>
       <div class="row">
       <div class="col-sm-12 col-md-12">
@@ -31,7 +30,7 @@
          <article class="p-4 w-100">{{ page.description|raw }}</article>
          </div>
     </div>
-   
+  
 {% endblock %}
 
 

@@ -1,39 +1,106 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Modification du profil  {% endblock %}
+		{% block title %}
+			Modification du profil
+		{% endblock %}
 
-{% block body %}
- <div class="user-connect">
- 
- {{form_start(form)}}
- <div class="form-connect bg-light mb-5"> 
- 
-  <h1 class="p-4">Modification du profil </h1>
-     <div class="row">
-     
-         <div class="col-5 mx-5"> 
-          {{form_row(form.imageFile)}}
-         </div>
-      
-     
-          <div class="col-5 p-4"> 
-            
-             {{form_row(form.firstName, {'attr': {'class': 'mb-3'}})}}
-             {{form_row(form.lastName, {'attr': {'class': 'mb-3'}})}}
-              {{form_row(form.email, {'attr': {'class': 'mb-3'}})}} 
-            {{form_row(form.introduction, {'attr': {'class': 'mb-3'}})}}
-          {{form_row(form.description,  {'attr': {'class': 'mb-3'}})}}
-          </div>
-      </div>
+		{% block body %}
+			<div class="container mt-4">
+				<div class="row">
+					{% for label, messages in app.flashes %}
+						<div class="container">
+							<div class="alert alert-{{ label }}">
+								{% for message in messages %}
+									<p>
+										{{ message}}
+									</p>
+								{% endfor %}
+							</div>
+						</div>
+					{% endfor %}
+				</div>	
+				{{form_start(form)}}
+				<div class="row">
+				
+					<div class="col-md-5">
+						<h1>
+							Modification du profil
+						</h1>
+					</div>
 
-  
-      <div class="row justify-content-center">
-      <div class="col-7 p-3">
-         <button type="submit" class="btn btn-success"> Mettre à jour</button>
-       </div>
-     </div> 
-  {{form_end(form)}}
-</div>
+					<div class="col-md-6 right">
+						{{form_row(form.imageFile)}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="card-signin-address" id="address" data-prototype="{{ form_widget(form.addresses.vars.prototype)|e('html_attr') }}">
+							<div class="row flex-row">
+					
 
-</div>
-{% endblock %}
+								{% for row in form.addresses %}
+									<div class="col-6 float-right">
+										<div class="card-address">
+											<div class="card-header-address bg-card">
+												<a class="text-dark" href="#item-address">
+													Adresse 
+													
+												</a>
+											</div>
+											<div class="card-body-address" id="item-address">
+												{{form_widget(row)}}
+											</div>
+											
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+
+						</div>
+
+					</div>
+					<div class="col-md-6">
+
+						<div class="card-identity right">
+							<div class="card-header">
+								<h3>
+									Identité
+								</h3>
+							</div>
+							<div class="card-body-adress">
+								{{form_row(form.firstName, {'attr': {'class': 'mb-3'}}
+								)}}
+								{{form_row(form.lastName, {'attr': {'class': 'mb-3'}}
+								)}}
+								{{form_row(form.email, {'attr': {'class': 'mb-3'}}
+								)}}
+								{{form_row(form.introduction, {'attr': {'class': 'mb-3', 'rows':6}}
+								)}}
+								{{form_row(form.description,  {'attr': {'class': 'mb-3', 'rows': 6}}
+								)}}
+							</div>
+						</div>
+
+
+					</div>
+					</div>
+					<div class="row">
+						<div class="col-7 p-3">
+							<button type="submit" class="btn btn-success">
+								Mettre à jour
+							</button>
+						</div>
+					</div>
+					{{form_end(form)}}
+
+
+				</div>
+
+			{% endblock %}
+
+			{% block javascripts %}
+				{{ parent() }}
+
+				{{ encore_entry_script_tags('address' )}}
+
+			{% endblock %}

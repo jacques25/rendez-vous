@@ -1,0 +1,62 @@
+<div class="col-md-6 float-right">
+  <div class="card-address bg-light">
+    <div class="card-address-header">
+     <h4 class="">	Ajouter une nouvelle adresse</h4>
+    </div>
+    <div class="card-address-body">
+	{{ form_start(form)}}
+		      	
+            <div class="form-group">
+						{{form_widget(form.firstName)}}
+						</div>
+
+						 <div class="form-group">
+						{{form_widget(form.lastName)}}
+						</div>
+
+		      	{# Les erreurs générales du formulaire. #}
+					
+		      	{{ form_errors(form) }}
+		      	<div class="form-group">
+		      		{{ form_errors(form.phone) }}
+      
+		      		{{ form_widget(form.phone, {'attr': {'placeholder': 'Téléphone' }}) }}
+		      	</div> 
+			      <div class="form-group">
+
+			         	{{ form_errors(form.street) }}
+         
+			         	{{ form_widget(form.street, {'attr': {'placeholder': 'Adresse'}}) }}
+			      </div>
+						<div class="form-group">
+				       {{ form_errors(form.complement) }}
+   
+				      {{ form_widget(form.complement, {'attr': {'placeholder': 'Complément d\'adresse' }}) }}
+			
+		        </div>
+			      <div class="form-group">
+			        	{{ form_errors(form.cp) }}
+        
+			        	{{ form_widget(form.cp, {'attr': {'placeholder':' Code postal'}}) }}
+			      </div>
+			      <div class="form-group">
+		         		{{ form_errors(form.city) }}
+         
+		         		{{ form_widget(form.city, {'attr': {'placeholder': 'Ville'}}) }}
+		      	</div>
+			      <div class="form-group">
+			        	{{ form_errors(form.country) }}
+        
+			        	{{ form_widget(form.country, {'attr': {'placeholder':'Pays' }}) }}
+			      </div>
+			   
+    </div>
+    <div class="card-address-footer m-2">
+			    <button class="btn btn-info btn-lg" type="submit">Ajouter une adresse </button> 
+		</div>
+     {{ form_rest(form) }}
+  </div>
+
+{{ form_end(form) }}
+
+</div>

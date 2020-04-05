@@ -1,0 +1,37 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}PopupTaille index{% endblock %}
+
+{% block body %}
+    <h1>PopupTaille index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Popup</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for popup_taille in popup_tailles %}
+            <tr>
+                <td>{{ popup_taille.id }}</td>
+                <td>{{ popup_taille.title }}</td>
+                <td>{{ popup_taille.popup|raw }}</td>
+                <td>
+                    <a href="{{ path('admin_popup_taille_show', {'id': popup_taille.id}) }}">show</a>
+                    <a href="{{ path('admin_popup_taille_edit', {'id': popup_taille.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_popup_taille_new') }}">Create new</a>
+{% endblock %}

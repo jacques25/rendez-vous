@@ -60,7 +60,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('admin', './assets/js/admin.js')
     .addEntry('option', './assets/js/optionBijou.js')
-
+    .addEntry('address', './assets/js/address.js')
     .addEntry('optSelect', './assets/js/optSelect.js')
     .addEntry('seance', './assets/js/seanceOption.js')
     .addEntry('select', './assets/js/select.js')

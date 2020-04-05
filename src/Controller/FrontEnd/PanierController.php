@@ -5,7 +5,7 @@ namespace App\Controller\FrontEnd;
 
 use App\Entity\UserAdress;
 use App\Form\UserAdressType;
-use App\Form\FormAccount\UserType;
+use App\Entity\Commandes;
 use App\Repository\OptionBijouRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,8 +38,6 @@ class PanierController extends AbstractController
 
   /**
    * @Route("/panier", name="panier")
-   *
-   * @return Response
    */
   public function panier(Request $request, OptionBijouRepository $optionBijouRepository)
   {
@@ -127,13 +125,13 @@ class PanierController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
       $manager = $this->getDoctrine()->getManager();
 
-      $user->addRoles($role);
+      $user->setRoles($role);
       $userAddresss->setUser($user);
       $manager->persist($userAddresss);
       $manager->flush();
 
-      $this->addFlash('notice', "L'adresse a bien été ajouter");
-      return $this->redirectToRoute('panier_livraison');
+      $this->addFlash('success', "L'adresse a bien été ajouter");
+      return $this->redirectToRoute('panier_validation');
     }
 
     return $this->render('panier/livraison.html.twig', ['form' => $form->createView(), 'user' => $user]);
@@ -142,32 +140,49 @@ class PanierController extends AbstractController
 
   /**
    *
-   * @Route("panier/validation/", name="panier_validation", requirements={"user"="\d+"} )
+   * @Route("/panier/validation", name="panier_validation", requirements={"user"="\d+"} )
    * 
    */
-  public function validationAction(Request $request)
+  public function validation(Request $request)
   {
 
-
-    if ($request == null) {
+    if ($request === null) {
       $this->addFlash('warning', 'Votre panier est vide');
       $this->redirectToRoute('app_homepage');
     }
 
-    if ($request->isMethod('POST'))
+    if ($request->isMethod('POST')) {
       $this->setLivraisonOnSession($request);
 
-    $em = $this->getDoctrine()->getManager();
+      $em = $this->getDoctrine()->getManager();
+      $prepareCommande = $this->forward('App\Controller\FrontEnd\CommandesController:prepareCommande');
 
-    $prepareCommande = $this->forward('Commandes:prepareCommande');
+      $commande = $em->getRepository(Commandes::class)->find($prepareCommande->getContent());
+      
+      return $this->render('panier/validation.html.twig', [
+        'commande' => $commande
 
-    $commande = $em->getRepository('App:Commandes')->find($prepareCommande->getContent());
+      ]);
+    }
+  }
 
+  public function setLivraisonOnSession(Request $request)
+  {
+    $session = $request->getSession();
 
-    return $this->render('Panier:validation.html.twig', [
-      'commande' => $commande
+    if (!$session->has('address')) $session->set('address', array());
 
-    ]);
+    $address = $session->get('address');
+
+    if ($request->get('livraison') != null && $request->get('facturation') != null) {
+      $address['livraison'] = $request->get('livraison');
+      $address['facturation'] = $request->get('facturation');
+    } else {
+      return $this->redirectToRoute('panier_validation');
+    }
+    $session->set('address', $address);
+
+    return $this->redirectToRoute('panier_validation');
   }
 
   /**

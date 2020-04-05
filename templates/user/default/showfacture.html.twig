@@ -1,0 +1,228 @@
+{% extends '::layout.html.twig' %}
+
+		{% block body %}
+
+			<div class="row flex-row mt-5">
+
+				<div class=" col-8 mb-4">
+					<img class="img-rounded float-left" src="{{asset('uploads/rendez-vous.png')}}">
+					<h2 class="logo">
+						Rendez-vous avec soi
+					</h2>
+				</div>
+			</div>
+
+			<div class="row flex-row">
+
+
+				<div class="col-6">
+					<h2>
+						Facture
+					</h2>
+					<p class="">
+						Date:
+						{{facture.date|date('d-m-Y') }}
+					</p>
+					<p class="">
+						Ref:
+						{{ facture.reference }}
+					</p>
+				</div>
+				<div class="col-6 center">
+					<h2>
+						Adresse
+					</h2>
+
+					<p class="nav-link">
+						{{facture.commande.facturation.lastname }}
+						{{facture.commande.facturation.firstname }}
+					</p>
+					<p class="nav-link">
+
+						{{facture.commande.facturation.address }}
+					</p>
+					<p class="nav-link">
+						{{facture.commande.facturation.cp }}
+
+						{{facture.commande.facturation.city }}
+						{{facture.commande.facturation.country }}
+					</p>
+
+
+				</div>
+			</div>
+
+			<div class="row flex-row">
+
+				{% if facture.commande.bijou is defined and facture.commande.bijou is not null %}
+
+
+					<table class="mt-4 table" id="entity">
+
+
+						<thead>
+							<tr>
+								<th>
+									ARTICLES
+								</th>
+								<th>
+									QUANTITE
+								</th>
+								{% if facture.commande.bijou is not null %}
+									<th>
+										TAILLE
+									</th>
+								{% endif %}
+								<th>
+									P.U
+								</th>
+
+								<th>
+									MONTANT TTC
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for bijou in facture.commande.bijou  %}
+								<tr>
+
+									<td class="color">
+										{{ bijou.reference }}
+									</td>
+									<td class="color">
+										{{ bijou.quantite }}
+									</td>
+									<td>
+										{{bijou.taille}}
+									</td>
+
+
+									<td class="color">
+										{{ bijou.prix }}
+									</td>
+
+									<td>
+										{{bijou.prix * bijou.quantite}}
+
+									</td>
+								{% endfor %}
+							</tr>
+
+						</tbody>
+					</table>
+
+
+				{% endif %}
+			</div>
+			{% if facture.commande.promo is defined and facture.commande.promo is not null %}
+				<div class="row mt-4">
+
+					<h3 class="titre">
+						Articles en promotion
+					</h3>
+
+
+					<table id="entity">
+						<tr>
+							<td width="180">
+								DESIGNATION
+							</td>
+							<td width="110">
+								QUANTITE
+							</td>
+							<td width="100">
+								P.U
+							</td>
+							<td width="180">
+								MONTANT REDUCTION
+							</td>
+							<td width="105">
+								MONTANT TTC
+							</td>
+						</tr>
+						{% for promo in facture.commande.promo %}
+							<tr>
+								<td class="color">
+									{{ promo.reference }}
+								</td>
+								<td class="color">
+									{{ promo.quantite }}
+								</td>
+								<td class="color">
+									{{promo.horsPromoTTC }}
+									€
+								</td>
+
+								<td class="color">
+									-
+									{{promo.prixReduit}}
+									€
+								</td>
+								<td class="color">
+									{{promo.totalPromo}}
+									€
+								</td>
+
+
+							</tr>
+						</table>
+
+						<table id="total">
+							<tr>
+
+								<td width="150">
+									REDUCTION
+									{{  promo.reduction.valeur }}
+									%
+								</td>
+								<td class="color" width="60">
+									{{promo.prixReduit }}
+									€
+								</td>
+							</tr>
+							<tr>
+								<td width="150">
+									FRAIS DE LIVRAISON
+								</td>
+								<td class="color" width="60">
+									{{facture.commande.fraisPort }}
+									€
+								</td>
+							</tr>
+							<tr>
+								<td width="150">
+									TOTAL TTC
+								</td>
+
+								<td class="color" width="60">
+									{{facture.commande.totalPromo * promo.quantite + facture.commande.fraisPort }}
+									€
+								</td>
+							</tr>
+						</table>
+
+
+					{% endfor %}
+				</div>
+			{% endif %}
+			{% if facture.commande.bijou is defined and facture.commande.bijou is not null %}
+				<div class="d-flex flex-row-reverse">
+					<div class="col-5 mx-5" id="total">
+
+						TOTAL COMMANDE :
+
+						{{ dump(facture.commande.totalCommande)}}
+						€
+					</div>
+
+				</div>
+			{% endif %}
+			<div class="row mt-5">
+				<div class="col-6">
+					<a class="btn btn-primary" href="{{'user_facture'}}">
+						Retour
+					</a>
+				</div>
+			</div>
+
+		{% endblock %}

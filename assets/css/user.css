@@ -1,56 +1,176 @@
- .user-connect {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   min-height: 100vh;
- }
+.user-connect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
 
+.user-register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
 
- .alert-success {
-   box-shadow: 4px 5px 15px 0px #b1cec3;
-   background: #11a9788a;
-   color: #084425;
-   border-color: #39a718d1;
-   height: auto;
+.alert-success {
+  box-shadow: 4px 5px 15px 0px #b1cec3;
+  background: #11a9788a;
+  color: #084425;
+  border-color: #39a718d1;
+  height: auto;
+}
 
- }
+.alert-danger {
+  box-shadow: 2px 4px 6px 0px #dc3546b4;
+  background-color: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+}
 
+.user h1 {
+  font-style: italic;
+  font-size: 16px;
+  text-transform: uppercase;
+}
 
- .alert-danger {
-   box-shadow: 2px 4px 6px 0px #dc3546b4;
-   background-color: #dc3545;
-   color: #fff;
-   border-color: #dc3545;
- }
+input {
+  font-size: 14px !important;
+}
 
- .user h1 {
-   font-style: italic;
-   font-size: 16px;
-   text-transform: uppercase;
+button[type='submit'] {
+  font-size: inherit;
+}
 
- }
+a.btn-link {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #007bff;
+}
 
- input {
-   font-size: 14px !important;
- }
+a.btn-link:hover {
+  text-decoration-line: none;
+  color: #073f7a;
+}
 
- button[type=submit] {
-   font-size: inherit;
- }
+/* Button Color */
 
- a.btn-link {
-   font-size: 1.3rem;
-   font-weight: 400;
-   color: #007bff;
- }
+.bg-blue-light {
+  background-color: #02b9d6;
+}
 
- a.btn-link:hover {
-   text-decoration-line: none;
-   color: #073f7a;
- }
+/* FORM USER */
 
- /* Button Color */
+.connect {
+  max-width: 400px;
+  height: 100%;
+}
 
- .bg-blue-light {
-   background-color: #02b9d6;
- }
+.register {
+  width: 600px;
+  height: 100%;
+  box-shadow: 4px 4px 10px 0px rgba(99, 86, 78, 0.6);
+  border-radius: 16px;
+}
+
+.connect,
+.form-connect {
+  border-radius: 8px;
+  box-shadow: 4px 4px 10px 0px rgba(99, 86, 78, 0.6);
+  width: 100%;
+}
+.connect h4 {
+  font-size: 1.8rem;
+  color: #847e7e;
+}
+
+.user-connect form {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* FORM CONTACT */
+.card-registration {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.address {
+  max-width: 100%;
+}
+
+.card-body-registration,
+.card-identity {
+  background: #fff;
+  left: 0;
+  top: 200px;
+  width: 100%;
+  padding: 15px 15px 15px;
+  border-radius: 8px;
+  box-shadow: 3px 3px 8px 0px rgba(136, 134, 134, 0.527);
+}
+
+.card-signin-address {
+  background: #fff;
+  left: 0;
+  width: 100%;
+  padding: 15px 15px 15px;
+  border-radius: 8px;
+  box-shadow: 3px 3px 8px 0px rgba(136, 134, 134, 0.527);
+}
+
+.card-address {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  padding: 10px;
+}
+
+.card-header-address {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header-address {
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card-body-address {
+  flex: 1 1 auto;
+  min-height: 1px;
+}
+
+.card-footer-address:last-child {
+  border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px);
+}
+
+.card-footer-address {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.bx-sh {
+  box-shadow: 3px 3px 8px 0px rgba(37, 37, 37, 0.6);
+}

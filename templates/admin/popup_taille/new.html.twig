@@ -1,0 +1,14 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}New PopupTaille{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Create new PopupTaille</h1>
+
+    {{ include('admin/popup_taille/_form.html.twig') }}
+
+    <a href="{{ path('admin_popup_taille_index') }}">back to list</a>
+    
+    </div>
+{% endblock %}

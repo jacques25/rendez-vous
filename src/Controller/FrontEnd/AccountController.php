@@ -4,16 +4,19 @@ namespace App\Controller\FrontEnd;
 
 use App\Entity\User;
 use App\Form\AccountType;
+use App\Entity\UserAdress;
+use App\Form\UserAdressType;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Message;
 use App\Form\FormAccount\ProfileType;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -37,7 +40,7 @@ class AccountController extends AbstractController
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('app_homepage');
         }
 
 
@@ -72,8 +75,16 @@ class AccountController extends AbstractController
      */
     public function profile(Request $request, TokenGeneratorInterface $tokenGenerator, LoggerInterface $logger)
     {
+        $manager = $this->getDoctrine()->getManager();
         $logger->debug('Vous êtes connecté en tant que ' . $this->getUser()->getUsername());
         $user = $this->getUser();
+
+        $originalAddress = new ArrayCollection();
+
+        foreach ($user->getAddresses() as $address) {
+            $originalAddress->add($address);
+        }
+
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return  $this->redirectToRoute('account_login');
             $this->addFlash('danger', " Mais vous n' êtes pas connecté !");
@@ -81,9 +92,15 @@ class AccountController extends AbstractController
             $form = $this->createForm(ProfileType::class, $user);
             $form->handleRequest($request);
             $token = $tokenGenerator->generateToken();
-            if ($form->isSubmitted() && $form->isValid()) {
 
-                $manager = $this->getDoctrine()->getManager();
+            if ($form->isSubmitted() && $form->isValid()) {
+                foreach ($originalAddress as $address) {
+                    if ($user->getAddresses()->contains($address) === false) {
+                        // remove the Task from the Tag
+                        $manager->remove($address);
+                    }
+                }
+
 
                 $slugger = new AsciiSlugger();
                 $user->setSlug($slugger->slug(strtolower($user->getFirstName() . ' ' . $user->getLastName())));
@@ -105,6 +122,34 @@ class AccountController extends AbstractController
         }
         return $this->redirectToRoute('accueil');
     }
+
+
+    /**
+     *
+     * @Route("/profil/utilisateur/adresse", name="profile_user_address")
+     */
+    public function adresse(Request $request)
+    {
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        $userAddress = new UserAdress();
+
+        $form = $this->createForm(UserAdressType::class, $userAddress);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $userAddress->setUser($user);
+            $em->persist($userAddress);
+            $em->flush();
+
+            $this->addFlash('notice', "L'adresse a bien été ajouter");
+            return $this->redirectToRoute('account_profile', ['user' => $user->getId()]);
+        }
+
+        return $this->render('user/adresse.html.twig', ['form' => $form->createView(), 'user' => $user]);
+    }
+
 
     /**
      * @Route("/mot-de-passe-oublie", name="app_forget_password")

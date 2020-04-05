@@ -1,18 +1,19 @@
 <?php
 
 namespace App\Controller\FrontEnd;
-
-use function random_bytes;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Bijou;
+use App\Entity\OptionBijou;
 use App\Entity\Commandes;
+use App\Entity\UserAdress;
+use function random_bytes;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CommandesController extends AbstractController
 {
-
-  public function facture(Request $request)
+    public function facture(Request $request)
   {
 
     $em = $this->getDoctrine()->getManager();
@@ -24,39 +25,41 @@ class CommandesController extends AbstractController
     $taille = $session->get('taille');
     $reference = $session->get('reference');
     $prix = $session->get('prix');
+    $bijou = $session->get('bijou');
     $totalTTC = 0;
-
+   
+    
+   
     $commande = array();
     $totalPromo = 0;
     $horsPromoTTC = 0;
     $fraisPort = 0;
 
-    /*   $facturation = $em->getRepository('App:UserAddress')->find($adresse['facturation']);
-        $livraison = $em->getRepository('App:UserAddress')->find($adresse['livraison']); */
-
-    $bijous = $em->getRepository('App:Bijou')->findArray(array_keys($session->get('panier')));
-
+      $facturation = $em->getRepository(UserAdress::class)->find($adresse['facturation']);
+      $livraison = $em->getRepository(UserAdress::class)->find($adresse['livraison']);
+ 
+    $optionBijous = $em->getRepository(OptionBijou::class)->findArray(array_keys($session->get('panier')));
     /* $promos = $em->getRepository('BoutiqueBundle:Promo')->findArray(array_keys($session->get('panier'))); */
-
-    foreach ($bijous as $bijou) {
-      $totalPrix = ($prix[$bijou->getId()] * $panier[$bijou->getId()]);
-      $totalTTC += $totalPrix;
-
-      $commande['bijou'][$bijou->getId()] = array(
-        'reference' => $reference[$bijou->getId()],
-        'title' => $bijou->getTitle(),
-        'quantite' => $panier[$bijou->getId()],
-        'taille' => $taille[$bijou->getId()],
-        'prix' => $prix[$bijou->getId()],
-
-      );
+  
+    foreach ($optionBijous as $optionBijou) {
+       
+       $commande['optionBijou'][$optionBijou->getId()] = array(
+        'reference' => $optionBijou->getReference(),
+        'taille' => $optionBijou->getTaille(),
+        'prix' => $optionBijou->getPrix(),
+        'quantite' => $panier[$optionBijou->getId()],
+        'bijou'  => $optionBijou->getBijou()
+      ); 
+       $totalPrix = ($optionBijou->getPrix() * $panier[$optionBijou->getId()]);
+       $totalTTC += $totalPrix;
     }
-
+      
+    
     $commande['livraison'] = array(
-      'firstname' => $livraison->getFirstname(),
-      'lastname' => $livraison->getLastname(),
+      'firstname' => $livraison->getFirstName(),
+      'lastname' => $livraison->getLastName(),
       'phone' => $livraison->getPhone(),
-      'address' => $livraison->getAddress(),
+      'address' => $livraison->getStreet(),
       'cp' => $livraison->getCp(),
       'city' => $livraison->getCity(),
       'country' => $livraison->getCountry(),
@@ -67,13 +70,13 @@ class CommandesController extends AbstractController
       'firstname' => $facturation->getFirstname(),
       'lastname' => $facturation->getLastname(),
       'phone' => $facturation->getPhone(),
-      'address' => $facturation->getAddress(),
+      'address' => $facturation->getStreet(),
       'cp' => $facturation->getCp(),
       'city' => $facturation->getCity(),
       'country' => $facturation->getCountry(),
       'complement' => $facturation->getComplement()
     );
-
+    
 
     $commande['token'] = bin2Hex($generator);
     $commande['totalCommande'] = $totalTTC;
@@ -81,23 +84,23 @@ class CommandesController extends AbstractController
     return $commande;
   }
 
-  public function prepareCommandeAction(Request $request)
+  public function prepareCommande(Request $request)
   {
     $session = $request->getSession();
 
     $em = $this->getDoctrine()->getManager();
 
 
-    if (!$session->has('commande'))
+    if(!$session->has('commande')) {
       $commande = new Commandes();
-    else
+    } else
 
-      $commande = $em->getRepository('BoutiqueBundle:Commandes')->find($session->get('commande'));
-
-    $commande->setDate(new \DateTime());
+      
+    $commande = $em->getRepository(Commandes::class)->find($session->get('commande'));
+    $commande->setDateCommande(new \DateTime());
     $commande->setUser($this->container->get('security.token_storage')->getToken()->getUser());
     $commande->setValider(0);
-    $commande->setReference(0);
+    $commande->setNumeroCommande(0);
     $commande->setCommande($this->facture($request));
 
     if (!$session->has('commande')) {
@@ -120,11 +123,11 @@ class CommandesController extends AbstractController
    *
    * @Route("/api/banque/{id}", name="validation_commande")
    */
-  public function validationCommandeAction(Request $request, $id)
+  public function validationCommande(Request $request, $id)
   {
     $em = $this->getDoctrine()->getManager();
 
-    $commande = $em->getRepository('BoutiqueBundle:Commandes')->find($id);
+    $commande = $em->getRepository(Commandes::class)->find($id);
     if (!$commande || $commande->getValider() == 1) {
 
       throw $this->createNotFoundException('La commande n\'existe pas');

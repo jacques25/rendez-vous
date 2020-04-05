@@ -47,7 +47,7 @@ class OptionBijouType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => OptionBijou::class,
-            'attr' => ['label' => false]
+
         ]);
     }
 }

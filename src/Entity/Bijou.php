@@ -114,6 +114,12 @@ class Bijou
      */
     private $promo = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\PopupTaille", inversedBy="bijous",  cascade={"persist"},fetch="EAGER")
+     */
+    private $popuptailles;
+
+
 
     public function __construct()
     {
@@ -122,6 +128,7 @@ class Bijou
         $this->produits = new ArrayCollection();
         $this->boutiques = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+        $this->popuptailles = new ArrayCollection();
     }
 
 
@@ -386,6 +393,52 @@ class Bijou
     public function setPromo(bool $promo): self
     {
         $this->promo = $promo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PopupTaille[]
+     */
+    public function getPopuptailles(): Collection
+    {
+        return $this->popuptailles;
+    }
+
+    public function addPopuptailles(PopupTaille $popuptaille): self
+    {
+        if (!$this->popuptailles->contains($popuptaille)) {
+            $this->popuptailles[] = $popuptaille;
+            $popuptaille->addBijous($this);
+        }
+
+        return $this;
+    }
+
+    public function removePopuptailles(PopupTaille $popuptaille): self
+    {
+        if ($this->popuptailles->contains($popuptaille)) {
+            $this->popuptailles->removeElement($popuptaille);
+            $popuptaille->removeBijous($this);
+        }
+
+        return $this;
+    }
+
+    public function addPopuptaille(PopupTaille $popuptaille): self
+    {
+        if (!$this->popuptailles->contains($popuptaille)) {
+            $this->popuptailles[] = $popuptaille;
+        }
+
+        return $this;
+    }
+
+    public function removePopuptaille(PopupTaille $popuptaille): self
+    {
+        if ($this->popuptailles->contains($popuptaille)) {
+            $this->popuptailles->removeElement($popuptaille);
+        }
 
         return $this;
     }

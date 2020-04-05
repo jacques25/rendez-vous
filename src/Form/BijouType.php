@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Bijou;
 use App\Entity\Produit;
 use App\Entity\Boutique;
+use App\Entity\PopupTaille;
 use App\Form\ApplicationType;
 use App\Form\OptionBijouType;
 use App\Form\PropertiesBijouType;
@@ -62,6 +63,17 @@ class BijouType extends ApplicationType
                 'class' =>  Boutique::class,
                 'choice_label' => 'title',
                 'multiple' => true,
+
+            ])
+            ->add('popuptailles', EntityType::class, [
+                'attr' => ['id' => 'multiple'],
+                'required' => false,
+                'placeholder' => 'Choisir un tableau de conversion',
+                'class' => PopupTaille::class,
+                'label' => 'Conversion des tailles',
+                'choice_label' => 'title',
+                'multiple' => true,
+                'expanded' => false
 
             ])
             ->add('promo', CheckboxType::class, [

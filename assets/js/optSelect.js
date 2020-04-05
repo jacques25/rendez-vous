@@ -11,6 +11,17 @@ $(document).ready(function () {
   }
 });
 
+$(document).ready(function () {
+  var mutiple = document.getElementById('multiple-popup')
+  if (mutiple) {
+    new SlimSelect({
+      select: mutiple,
+      placeholder: true
+
+    });
+  }
+});
+
 
 $(document).ready(function () {
   var bout_cat = document.getElementById('boutique_category')

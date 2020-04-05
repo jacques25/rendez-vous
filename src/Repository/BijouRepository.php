@@ -87,4 +87,15 @@ class BijouRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+
+    public function findArray($array){
+
+          $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.id IN (:array)')
+
+            ->setParameter('array', $array);
+        return $qb->getQuery()->getResult();
+    }
 }
