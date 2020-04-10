@@ -1,0 +1,54 @@
+{% extends "admin_base.html.twig" %}
+
+{% block titte %} les utilisateurs {% endblock %}
+
+{% block body %}
+<div class="container">
+ <h1> Les utilisateurs </h1>
+  
+   <table class="table table-fluid">
+    <thead>
+     <tr>
+        <td>Prénom</td>
+        <td>Nom</td>
+        <td>Email</td>
+        <td>Roles</td>
+        <td>Adresse</td>
+        <td>Nombre de commandes</td>
+        <td> Action </td>
+     </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+    {% for user in users %}
+        {% for address in user.addresses %}
+           <td> {{address.lastName}}</td>
+          <td> {{address.firstName}}</td>
+      
+    
+     <td>{{user.email}}</td>
+     <td>
+         {% for role in user.roles %}
+             {{role}}</br>
+         {% endfor %}
+   </td>
+     <td>{{address.street}} {{address.cp}}  {{address.city}}</td>
+      {% if user.commandes %}
+       <td>  {{user.commandes|length}} </td>
+      {% endif %}
+      
+    {% endfor %}
+         {% endfor %}
+         <td> 
+         <a href="#" > <i class="fas fa-envelope"></i></a>
+         <a href="#" > <i class="fas fa-edit"></i></a>
+         </td>
+    </tr>
+    </tbody
+   
+   </table>
+  
+</div>
+
+{% endblock %}
