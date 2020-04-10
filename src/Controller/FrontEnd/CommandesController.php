@@ -2,18 +2,28 @@
 
 namespace App\Controller\FrontEnd;
 use App\Entity\Bijou;
-use App\Entity\OptionBijou;
 use App\Entity\Commandes;
 use App\Entity\UserAdress;
 use function random_bytes;
+use App\Entity\OptionBijou;
+use App\Service\GetReference;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CommandesController extends AbstractController
-{
-    public function facture(Request $request)
+{  
+   private $getReference;
+   public function __construct(GetReference $getReference){
+
+    $this->getReference = $getReference;
+   }
+  
+  public function facture(Request $request)
   {
 
     $em = $this->getDoctrine()->getManager();
@@ -22,25 +32,18 @@ class CommandesController extends AbstractController
 
     $adresse = $session->get('address');
     $panier = $session->get('panier');
-    $taille = $session->get('taille');
-    $reference = $session->get('reference');
-    $prix = $session->get('prix');
-    $bijou = $session->get('bijou');
+
     $totalTTC = 0;
-   
-    
-   
     $commande = array();
-    $totalPromo = 0;
-    $horsPromoTTC = 0;
-    $fraisPort = 0;
+   
 
       $facturation = $em->getRepository(UserAdress::class)->find($adresse['facturation']);
       $livraison = $em->getRepository(UserAdress::class)->find($adresse['livraison']);
  
     $optionBijous = $em->getRepository(OptionBijou::class)->findArray(array_keys($session->get('panier')));
-    /* $promos = $em->getRepository('BoutiqueBundle:Promo')->findArray(array_keys($session->get('panier'))); */
   
+    /* $promos = $em->getRepository('BoutiqueBundle:Promo')->findArray(array_keys($session->get('panier'))); */
+
     foreach ($optionBijous as $optionBijou) {
        
        $commande['optionBijou'][$optionBijou->getId()] = array(
@@ -53,8 +56,8 @@ class CommandesController extends AbstractController
        $totalPrix = ($optionBijou->getPrix() * $panier[$optionBijou->getId()]);
        $totalTTC += $totalPrix;
     }
-      
-    
+       
+   
     $commande['livraison'] = array(
       'firstname' => $livraison->getFirstName(),
       'lastname' => $livraison->getLastName(),
@@ -80,7 +83,7 @@ class CommandesController extends AbstractController
 
     $commande['token'] = bin2Hex($generator);
     $commande['totalCommande'] = $totalTTC;
-
+    
     return $commande;
   }
 
@@ -97,12 +100,14 @@ class CommandesController extends AbstractController
 
       
     $commande = $em->getRepository(Commandes::class)->find($session->get('commande'));
+   
     $commande->setDateCommande(new \DateTime());
     $commande->setUser($this->container->get('security.token_storage')->getToken()->getUser());
     $commande->setValider(0);
     $commande->setNumeroCommande(0);
     $commande->setCommande($this->facture($request));
-
+    
+    
     if (!$session->has('commande')) {
       $em->persist($commande);
 
@@ -123,8 +128,9 @@ class CommandesController extends AbstractController
    *
    * @Route("/api/banque/{id}", name="validation_commande")
    */
-  public function validationCommande(Request $request, $id)
-  {
+  public function validationCommande(Request $request, $id, MailerInterface $mailer)
+  { 
+    
     $em = $this->getDoctrine()->getManager();
 
     $commande = $em->getRepository(Commandes::class)->find($id);
@@ -132,9 +138,28 @@ class CommandesController extends AbstractController
 
       throw $this->createNotFoundException('La commande n\'existe pas');
     }
+    
+      $user = $commande->getUser();
+      
+      $email = $user->getEmail();
+      $username = $user->getLastName();
+      $url = $this->generateUrl('show_facture', ['id' => $commande->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+      $mail = (new Email())
+        ->from('admin@rvas.fr')
+        ->to($email)
+        ->subject("Bon de commande à Télécharger")
+        ->text(
+          'Bonjour '  . $username . ',
+          Votre Commande a bien été enregitrée. Téléchargez votre bon de commande en cliquant sur le lien:  ' . $url . '' ,
+          'text/html'
+        );
 
+      $mailer->send($mail);
+
+    
+  
     $commande->setValider(1);
-    $commande->setReference($this->container->get('setNewReference')->reference()); //service
+    $commande->setNumeroCommande($this->getReference->reference()); //service
 
     $em->flush();
 
@@ -146,7 +171,7 @@ class CommandesController extends AbstractController
         $session->remove('reference');
         $session->remove('commande'); */
 
-    $this->addFlash('success', 'Votre commande a été validée avec succès');
+      $this->addFlash('success', 'Votre commande est validée, un lien vient de vous être envoyé pour la finaliser');
     return $this->redirectToRoute('panier');
   }
 }

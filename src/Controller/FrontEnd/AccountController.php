@@ -9,11 +9,9 @@ use App\Form\UserAdressType;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
-use Symfony\Component\Mime\Message;
 use App\Form\FormAccount\ProfileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,6 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 
@@ -36,7 +35,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/connexion", name="account_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils, Security $security)
+    public function login(AuthenticationUtils $authenticationUtils)
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
 
@@ -45,8 +44,14 @@ class AccountController extends AbstractController
 
 
         $error = $authenticationUtils->getLastAuthenticationError();
+       
+         
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+        if($error) {
+            $this->addFlash('danger', 'Vous devez vous inscrire pour continuer.');
+            $this->redirectToRoute('account_login');
+        }
 
         return $this->render('account/login.html.twig', [
             'error' => $error,
@@ -238,11 +243,11 @@ class AccountController extends AbstractController
             $passwordConfirm = $passwordEncoder->encodePassword($user, $request->get('passwordConfirm'));
 
 
-            if ($request->get('hash') !== $request->get('passwordConfirm')) {
+            if ($request->get('password') !== $request->get('passwordConfirm')) {
                 $this->addFlash('warning', 'Les mots de passe ne sont pas identiques');
             } else {
-                $password = $passwordEncoder->encodePassword($user, $request->get('hash'));
-                $user->setHash($password);
+                $password = $passwordEncoder->encodePassword($user, $request->get('password'));
+                $user->setPassword($password);
                 $manager->flush();
                 $this->addFlash('success', 'Réinitialiation de votre mot de passe réussie !');
 

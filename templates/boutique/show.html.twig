@@ -2,7 +2,7 @@
 		{% block body %}
 
 
-			<div class="jumbotron" style="{% if boutique.photo %} background-image:url({{vich_uploader_asset(boutique.photo, 'imageFile') }}) {% endif %}">
+			<div class="jumbotron" style="{% if boutique.filename %} background-image:url({{vich_uploader_asset(boutique, 'imageFile') }}) {% endif %}">
 				<div class="container mt-4">
 					<h1>
 						{{boutique.title }}

@@ -1,12 +1,13 @@
 {% extends "base.html.twig" %}
 
-{% block title %} {{page.title}} {% endblock %}
+{% block title %} {% if page %} {{page.title}} {% endif %} {% endblock %}
 
 {% block body %}
  <div class="row-fluid">
+ {% if page.filename is defined %}
     <div class="jumbotron" style="background: url({{ vich_uploader_asset(page, 'imageFile')}});" ></div>
-         
-   
+ {% endif %}    
+ {% if page %}  
      
       <div class="col-sm-12 col-md-12 col-lg-12">
            <h1 class="mt-3">{{page.title }}</h1>
@@ -15,6 +16,7 @@
          <article class="p-4 w-100">{{ page.description|raw }}</article>
    
    </div>
+   {% endif %}
    </div>
 {% endblock %}
 

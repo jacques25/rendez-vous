@@ -24,7 +24,7 @@
             <tr>
                 <td>{{ page.id }}</td>
                 <td>{{ page.title }}</td>
-                <td class="des">{{ page.description|u.truncate(180, '...')|raw }}</td>
+             
                 <td>{{ page.slug }}</td>
                 <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td> <img src="{{vich_uploader_asset(page, 'imageFile')}}" alt="" width=150> </td>

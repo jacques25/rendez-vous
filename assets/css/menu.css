@@ -208,300 +208,56 @@ a {
     opacity: 1;
   }
 }
-/* RESPONSIVE */
-@media only screen and (max-width: 1138px) {
-  /* line 8, ../sass/responsive.scss */
-  body {
-    overflow-y: scroll;
-    font-size: 16px;
-    line-height: 1.4;
-    height: 100%;
-  }
+/* line 234, ../sass/menu.scss */
+.dropdown:hover .nav-panier-content {
+  display: block;
+  transition: slideIn 0.3s;
+}
 
-  /* line 15, ../sass/responsive.scss */
-  .site-pusher,
-  .site-container {
-    height: 100%;
-    margin-bottom: 40px;
-    width: 100%;
-  }
+/* line 240, ../sass/menu.scss */
+.nav-panier-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #8f725c;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-bottom: 1px solid #888;
+}
 
-  /* line 23, ../sass/responsive.scss */
-  .site-pusher {
-    -moz-transition-duration: 0.3s;
-    -o-transition-duration: 0.3s;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -moz-transform: translateX(0);
-    -ms-transform: translateX(0);
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
+/* line 252, ../sass/menu.scss */
+.nav-panier-content span {
+  text-decoration: none;
+  display: block;
+  min-width: 200px;
+  font-size: 12px;
+}
 
-  /* line 28, ../sass/responsive.scss */
-  .site-content {
-    position: relative;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    padding-top: 0;
-    width: 100%;
-    padding-bottom: 15%;
-  }
+/* line 258, ../sass/menu.scss */
+.sub-panier {
+  border-bottom: 1px solid #888;
+}
 
-  /* line 40, ../sass/responsive.scss */
-  .header {
-    position: static;
-    z-index: 10000;
-  }
+/* line 262, ../sass/menu.scss */
+.panier-float-left {
+  float: left;
+  padding: 15px 15px 0px;
+  position: relative;
+}
 
-  /* line 45, ../sass/responsive.scss */
-  .header__icon {
-    display: block;
-    position: relative;
-    float: left;
-    width: 50px;
-    height: 66px;
-    cursor: pointer;
-    color: #888;
-  }
-  /* line 54, ../sass/responsive.scss */
-  .header__icon:after {
-    content: '';
-    position: absolute;
-    display: block;
-    width: 1rem;
-    height: 0;
-    top: 16px;
-    left: 15px;
-    -moz-box-shadow: 0 10px 0 1px #fff, 0 16px 0 1px #fff, 0 22px 0 1px #fff;
-    -webkit-box-shadow: 0 10px 0 1px #fff, 0 16px 0 1px #fff, 0 22px 0 1px #fff;
-    box-shadow: 0 10px 0 1px #fff, 0 16px 0 1px #fff, 0 22px 0 1px #fff;
-  }
+/* line 268, ../sass/menu.scss */
+.panier-float-right {
+  text-align: center;
+  top: 0px;
+  margin: 10px;
+  line-height: 15px;
+}
 
-  /* line 68, ../sass/responsive.scss */
-  .menu {
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    top: 0;
-    width: 250px;
-    background-color: #8f725c;
-    height: 100%;
-    -moz-transform: translateX(-250px);
-    -ms-transform: translateX(-250px);
-    -webkit-transform: translateX(-250px);
-    transform: translateX(-250px);
-    -moz-transition-duration: 0.3s;
-    -o-transition-duration: 0.3s;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    z-index: 99;
-  }
-  /* line 81, ../sass/responsive.scss */
-  .menu .menu-left {
-    display: inline;
-    text-align: center;
-  }
-  /* line 86, ../sass/responsive.scss */
-  .menu .menu-left .menu-left .nav-hub {
-    text-align: center;
-    line-height: 5px;
-  }
-  /* line 91, ../sass/responsive.scss */
-  .menu .menu-left li {
-    line-height: 40px;
-    float: none;
-    display: block;
-    border-bottom: 1px solid #543521;
-  }
-  /* line 100, ../sass/responsive.scss */
-  .menu .menu-left a {
-    padding: 0;
-  }
-  /* line 106, ../sass/responsive.scss */
-  .menu .menu-right {
-    margin: 0;
-    text-align: center;
-    float: left;
-    width: 260px;
-  }
-  /* line 113, ../sass/responsive.scss */
-  .menu .menu-right .sub-user-right {
-    background-color: #543521;
-    width: 250px;
-    box-shadow: 1px 3px 5px 0px rgba(62, 47, 35, 0.71);
-    left: 24px;
-  }
-  /* line 123, ../sass/responsive.scss */
-  .menu .menu-right li {
-    width: 250px;
-    margin-left: -40px;
-    line-height: 40px;
-    border-bottom: 1px solid #543521;
-    position: relative;
-  }
-  /* line 132, ../sass/responsive.scss */
-  .menu .menu-right a {
-    width: 250px;
-    border-bottom: 1px solid #8f725c;
-    margin: 0;
-  }
-  /* line 138, ../sass/responsive.scss */
-  .menu .menu-right a:last-child {
-    border-bottom: none;
-  }
-  /* line 144, ../sass/responsive.scss */
-  .menu .nav-boutique {
-    margin-left: 0;
-    color: inherit;
-    background-color: #543521;
-    width: 250px;
-    z-index: 0;
-    text-align: center;
-    position: relative;
-    padding: 2px;
-    box-shadow: 1px 3px 5px 0px rgba(62, 47, 35, 0.71);
-  }
-  /* line 155, ../sass/responsive.scss */
-  .menu .nav-boutique li {
-    border-bottom: 1px solid #8f725c;
-  }
-  /* line 159, ../sass/responsive.scss */
-  .menu .nav-boutique li:last-child {
-    border-bottom: none;
-  }
-  /* line 165, ../sass/responsive.scss */
-  .menu .nav-produits {
-    color: inherit;
-    background-color: #543521;
-    width: 256px;
-    z-index: 0;
-    position: relative;
-    padding: 2px;
-    box-shadow: 1px 3px 5px 0px rgba(62, 47, 35, 0.71);
-  }
-  /* line 177, ../sass/responsive.scss */
-  .menu .nav-hub {
-    color: inherit;
-    background-color: #543521;
-    width: 250px;
-    z-index: 0;
-    text-align: center;
-    position: relative;
-    padding: 2px;
-    box-shadow: 1px 3px 5px 0px rgba(62, 47, 35, 0.71);
-  }
-  /* line 190, ../sass/responsive.scss */
-  .menu .nav-hub a {
-    color: #fff;
-    text-decoration: none;
-    text-align: center;
-    font-style: italic;
-    border-bottom: 1px solid #888;
-    width: 250px;
-    margin: 0;
-    padding: 8px 2px;
-  }
-  /* line 202, ../sass/responsive.scss */
-  .menu .nav-hub a:last-child {
-    border-bottom: none;
-  }
-  /* line 208, ../sass/responsive.scss */
-  .menu .nav-boutique li.has-sub div,
-  .menu .nav-hub li.has-sub div,
-  .menu .nav-produits li.has-sub div {
-    display: none;
-    color: inherit;
-    background-color: #8f725c;
-    z-index: 1000;
-  }
-  /* line 219, ../sass/responsive.scss */
-  .menu .nav-hub li.tap div,
-  .menu .nav-hub li.tap ul {
-    display: block;
-  }
-  /* line 224, ../sass/responsive.scss */
-  .menu .nav-hub li.tap div a,
-  .menu .nav-hub li.tap ul a {
-    border-bottom: 1px solid #543521;
-    text-align: center;
-  }
-  /* line 230, ../sass/responsive.scss */
-  .menu .nav-boutique li.tap div,
-  .menu .nav-produits li.tap div {
-    display: block;
-    height: auto;
-  }
-  /* line 238, ../sass/responsive.scss */
-  .menu .nav-boutique li.tap div a,
-  .menu .nav-produits li.tap div a {
-    border-bottom: 1px solid #543521;
-    text-align: center;
-  }
-  /* line 243, ../sass/responsive.scss */
-  .menu .nav-boutique li.tap div a:last-child,
-  .menu .nav-produits li.tap div a:last-child {
-    border-bottom: none;
-  }
-
-  /* line 251, ../sass/responsive.scss */
-  .table {
-    margin-left: -65px;
-    width: 200px;
-    display: inline;
-  }
-
-  /* line 256, ../sass/responsive.scss */
-  .table-thead td {
-    padding: 10px 0px 10px 0px !important;
-  }
-
-  /* line 259, ../sass/responsive.scss */
-  .table th {
-    width: 10%;
-  }
-
-  /* line 264, ../sass/responsive.scss */
-  .footer {
-    background: #8f725c;
-    width: 100%;
-    height: 90px;
-    bottom: 0;
-    left: 0;
-    position: relative !important;
-    color: #fff;
-    box-shadow: 0px -10px 50px -10px rgba(10, 133, 155, 0.8), 0px -10px 50px -10px rgba(80, 216, 216, 0.5);
-    text-align: center;
-    display: block;
-  }
-
-  /* line 280, ../sass/responsive.scss */
-  .with--sidebar .site-pusher {
-    -moz-transform: translateX(250px);
-    -ms-transform: translateX(250px);
-    -webkit-transform: translateX(250px);
-    transform: translateX(250px);
-  }
-  /* line 284, ../sass/responsive.scss */
-  .with--sidebar .site-cache {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-  }
-
-  /* line 297, ../sass/responsive.scss */
-  .table-panier table {
-    max-width: 400px;
-  }
-
-  /* line 301, ../sass/responsive.scss */
-  .table-font-size tr,
-  .table-tbody td {
-    font-size: 14px;
-  }
+/* line 275, ../sass/menu.scss */
+.footer-sub-panier {
+  position: relative;
+  bottom: 0;
+  font-size: 18px;
+  font-weight: bold;
 }

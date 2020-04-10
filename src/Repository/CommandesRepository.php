@@ -19,32 +19,25 @@ class CommandesRepository extends ServiceEntityRepository
         parent::__construct($registry, Commandes::class);
     }
 
-    // /**
-    //  * @return Commande[] Returns an array of Commande objects
-    //  */
-    /*
-    public function findByExampleField($value)
+   public function byFacture($user)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.user = :user')
+            ->andWhere('c.valider = 1')
+            ->andWhere('c.numero_commande != 0')
 
-    /*
-    public function findOneBySomeField($value): ?Commande
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->orderBy('c.id')
+            ->setParameter('user', $user);
+
+        return $qb->getQuery()->getResult();
     }
-    */
+
+    public function getCommandesCount()
+    {
+        return $this->createQueryBuilder('commandes')
+            ->select('COUNT(commandes.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

@@ -57,7 +57,7 @@ class Article
     /**
      * @var File|null
      * @Assert\Image(mimeTypes="image/*")
-     * @Vich\UploadableField(mapping="articles", fileNameProperty="filename")
+     * @Vich\UploadableField(mapping="articles_images", fileNameProperty="filename")
      *
      * @var File
      */

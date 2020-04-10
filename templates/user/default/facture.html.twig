@@ -1,4 +1,4 @@
-{% extends '::layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 		{% block body %}
 <div class="row mt-5">
@@ -9,19 +9,11 @@
 			<div class="row ">
 			
 				<div class="col-md-4 mb-3">
-					{% include 'UserBundle:Default:modulesUsed/utilisateursConnecte.html.twig' %}
-				
-					{% for flashMessage in app.session.flashbag.get('success' )%}
-						<div class="alert alert-success">
-							{{flashMessage }}
-						</div>
-					{% endfor %}
-
-					{% for flashMessage in app.session.flashbag.get('warning' )%}
-						<div class="alert alert-warning">
-							{{flashMessage }}
-						</div>
-					{% endfor %}
+			 
+                      {% for message in app.flashes('warning') %}
+                        <p> {{ message}} </p>
+                      {% endfor %}
+                  
 						</div>
 					<div class"col-md-8">
 					 <table class="table">
@@ -44,12 +36,8 @@
 
 
 							<tr scope="row">
-								<th>
-									Facture n°
-								</th>
-								<th>
-									Date
-								</th>
+								<th>Facture n°</th>
+								<th>Date</th>
 								
 							
 								{# {% if facture.commande.totalPromo is defined %}
@@ -58,12 +46,8 @@
 																																																																										               {% endif %} 
 																																																																										            #}
 
-								<th>
-									Total
-								</th>
-								<th>
-									Téléchargement
-								</th>
+								<th>	Total</th>
+								<th>Téléchargement</th>
 
 							</tr>
             </thead>
@@ -71,10 +55,10 @@
 							<tr scope="row">
 
 								<td>
-									{{facture.reference}}
+									{{facture.NumeroCommande}}
 								</td>
 								<td>
-									{{ facture.date|date('d/m/Y') }}
+									{{ facture.dateCommande|date('d/m/Y') }}
 								</td>
 							
 								{% if  facture.commande.totalPromo is defined and facture.commande.totalPromo is not null %}
@@ -95,7 +79,7 @@
 								</td>
 
 								<td>
-									<a class="mx-3" href="{{ path('facture-pdf',{'id': facture.id}) }}" target="_blank">
+									<a class="mx-3" href="{{ path('facture_pdf',{'id': facture.id}) }}" target="_blank">
 										<i class="fas fa-upload"></i>
 									</a>
 									<a href="{{ path('show_facture',{'id': facture.id}) }}" >

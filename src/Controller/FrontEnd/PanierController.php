@@ -3,15 +3,20 @@
 namespace App\Controller\FrontEnd;
 
 
+use App\Entity\Commandes;
 use App\Entity\UserAdress;
 use App\Form\UserAdressType;
-use App\Entity\Commandes;
+use Symfony\Component\Mime\Email;
 use App\Repository\OptionBijouRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class PanierController extends AbstractController
 {
@@ -21,18 +26,40 @@ class PanierController extends AbstractController
 
     $this->session = $session;
   }
-
-  public function menu(Request $request)
+  
+ 
+  public function menu(Request $request, OptionBijouRepository $optionBijouRepository)
   {
+   
     $session =  $request->getSession();
+       if (!$session->has('panier')) $session->set('panier', []);
+    
+    $result = [];
+    $panier = $session->get('panier');
+    $totalTTC = 0;
+    $items = $optionBijouRepository->findArray(array_keys($session->get('panier')));
+
+   
     if (!$session->has('panier')) {
       $items = 0;
       $this->redirectToRoute('app_homepage');
     } else {
-      $items = count($session->get('panier'));
+        $itemsCount = count($session->get('panier'));
+        foreach ($items as $item) {
+          $result['item'][$item->getId()] = array(
+          'quantite' => $panier[$item->getId()],
+          'reference' => $item->getReference(),
+          'prix' => $item->getPrix(),
+          'bijou'  => $item->getBijou()
+        );
+       $totalPrix = ($item->getPrix() * $panier[$item->getId()]);
+       $totalTTC += $totalPrix;
+        }
+         $result['totalCommande'] = $totalTTC;
+     return   $this->render('panier/menu.html.twig', ['itemsCount' => $itemsCount , 'result' => $result ]);
+      
     }
-
-    return $this->render('panier/menu.html.twig', ['items' => $items]);
+          return $this->render('panier/menu.html.twig', ['itemsCount' => $itemsCount]);
   }
 
 
@@ -114,8 +141,7 @@ class PanierController extends AbstractController
 
   public function livraison(Request $request)
   {
-    $role = ['ROLE_CLIENT'];
-
+    
     $user = $user = $this->container->get('security.token_storage')->getToken()->getUser();
     $userAddresss = new UserAdress();
     $form = $this->createForm(UserAdressType::class, $userAddresss);
@@ -125,7 +151,7 @@ class PanierController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
       $manager = $this->getDoctrine()->getManager();
 
-      $user->setRoles($role);
+      $user->addRole("ROLE_CLIENT");
       $userAddresss->setUser($user);
       $manager->persist($userAddresss);
       $manager->flush();
@@ -143,9 +169,10 @@ class PanierController extends AbstractController
    * @Route("/panier/validation", name="panier_validation", requirements={"user"="\d+"} )
    * 
    */
-  public function validation(Request $request)
+  public function validation(Request $request, MailerInterface $mailer)
   {
-
+   
+  
     if ($request === null) {
       $this->addFlash('warning', 'Votre panier est vide');
       $this->redirectToRoute('app_homepage');
@@ -153,12 +180,12 @@ class PanierController extends AbstractController
 
     if ($request->isMethod('POST')) {
       $this->setLivraisonOnSession($request);
-
+    
       $em = $this->getDoctrine()->getManager();
       $prepareCommande = $this->forward('App\Controller\FrontEnd\CommandesController:prepareCommande');
-
       $commande = $em->getRepository(Commandes::class)->find($prepareCommande->getContent());
       
+
       return $this->render('panier/validation.html.twig', [
         'commande' => $commande
 

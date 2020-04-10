@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    locale: fr
     app.path.produits_images: /uploads/images/produits
     app.path.bijoux_images: /uploads/images/bijoux
     app.path.boutiques_images: /uploads/images/boutiques
@@ -34,5 +35,18 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
+    getTemplate:
+        class: App\Service\getTemplating
+        arguments: ["@service_container"]
+    
+    setNewfacture:
+        class: App\Service\GetFacture
+        arguments: ["@service_container"]
+    
+    app.security.voter.edit_commande:
+        class: App\Security\Voter\EditCommande
+        tags: 
+            - { name: securyty.voter }
     
     

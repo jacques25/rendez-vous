@@ -1,4 +1,5 @@
 twig:
+    
     default_path: '%kernel.project_dir%/templates'
     form_themes:
         - 'bootstrap_4_layout.html.twig'
@@ -8,3 +9,10 @@ twig:
     
     globals:
        logo_site: '/build/img/rdv.png'
+       site_name: 'Rendez vous avec soi'
+       site_street:  3, Rue Robespierre
+       site_cp: 26500
+       site_city: Bourg lès Valence
+       contact_email: francoise.forite@cegetel.net
+       telephone_fixe:   04 75 42 91 26
+       telephone_mobile: 07 81 68 40 26

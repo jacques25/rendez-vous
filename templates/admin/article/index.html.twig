@@ -23,7 +23,7 @@
                 <td>{{ article.id }}</td>
                 <td>{{ article.title }}</td>
                
-                <td>{{article.description|u.truncate(380)|raw}}</td>
+              
            
                 <td>
                 {% if article.filename %}
@@ -32,7 +32,8 @@
                 {% endif %} 
                   </td>
                   <td>
-                    <a class="btn btn-primary" href="{{ path('admin.article.edit', {'id': article.id}) }}">edit</a>
+                    <a class="btn btn-primary" href="{{ path('admin.article.edit', {'id': article.id}) }}"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-danger" href="{{ path('admin.article.delete', {'id': article.id}) }}"><i class="fas fa-trash"></i></a>
                   </td>
                 </tr>
                 {% else %}

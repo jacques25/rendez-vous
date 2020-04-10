@@ -3,6 +3,7 @@
 
 {% block body %}
 
+	
  
 <div class="row">
    <div class="col-12 mt-5">
@@ -19,35 +20,9 @@
    </div>
 </div>
 <div class="row">
-	 <div class="col-4 livraison"> 
-        <div class="col-10 mb-4">   
-			   <h4 class="livraison">Adresse de livraison</h4>
-							
-							
-								{{commande.commande.livraison.firstname}}
-								{{commande.commande.livraison.lastname}}
-						
-								{{commande.commande.livraison.address}}
-						
-								{{commande.commande.livraison.cp}}
-								{{commande.commande.livraison.city}}
-        </div>
-				<div class="col-10">
-										
-				<h4 class="livraison">Adresse de facturation</h4>
-						
-					{{commande.commande.facturation.firstname}}
-					{{commande.commande.facturation.lastname}}
-				
-					{{commande.commande.facturation.address}}
-			
-					{{commande.commande.facturation.cp}}
-					{{commande.commande.facturation.city}}	
-					</div>
-</div>
-			<div class="col-8">
+<div class="col-12">
 		
-							<table class="table text-center">
+							<table class="table-fluid text-center">
 
 								<thead class="table-thead">
 									<tr>
@@ -81,29 +56,66 @@
 				   			
                            	  {% endfor %}
                            <tr>
-													  <td></td>
-                             <td class="Prix-total"><strong>
-                               <dt>{{'Total'|upper}} : {{ commande.commande.totalCommande }}€</dt>
-				                  </strong>
-                              </td>
-			                  </tr>	
-								</tbody>
+									
+									<tfoot>		
+									<tr>
+                           <th ></th> 
+													 <th> </th> 
+													 <th> </th>
+													 <th> </th>
+													 <th> </th>
+													 <th class="">{{'Total'|upper}} {{ commande.commande.totalCommande }}€</th>
+				                </tr>  
+                  </tfoot>           
+			                  
+								
 							</table>
 
 
 						
-			</div>
-   </div> 
+		</div>
+</div>
+<div class="row">
+	 <div class="col-3 livraison  bg-light"> 
+        <div class="col-12 mb-3">   
+			   <h4>Adresse de livraison</h4>
+							
+							
+								{{commande.commande.livraison.firstname}}
+								{{commande.commande.livraison.lastname}}
+						
+								{{commande.commande.livraison.address}}
+						
+								{{commande.commande.livraison.cp}}
+								{{commande.commande.livraison.city}}
+							<a href="{{path('account_profile')}}" class="btn btn-warning"> Modifier votre adresse</a>
+        </div>
+				
+				<div class="col-12">
+										
+				 <h4>Adresse de facturation</h4>
+						
+					{{commande.commande.facturation.firstname}}
+					{{commande.commande.facturation.lastname}}
+				
+					{{commande.commande.facturation.address}}
+			
+					{{commande.commande.facturation.cp}}
+					{{commande.commande.facturation.city}}	
+					<a href="{{path('panier_validation')}}" class="btn btn-warning"> Modifier votre adresse</a>
+				</div>
+			
+    </div>
+</div> 
 
-	
-<div class="flex-row">
+<div class="row mt-5">
 					
 		<a href="{{path('app_homepage')}}" class="btn btn-info btn-lg m-2 ">
 		<i class="fa fa-chevron-left"></i> Poursuivre vos achats
 		</a>
 						
-		<a href="#" class="btn btn-success btn-lg m-2 pull-right">
-			<i class="far fa-credit-card"></i> Payer
+		<a href="{{path('validation_commande', {'id': commande.id })}}" class="btn btn-success btn-lg m-2 pull-right">
+			<img src="{{asset('/build/img/commande-blanc.png')}}" width="30"> Commander
 		</a>
 						
 </div>

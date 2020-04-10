@@ -46,7 +46,7 @@ class Produit
     /**
      * @var File|null
      * @Assert\Image(mimeTypes="image/*")
-     * @Vich\UploadableField(mapping="produits", fileNameProperty="filename")
+     * @Vich\UploadableField(mapping="produits_images", fileNameProperty="filename")
      *
      * @var File
      */

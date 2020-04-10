@@ -3,14 +3,14 @@
 {% block title %}PopupTaille index{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>PopupTaille index</h1>
 
-    <table class="table">
+    <table class="table table-fluid">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>Popup</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,10 +19,9 @@
             <tr>
                 <td>{{ popup_taille.id }}</td>
                 <td>{{ popup_taille.title }}</td>
-                <td>{{ popup_taille.popup|raw }}</td>
                 <td>
-                    <a href="{{ path('admin_popup_taille_show', {'id': popup_taille.id}) }}">show</a>
-                    <a href="{{ path('admin_popup_taille_edit', {'id': popup_taille.id}) }}">edit</a>
+                    <a href="{{ path('admin_popup_taille_edit', {'id': popup_taille.id}) }}"><i class="fa fa-edit"></i></a>
+                    <a href="{{ path('admin_popup_taille_delete', {'id': popup_taille.id}) }}"><i class="fas fa-delete"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +32,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_popup_taille_new') }}">Create new</a>
+    <a class="btn btn-info" href="{{ path('admin_popup_taille_new') }}"><i class="fa fa-plus"></i> Nouveau</a>
+
+
 {% endblock %}

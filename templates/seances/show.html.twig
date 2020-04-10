@@ -6,11 +6,17 @@
 
 		{% block body %}
 
-		  <div class="row">
+		  <div class="row content-page">
+			{% if seance.filename is defined %}
+       <div class="jumbotron" style="background:url({{ vich_uploader_asset(seance, 'imageFile')}}) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+     background-size: cover;">   </div>
+      
+      {% endif %} 
 
-			    <img class="images-page img-fluid" src="{{vich_uploader_asset(seance, 'imageFile')}}" alt={{seance.filename}}> 
-			</div>
-			<div class="row content-page">
+		
 			    <div class="col-md-12">
 
 						  <h1 class="mt-3"> {{seance.title }}</h1>

@@ -16,7 +16,8 @@
   .site-container {
     height: 100%;
     margin-bottom: 40px;
-    width: 100%;
+    width: 100%; 
+     position:relative;
   }
 
 
@@ -26,8 +27,8 @@
   }
 
   .site-content {
-    position: relative;
-
+  
+    height: 100%;
     right: 0;
     left: 0;
     bottom: 0;
@@ -118,7 +119,10 @@
 
 
       }
-
+      .nav-panier-content{
+        left: 0;
+        background-color: #543521;
+      }
 
       li {
         width: 250px;
@@ -260,19 +264,23 @@
     width:10%;
    
   }
-
+  .table-fluid{
+    margin-left: -25px;
+  }
+  .livraison {
+    min-width:400px;
+  }
   .footer {
     background: #8f725c;
     width: 100%;
     height: 90px;
     bottom: 0;
     left: 0;
-    position: relative !important;
+    
     color: #fff;
     box-shadow: 0px -10px 50px -10px rgba(10, 133, 155, 0.8),
       0px -10px 50px -10px rgba(80, 216, 216, 0.5);
     text-align: center;
-    display: block;
   }
 
   .with--sidebar {
@@ -303,4 +311,60 @@
     {
     font-size: 14px;
   }
+
+
+
+  .modal {
+    height: 100%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+.modal-content-body {
+    padding: 0%;
+    margin-top:20% !important;
+    width: 250px !important;
+    height:auto;
+}
+
+.modal {
+  height: 100%;
+}
+}
+
+@media only screen and (max-width: 900px) {
+.modal-content-body {
+    padding: 0%;
+    margin-top:20% !important;
+    width: 350px !important;
+    height:auto;
+}
+
+.modal {
+  height: 100%;
+}
+
+}
+
+@media only screen and (max-width:1100px){
+select#select-taille{
+  margin-bottom: 40px;
+}
+.btn-panier  {
+  
+    position: relative;
+    margin-left: -3px !important;
+
+}
+
+article:last-child  {
+  
+   margin-bottom: 100%;
+}
+.img-body {
+ float:none !important;
+ position:relative;
+ width:100% !important;
+}
+
 }

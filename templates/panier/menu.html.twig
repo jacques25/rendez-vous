@@ -1,21 +1,61 @@
  
  
- {% if items == 0 %}
+ {% if itemsCount == 0  %}
 
   
        <a  href="{{path('app_homepage')}}">
 
     <i class="fa fa-shopping-basket"></i> vide</a>
-
-  {% elseif  items != 1 %}
- 
-          <a  href="{{ path('panier')}}"> <i class="fas fa-shopping-basket"></i> {{ items }} articles </a> 
-       
-        {% else %} 
   
-         <a  href="{{ path('panier')}}"> <i class="fas fa-shopping-basket"></i> 1 article </a>
+  {% elseif  itemsCount != 1 %} 
+     
+      <a  class="nav-panier" href="{{ path('panier')}}"> <i class="fas fa-shopping-basket"></i> {{ itemsCount }} articles </a> 
+        <div class="nav-panier-content">  
+          
+            {% for link in result.item %}
+            <div class="sub-panier">
+               <div class="panier-float-left">
+                 <img src="{{vich_uploader_asset(link.bijou, 'imageFile') }}" width="30">
+               </div>
+               <div class="panier-float-right">
+                  <span> Quantité  {{link.quantite}}</span> 
+                  <span> Référence {{ link.reference}}</span>
+                  <span> Prix Unitaire {{ link.prix}} €</span>
+               </div>
+             
+            </div>
+            {% endfor %} 
+            <div class="footer-sub-panier">
+              <span> Total Commande: {{result.totalCommande}} €</span>
+            </div>
+        </div>
+   
+  {% else %} 
+       
+        <a  class="nav-panier" href="{{ path('panier')}}"> <i class="fas fa-shopping-basket"></i> 1 article </a>
+  
+               
+            <div  class="nav-panier-content">  
+               {% for link in result.item %}
+            <div class="sub-panier">
+               <div class="panier-float-left">
+                 <img src="{{vich_uploader_asset(link.bijou, 'imageFile') }}" width="30">
+               </div>
+               <div class="panier-float-right">
+                  <span> Quantité  {{link.quantite}}</span> 
+                  <span> Référence {{ link.reference}}</span>
+                  <span> Prix Unitaire {{ link.prix}} €</span>
+               </div>
+             
+            </div>
+            {% endfor %} 
+            <div class="footer-sub-panier">
+              <span> Total Commande: {{result.totalCommande}} €</span>
+            </div>
+            </div>  
+          
         
-      {% endif %}
+  {% endif %}
       
   
 

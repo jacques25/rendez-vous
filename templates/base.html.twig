@@ -48,11 +48,13 @@
 								{% endblock %}
 						
 						</div>	
-  {% include 'partials/footer.html.twig' %}
-				 <div class="site-cache" id="site-cache"></div>	
-		     
-				</div>
+  <div class="site-cache" id="site-cache"></div>	
+				</div> 
+			
+		     {% include 'partials/footer.html.twig' %}
+				
 	      </div>
+					
 				{% block javascripts %}
 
 					<script src="{{asset('/build/fontawesome/js/all.js')}}"></script>

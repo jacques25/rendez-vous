@@ -6,9 +6,9 @@ use App\Entity\Produit;
 use App\Form\PhotoType;
 use App\Entity\Boutique;
 use App\Entity\Category;
+use Jacques\ImageBundle\Form\Type\ImageType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
-use Twig\Profiler\Node\EnterProfileNode;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,7 +23,7 @@ class BoutiqueType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('photo', PhotoType::class, [
+            ->add('imageFile', ImageType::class, [
                 'required' => false,
                 'label' => false,
             ])

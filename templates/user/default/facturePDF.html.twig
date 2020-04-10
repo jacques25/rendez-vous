@@ -1,49 +1,97 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTDXHTML1.0Transitional//EN" "http//www.w3.org/TR/xhtml1/DTD/xhtlm1-transitional.dtd">
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-    <title>Facture</title>
-  </head>
+<page  backtop="0mm"  backbottom= "0mm" backleft ="5mm" backright= "5mm">  
+  <page_header>
+          <table class="header">
+          <tr>
+          <td width="360"> <img class="img-left" src="https://localhost:8000/build/img/rdv.png">
+           <h2>Rendez-vous avec soi</h2>
+           
+          </td>
+          <td width="180"></td>
+          <td width="180"></td>
+          
+           <td width="180">page: [[page_nb]]</td>
+         </tr>
+         </table>
+
+          <table> 
+        <tr>
+            <td width="360">
+             <h4>Commande n°  {{ facture.NumeroCommande }}   du <span> {{facture.DateCommande|date('d M Y')  }}</span> </h4>
+            </td>
+            <td width="180"></td>
+            <td width="180">
+
+           
+      
+              <address id="coordonnes">
+               <p class="address-top"> <em>{{facture.commande.facturation.lastname }}</em>
+                <em>{{facture.commande.facturation.firstname }}</em></p>
+            
+               <p class="address-bottom"><em>{{facture.commande.facturation.address }}</em>
+               <em>{{facture.commande.facturation.cp }}</em>
+                <em>{{facture.commande.facturation.city }}</em>
+               <em>{{facture.commande.facturation.country }}</em></p>
+              </address>
+            </td>
+        </tr>
+       </table>
+  </page_header>
+       
+        
+  
+  <page_footer>
+  
+          <table class="footer_pdf">
+          <tr class="footer-tr">
+          <td width="180">
+           <img class="img" src="https://localhost:8000/build/img/rdv.png" width="30">
+          </td>
+        
+          <td width="180">
+           <em><img class="img-left" src="https://localhost:8000/build/img/email-blanc.png" width="14" style="margin-right:5px;"> {{contact_email}}</em>
+
+           <em> <img class="img-left" src="https://localhost:8000/build/img/adresse-blanc.png" width="14" style="margin-right:5px;"> 
+             {{site_street}} {{site_cp}} {{site_city}}</em>
+          
+          </td>  
+          <td width="180"></td>
+          <td  width="180">
+          
+          
+           <em class="telephone_fixe"> <img class="img-left" src="https://localhost:8000/build/img/fixe-blanc.png" width="14" style="margin-right:5px;">{{telephone_fixe}}
+           </em>
+
+
+           <em><img class="img-left" src="https://localhost:8000/build/img/mobile-blanc.png" width="14" style="margin-right:5px;">
+               {{telephone_mobile}}</em> 
+
+          </td>
+          
+          
+          </tr>
+
+          </table>
+
+    
+  </page_footer> 
+
   <style>
     
-    
-    .main {
-      width:100%;
-      background-color: #c4f2f2;
-      top:0;
-      left:0;
-      padding:10px;
+    .header {
+      border-bottom: 1px solid #888;
+      position: relative;
+      background-color: #8f725c ;
+      height: 60px;
+      width:1250px;
+      left: -28px;
+      box-shadow: 0px 2px 0px 2px #ddd;
     }
-    .header h1 {
-      color: #8f725c;
-      font-size: 24px;
+    .header h2 {
+      color: #fff;
+      font-size: 18px;
       display: block;
       position: relative;
-      margin-top: 18px;
       margin-right: -18px;
-    }
-
-    .center {
-      text-align: center;
-    }
-
-    .color {
-      color: #000;
-      font-weight: 900;
-      font-size: 14px;
-    }
-
-    .strong {
-      font-weight: bold;
-    }
-    .min {
-      font-size: 10px;
-    }
-    .telephone_fixe:before {
-
-      content: "\2706";
-
-
     }
 
     .header img {
@@ -55,66 +103,72 @@
       float: left;
       margin: 10px;
     }
-
-    ul#coordonnes {
+     .img {
+      position: relative;
+      top: 30px;
+      left: 30px;
+      width: 30px;
+      height: 30px;
       float: left;
-      margin-top: -68px;
-      margin-left: 400px;
+      margin: 10px;
+     }
+    #coordonnes {
+      float: right;
+      position:relative;
       list-style: none;
-      font-size: 18px;
-      text-transform: uppercase;
     }
 
-    ul#coordonnes li {
-      height: 20px;
+    .titre {
+      top: 130px;
+      left: 140px;
+      
+      font-size: 20px;
+      display: block;
+      line-height: 25px;
+      position: relative;
     }
-
-    table {
-      border-bottom: 2px #5c6eef;
-    }
+    
     table#enTete {
-      position: absolute;
+      position: relative;
       top: 80px;
       left: 20px;
       text-align: center;
       border-bottom: none;
     }
 
-    table#enTete h1 {
-      color: #666;
-      font-weight: bold;
-      font-size: 20px;
-      margin-top: 50px;
-      margin-left: 20px;
-
+  
+    .corps-body {
+      padding-top:55px;
+      position:absolute;
     }
-
-    .titre {
+   
+    .table-commande {
       margin-top: 30px;
-      margin-left: 140px;
-
-      display: block;
-    }
-
-    table#entity {
-      /*float:left;*/
-      margin-top: 30px;
+      width:1200px;
       text-align: center;
+      border: 1px solid #23a2b8;
     }
 
-    table#entity td {
-      height: 45px;
+   .bg-tr {
+      background-color: #23a2b8;
+      position: relative;
+      height:10px
+    }
+    .bg-tr td {
+      color: #fff;
+    }
+      
+    .table-commande td {
+      padding:10px;
 
     }
+
 
     table#total {
-      float: right;
-      margin-left: 480px;
-      border-bottom: 2px solid #5c6eef;
-      border-left: 2px solid #5c6eef;
-      border-right: 2px solid #5c6eef;
+     
+      margin-left: 580px;
       margin-top: 0;
-
+     position: relative;
     }
 
     table#total_promo {
@@ -137,23 +191,21 @@
       margin-left: 435px;
     }
 
-    #footer_pdf {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 60px;
-      margin-bottom: -8px;
+    .footer_pdf {
+      width:1250px;
+      height: 30px;
+      position:relative;
+      margin-bottom:0px;
       color: #fff;
-      padding: 10px;
-      font-size: 16px;
-      background-color: #5c6eef;
+      background-color: #8f725c;
+      left: -28px;
+      padding:0px 25px 25px 25px;
+     
     }
-    #footer_pdf p {
-      line-height: 2px;
+    .footer_tr {
+      padding: 10px 0px 0px 0px;
     }
-    #footer_pdf h3 {
-      line-height: 2px;
-    }
+
     .float-right {
       float: right;
       text-decoration: none;
@@ -162,100 +214,51 @@
       position: relative;
     }
 
-    .float-left {
-      float: left;
-      width: 50%;
-      display: block;
-      position: relative;
-    }
+    
     .img-left {
       float: left;
     }
+    .address-top {
+      padding-top: 55px;
+      margin-bottom:-10px;
+    }
+    .address-bottom{
+      top: 0;
+    }
+
+
   </style>
-  <body>
-    <div class="main">
-      <div class="header">
-        <img class="img-left" src="uploads/rendez-vous.png">
-        <h1>Rendez-vous avec soi</h1>
-      </div>
-      <table id="entete">
-        <tr>
-          <td colspan="1"></td>
-          <td colspan="1">
-            <h1>Facture</h1>
-          </td>
-          <td colspan="1"></td>
-        </tr>
-        <tr class="">
-          <td height="20" width="60">
-            Page
-          </td>
-          <td width="100">
-            Date
-          </td>
-          <td width="80">
-            Ref
-          </td>
-        </tr>
-        <tr>
-          <td class="color">[[page_nb]]</td>
-          <td class="color">
-            {{facture.date|date('d-m-Y') }}</td>
-          <td class="color">
-            {{ facture.reference }}</td>
-        </tr>
-      </table>
-      <ul id="coordonnes">
-        <li>
-          {{facture.commande.facturation.lastname }}
-          {{facture.commande.facturation.firstname }}</li>
-        <li>
-          {{facture.commande.facturation.address }}</li>
-        <li>{{facture.commande.facturation.cp }}
-          {{facture.commande.facturation.city }}
-          {{facture.commande.facturation.country }}</li>
-      </ul>
+ 
+
+    <div class="corps-body">
+       
+      
+      {% if facture.commande.optionBijou is defined and facture.commande.optionBijou is not null %}
+        <h5 class="titre">Articles</h5>
 
 
-      {% if facture.commande.bijou is defined and facture.commande.bijou is not null %}
-        <h2 class="titre">
-          Articles
-        </h2>
-
-
-        <table id="entity">
-
-
-          <tr>
-            <td width="180">
-              DESIGNATION</td>
-            <td width="180">
-              QUANTITE</td>
-            <td width="180">
-              TAILLE
-            </td> <td width="180">
-              P.U - HT</td>
-            <td width="180">
-              MONTANT HT</td>
-            <td></td>
-          </tr>
-
-          {% for bijou in facture.commande.bijou  %}
+        <table class="table-commande">
+          <thead>
+           <tr class="bg-tr">
+             <td width="110"> Réference</td>
+             <td width="110">Quantité</td>
+             <td width="110">taille</td> 
+             <td width="110">P.U </td>
+             <td width="110">Total</td>
+             
+           </tr>
+          </thead>
+          {% for option in facture.commande.optionBijou  %}
+           <tbody>
+         
             <tr>
-              <td class="color">{{bijou.title|upper}} - {{ bijou.reference }}</td>
-              <td class="color">
-                {{ bijou.quantite }}
-              </td>
-               <td class="color">
-               {% for taille in bijou.taille %}
-                {{ taille }}
-                {% endfor %}
-              </td>
-              <td class="color">{{ bijou.prix }}</td>
-              <td class="color">{{ bijou.prix* bijou.quantite }}</td>
-
-
+              <td class="color">{{ option.reference }}</td>
+              <td class="color"> {{ option.quantite }} </td>
+              <td class="color"> {{ option.taille }}</td>
+              <td class="color">{{ option.prix }}</td>
+              <td class="color">{{ option.prix* option.quantite }}</td>
             </tr>
+            </tbody>
           {% endfor %}
         </table>
 
@@ -263,18 +266,16 @@
          
          
           <tr>
-            <td width="150">
+            <td width="90">
               TOTAL TTC</td>
-            <td class="color" width="60">
-              {{facture.commande.totalCommande }}
-              €</td>
+            <td class="color" width="40">{{facture.commande.totalCommande }} €</td>
           </tr>
         </table>
 
 
       {% endif %}
 
-      {% if facture.commande.promo is defined and facture.commande.promo is not null %}
+     {#  {% if facture.commande.promo is defined and facture.commande.promo is not null %}
         <h2 class="titre">
           Articles en promotion</h2>
 
@@ -355,33 +356,7 @@
               €</td>
           </tr>
         </table>
-      {% endif %}
+      {% endif %} #}   
+    </div> 
+ </page>
 
-       <div id="footer_pdf">
-
-      <div class="float-left">
-        <h3>{{site_name}}</h3>
-        <p><i class="fas fa-email"></i> {{mail_contact}}</p>
-
-
-        <p>{{rue}}
-          {{cp}}
-          {{ville}}</p>
-
-
-      </div>
-
-      <div class="float-right">
-        <p class="telephone_fixe">{{telephone_fixe}}</p>
-
-
-        <p>
-          <i class="fas fa-mobile-alt"></i>
-          {{telephone_mobile}}</p>
-
-      </div>
-    </div>
-    </div>
-   
-  </body>
-</html>

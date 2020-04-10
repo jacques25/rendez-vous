@@ -5,10 +5,8 @@ namespace App\Controller\FrontEnd\User;
 use App\Entity\User;
 
 use Symfony\Component\Mime\Email;
+
 use App\Form\FormAccount\RegistrationType;
-use App\Service\MessageGenerator;
-use Swift_Mailer;
-use Swift_Message;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mailer\Transport\Smtp\Auth\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
@@ -41,7 +38,7 @@ class RegistrationController extends AbstractController
     AuthenticationUtils $authenticationUtils,
     UserPasswordEncoderInterface $encoder,
     TokenGeneratorInterface $tokenGenerator,
-    Swift_Mailer $mailer
+    MailerInterface $mailer
   ): Response {
     $user = $authenticationUtils->getLastUsername();
     $user = new User();
@@ -63,11 +60,11 @@ class RegistrationController extends AbstractController
       $email = $user->getEmail();
       $username = $user->getLastName();
       $url = $this->generateUrl('confirm_account', array('email' => $email, 'token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
-      $mail = (new Swift_Message())
-        ->setFrom('admin@rvas.fr')
-        ->setTo($email)
-        ->setSubject("Lien de vérification d'inscription")
-        ->setBody(
+      $mail = (new Email())
+        ->from('admin@rvas.fr')
+        ->to($email)
+        ->subject("Lien de vérification d'inscription")
+        ->text(
           ' Bonjour ' . $username .
             ' Voici le lien pour confirmer votre inscription: <a href="' . $url . ' "> ' . $url . '</a>',
           'text/html'
@@ -100,7 +97,7 @@ class RegistrationController extends AbstractController
     $tokenExist = $user->getConfirmToken();
     if ($token === $tokenExist) {
       $user->setConfirmToken(null);
-      $user->setEnabled(false);
+      $user->setEnabled(true);
       $em->persist($user);
       $em->flush();
       $this->addFlash('success', "Votre compte est activé");

@@ -52,7 +52,7 @@ class User implements UserInterface, Serializable
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json_array")
      */
     private $roles = [];
 
@@ -136,7 +136,7 @@ class User implements UserInterface, Serializable
 
     public function __construct()
     {
-        $this->enabled = true;
+        $this->enabled = false;
 
         $this->addresses = new ArrayCollection();
         $this->commandes = new ArrayCollection();
@@ -257,11 +257,15 @@ class User implements UserInterface, Serializable
      * @see UserInterface 
      
      */
-    public function getRoles(): array
+    public function getRoles()
     {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
+       $tmpRoles = $this->roles;
+     
+      if(in_array('ROLE_USER', $tmpRoles) === false ){
+          $tmpRoles[] = 'ROLE_USER';
+      }
+
+      return $tmpRoles;
     }
 
     public function setRoles(array $roles): self
@@ -269,6 +273,11 @@ class User implements UserInterface, Serializable
         $this->roles = $roles;
         return $this;
     }
+
+    function addRole($role) {
+        $this->roles[] = $role;
+    }
+   
 
 
 
@@ -413,14 +422,14 @@ class User implements UserInterface, Serializable
     }
 
     /**
-     * @return Collection|Commande[]
+     * @return Collection|Commandes[]
      */
     public function getCommandes(): Collection
     {
         return $this->commandes;
     }
 
-    public function addCommande(Commande $commande): self
+    public function addCommande(Commandes $commande): self
     {
         if (!$this->commandes->contains($commande)) {
             $this->commandes[] = $commande;
@@ -430,7 +439,7 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
-    public function removeCommande(Commande $commande): self
+    public function removeCommande(Commandes $commande): self
     {
         if ($this->commandes->contains($commande)) {
             $this->commandes->removeElement($commande);
@@ -442,4 +451,6 @@ class User implements UserInterface, Serializable
 
         return $this;
     }
+
+   
 }

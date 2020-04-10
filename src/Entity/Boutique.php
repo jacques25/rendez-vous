@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BoutiqueRepository")
  * @UniqueEntity("title")
+ * @Vich\Uploadable()
  */
 class Boutique
 {
@@ -30,10 +34,19 @@ class Boutique
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Photo", cascade={"persist", "remove"})
+     /**
+     * @ORM\Column(type="string" , length=255, nullable=true)
      */
-    private $photo;
+    private $filename;
+
+    /**
+     * @var File|null
+     * @Assert\Image(mimeTypes="image/*")
+     * @Vich\UploadableField(mapping="boutiques_images", fileNameProperty="filename")
+     *
+     * @var File
+     */
+    private $imageFile;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="boutiques")
@@ -134,28 +147,7 @@ class Boutique
         return $this;
     }
 
-    /**
-     * Get the value of photo.
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
-     * Set the value of photo.
-     *
-     * @return self
-     */
-    public function setPhoto($photo)
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-
-
+  
     /**
      * @return Collection|Bijou[]
      */
@@ -236,5 +228,40 @@ class Boutique
     public function getProduit(): Collection
     {
         return $this->produit;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(?string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile(?File $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
     }
 }

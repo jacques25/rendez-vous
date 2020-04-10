@@ -2,24 +2,24 @@ vich_uploader:
     db_driver: orm
 
     mappings:
-        produits:
+        produits_images:
             uri_prefix: /images/produits
             upload_destination: '%kernel.project_dir%/public/images/produits'
-        bijoux:
+        bijoux_images:
             uri_prefix: /images/bijoux
             upload_destination: '%kernel.project_dir%/public/images/bijoux'
-        boutiques:
+        boutiques_images:
             uri_prefix: /images/boutiques
             upload_destination: '%kernel.project_dir%/public/images/boutiques'
         
-        articles:
+        articles_images:
             uri_prefix: /images/articles
             upload_destination: '%kernel.project_dir%/public/images/articles'
-        pages:
+        pages_images:
             uri_prefix: /images/pages
             upload_destination: '%kernel.project_dir%/public/images/pages'
         
-        photos:
+        photos_images:
             uri_prefix: /images/photos
             upload_destination: '%kernel.project_dir%/public/images/photos'
         

@@ -51,7 +51,7 @@ class Bijou
     /**
      * @var File|null
      * @Assert\Image(mimeTypes="image/*")
-     * @Vich\UploadableField(mapping="bijoux", fileNameProperty="filename")
+     * @Vich\UploadableField(mapping="bijoux_images", fileNameProperty="filename")
      *
      * @var File
      */

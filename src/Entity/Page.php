@@ -54,7 +54,7 @@ class Page
     /**
      * @var File|null
      * @Assert\Image(mimeTypes="image/*")
-     * @Vich\UploadableField(mapping="pages", fileNameProperty="filename")
+     * @Vich\UploadableField(mapping="pages_images", fileNameProperty="filename")
      *
      * @var File
      */

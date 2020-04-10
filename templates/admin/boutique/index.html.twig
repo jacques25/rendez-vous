@@ -31,8 +31,8 @@
         <td>
           {{ boutique.description }}</td>
         <td>
-          {% if boutique.photo %}
-          <img src="{{ vich_uploader_asset(boutique.photo, 'imageFile')}}" width="100">
+          {% if boutique.filename %}
+          <img src="{{ vich_uploader_asset(boutique, 'imageFile')}}" width="100">
           {% endif %}
           </td>
         <td>

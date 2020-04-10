@@ -1,47 +1,33 @@
-{% extends '::layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 		{% block body %}
 
+			
 			<div class="row flex-row mt-5">
-
-				<div class=" col-8 mb-4">
-					<img class="img-rounded float-left" src="{{asset('uploads/rendez-vous.png')}}">
-					<h2 class="logo">
-						Rendez-vous avec soi
-					</h2>
-				</div>
-			</div>
-
-			<div class="row flex-row">
 
 
 				<div class="col-6">
-					<h2>
-						Facture
-					</h2>
+					<h1>Commande  </h1>
+					<p class="">Date: 	{{facture.dateCommande|date('d-m-Y') }}	</p>
 					<p class="">
-						Date:
-						{{facture.date|date('d-m-Y') }}
-					</p>
-					<p class="">
-						Ref:
-						{{ facture.reference }}
+						Numero de commande:
+						{{ facture.numeroCommande }}
 					</p>
 				</div>
 				<div class="col-6 center">
-					<h2>
-						Adresse
-					</h2>
+					<h1>
+						Adresse Client
+					</h1>
 
-					<p class="nav-link">
+					<p class="">
 						{{facture.commande.facturation.lastname }}
 						{{facture.commande.facturation.firstname }}
 					</p>
-					<p class="nav-link">
+					<p class="">
 
 						{{facture.commande.facturation.address }}
 					</p>
-					<p class="nav-link">
+					<p class="">
 						{{facture.commande.facturation.cp }}
 
 						{{facture.commande.facturation.city }}
@@ -52,27 +38,28 @@
 				</div>
 			</div>
 
-			<div class="row flex-row">
+			<div class="row">
 
-				{% if facture.commande.bijou is defined and facture.commande.bijou is not null %}
+				{% if facture.commande.optionBijou is defined and facture.commande.optionBijou is not null %}
+       
+					<table class="table-fluid">
 
 
-					<table class="mt-4 table" id="entity">
-
-
-						<thead>
+						<thead class="table-thead">
 							<tr>
 								<th>
-									ARTICLES
+								 {{'réference'|upper}}
 								</th>
 								<th>
 									QUANTITE
 								</th>
-								{% if facture.commande.bijou is not null %}
+										{% for option in facture.commande.optionBijou  %}
+								{% if option.taille is not null %}
 									<th>
 										TAILLE
 									</th>
 								{% endif %}
+								{% endfor %}
 								<th>
 									P.U
 								</th>
@@ -80,32 +67,40 @@
 								<th>
 									MONTANT TTC
 								</th>
+								<th> {{'téléchargement'|upper }}</th>
 							</tr>
 						</thead>
-						<tbody>
-							{% for bijou in facture.commande.bijou  %}
+						<tbody class="table-tbody">
+							{% for option in facture.commande.optionBijou  %}
+							 
 								<tr>
-
-									<td class="color">
-										{{ bijou.reference }}
+	             {#   <td><img src="{{vich_uploader_asset(option.bijou,'imageFile')}}" width="40"></td>  #}
+									<td>
+										{{ option.reference }}
 									</td>
-									<td class="color">
-										{{ bijou.quantite }}
+								
+									<td>
+										{{ option.quantite }}
 									</td>
 									<td>
-										{{bijou.taille}}
+										{{option.taille}}
 									</td>
 
 
-									<td class="color">
-										{{ bijou.prix }}
+									<td>
+										{{ option.prix }}
 									</td>
 
 									<td>
-										{{bijou.prix * bijou.quantite}}
+										{{option.prix * option.quantite}}
 
 									</td>
 								{% endfor %}
+								 <td> 
+                   	<a class="mx-3" href="{{ path('facture_pdf',{'id': facture.id}) }}" target="_blank">
+										<i class="fas fa-upload"></i>
+									</a>
+								 </td>
 							</tr>
 
 						</tbody>
@@ -211,8 +206,7 @@
 
 						TOTAL COMMANDE :
 
-						{{ dump(facture.commande.totalCommande)}}
-						€
+						{{facture.commande.totalCommande}}€
 					</div>
 
 				</div>

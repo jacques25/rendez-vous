@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
             ->setIntroduction("L'adminstrateur du site")
             ->setDescription("Je suis l'administraeur du site RVAS...")
             ->setSlug("jacques-rodi")
-            ->setHash($this->encoder->encodePassword($user, 'PeleMele84$'))
+            ->setPassword($this->encoder->encodePassword($user, 'PeleMele84$'))
             ->setRoles(['ROLE_ADMIN']);
         $manager->persist($user);
 

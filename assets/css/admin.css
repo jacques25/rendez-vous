@@ -5,6 +5,7 @@
 @import "typeahead.css";
 @import "bootstrap-tagsinput.css";
 @import "../css/font.css";
+@import "../css/admin-responsive.css";
 
 
 #content {
@@ -129,6 +130,31 @@ a.text-color:hover,
         padding: 1rem;
         width: 14rem;
     }
+}
+
+/* TABLE */
+
+.table-fluid {
+    width:100%;
+     background-color: #fff;
+     margin-bottom: 50px;
+     text-align:center;
+     border: 1px solid #8935ce;
+     
+}
+thead {
+    color:#fff;
+}
+
+.table-fluid thead {
+    background-color: #8935ce;
+    padding:15px;
+}
+.table-fluid tbody {
+    color: #888;
+}
+td {
+    width:15%;
 }
 
 /* CUSTOM CHECKBOX */

@@ -75,15 +75,15 @@
 							</div>
 
 							<div class="prix-bijou row align-content-bottom">
-								<div id="option-prix"></div>
+								<div id="option-prix" style="margin-left: 25px;"></div>
 
 
-								<div id="option-disponible" style="font-size:12px;"></div>
+								<div id="option-disponible" style="font-size:12px; margin-left:15px; margin-top:9px;"></div>
 
-								<p class="livraison m-1"></p>
+							
 							</div>
 
-							<form class="form mb-5 mx-4" id="form-panier" method="get">
+							<form class="form mb-5 mx-2" id="form-panier" method="get">
 
 								<select class="span1" name="qte" onchange="this.form.submit()">
 									{% for i in 1..10 %}
@@ -92,19 +92,19 @@
 										</option>
 									{% endfor %}
 								</select>
-								<select id="select-taille" class="taille" name="taille"></select>
-								<button id="btn-submit-panier" class="btn btn-info btn-lg mx-2" type="submit">
+								<select id="select-taille" class="taille mr-5" name="taille"></select>
+								<button id="btn-submit-panier" class="btn btn-info btn-panier mx-3" type="submit">
 									<i class="fa fa-shopping-bag"></i>
-									Ajouter au panier
+									 Ajouter au panier
 								</button>
 
 
 							</form>
 
-							<div>
+							
 
 								{% if bijou.popuptailles is not empty %}
-									<a class="btn btn-secondary" href="#" id="open">
+									<a class="btn btn-secondary mx-1 mb-4" href="#" id="open">
 										Trouvez votre taille
 									</a>
 									<div class="modal-popup" id="modal1">
@@ -129,6 +129,8 @@
 								{% endif %}
 
 							</div>
+							
+							<div>
 
 
 							{% if bijou.propertiesBijou  %}
