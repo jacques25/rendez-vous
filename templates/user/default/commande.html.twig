@@ -1,0 +1,129 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-email.css'), source('@styles/email.css') ) %}
+
+	<container>
+	<spacer size="16"></spacer>
+			<row class="header">
+				<columns large="4" small="12">
+					<a href="{{url('app_homepage') }}">
+						<img src="{{asset('/build/img/rdv.png')}}" class="logo" alt="logo_site">
+					</a>
+				</columns>
+				<columns large="8" small="12">
+				 	<h2>	Rendez-vous avec soi</h2>
+					
+				</columns>
+			</row>
+			<row class="content">
+				<columns>
+         <spacer size="30"></spacer>
+					<h1 class="title">	
+          <center>	Merci pour votre commande {{facture.commande.livraison.lastname}} 	</center>
+					</h1>
+					<spacer size="16"></spacer>
+
+					<callout class="secondary">
+						<row>
+							<columns large="6">
+								<p>
+									<strong>	Mode de paiement</strong>
+									<br/>
+									Par chèque à l'ordre de:<br/>
+                   Mme Françoise Forite
+
+								</p>
+								<p>
+									<strong>	Numéro de commande	</strong>
+									<br/>
+									  {{facture.numeroCommande}}
+								</p>
+							</columns>
+							<columns large="6">
+              	<p>
+									<strong>
+										Adresse Email
+									</strong>
+									<br/>
+									{{facture.user.email}}
+								</p>
+								<p>
+									<strong>Adresse de livraison	</strong>
+									<br/>
+									{{facture.commande.livraison.firstname}}
+									{{facture.commande.livraison.lastname}}
+									<br/>
+									{{facture.commande.livraison.address}}
+									<br/>
+									{{facture.commande.livraison.cp}}
+									{{facture.commande.livraison.city}}
+								</p>
+
+							</columns>
+						</row>
+					</callout>
+					<row>
+					<columns class="command-body">
+					<spacer size="16"></spacer>
+					<h4>	<center>	Détails de votre commande</center></h4>
+					</colummns>
+				<callout>
+					<table style="text-align:center;">
+						<tr>
+            <center>
+							<th><b>Référence</b></th>
+							<th><b>	Taille</b></th>
+							<th><b> Quantité</b></th>
+							<th><b> P.U </b></th>
+							<th><b> 	Sous Total </b></th>
+              </center>
+						</tr>
+						{% for comd in facture.commande.optionBijou %}
+							<tr><center>
+								<td>{{comd.reference}}	</td>
+								<td>{{comd.taille}}</td>
+								<td>{{comd.quantite}}</td>
+								<td>{{comd.prix }}</td>
+								<td>{{(comd.prix * comd.quantite)|number_format(2, '.', ',')}}</td>
+						 </center>	
+            </tr>
+             
+						{% endfor %}
+          
+						<tr>
+							<td  class="first"><b>Total commande	</b>	</td>
+							<td class="last">	{{(facture.commande.totalCommande)|number_format(2, '.', ',')}}€	</td>
+						</tr>
+
+
+					</table>
+          </callout>
+           <spacer size="25"></spacer>
+					<callout>
+					
+						<p>
+							<center>
+								Télécharger votre bon de commande
+							</center>
+						</p>
+            	<spacer size="10"></spacer>
+						<center>
+							<a class="btn-url" href="#">
+								Bon de commande
+							</a>
+						</center>
+
+
+					</callout>
+				</columns>
+	  	</row>
+		  <row class="footer text-center">
+			  <columns large="3">
+				<spacer size="20"></spacer>
+			  	<a class="btn-login"  href="{{url('account_login')}}" >
+					Connexion
+				</a>
+			  </columns>
+		  </row>
+</container>
+
+
+	{% endapply %}

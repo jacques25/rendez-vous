@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\PhotoType;
 use App\Form\ApplicationType;
 use Jacques\ImageBundle\Form\Type\ImageType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -24,7 +25,8 @@ class RegistrationType extends ApplicationType
             ->add('lastName', TextType::class, $this->getConfiguration("Nom", "Votre nom de famille..."))
             ->add('email', EmailType::class, $this->getConfiguration("Email", "Votre adresse email..."))
             ->add('password', PasswordType::class, $this->getConfiguration("Mot de passe", "Votre mot de passe doit avoir au minimum 8 caractères"))
-            ->add('passwordConfirm', PasswordType::class, $this->getConfiguration("Confirmation du mot de passe", "Veuillez confirmer votre mot de passe"));
+            ->add('passwordConfirm', PasswordType::class, $this->getConfiguration("Confirmation du mot de passe", "Veuillez confirmer votre mot de passe"))
+            ->add('subscribedToNewsletter', CheckboxType::class, $this->getConfiguration("s'incrire à notre Newsletter", ''));
     }
 
     public function configureOptions(OptionsResolver $resolver)

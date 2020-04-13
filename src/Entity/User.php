@@ -112,6 +112,10 @@ class User implements UserInterface, Serializable
     private $enabled;
 
     /**
+     * @ORM\Column(name="subscribedToNewsletter", type="boolean")
+     */
+    private $subscribedToNewsletter;
+    /**
      * @var string le token qui servira lors de l'oubli de mot de passe
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -137,7 +141,7 @@ class User implements UserInterface, Serializable
     public function __construct()
     {
         $this->enabled = false;
-
+        $this->subscribedToNewsletter = false;
         $this->addresses = new ArrayCollection();
         $this->commandes = new ArrayCollection();
     }
@@ -451,6 +455,20 @@ class User implements UserInterface, Serializable
 
         return $this;
     }
+
+    public function getSubscribedToNewsletter(): ?bool
+    {
+        return $this->subscribedToNewsletter;
+    }
+
+    public function setSubscribedToNewsletter(bool $subscribedToNewsletter): self
+    {
+        $this->subscribedToNewsletter = $subscribedToNewsletter;
+
+        return $this;
+    }
+
+   
 
    
 }

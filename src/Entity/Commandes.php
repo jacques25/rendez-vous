@@ -21,6 +21,11 @@ class Commandes
      */
     private $valider;
 
+     /**
+     * @ORM\Column(name="sendCommande", type="boolean")
+     */
+    private $sendCommande;
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -40,6 +45,11 @@ class Commandes
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commandes")
      */
     private $user;
+
+    public function __construct()
+    {
+        $this->sendCommande = false;
+    }
 
     public function getId(): ?int
     {
@@ -102,6 +112,18 @@ class Commandes
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSendCommande(): ?bool
+    {
+        return $this->sendCommande;
+    }
+
+    public function setSendCommande(bool $sendCommande): self
+    {
+        $this->sendCommande = $sendCommande;
 
         return $this;
     }

@@ -1,19 +1,19 @@
 <?php
 
 namespace App\Controller\FrontEnd;
-use App\Entity\Bijou;
 use App\Entity\Commandes;
 use App\Entity\UserAdress;
 use function random_bytes;
 use App\Entity\OptionBijou;
 use App\Service\GetReference;
-use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mime\Address;
 
 class CommandesController extends AbstractController
 {  
@@ -138,39 +138,34 @@ class CommandesController extends AbstractController
 
       throw $this->createNotFoundException('La commande n\'existe pas');
     }
+     
     
       $user = $commande->getUser();
-      
+      $commande->setValider(1);
+      $commande->setNumeroCommande($this->getReference->reference());
+      $em->flush();
       $email = $user->getEmail();
       $username = $user->getLastName();
       $url = $this->generateUrl('show_facture', ['id' => $commande->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-      $mail = (new Email())
-        ->from('admin@rvas.fr')
-        ->to($email)
+      $mail = (new TemplatedEmail())
+        ->from(new Address('contact@rvas.site', 'Rendez-vous Avec Soi'))
+        ->to(new Address($email, $username))
         ->subject("Bon de commande à Télécharger")
-        ->text(
-          'Bonjour '  . $username . ',
-          Votre Commande a bien été enregitrée. Téléchargez votre bon de commande en cliquant sur le lien:  ' . $url . '' ,
-          'text/html'
-        );
+        ->htmlTemplate('email/email-commande-pdf.html.twig')
+        ->context( [
+           'user' => $user,
+           'username' => $username,
+           'url'=> $url,
+           'commande'=> $commande
+        ]);
 
       $mailer->send($mail);
 
-    
-  
-    $commande->setValider(1);
-    $commande->setNumeroCommande($this->getReference->reference()); //service
-
-    $em->flush();
 
     $session = $request->getSession();
     $session->remove('adresse');
     $session->remove('panier');
-    /*  $session->remove('taille');
-        $session->remove('prix');
-        $session->remove('reference');
-        $session->remove('commande'); */
-
+   
       $this->addFlash('success', 'Votre commande est validée, un lien vient de vous être envoyé pour la finaliser');
     return $this->redirectToRoute('panier');
   }

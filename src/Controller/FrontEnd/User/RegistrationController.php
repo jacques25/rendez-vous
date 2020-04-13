@@ -7,6 +7,7 @@ use App\Entity\User;
 use Symfony\Component\Mime\Email;
 
 use App\Form\FormAccount\RegistrationType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,15 +61,15 @@ class RegistrationController extends AbstractController
       $email = $user->getEmail();
       $username = $user->getLastName();
       $url = $this->generateUrl('confirm_account', array('email' => $email, 'token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
-      $mail = (new Email())
+      $mail = (new TemplatedEmail())
         ->from('admin@rvas.fr')
         ->to($email)
         ->subject("Lien de vérification d'inscription")
-        ->text(
-          ' Bonjour ' . $username .
-            ' Voici le lien pour confirmer votre inscription: <a href="' . $url . ' "> ' . $url . '</a>',
-          'text/html'
-        );
+        ->htmlTemplate('email/register.html.twig')
+        ->context([
+                    'username' => $username,
+                    'url' => $url
+                ]);
 
       $mailer->send($mail);
 

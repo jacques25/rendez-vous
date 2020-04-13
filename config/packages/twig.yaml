@@ -1,5 +1,8 @@
 twig:
-    
+    paths:
+        'public/build/img': img
+        'assets/css': styles
+
     default_path: '%kernel.project_dir%/templates'
     form_themes:
         - 'bootstrap_4_layout.html.twig'

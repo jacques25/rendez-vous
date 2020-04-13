@@ -40,4 +40,17 @@ class CommandesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+
+     public function findLastCommandes()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->leftJoin('c.user', 'u')
+            ->addSelect('u')
+            ->orderBy('c.date_commande', 'DESC');
+            
+      
+        return  $qb->getQuery()
+            ->getResult();
+    }
 }

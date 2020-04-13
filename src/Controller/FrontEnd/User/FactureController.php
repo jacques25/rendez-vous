@@ -38,10 +38,10 @@ class FactureController extends AbstractController
     /**
      * @Route("/profile/factures/pdf/{id}", name="facture_pdf")
      */
-    public function facturePDF(Request $request, $id, CommandesRepository $commandesRepository)
+    public function facturePDF($id)
     {
        
-        $facture = $commandesRepository->findOneBy([
+        $facture = $this->commandesRepository->findOneBy([
             'user' => $this->getUser(),
             'valider' => 1,
             'id' => $id
@@ -55,7 +55,7 @@ class FactureController extends AbstractController
      * @Route("/profile/voir/facture/{id}", name="show_facture" )
      */
 
-    public function showFacture(Request $request, $id )
+    public function showFacture($id)
     {
       
        
@@ -76,6 +76,18 @@ class FactureController extends AbstractController
             'facture' => $facture
         ]);
     }
-
+   
+     /**
+     * @Route("/profile/edition/commande/{id}", name="edit_commande")
+     */
+    public function editFacture($id){
+        $facture = $this->commandesRepository->findOneBy([
+            'user' => $this->getUser(),
+            'valider' => 1,
+            'id' => $id
+        ]);
+         dump($facture);
+        return $this->render('user/default/commande.html.twig', ['facture' => $facture]);
+    }
 
 }

@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Contact
+
+class Contact 
 {
   /**
    * @Assert\NotBlank()
@@ -49,8 +50,7 @@ class Contact
    */
   private $message;
 
-
-
+ 
   /**
    * Get the value of firstname
    *

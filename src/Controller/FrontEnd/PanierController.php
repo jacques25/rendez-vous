@@ -169,7 +169,7 @@ class PanierController extends AbstractController
    * @Route("/panier/validation", name="panier_validation", requirements={"user"="\d+"} )
    * 
    */
-  public function validation(Request $request, MailerInterface $mailer)
+  public function validation(Request $request)
   {
    
   

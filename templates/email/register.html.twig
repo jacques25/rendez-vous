@@ -1,0 +1,33 @@
+
+{% apply inky_to_html|inline_css(source('@styles/foundation-email.css'), source('@styles/email.css') ) %}
+
+ <container>
+  <row class="header">
+  <columns>
+    <a href="{{ url('app_homepage')}}">
+    <img src="{{email.image('@img/rdv.png')}}" class="logo" alt="logo_site">
+    </a> 
+    <h2> Rendez-vous avec soi </h2>
+    </columns>
+  </row>
+  <row class="content">
+   <columns>
+   <spacer size="35"></spacer>
+    <h1><center> Bonjour  {{username}} </center></h1>
+     <p> Voici le lien pour réinitialiser votre mot de passe : </p> 
+     <a class="btn-url"  href="{{ url }}">Activation de votre compte</a>
+     <spacer size="35"></spacer>
+     </columns>
+  </row>
+   <spacer size="30"></spacer>
+  <row class="footer">
+  <columns>
+    <spacer size="20"></spacer>
+    <a class="btn-login" href="{{absolute_url(path('account_login'))}}">Connection</a>
+  </columns>
+  </row>
+  </container>
+
+{% endapply %}
+
+

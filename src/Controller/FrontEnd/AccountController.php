@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Form\FormAccount\ProfileType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,9 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 
@@ -194,15 +195,15 @@ class AccountController extends AbstractController
             $username = $user->getFirstName();
             $url = $this->generateUrl('app_reset_password', array('token' => $token, 'username' => $username), UrlGeneratorInterface::ABSOLUTE_URL);
 
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from('admin@rvas.fr')
                 ->To($user->getEmail())
                 ->subject('Réinitialiser votre mot de passe')
-                ->text(
-                    "Bonjour" . $username .
-                        "Voici le lien pour réinitialiser votre mot de passe : " . $url,
-                    'text/html'
-                );
+                ->htmlTemplate('email/forget_password.html.twig')
+                ->context([
+                    'username' => $username,
+                    'url' => $url
+                ]);
 
             $mailer->send($email);
 
@@ -211,8 +212,6 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account_login');
         }
 
-
-
         return $this->render('account/forget_password.html.twig');
     }
 
@@ -220,11 +219,7 @@ class AccountController extends AbstractController
      * @Route("/reinitialiser-mot-de-passe/{token}", name="app_reset_password")
      */
 
-    public function resetPassword(
-        UserRepository $userRepository,
-        Request $request,
-        string $token,
-        UserPasswordEncoderInterface $passwordEncoder
+    public function resetPassword(UserRepository $userRepository, Request $request,  string $token, UserPasswordEncoderInterface $passwordEncoder
     ) {
 
 
@@ -243,7 +238,7 @@ class AccountController extends AbstractController
             $passwordConfirm = $passwordEncoder->encodePassword($user, $request->get('passwordConfirm'));
 
 
-            if ($request->get('password') !== $request->get('passwordConfirm')) {
+            if ($request->get('password') !== $passwordConfirm) {
                 $this->addFlash('warning', 'Les mots de passe ne sont pas identiques');
             } else {
                 $password = $passwordEncoder->encodePassword($user, $request->get('password'));

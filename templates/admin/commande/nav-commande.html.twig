@@ -1,0 +1,22 @@
+	{% for commande in commandes %}
+    <a class="dropdown-item d-flex align-items-center" href="{{path('admin_commande_show', {'id': commande.id})}}">
+									<div class="mr-3">
+										<div class="bg-light" >
+                     {% if commande.user.filename %}
+										 <img class="rounded-circle" src={{vich_uploader_asset(commande.user, 'imageFile')}} width="30">
+                     {% else %}
+                       <img class="rounded-circle" src="{{asset('/images/users/avatar.png')}}" width="30" >
+                     {% endif %}
+										</div>
+									</div>
+									<div>
+										<div class="small text-gray-500">
+											{{ commande.dateCommande|date('d/M/Y H:i') }}
+										</div>
+										<span class="font-weight-bold">
+											 {{ commande.user.username }}
+										</span>
+									</div>
+		</a>
+  {% endfor %}
+  

@@ -51,4 +51,25 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
+    /**
+     * @return User[]
+     */
+    public function findAllSubscribedToNewsletter(): array
+    {
+        return $this->createQueryBuilder('u')
+        ->andWhere('u.subscribedToNewsletter = 1')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function findUserHasCommand()
+    {
+        return $this->createQueryBuilder('u')
+               ->join('u.commandes' , 'c')
+               ->addSelect('c')
+               ->andWhere('c.sendCommande = 1')
+               ->getQuery()
+               ->getResult();
+    }
 }

@@ -4,9 +4,8 @@ namespace App\Controller\FrontEnd;
 
 use App\Entity\Contact;
 use App\Form\Contact\ContactType;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mime\Message;
-use Symfony\Component\Mime\RawMessage;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,23 +29,34 @@ class PageController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+     
       $contactEmail = $contact->getEmail();
       $name = ($contact->getFirstname() . ' ' .  $contact->getLastname());
       $phone = $contact->getPhone();
       $subject = $contact->getSubject();
-      $message =  '<h1> Objet: ' . $subject . '</h1><br><p> Nom: ' . $name . '</p><p> Téléphone: ' . $phone . '
-                    </p><p> <h5>Message </h5>' . $contact->getMessage() . '</p>';
 
-      $email = (new Email())
-        ->from($contactEmail)
-        ->To('jacques19611@live.fr')
+      $mail = (new TemplatedEmail())
+        ->from(new Address($contact->getEmail(), $name))
+        ->to(new Address('jacquesrodi84@gmail.com', 'Rendez-vous Avec Soi'))
         ->subject($subject)
-        ->html($message);
-      $mailer->send($email);
+        ->htmlTemplate('email/email-contact.html.twig')
+        ->context( [
+           'name' => $name,
+            'contactEmail' => $contactEmail,
+           'phone'=> $phone,
+           'message'=> $contact->getMessage(),
+           'subject' => $contact->getSubject()
+        ]);
+
+
+
+      $mailer->send($mail);
+
+
 
       $this->addFlash('success', 'Votre mail à été envoyé, nous vous répondrons dans les plus bref délais.');
 
-      return $this->redirectToRoute('accueil');
+      return $this->redirectToRoute('app_homepage');
     }
     return $this->render('pages/contact.html.twig', ['form' => $form->createView()]);
   }

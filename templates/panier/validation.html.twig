@@ -20,8 +20,11 @@
    </div>
 </div>
 <div class="row">
-<div class="col-12">
-		
+  <div class="col-12">
+	           {% if commande.commande.optionBijou == null %}
+                 	  <div class="alert alert-success"> Aucun article dans le panier</div>
+						 {% else %}
+		      
 							<table class="table-fluid text-center">
 
 								<thead class="table-thead">
@@ -31,9 +34,9 @@
                               <th> Article </th>
 										<th>Quantité</th>
 
-										{% if commande.commande.optionBijou is not null %}
+									
 											<th>Taille</th>
-										{% endif %}
+								
 										<th>P.U</th>
 										<th>Total</th>
 
@@ -72,8 +75,8 @@
 							</table>
 
 
-						
-		</div>
+					
+  </div>
 </div>
 <div class="row">
 	 <div class="col-3 livraison  bg-light"> 
@@ -109,18 +112,20 @@
 </div> 
 
 <div class="row mt-5">
-					
+					<a href="{{path('validation_commande', {'id': commande.id })}}" class="btn btn-success btn-lg m-2 pull-right">
+			<img src="{{asset('/build/img/commande-blanc.png')}}" width="30"> Commander
+		</a>	
+ 
+		 
 		<a href="{{path('app_homepage')}}" class="btn btn-info btn-lg m-2 ">
 		<i class="fa fa-chevron-left"></i> Poursuivre vos achats
 		</a>
 						
-		<a href="{{path('validation_commande', {'id': commande.id })}}" class="btn btn-success btn-lg m-2 pull-right">
-			<img src="{{asset('/build/img/commande-blanc.png')}}" width="30"> Commander
-		</a>
+	
 						
 </div>
 			
-
+{% endif %}
 
 
 {% endblock %}

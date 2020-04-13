@@ -1,0 +1,55 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-email.css'), source('@styles/email.css') ) %}
+
+<container>
+	<spacer size="16"></spacer>
+			<row class="content">
+				<columns>
+         <spacer size="30"></spacer>
+					<h1 class="title">	
+          <center> {{ subject }} 	</center>
+					</h1>
+					<spacer size="16"></spacer>
+
+					<callout class="secondary">
+						<row>
+							<columns>
+								<p>
+									<strong> Nom	</strong>
+
+									<br/>
+									{{ name }}
+								</p>
+              	<p>
+									<strong>Adresse Email</strong>
+									<br/>
+									{{ contactEmail}}
+								</p>
+								<p>
+									<strong> Téléphone	</strong>
+
+									<br/>
+									{{ phone }}
+								</p>
+
+								
+
+							</columns>
+						</row>
+					</callout>
+					<row>
+					<columns class="command-body">
+					<spacer size="16"></spacer>
+					<h4>	<center>Message</center></h4>
+					<p> {{ message }}</p>
+					</colummns>
+				   
+           <spacer size="25"></spacer>
+				
+				</columns>
+	  	</row>
+		  <row class="footer text-center">
+		  </row>
+</container>
+
+
+	{% endapply %}

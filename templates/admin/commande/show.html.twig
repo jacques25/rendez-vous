@@ -1,0 +1,28 @@
+{% extends "admin_base.html.twig" %}
+
+{% block title %} Commande n° {{ commande.numeroCommande }}{% endblock %}
+
+{% block body %}
+ 
+ <div class="container">
+  <div class="row flex-row">
+    <div class="card">
+     <div class="header">
+      {{commande.dateCommande|date('d/m/Y')}}
+      {% if commande.valider == 1 %}
+      <p><strong> {{'Commande validée '}}</strong></p>
+      {% endif %}
+     </div>
+      <div class="card-body">
+       {{ commande.user.lastname}}
+      
+      </div>
+    
+    </div>
+  
+  </div>
+ 
+ </div>
+
+
+{% endblock %}

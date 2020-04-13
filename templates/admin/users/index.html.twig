@@ -19,33 +19,39 @@
      </tr>
     </thead>
 
-    <tbody>
-    <tr>
+    <tbody> 
     {% for user in users %}
+    <tr>
+      <td>{{user.email}}</td>
+       
         {% for address in user.addresses %}
            <td> {{address.lastName}}</td>
           <td> {{address.firstName}}</td>
-      
+          <td>{{address.street}} {{address.cp}}  {{address.city}}</td>
+
+         {% endfor %}
     
-     <td>{{user.email}}</td>
+     
      <td>
          {% for role in user.roles %}
              {{role}}</br>
          {% endfor %}
    </td>
-     <td>{{address.street}} {{address.cp}}  {{address.city}}</td>
+     
+   
       {% if user.commandes %}
        <td>  {{user.commandes|length}} </td>
       {% endif %}
       
-    {% endfor %}
-         {% endfor %}
+   
+ 
          <td> 
          <a href="#" > <i class="fas fa-envelope"></i></a>
-         <a href="#" > <i class="fas fa-edit"></i></a>
+         <a href="{{path('admin_user_edit', {'id': user.id})}}" > <i class="fas fa-edit"></i></a>
          </td>
     </tr>
-    </tbody
+      {% endfor %}
+    </tbody>
    
    </table>
   

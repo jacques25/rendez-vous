@@ -21,4 +21,15 @@ class AdminUserController extends AbstractController
        
          return $this->render('admin/users/index.html.twig', ['users' => $users]);
     }
+
+
+     /**
+     * @Route("/user/edit/{id}" , name="admin_user_edit")
+     */
+    public function edit($id , UserRepository $userRepository) {
+
+         $user = $userRepository->findOneBy(['id' => $id]);
+       
+         return $this->render('admin/users/edit.html.twig', ['user' => $user]);
+    }
 }

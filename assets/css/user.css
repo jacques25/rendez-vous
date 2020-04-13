@@ -87,8 +87,22 @@ a.btn-link:hover {
   width: 100%;
   max-width: 100%;
 }
-
 /* FORM CONTACT */
+
+.contact {
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  width: 100%;
+}
+.contact-me {
+  max-width: 580px; 
+   box-shadow: 4px 4px 10px 0px rgba(99, 86, 78, 0.6);  
+   border-radius: 8px;
+   background-color: #fff;
+}
+
 .card-registration {
   position: relative;
   display: -webkit-box;
