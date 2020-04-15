@@ -33,10 +33,5 @@ class MenuController extends AbstractController
         );
     }
 
-    public function test(Request $request)
-    {
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
-    }
+  
 }

@@ -1,41 +1,22 @@
-{% extends 'base.html.twig' %}
+
 
 		{% block body %}
-<div class="row mt-5">
-<h2>
-						Factures
-					</h2>
-</div>
-			<div class="row ">
-			
-				<div class="col-md-4 mb-3">
-			 
-                      {% for message in app.flashes('warning') %}
-                        <p> {{ message}} </p>
-                      {% endfor %}
-                  
-						</div>
-					<div class"col-md-8">
-					 <table class="table">
-					  <thead>
-            
-						{% if factures|length ==  0 %}
-              <tr>
-							
-								<td scope="row">
-									<center>
-										Aucune facture actuellement.
-									</center>
-								</td>
-						
-              </tr>
-						{% endif %}
-            
-						
-						{% for facture in factures %}
-
-
-							<tr scope="row">
+		
+		{% for message in app.flashes('warning') %}
+              <p> {{ message}} </p>
+            {% endfor %}
+<div class="card-fluid">
+       <div class="card-fluid-header">
+             <h4> {% if factures|length == 1 %}
+                   Facture {% else %}
+             		  Factures {% endif %}
+             						
+             </h4>
+      </div>
+			<div class="card-fluid-body">
+				<table class=" table table-fluid">
+					<thead>
+            	<tr>
 								<th>Facture n°</th>
 								<th>Date</th>
 								
@@ -50,9 +31,16 @@
 								<th>Téléchargement</th>
 
 							</tr>
-            </thead>
-						<tbody>
-							<tr scope="row">
+          </thead>
+						{% if factures|length ==  0 %}
+             <tr><td scope="row">	Aucune facture actuellement.</td></tr>
+					  {% endif %}
+          
+						
+						{% for facture in factures %}
+						
+					<tbody>
+						<tr>
 
 								<td>
 									{{facture.NumeroCommande}}
@@ -92,8 +80,8 @@
 					
            </tbody>	
 					 {% endfor %}
-					</table>
-        	</div>
+				</table>
+      </div>
 
-		</div>
+</div>
 	{% endblock %}

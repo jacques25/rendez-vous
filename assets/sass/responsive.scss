@@ -330,6 +330,26 @@
 .modal {
   height: 100%;
 }
+
+  .table{
+        margin-left: -55px !important;
+        width: 200px; 
+        display: inline;
+  }
+ .table-thead td {
+    padding: 10px 0px 10px 0px !important;
+    font-size: 100%;
+  }
+  .table-thead th {
+    width:8% !important;
+    font-size:12px;
+  }
+  .table-fluid{
+    margin-left: -25px;
+  }
+  .table-tbody td {
+    font-size: 13px !important;
+  }
 }
 
 @media only screen and (max-width: 900px) {

@@ -5,6 +5,7 @@ use App\Entity\Commandes;
 use App\Entity\UserAdress;
 use function random_bytes;
 use App\Entity\OptionBijou;
+use App\Repository\CommandesRepository;
 use App\Service\GetReference;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +41,7 @@ class CommandesController extends AbstractController
       $facturation = $em->getRepository(UserAdress::class)->find($adresse['facturation']);
       $livraison = $em->getRepository(UserAdress::class)->find($adresse['livraison']);
  
-    $optionBijous = $em->getRepository(OptionBijou::class)->findArray(array_keys($session->get('panier')));
+     $optionBijous = $em->getRepository(OptionBijou::class)->findArray(array_keys($session->get('panier')));
   
     /* $promos = $em->getRepository('BoutiqueBundle:Promo')->findArray(array_keys($session->get('panier'))); */
 
@@ -94,11 +95,11 @@ class CommandesController extends AbstractController
     $em = $this->getDoctrine()->getManager();
 
 
-    if(!$session->has('commande')) {
+    if(!$session->has('commande')) 
       $commande = new Commandes();
-    } else
+    else
 
-      
+  
     $commande = $em->getRepository(Commandes::class)->find($session->get('commande'));
    
     $commande->setDateCommande(new \DateTime());
@@ -134,8 +135,8 @@ class CommandesController extends AbstractController
     $em = $this->getDoctrine()->getManager();
 
     $commande = $em->getRepository(Commandes::class)->find($id);
-    if (!$commande || $commande->getValider() == 1) {
-
+    if (!$commande) {
+      
       throw $this->createNotFoundException('La commande n\'existe pas');
     }
      
@@ -168,5 +169,28 @@ class CommandesController extends AbstractController
    
       $this->addFlash('success', 'Votre commande est validée, un lien vient de vous être envoyé pour la finaliser');
     return $this->redirectToRoute('panier');
+  }
+  
+  /**
+   * @Route("/annulation/commande/{id}", name="commande_remove")
+   *
+   * @param Request $request
+   * @param CommandesRepository $commandesRepository
+   */
+  public function removeCommande($id, Request $request)
+  {   
+         $session = $request->getSession();
+         $em = $this->getDoctrine()->getManager();
+         $commande = $em->getRepository(Commandes::class)->find($id);
+         $valid = $commande->getValider();
+          
+         if($valid === false){
+           $em->remove($commande);
+           $em->flush();
+           $session->remove('panier');
+           $session->remove('commande');
+           $this->addFlash('success' , 'Vous avez annulé votre commande. Nous espérons vous revoir Bientôt !');
+         return $this->redirectToRoute('panier');
+         }
   }
 }

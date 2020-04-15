@@ -1,5 +1,5 @@
 	{% for commande in commandes %}
-    <a class="dropdown-item d-flex align-items-center" href="{{path('admin_commande_show', {'id': commande.id})}}">
+    <a class="dropdown-item d-flex align-items-center" href="{{path('admin_commande_show', {'user': commande.user.id})}}">
 									<div class="mr-3">
 										<div class="bg-light" >
                      {% if commande.user.filename %}

@@ -28,42 +28,48 @@
   </div>
 </div>
 <div class="col-sm-9">
-  <div class="card">
-     <table class="table table-bordered">
-       <thead  style="background: #5a1ca5;">
+ 
+     <table class="table-fluid table-striped">
+       <thead>
        <tr class="text-center">
-         <td colspan="2">Numéro </td>
-         <td colspan="2"> Date</td>
-         <td colspan="2"> Article </td>
-         <td colspan="2"> Total de la commande</td>
+         <td>Numéro </td>
+         <td> Date</td>
+         <td> Article </td>
+         <td> Total de la commande</td>
+         <td> Validée </td>
        </tr>
-       
+      
        </thead>
-      <tbody>
+       <tbody >
         {% for commande in  user.commandes %}
-       <tr class="text-center">
-        <td colspan="2">  {{ commande.numeroCommande}}</td>
-        <td colspan="2"> {{ commande.dateCommande|date('d-m-Y')}}</td>
+       <tr class="text-center"> 
+      
+        <td> <a href="{{path('admin_commande_show', {'user' : commande.user.id })}}"> {{ commande.numeroCommande}}</a></td>
+        <td> {{ commande.dateCommande|date('d-m-Y')}}</td>
         
-         <td colspan="2">  
-         <table class="table-striped">
-         {% for article in commande.commande.optionBijou %}
-          <tr> 
-          <td colspan="2">{{ article.reference}}</td>
-          <td colspan="2">{{article.quantite}}</td>
-          <td colspan="2"> {{article.prix}}</td>
-          {% endfor %}
-          </tr>
+         <td>  
+          <table class="table-bordered" style="font-size:14px">
+        
+            {% for article in commande.commande.optionBijou %}
+             <tr> 
+              <td colspan="2"> {{ article.reference}} </td>
+              <td colspan="2"> {{article.quantite}} </td>
+              <td colspan="2"> {{article.prix}} </td>
+            </tr> 
+            
+            {% endfor %}
+           
           </table>
          </td>
          
         <td> {{ commande.commande.totalCommande }} €</td>
+        <td> {{ commande.valider }} </td>
        </tr>
         {% endfor %}
       </tbody>
      
      </table>
-   </div>  
+   
  </div>
  </div>
 

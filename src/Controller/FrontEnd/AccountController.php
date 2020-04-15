@@ -86,7 +86,7 @@ class AccountController extends AbstractController
         $user = $this->getUser();
 
         $originalAddress = new ArrayCollection();
-
+        
         foreach ($user->getAddresses() as $address) {
             $originalAddress->add($address);
         }
@@ -123,7 +123,8 @@ class AccountController extends AbstractController
                 'form' => $form->createView(),
                 'user' => $user,
                 'token' => $token,
-                'logger' => $logger
+                'logger' => $logger,
+                'commandes' => $user->getCommandes()
             ]);
         }
         return $this->redirectToRoute('accueil');

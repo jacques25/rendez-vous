@@ -326,9 +326,38 @@
   .modal {
     height: 100%;
   }
+
+  /* line 334, ../sass/responsive.scss */
+  .table {
+    margin-left: -55px !important;
+    width: 200px;
+    display: inline;
+  }
+
+  /* line 339, ../sass/responsive.scss */
+  .table-thead td {
+    padding: 10px 0px 10px 0px !important;
+    font-size: 100%;
+  }
+
+  /* line 343, ../sass/responsive.scss */
+  .table-thead th {
+    width: 8% !important;
+    font-size: 12px;
+  }
+
+  /* line 347, ../sass/responsive.scss */
+  .table-fluid {
+    margin-left: -25px;
+  }
+
+  /* line 350, ../sass/responsive.scss */
+  .table-tbody td {
+    font-size: 13px !important;
+  }
 }
 @media only screen and (max-width: 900px) {
-  /* line 336, ../sass/responsive.scss */
+  /* line 356, ../sass/responsive.scss */
   .modal-content-body {
     padding: 0%;
     margin-top: 20% !important;
@@ -336,29 +365,29 @@
     height: auto;
   }
 
-  /* line 343, ../sass/responsive.scss */
+  /* line 363, ../sass/responsive.scss */
   .modal {
     height: 100%;
   }
 }
 @media only screen and (max-width: 1100px) {
-  /* line 350, ../sass/responsive.scss */
+  /* line 370, ../sass/responsive.scss */
   select#select-taille {
     margin-bottom: 40px;
   }
 
-  /* line 353, ../sass/responsive.scss */
+  /* line 373, ../sass/responsive.scss */
   .btn-panier {
     position: relative;
     margin-left: -3px !important;
   }
 
-  /* line 360, ../sass/responsive.scss */
+  /* line 380, ../sass/responsive.scss */
   article:last-child {
     margin-bottom: 100%;
   }
 
-  /* line 364, ../sass/responsive.scss */
+  /* line 384, ../sass/responsive.scss */
   .img-body {
     float: none !important;
     position: relative;

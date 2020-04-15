@@ -141,57 +141,61 @@ class PanierController extends AbstractController
 
   public function livraison(Request $request)
   {
-    
-    $user = $user = $this->container->get('security.token_storage')->getToken()->getUser();
+    $role = ["ROLE_CLIENT"];
+    $user = $this->container->get('security.token_storage')->getToken()->getUser();
     $userAddresss = new UserAdress();
-    $form = $this->createForm(UserAdressType::class, $userAddresss);
 
+    $form = $this->createForm(UserAdressType::class, $userAddresss);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
       $manager = $this->getDoctrine()->getManager();
 
-      $user->addRole("ROLE_CLIENT");
+      $user->setRoles($role);
       $userAddresss->setUser($user);
       $manager->persist($userAddresss);
       $manager->flush();
-
+      
       $this->addFlash('success', "L'adresse a bien été ajouter");
-      return $this->redirectToRoute('panier_validation');
+      return $this->redirectToRoute('panier_livraison');
     }
-
+    
     return $this->render('panier/livraison.html.twig', ['form' => $form->createView(), 'user' => $user]);
   }
 
 
   /**
    *
-   * @Route("/panier/validation", name="panier_validation", requirements={"user"="\d+"} )
+   * @Route("/panier/validation", name="panier_validation",requirements={"user"="\d+"})
    * 
    */
-  public function validation(Request $request)
-  {
-   
-  
-    if ($request === null) {
-      $this->addFlash('warning', 'Votre panier est vide');
-      $this->redirectToRoute('app_homepage');
-    }
+  public function validation(Request $request )
+  { 
 
-    if ($request->isMethod('POST')) {
-      $this->setLivraisonOnSession($request);
+  /*  if ($request == null) {
+      $this->addFlash('warning', 'Votre panier est vide');
+       $this->redirectToRoute('app_homepage');
+    } */
     
+    if ($request->getMethod() == 'POST')
+      $this->setLivraisonOnSession($request);
       $em = $this->getDoctrine()->getManager();
+      
+    
       $prepareCommande = $this->forward('App\Controller\FrontEnd\CommandesController:prepareCommande');
       $commande = $em->getRepository(Commandes::class)->find($prepareCommande->getContent());
       
-
-      return $this->render('panier/validation.html.twig', [
+     
+       return $this->render('panier/validation.html.twig', [
         'commande' => $commande
+       ]);
+   
+    
+   
 
-      ]);
-    }
-  }
+  }  
+      
+
 
   public function setLivraisonOnSession(Request $request)
   {
@@ -207,6 +211,7 @@ class PanierController extends AbstractController
     } else {
       return $this->redirectToRoute('panier_validation');
     }
+
     $session->set('address', $address);
 
     return $this->redirectToRoute('panier_validation');

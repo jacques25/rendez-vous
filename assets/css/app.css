@@ -568,7 +568,7 @@ span.rounded-taille {
     margin-bottom: 35px;
 }
 
-.panel-heading>.accordion-toggle,
+.panel-heading>.accordion-toggle, 
 .panel-heading-two>.accordion-toggle {
     background: #eee no-repeat 95% 50%;
     color: #91705c;
@@ -873,13 +873,13 @@ h4.panier-title {
     color: #fff;
     padding: 10px;
     text-align: center;
-    font-size: 14px;
+    font-size: 0.8em;
 }
 
 .table-tbody {
     background-color: #fff;
     padding: 15px;
-
+ 
 }
 
 .table-panier td,
@@ -921,11 +921,26 @@ h4.panier-title {
     text-align: center;
 }
 
-.badge {
-    display: none;
+.badge-circle {
+   font-size: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    padding-top: 11px;
+    background-color: rgb(13, 85, 16);
 }
 
 .alert .alert-danger {
     color: #fff;
     background-color: #dc3545;
+}
+
+#total, .btn-telechargement {
+    background: rgb(5, 39, 78);
+    padding: 15px;
+    color: #fff;
+    text-align: center;
+    border-radius: 16px;
 }

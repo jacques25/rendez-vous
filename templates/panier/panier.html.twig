@@ -11,42 +11,49 @@
        <div class="col-12">
 		  	<h1> Votre Panier</h1>
 	    </div>
-	
+			</div>
+	  <div class="row">
 		 {% for label, messages in app.flashes %}
          
-           <div class="col-12 alert alert-{{ label }}">
-              {% for message in messages %}
-                     <p> {{ message}} </p>
+          
+              {% for message in messages %} 
+							<div class="col-12 w-100 text-center alert alert-{{ label }}">
+                      {{ message}} 
+							 </div>
               {% endfor %}
-           </div>
+          
         
        {% endfor %}
 
     
-			</div>
+		
 	  
 			{% if items|length  == 0 %} 
 			 
-				<div class="col-12 alert alert-success w-100 text-center uppercase"> Aucun article dans votre panier</div>
+				<div class="col-12 alert alert-success w-100 text-center"> Aucun article dans votre panier</div>
 						
    
 			
      {% else %}
-			 <div class="table-responsive-sm table-responsive-xl table-responsive-md">
+			 
 			   
-        				<table class="table table-fixed m-2">
+        				<table class="table table-fluid m-2">
         						<thead class="table-thead">
         								<tr>
-        
+                          {% for item in items %}
+														
+													
         									<th class="th-sm">Référence</th>
         	                 <th class="th-sm"> designation </th>
+													 {% if item.bijou.promo == true %}
         									 <th class="th-sm"> Promo </th>
+													 {% endif %}
         									<th class="th-sm">  taille </th>
         									<th class="th-sm">	prix	</th>
         									<th class="th-sm">	quantité </th>
         									<th class="th-sm">  Total	</th>
         									<th class="th-sm"> action </th>
-        
+                      {% endfor %}
         								</tr>
         						</thead>
         			      <tbody class="table-tbody">
@@ -60,16 +67,18 @@
 							   {% endif %}
 
 						    </td>
-	
+	 {% if item.bijou.promo == true %}
                 <td>
-						      {% if item.bijou.promo %}
+						     
 							    	<span class=" mt-5 p-2 bg-warning rounded-pill text-dark font-weight-bold">
 								     	Promo !
 								    </span>
-							    {% endif %}
+							   
 							  </td>
+								{% endif %}
+								{% if item.taille == true %}
 						    <td>	{{item.taille}}	</td>
-    
+               {% endif %}
 						    <td>	{{item.prix}}</td>
 						    <td>
 						     	<form action={{path('panier_add', {'id': item.id} )}}>
@@ -109,7 +118,7 @@
         					  </tbody>
         		  </table>	
 
-      </div>
+      
 			<div class="col-12 mt-4">
 			 <a href="{{path('app_homepage')}}" class="btn btn-success mt-2"> Poursuivre vos achats</a>
 			 	{% if  items is not empty %}
@@ -122,5 +131,5 @@
 
 			
 			{% endif %}
-
+</div>
 {% endblock %}

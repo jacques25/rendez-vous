@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Commandes;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Commande|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,10 +48,24 @@ class CommandesRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('c')
             ->leftJoin('c.user', 'u')
             ->addSelect('u')
-            ->orderBy('c.date_commande', 'DESC');
+            ->orderBy('c.date_commande', 'DESC')
+            ->setMaxResults(3);
             
       
         return  $qb->getQuery()
             ->getResult();
+    }
+
+    public function findCommandesByUser($user)
+    {
+       return $this->createQueryBuilder('c')
+              ->select('c')
+              ->leftJoin('c.user', 'u')
+              ->addSelect('u')
+              ->where('u.id = :user')
+              ->setParameter('user', $user)
+              ->getQuery()
+              ->getResult();
+             
     }
 }

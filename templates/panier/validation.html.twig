@@ -21,7 +21,7 @@
 </div>
 <div class="row">
   <div class="col-12">
-	           {% if commande.commande.optionBijou == null %}
+	           {% if commande.commande.optionBijou|length == null %}
                  	  <div class="alert alert-success"> Aucun article dans le panier</div>
 						 {% else %}
 		      
@@ -39,10 +39,10 @@
 								
 										<th>P.U</th>
 										<th>Total</th>
-
+                   
 									</tr>
 								</thead>
-
+           
 
 								<tbody class="table-body"> 
                         {% for optionBijou in commande.commande.optionBijou %} 
@@ -54,6 +54,7 @@
                                 <td> {{optionBijou.taille}}</td>
                                 <td> {{ optionBijou.prix }}</td>
                                 <td> {{optionBijou.prix * optionBijou.quantite }}€</td>
+																
 							       		 
                            </tr>      
 				   			
@@ -112,16 +113,16 @@
 </div> 
 
 <div class="row mt-5">
-					<a href="{{path('validation_commande', {'id': commande.id })}}" class="btn btn-success btn-lg m-2 pull-right">
-			<img src="{{asset('/build/img/commande-blanc.png')}}" width="30"> Commander
-		</a>	
- 
+			
 		 
 		<a href="{{path('app_homepage')}}" class="btn btn-info btn-lg m-2 ">
-		<i class="fa fa-chevron-left"></i> Poursuivre vos achats
+	   	<i class="fa fa-chevron-left"></i> Poursuivre vos achats
 		</a>
-						
-	
+		<a href="{{path('validation_commande', {'id': commande.id })}}" class="btn btn-success btn-lg m-2 pull-right">
+			<img src="{{asset('/build/img/commande-blanc.png')}}" width="30"> Commander
+		</a>	
+ 	
+	  <a class="btn btn-danger btn-lg m-2" href="{{path('commande_remove', {'id': commande.id })}}"><i class="fas fa-trash"></i> Annulation Commande</a>
 						
 </div>
 			

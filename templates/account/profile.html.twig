@@ -5,8 +5,9 @@
 		{% endblock %}
 
 		{% block body %}
-			<div class="container mt-4">
+			<div class="container-fluid mt-4">
 				<div class="row">
+        
 					{% for label, messages in app.flashes %}
 						<div class="container">
 							<div class="alert alert-{{ label }}">
@@ -18,25 +19,36 @@
 							</div>
 						</div>
 					{% endfor %}
+						<h1>	Modification du profil
+						</h1>
 				</div>	
+
 				{{form_start(form)}}
 				<div class="row">
 				
-					<div class="col-md-5">
-						<h1>
-							Modification du profil
-						</h1>
+					<div class="col-md-6">
 						
-						 <div class="nav-vertical">
-						  <a class="btn btn-secondary" href="{{path('user_facture')}}">Mes Factures</a></li>
-
-				      <a class="btn bnt-light" href="{{ path('panier_livraison') }}">	Mes adresses	</a></li>
-						 </div>
-						
-					</div>
-
-					<div class="col-md-6 right">
 						{{form_row(form.imageFile)}}
+					</div>
+						<div class="col-md-6">
+
+						<div class="card-identity right">
+							<div class="card-header">
+								<h3>Identité	</h3>
+							</div>
+							<div class="card-body-adress">
+								{{form_row(form.firstName, {'attr': {'class': 'mb-3'}}
+								)}}
+								{{form_row(form.lastName, {'attr': {'class': 'mb-3'}}
+								)}}
+								{{form_row(form.email, {'attr': {'class': 'mb-3'}}
+								)}}
+								{{form_row(form.introduction, {'attr': {'class': 'mb-3', 'rows':6}}
+								)}}
+								{{form_row(form.description,  {'attr': {'class': 'mb-3', 'rows': 6}}
+								)}}
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -66,29 +78,8 @@
 						</div>
 
 					</div>
-					<div class="col-md-6">
-
-						<div class="card-identity right">
-							<div class="card-header">
-								<h3>
-									Identité
-								</h3>
-							</div>
-							<div class="card-body-adress">
-								{{form_row(form.firstName, {'attr': {'class': 'mb-3'}}
-								)}}
-								{{form_row(form.lastName, {'attr': {'class': 'mb-3'}}
-								)}}
-								{{form_row(form.email, {'attr': {'class': 'mb-3'}}
-								)}}
-								{{form_row(form.introduction, {'attr': {'class': 'mb-3', 'rows':6}}
-								)}}
-								{{form_row(form.description,  {'attr': {'class': 'mb-3', 'rows': 6}}
-								)}}
-							</div>
-						</div>
-
-
+				  <div class="col-md-6">
+           {{ render(controller('App\\Controller\\FrontEnd\\User\\FactureController::facture')) }}
 					</div>
 					</div>
 					<div class="row">

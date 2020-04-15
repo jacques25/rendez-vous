@@ -21,6 +21,7 @@ class Commandes
      */
     private $valider;
 
+    
      /**
      * @ORM\Column(name="sendCommande", type="boolean")
      */
@@ -49,6 +50,8 @@ class Commandes
     public function __construct()
     {
         $this->sendCommande = false;
+        $this->valider = false;
+       
     }
 
     public function getId(): ?int
