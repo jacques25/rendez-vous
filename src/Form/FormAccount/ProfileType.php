@@ -28,6 +28,7 @@ class ProfileType extends ApplicationType
       ->add('imageFile', ImageType::class, [
         'required' => false,
         'label' => false,
+        'attr' => ['id' => 'image-profile']
       ])
 
       ->add('introduction', TextType::class, $this->getConfiguration('Introduction', "Présentez vous en quelques mots..."))

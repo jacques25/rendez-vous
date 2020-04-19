@@ -7,13 +7,11 @@
 				<meta charset="UTF-8">
 
 				<title>
-					{% block title %}
-					{% endblock %}
+					{% block title %}	{% endblock %}
 				</title>
 
 				{% block stylesheets %}
-					<link
-					rel="icon" type="image/png" href="{{asset('/build/img/rdv.png')}}"/>
+					<link 	rel="icon" type="image/png" href="{{asset('/build/img/rdv.png')}}"/>
 					<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
 					<link rel="stylesheet" href="{{asset('/build/fontawesome/css/all.css')}}">
 					{{ encore_entry_link_tags('app')}}
@@ -23,42 +21,46 @@
 
 			<body>
 				<div class="site-container">
-					<div class="site-pusher">
-						{{ render(controller('App\\Controller\\FrontEnd\\MenuController::menu', {'limit' : 6})) }}
-				
-		  			<div class="site-content container-fluid">
-							
-								<a id="button" style="display:block;">
-									<i class="fa fa-chevron-up"></i>
-									Haut de page
-								</a>
+				  	<div class="site-pusher">
+				    		{{ render(controller('App\\Controller\\FrontEnd\\MenuController::menu', {'limit' : 6})) }}
+				    
+		
+		  			  <div class="site-content">
+							  				 {% for label, messages in app.flashes %}
+                 <div class="alert alert-{{ label }} mt-2">
+                                        {% for message in messages %}
+                                         <p> {{ message}} </p>
+                                      {% endfor %}
+                                      </div>
+    
+                                  {% endfor %}
+			             					<a id="button" style="display:block;">
+			             						<i class="fa fa-chevron-up"></i>
+			             						Haut de page
+			             					</a>
 
-								{% block body %}
-									{% for label, messages in app.flashes %}
-										<div class="container">
-											<div class="alert alert-{{ label }}">
-												{% for message in messages %}
-													<p>
-														{{ message}}
-													</p>
-												{% endfor %}
-											</div>
-										</div>
-									{% endfor %}
-								{% endblock %}
-						
-						</div>	
-  <div class="site-cache" id="site-cache"></div>	
-				</div> 
-			
-		     {% include 'partials/footer.html.twig' %}
-				
-	      </div>
-					
+								      {% block body %}
+								
+							        	{% endblock %}
+						       
+			   <div class="site-cache" id="site-cache"></div>	  		     
+				 
+				 	</div>	
+                  
+				 
+				  
+				       </div>
+				 	
+	     
+				 {% include 'partials/footer.html.twig' %} 
+		
+				 </div>
 				{% block javascripts %}
-
+	        {{ encore_entry_script_tags('app' )}}
 					<script src="{{asset('/build/fontawesome/js/all.js')}}"></script>
-					{{ encore_entry_script_tags('app' )}}
+					<script>
+					         
+					</script>
 				{% endblock %}
 			</body>
 

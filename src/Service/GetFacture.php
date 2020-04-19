@@ -27,7 +27,7 @@ class GetFacture
 
 
         $html2pdf->pdf->SetTitle('Facture ' . $facture->getNumeroCommande());
-        $html2pdf->pdf->SetSubject('Facture RDAVS');
+        $html2pdf->pdf->SetSubject('facture RDAVS');
         $html2pdf->pdf->SetKeywords('facture, Rendez-vous avec soi');
         $html2pdf->pdf->SetDisplayMode('fullpage');
         $html2pdf->writeHTML($html);

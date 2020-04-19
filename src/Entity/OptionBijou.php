@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Entity\Bijou;
-
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Bijou;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OptionBijouRepository")
+ * @UniqueEntity("reference")
  */
 class OptionBijou
 {
@@ -25,7 +26,7 @@ class OptionBijou
     private $prix = 00.00;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, )
      */
     private $reference;
 

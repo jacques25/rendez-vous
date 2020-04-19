@@ -38,7 +38,6 @@ window.onload = function () {
     img.onclick = function () {
       modal.style.display = "block";
       modalImg.src = this.src;
-      captionText.innerHTML = this.alt;
     }; // Get the <span> element that closes the modal
 
     var span = document.getElementsByClassName("close")[0]; // When the user clicks on <span> (x), close the modal
@@ -80,26 +79,38 @@ window.onclick = function (event) {
   }
 };
 
-$(document).ready(function () {
-  // function footerAlwayInBottom(footerSelector) {
-  //     var docHeight = $(window).height();
-  //     var footerTop = footerSelector.position().top + footerSelector.height();
-  //     if (footerTop < docHeight) {
-  //         footerSelector.css("margin-top", (docHeight - footerTop) + "px");
-  //     }
-  // }
+$(window).on("scroll", function() {
+	var scrollHeight = $(document).height();
+	var scrollPosition = $(window).height() + $(window).scrollTop();
+	if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+    $('#footerMenu').addClass("show");
 
-  // // Apply when page is loading
-  // footerAlwayInBottom($("#footer"));
-  // // Apply when page is resizing
-  // $(window).resize(function () {
-  //     footerAlwayInBottom($(".footer"));
-  // });
+  }
+  else {
+    	$('#footerMenu').removeClass("show");
+  }
+});
+ 
+/* (function( $ ){
+	$.fn.footerMenu = function() {
+		$(window).scroll(function() {
+	    	if ($(document).scrollTop() >100) {
+	      	
+	    	} else {
+	      	
+	    	}
+	  	});
+	};
+})(jQuery); */
+
+/* $(".site-content").footerMenu(); */
+
+/* $(document).ready(function () {
 
   var scroll = $("#button");
 
   $(window).scroll(function () {
-    if ($(window).scrollTop() > 300) {
+    if ($(window).scrollEnd() == 0) {
       scroll.addClass("show");
     } else {
       scroll.removeClass("show");
@@ -115,7 +126,7 @@ $(document).ready(function () {
       "300"
     );
   });
-
+ */
   $(".card").hover(
     function () {
       $(this).addClass("animate");
@@ -124,7 +135,7 @@ $(document).ready(function () {
       $(this).removeClass("animate");
     }
   );
-});
+
 
 var element = $(".panel-heading a");
 var btn = $(".panel-heading-two a");

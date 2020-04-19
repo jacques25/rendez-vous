@@ -2,77 +2,92 @@
  {% block title %} edition {{user.firstName }}{% endblock %}
 
 {% block body %}
- <div class="container-fluid"> 
- <div class="row">
- <div class="col-sm-3">
-  <div class="card">
-   <div class="card-img m-3">
-     <img class="rounded-circle" src="{{vich_uploader_asset(user,'imageFile' )}}" alt="" width="60">
-   </div>
-    <div class="card-body">
-      <div class="card-text">
-        <p>{{ user.firstName }}<p>
-        <p>{{ user.lastName }}<p>
-        <p>{{user.email}}<p>
-      </div>
- 
-  
-      {% for address in user.addresses %}
-      <div class="card-text">
-       <p> {{address.street}}</p>
-       <p> {{ address.complement}}</p>
-        <p>{{ address.cp}} {{address.city}}</p>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</div>
-<div class="col-sm-9">
- 
-     <table class="table-fluid table-striped">
-       <thead>
-       <tr class="text-center">
-         <td>Numéro </td>
-         <td> Date</td>
-         <td> Article </td>
-         <td> Total de la commande</td>
-         <td> Validée </td>
-       </tr>
+ <div class="container"> 
+ <div class="row flex-row">
       
-       </thead>
-       <tbody >
-        {% for commande in  user.commandes %}
-       <tr class="text-center"> 
-      
-        <td> <a href="{{path('admin_commande_show', {'user' : commande.user.id })}}"> {{ commande.numeroCommande}}</a></td>
-        <td> {{ commande.dateCommande|date('d-m-Y')}}</td>
-        
-         <td>  
-          <table class="table-bordered" style="font-size:14px">
-        
-            {% for article in commande.commande.optionBijou %}
-             <tr> 
-              <td colspan="2"> {{ article.reference}} </td>
-              <td colspan="2"> {{article.quantite}} </td>
-              <td colspan="2"> {{article.prix}} </td>
-            </tr> 
-            
-            {% endfor %}
+           <div class="card-fluid row">
+           <div class="card-body col-md-6">
+                <div class="card bg-card p-2 m-2">
+               <div class="card-img m-3">
+                  <img class="rounded-circle" src="{{vich_uploader_asset(user,'imageFile' )}}" alt="" width="60">
+               </div>
+                
+              <div class="card-text">
+                   
+                    <p><b> Prénom  : </b> {{ user.firstName }}<p>
+                    <p> <b> Nom  : </b>{{ user.lastName }}<p>
+                    <p> <b> Email  : </b>{{user.email}}<p>
+              </div>
+              </div>
+                  {% for address in user.addresses %}
+                  <div class="card bg-card p-2 m-2">
+              <div class="card-text">
+                      
+                   <p> <b> Rue  : </b>{{address.street}}</p>
+                   <p><b> Complément  : </b> {{ address.complement}}</p>
+                    <p><b> Code Postal  : </b>{{ address.cp}}</p>
+                    <p> {{address.city}}</p>
+              </div>
+              </div>
+                  {% endfor %}
+           </div>
            
-          </table>
-         </td>
-         
-        <td> {{ commande.commande.totalCommande }} €</td>
-        <td> {{ commande.valider }} </td>
-       </tr>
-        {% endfor %}
-      </tbody>
+           <div class="card-body col-md-6 ">
+                 <table class="table-fluid">
+                    <thead>
+                   <tr class="text-center">
+                      <td>Numéro </td>
+                      <td> Date</td>
+                      <td> Article </td>
+                      <td> Total de la commande</td>
+                      <td> Validée </td>
+                   </tr>
+               
+                    </thead>
+                    <tbody >
+                        {% for commande in  user.commandes %}
+                         <tr class="text-center"> 
+                      
+                             <td> <a href="{{path('admin_commande_show', {'user' : commande.user.id })}}"> {{ commande.numeroCommande}}</a></td>
+                             <td> {{ commande.dateCommande|date('d-m-Y h:i')}}</td>
+               
+                             <td>  
+                             <table class="table-fluid" style="font-size:14px">
+                                <thead>
+                                    <tr>
+                                      <th>Référence</th>
+                                      <th>Quantité</th>
+                                      <th>Prix U</th>
+                                    </tr>
+                                </thead>
+                                <tbody>  
+                                    {% for article in commande.commande.optionBijou %} 
+                                      <tr> 
+                                            <td > {{ article.reference}} </td>
+                                            <td> {{article.quantite}} </td>
+                                            <td > {{article.prix}} </td>
+                                       </tr>  
+                                     {% endfor %}
+                                </tbody>
+                             </table> 
+                         
+                             </td>
+                             <td> {{ commande.commande.totalCommande }} €</td>
+                            <td> {{ commande.valider }} </td>
+                         </tr> 
+                       {% endfor %}
+                    </tbody>
      
-     </table>
-   
+                </table>
+           
+          </div>  
+         </div>
  </div>
- </div>
-
+ 
+    <div class="row">
+    <a href="{{path('admin_users_index')}}" class="btn btn-info mx-4 mt-3"><i class="fa fa-checvron-left"></i>  Retour vers la liste </a>
+   </div>
+ 
 </div>
 
 {% endblock %}

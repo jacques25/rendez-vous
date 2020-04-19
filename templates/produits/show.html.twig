@@ -5,12 +5,13 @@
 					<h1 class="">{{ produit.title|upper }} </h1></br>
 			  </div>
 			 
-					<div class="row">
+					<div class="row paragraph mb-5">
 							{% for bijou in listeBijoux %}
 								{% include 'produits/_card.html.twig' with {bijou: bijou} only %}
 
 							{% endfor %}
 					</div>
+					
         
 {% endblock %}
       

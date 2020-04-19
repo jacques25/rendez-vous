@@ -6,15 +6,14 @@
 <div class="container">
  <h1> Les utilisateurs </h1>
   
-   <table class="table table-fluid">
+   <table class="table-fluid mmx-2">
     <thead>
      <tr>
         <td>Prénom</td>
         <td>Nom</td>
         <td>Email</td>
-        <td>Roles</td>
-        <td>Adresse</td>
         <td>Nombre de commandes</td>
+        <td> edition commandes</td>
         <td> Action </td>
      </tr>
     </thead>
@@ -22,39 +21,25 @@
     <tbody> 
     {% for user in users %}
     <tr>
+      <td>{{user.firstname}}</td>
+      <td>{{user.lastname}}</td>
       <td>{{user.email}}</td>
-       
-        {% for address in user.addresses %}
-           <td> {{address.lastName}}</td>
-          <td> {{address.firstName}}</td>
-          <td>{{address.street}} {{address.cp}}  {{address.city}}</td>
-
-         {% endfor %}
-    
-     
-     <td>
-         {% for role in user.roles %}
-             {{role}}</br>
-         {% endfor %}
-   </td>
-     
    
       {% if user.commandes %}
        <td>  {{user.commandes|length}} </td>
       {% endif %}
-      
-   
- 
+       <td><a href="{{path('admin_commande_show', {'user': user.id})}}" > <i class="fas fa-edit"></i></a></td>
          <td> 
          <a href="#" > <i class="fas fa-envelope"></i></a>
-         <a href="{{path('admin_commande_show', {'user': user.id})}}" > <i class="fas fa-edit"></i></a>
+         <a href="{{path('admin_user_edit', {'id': user.id})}}" > <i class="fas fa-edit"></i></a>
+     
          </td>
     </tr>
       {% endfor %}
     </tbody>
    
    </table>
-  
+   
 </div>
 
 {% endblock %}

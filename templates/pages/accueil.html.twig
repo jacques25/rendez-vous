@@ -3,7 +3,7 @@
 {% block title %} {% if page %} {{page.title}} {% endif %} {% endblock %}
 
 {% block body %}
- <div class="row-fluid">
+ <div class="row">
  {% if page.filename is defined %}
     <div class="jumbotron" style="background: url({{ vich_uploader_asset(page, 'imageFile')}});" ></div>
  {% endif %}    
@@ -13,7 +13,7 @@
            <h1 class="mt-3">{{page.title }}</h1>
       </div>
         <div class="col-sm-12 col-md-12 col-lg-12">
-         <article class="p-4 w-100">{{ page.description|raw }}</article>
+         <article class="paragraph mb-5">{{ page.description|raw }}</article>
    
    </div>
    {% endif %}

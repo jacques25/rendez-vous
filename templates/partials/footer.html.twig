@@ -1,6 +1,6 @@
 
 
-<footer class="footer font-small" >
+<footer class="footer" id="footerMenu">
 <div class="container-fluid">
 <div class="row">
 		
@@ -42,12 +42,16 @@
 
         
 				<div class="col-md-3">
-				<hr class="clearfix w-100 d-md-none">
-					<a  href="{{ path('contact_me')}}">
-					   <h5  class="font-weight-bold text-uppercase mt-3 mb-4">	Me contactez !</h5>
-					</a>
-				</div>
-		
+				       <hr class="clearfix w-100 d-md-none">
+				       	<a  href="{{ path('contact_me')}}"  data-toggle="modal"  data-target="#modal-response" >
+					          <h5  class="font-weight-bold text-uppercase mt-3 mb-4">	Me contactez !</h5>
+				       	</a>
+		      	<div class="modal modal-container" role="dialog"  id="modal-response">
+                       	   
+		                                {{ render(controller('App\\Controller\\FrontEnd\\FooterController::contact'))}}	
+				                 
+				    </div>
+				 </div>
 </div>
 
 </div>

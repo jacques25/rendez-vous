@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-use App\Data\SearchData;
-use App\Entity\Bijou;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Produit;
+use App\Entity\Bijou;
+use App\Data\SearchData;
 
 /**
  * @method Bijou|null find($id, $lockMode = null, $lockVersion = null)
@@ -97,5 +98,17 @@ class BijouRepository extends ServiceEntityRepository
 
             ->setParameter('array', $array);
         return $qb->getQuery()->getResult();
+    }
+
+    public function findByBijous() {
+          $qb = $this->createQueryBuilder('b');
+          $qb->leftJoin('b.produits', 'p')
+                  ->addSelect('p')
+                  ->where('b.id = :id')
+                  ->orderBy('b.id', 'DESC')
+
+                  ;
+            
+          $qb->getQuery()->getResult();
     }
 }

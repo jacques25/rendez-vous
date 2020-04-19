@@ -1,18 +1,12 @@
-{% extends "base.html.twig" %}
 
-		{% block title %}
-			Contactez moi !
-		{% endblock %}
 
-		{% block body %}
-			<div class="row contact">
-				
-					<div class="col-sm-12 col-md-8 contact-me py-3 px-3">
+			<div class="contact-me">
 					<div class="card-contact">
 						<div class="card-header">
-							<h2 class="text-center font-italic">
-								Formulaire de contact
-							</h2>
+							<h2 class="text-center font-italic">	Formulaire de contact
+							 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button></h2>
 						</div>
 						<div class="card-body-contact">
 							{{form_start(form)}}
@@ -35,7 +29,5 @@
 							{{form_end(form)}}
 						</div>
 					</div>
-				</div>
-
 			</div>
-		{% endblock %}
+	

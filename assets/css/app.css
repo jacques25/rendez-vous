@@ -23,17 +23,8 @@ body {
 body {
     background-color: #c4f2f2;
     font-family: 'Sheherazade', sans-serif;
-
-
-
-
 } 
 
-.site-content {
-
-    width: 100%;
-    margin-bottom: 8%;
-}
 
 .site-container {
     height: 100%;
@@ -141,9 +132,10 @@ h1 {
 }
 
 .modal {
-  background: #79736b;
-  width: 100%;
-  padding: 50px;
+    background: rgba(34, 34, 34, 0.8);
+    width: 100%;
+    padding: 50px;
+
 }
 
 .modal-popup {
@@ -193,17 +185,37 @@ a.close-modal:hover {
   font-size: 18px;
 }
 
-#caption {
+.title-caption {
   margin: auto;
   display: block;
   width: 80%;
   max-width: 700px;
   text-align: center;
-  color: #efefef;
+  color: rgb(7, 5, 7);
   padding: 10px 0;
   height: 150px;
   font-weight: 700;
   font-size: 30px;
+}
+.title-caption figure {
+    color: #494948;
+    margin-left:  -85px;
+    font-size: 1.5rem;
+    z-index: 1000;
+}
+.close {
+   color: #646362;
+    opacity: 1;
+    top: 0 !important;
+    font-size: 2.5rem;
+    border-radius: 5px;
+    padding: 10px;
+    text-shadow: none;
+}
+
+.close:hover {
+      color: #888;
+    opacity: .75;
 }
 
 .img-modal {
@@ -218,15 +230,15 @@ a.close-modal:hover {
 
 .modal-content {
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   margin: auto;
   position: relative;
 }
 
 /* Add Animation */
 
-.modal-content,
-#caption {
+.modal-content
+ {
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.6s;
   animation-name: zoom;
@@ -593,11 +605,13 @@ span.rounded-taille {
 /* MODAL */
 
 .modal-content-body {
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin:auto;
-    transition: zoom 0.3s;
+    margin: auto;
+    transition:  zoom 0.3s;
+    width: 500px;
+    margin-top: 125px;
 }
 
 .modal-popup {
@@ -640,18 +654,6 @@ a.close-modal {
     font-size: 18px;
 }
 
-#caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: #efefef;
-    padding: 10px 0;
-    height: 150px;
-    font-weight: 700;
-    font-size: 30px;
-}
 
 .img-modal {
     margin: 20px 0px;
@@ -735,21 +737,58 @@ transition: zoom  3s ease;
     margin-left: auto;
     bottom: 0;
 }
-
-.footer {
+.modal .modal-container
+{
+   display: none;
+ 
+}
+.modal .modal-container .show {
+display: flex ;
+  justify-content: center;
+  align-items: center;
+  width: 100%; 
+  z-index: 1000;
+  background-color: #000;
+  opacity: 0.8;
+}
+.modal-backdrop {
+  display:none;
    
+}
+.contact-me {
+   box-shadow: 4px 4px 10px 0px rgba(99, 86, 78, 0.6);  
+   border-radius: 16px;
+   background-color: #fff;
+   padding:10px;
+   height:  auto;
+    width: 600px;
+    z-index: 10000;
+    margin: 125px auto;
+}
+.contact-me  h2 {
+    color: #212529;
+    font-size: 1.6rem;
+}
+
+#footerMenu {
+   position: fixed;
     background:#8f725c;
-    width: 100vw;
-    height: 10vh;
+    width: 100%;
+  
     bottom: 0;
     left: 0;
-    position: fixed;
-
     box-shadow: 0px -10px 50px -10px rgba(10, 133, 155, 0.8),
         0px -10px 50px -10px rgba(80, 216, 216, 0.5);
     text-align: center;
-    overflow: hidden;
-
+    overflow: none;
+   z-index: 300;
+}
+#footerMenu.show {
+   height:95px;
+ /*  -moz-transition:all 0.4s ease-in-out;
+  -o-transition:all 0.4s ease-in-out;
+  transition:all 0.4s ease-in-out;
+  -webkit-transition:all 0.4s ease-in-out; */
 }
 
 
@@ -943,4 +982,8 @@ h4.panier-title {
     color: #fff;
     text-align: center;
     border-radius: 16px;
+}
+
+.btn-telechargement:hover{
+    background-color: rgb(32, 153, 223);
 }

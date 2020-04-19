@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
-use App\Entity\Commandes;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\User;
+use App\Entity\Commandes;
+use Doctrine\ORM\Query;
 
 /**
  * @method Commande|null find($id, $lockMode = null, $lockVersion = null)
@@ -45,7 +47,7 @@ class CommandesRepository extends ServiceEntityRepository
 
      public function findLastCommandes()
     {
-        $qb = $this->createQueryBuilder('c')
+           $qb = $this->createQueryBuilder('c')
             ->leftJoin('c.user', 'u')
             ->addSelect('u')
             ->orderBy('c.date_commande', 'DESC')
@@ -58,7 +60,7 @@ class CommandesRepository extends ServiceEntityRepository
 
     public function findCommandesByUser($user)
     {
-       return $this->createQueryBuilder('c')
+       return $this->findAllVisible()
               ->select('c')
               ->leftJoin('c.user', 'u')
               ->addSelect('u')
@@ -67,5 +69,14 @@ class CommandesRepository extends ServiceEntityRepository
               ->getQuery()
               ->getResult();
              
+    }
+   
+    public function findAllVisibleQuery()
+    {
+        return $this->createQueryBuilder('c')
+                       ->select('c')
+                      ->getQuery()
+                      ->getResult();
+          
     }
 }

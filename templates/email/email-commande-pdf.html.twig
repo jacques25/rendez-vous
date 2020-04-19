@@ -85,17 +85,20 @@
 								<td>{{(comd.prix * comd.quantite)|number_format(2, '.', ',')}}</td>
 						 </center>	
             </tr>
-             
+           
 						{% endfor %}
-          
+            </table>
+          </callout>
+					<callout>
+					<table>
 						<tr>
-							<td  class="first"><b>Total commande	</b>	</td>
+							<th  class="first"><b>Total commande	</b>	</th>
 							<td class="last">	{{(commande.commande.totalCommande)|number_format(2, '.', ',')}}€	</td>
 						</tr>
-
-
+          </tr>
 					</table>
-          </callout>
+         </callout>
+					
            <spacer size="25"></spacer>
 					<callout>
 					
@@ -106,7 +109,7 @@
 						</p>
             	<spacer size="10"></spacer>
 						<center>
-							<a class="btn-url" href="#">
+							<a class="btn-url" href="{{url('show_facture', {'id' : user.id})}}'">
 								Bon de commande
 							</a>
 						</center>

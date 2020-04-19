@@ -4,7 +4,7 @@
 		{% block title %}	Panier	{% endblock %}
 			{% set totalBijou = 0 %}
 				{% set totalPrix = 0 %}
-
+        
 		{% block body %}
 
 		  <div class="row mt-4">
@@ -35,25 +35,29 @@
    
 			
      {% else %}
-			 
-			   
-        				<table class="table table-fluid m-2">
+			 </div>
+			         
+        				<table class="table table-fluid">
         						<thead class="table-thead">
         								<tr>
-                          {% for item in items %}
+                          
 														
 													
-        									<th class="th-sm">Référence</th>
-        	                 <th class="th-sm"> designation </th>
-													 {% if item.bijou.promo == true %}
-        									 <th class="th-sm"> Promo </th>
+        									<th>Référence</th>
+        	                 <th> designation </th>
+												{% for item in items %}
+													
+													 {% if  item.bijou.promo == true %}
+        									 <th> Promo </th>
 													 {% endif %}
-        									<th class="th-sm">  taille </th>
-        									<th class="th-sm">	prix	</th>
-        									<th class="th-sm">	quantité </th>
-        									<th class="th-sm">  Total	</th>
-        									<th class="th-sm"> action </th>
-                      {% endfor %}
+													 
+													 	{% endfor %}
+        									<th>  taille </th>
+        									<th>	prix	</th>
+        									<th>	quantité </th>
+        									<th>  Total	</th>
+        									<th> action </th>
+                      
         								</tr>
         						</thead>
         			      <tbody class="table-tbody">

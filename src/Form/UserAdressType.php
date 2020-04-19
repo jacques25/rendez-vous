@@ -28,6 +28,7 @@ class UserAdressType extends ApplicationType
     {
         $resolver->setDefaults([
             'data_class' => UserAdress::class,
+            'id' => 'address'
         ]);
     }
 }

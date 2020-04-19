@@ -1,0 +1,79 @@
+{% extends 'admin_base.html.twig' %}
+
+		{% block title %}
+			Liste des messages
+		{% endblock %}
+
+		{% block body %}
+
+
+			<div class="container">
+				<h1>
+					Messages
+				</h1>
+
+				{%  for contact  in contacts  %}
+					<div class="table-fluid">
+					  <fieldset class="fieldset bg-fluid">
+						     <a href="{{path('admin_contact_show', { 'id': contact.id })}}" data-toggle="tooltip" data-placement="bottom"  title="Lire le message">
+								  Message de  	{{ contact.firstname}}  	{{ contact.lastname}}</a>
+									</fieldset>
+					 <table class="table table-striped mt-4">
+					 	<thead class="bg-fushia mb-4">
+							<tr>
+							<th>#</th>
+								<th>	Prénom	</th>
+								<th>	Nom	</th>
+								<th>	Email</th>
+							</tr>
+						</thead>
+           	<tbody>
+							<tr>
+							<td><i class="span-contact"> {{ contact.id }}</i></td>
+								<td>	{{ contact.firstname}}</td>
+								<td> {{ contact.lastname}}	</td>
+								<td>{{ contact.email }}	</td>
+								</tr>
+              </tbody>
+					 </table>
+					
+					<table class="table table-striped mt-4">
+					  <thead class="bg-fushia">
+				      	<tr>
+								    <th>	Téléphone</th>
+					         	<th>Message	</th>
+							     	<th>Date Message</th>
+							     	<th>	action	</th>
+								</tr>
+					  </thead>
+            <tbody>
+					    	<tr>
+										<td>	{{ contact.phone}}</td>
+							      <td>	{{ contact.message}}	</td>
+							      <td>	{{ contact.dateMessage|date('d/m/Y H:i' )}}
+							      </td>
+
+							     <td>
+							     	{% if contact.messageLu != true  %}
+							     		<a class="btn btn-info" href="{{ path('admin_contact_show', {'id': contact.id})}}">Lire
+							     		</a>
+
+							     	
+							     	{% else %}
+							     		<div class="bg-success btn text-white">
+							     			Message  Lu
+							     		</div>
+							     	{% endif %}
+
+							     </td>
+
+							  </tr>
+						</tbody>
+					</table>
+          </div>
+                
+                {% endfor %}
+
+
+			</div>
+		{% endblock %}

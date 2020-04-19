@@ -1,5 +1,8 @@
 {
   "git.ignoreLimitWarning": true,
   "editor.fontFamily": "--monaco-monospace-font: \"Ubuntu Mono\", \"Liberation Mono\", \"DejaVu Sans Mono\", \"Courier New\", monospace; ",
-  "editor.fontSize": 16
+  "editor.fontSize": 16,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.fontSize": 10,
+  "terminal.integrated.fontWeight": "400"
 }

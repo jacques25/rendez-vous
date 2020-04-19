@@ -270,21 +270,30 @@
   .livraison {
     min-width:400px;
   }
-  .footer {
-    background: #8f725c;
+ #footerMenu {
+   position: fixed;
+    background:#8f725c;
     width: 100%;
-    height: 90px;
+    height: 0;
     bottom: 0;
     left: 0;
-    
-    color: #fff;
     box-shadow: 0px -10px 50px -10px rgba(10, 133, 155, 0.8),
-      0px -10px 50px -10px rgba(80, 216, 216, 0.5);
+        0px -10px 50px -10px rgba(80, 216, 216, 0.5);
     text-align: center;
-  }
+    overflow: none;
+   z-index: 300;
+}
+#footerMenu.show {
+   height: auto !important ;
+  -moz-transition: all 3s ease-in-out ;
+  -o-transition: all 3s ease-in-out;
+  transition:  height  3s ease-in-out;
+  -webkit-transition: height 3s ease-in-out;
+}
+
+
 
   .with--sidebar {
-
     .site-pusher {
       @include transform(translateX($menu-width));
     }
@@ -302,8 +311,9 @@
 
   }
 
-  .table-panier table {
-    max-width: 400px;
+  .table-fluid{
+    margin-left:auto;
+    margin-right: auto;
   }
 
   .table-font-size tr,
@@ -319,7 +329,7 @@
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 360px) {
 .modal-content-body {
     padding: 0%;
     margin-top:20% !important;
@@ -330,10 +340,20 @@
 .modal {
   height: 100%;
 }
+ .table-fluid{
+    width: 300px !important;
+    margin-left: 15% !important;
+    margin-right: 15% !important;
+    
+  }
+
+  .table-font-size tr,
+  .table-tbody td,
+    {
+    font-size: 14px;
+  }
 
   .table{
-        margin-left: -55px !important;
-        width: 200px; 
         display: inline;
   }
  .table-thead td {
@@ -344,9 +364,7 @@
     width:8% !important;
     font-size:12px;
   }
-  .table-fluid{
-    margin-left: -25px;
-  }
+
   .table-tbody td {
     font-size: 13px !important;
   }
@@ -387,4 +405,12 @@ article:last-child  {
  width:100% !important;
 }
 
+}
+
+.contact-me {
+ width: 100% !important;
+ margin-left: auto;
+ margin-right:auto;
+ position: relative;
+ left: -15px;
 }

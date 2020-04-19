@@ -19,6 +19,25 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
+         public function findLastMessages()
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->orderBy('m.dateMessage', 'DESC')
+            ->setMaxResults(3);
+            
+      
+        return  $qb->getQuery()
+            ->getResult();
+    }
+
+    public function getContactsCount()
+    {
+        return $this->createQueryBuilder('contact')
+            ->select('COUNT(contact.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Contact[] Returns an array of Contact objects
     //  */

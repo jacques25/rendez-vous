@@ -7,13 +7,12 @@
   <div class="row">
 <h1>Bijou index</h1>
 
-<table class="table table-striped">
+<table class="table table-fluid">
     <thead>
         <tr>
             <th>Id</th>
             <th>Title</th>
-            <th>Reférences</th>
-            <th> Taille </th>
+           
             <th>Image</th>
             <th>Crée le</th>
             <th>mise à jour</th>
@@ -28,25 +27,16 @@
             <td>{{ bijou.id }}</td>
             <td>{{ bijou.title }}</td>
             <td>
-                {% for option in bijou.optionBijou %}
-                {{ option.reference}},
-                {% endfor %}</td>
-            <td>
-                {% for option in bijou.optionBijou %}
-                {{ option.taille }},
-
-                {% endfor %}</td>
-            <td>
                 {% if bijou.filename is defined %}
                 <img src="{{vich_uploader_asset(bijou, 'imageFile')}}" width="60">
                 {% endif %}
             </td>
             <td>{{ bijou.createdAt ? bijou.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             <td>{{ bijou.updatedAt ? bijou.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            <td colspan="4">
+            <td>
                 
-                <a class="btn btn-info float-left mx-2" href="{{ path('admin_bijou_edit', {'id': bijou.id}) }}"><i class="fa fa-edit"></i></a>
-                <a class="btn btn-danger mb-3" href="{{ path('admin_bijou_delete', {'id': bijou.id}) }}"><i class="fa fa-remove"></i></a>
+                <a class="btn btn-info float-left" href="{{ path('admin_bijou_edit', {'id': bijou.id}) }}"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger" href="{{ path('admin_bijou_delete', {'id': bijou.id}) }}"><i class="fa fa-remove"></i></a>
             </td>
         </tr>
         {% else %}

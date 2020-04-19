@@ -3,11 +3,21 @@
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ *  @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
+ */
 class Contact 
 {
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
   /**
+   * @ORM\Column(type="string", length=255)
    * @Assert\NotBlank()
    * @Assert\Length(min=2, max=100)
    * @var string|null
@@ -15,16 +25,16 @@ class Contact
   private $firstname;
 
   /**
+   * @ORM\Column(type="string", length=250)
    * @Assert\NotBlank()
    * @Assert\Length(min=2, max=100)
    * @var string|null
    */
   private $lastname;
 
-  private $subject;
 
   /**
-   * 
+   * @ORM\Column(type="string", length=30)
    * @Assert\NotBlank()
    * @Assert\Regex(
    * pattern="/^[0-9]{10}$/",
@@ -35,22 +45,46 @@ class Contact
   private $phone;
 
   /**
-   * 
+   * @ORM\Column(type="string",  length=255)
    * @Assert\NotBlank()
    * @Assert\Email
    * @var string|null
    */
   private $email;
-
+ 
   /**
-   * 
+   * @ORM\Column(type="string",  length=255)
+   * @Assert\NotBlank()
+   */
+   private $subject;
+  /**
+   * @ORM\Column(type="text")
    * @Assert\NotBlank()
    * @Assert\Length(min=10)
    * @var string|null
    */
   private $message;
 
+  /**
+   * @ORM\column(type="datetime", nullable=true)
+   */
+  private $dateMessage;
  
+   /**
+   * @ORM\column(type="boolean")
+   */
+  private $messageLu;
+ 
+  /**
+   * @ORM\Column(type="boolean")
+   */
+  private $response;
+
+  public function __construct(){
+    $this->dateMessage = new \DateTime();
+    $this->messageLu = false;
+    $this->response = false;
+  }
   /**
    * Get the value of firstname
    *
@@ -190,4 +224,47 @@ class Contact
 
     return $this;
   }
+
+  public function getId(): ?int
+  {
+      return $this->id;
+  }
+
+  public function getDateMessage(): ?\DateTimeInterface
+  {
+      return $this->dateMessage;
+  }
+
+  public function setDateMessage(?\DateTimeInterface $dateMessage): self
+  {
+      $this->dateMessage = $dateMessage;
+
+      return $this;
+  }
+
+  public function getMessageLu(): ?bool
+  {
+      return $this->messageLu;
+  }
+
+  public function setMessageLu(bool $messageLu): self
+  {
+      $this->messageLu = $messageLu;
+
+      return $this;
+  }
+
+  public function getResponse(): ?bool
+  {
+      return $this->response;
+  }
+
+  public function setResponse(bool $response): self
+  {
+      $this->response = $response;
+
+      return $this;
+  }
+
+  
 }

@@ -159,6 +159,19 @@ a.btn-link:hover {
   padding: 10px;
 }
 
+/** USER PROFIL  */
+#profile_user img {
+   width : 150px;
+   float: left;
+   padding: 10px;
+   border-radius: 50%;
+  
+}
+#profile_imageFile_delete{
+     line-height: 25px;
+   position: relative;
+   margin:  25px ;
+}
 .card-header-address {
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);

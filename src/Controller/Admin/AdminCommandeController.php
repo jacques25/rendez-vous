@@ -2,17 +2,22 @@
 
 namespace App\Controller\Admin;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Service\GetReference;
+use App\Service\GetFacture;
+use App\Repository\CommandesRepository;
 use App\Entity\User;
 use App\Entity\Commandes;
-use App\Service\GetReference;
-use Symfony\Component\Mime\Address;
-use App\Repository\CommandesRepository;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Snappy\Pdf;
 
 
 /**
@@ -22,32 +27,42 @@ class AdminCommandeController extends AbstractController
 {  
    private $commandesRepository;
    private $getReference;
+    private $getFacture;
    
-   public function __construct(CommandesRepository $commandesRepository, GetReference $getReference)
+   
+   public function __construct(CommandesRepository $commandesRepository, GetReference $getReference, GetFacture $getFacture)
    {
       $this->commandesRepository = $commandesRepository;  
       $this->getReference = $getReference;
+      $this->getFacture = $getFacture;
+    
    }
     
    public function navMenu() 
-   {
+   {  
+     $commandeCount = $this->commandesRepository->getCommandesCount();
        $commandes = $this->commandesRepository
             ->findLastCommandes(
                 array(),  
             );
         return $this->render('admin/commande/nav-commande.html.twig',[
                 'commandes' => $commandes, 
-              ]);
+                'commandesCount' => $commandeCount
+        ]);
    }
   
    /**
     * @Route("/liste/commandes", name="admin_commandes_index")
     */
 
-    public function index(){
-      $commandes = $this->commandesRepository->findAll();
+    public function index(PaginatorInterface $paginatorInterface, Request $request)
+    {
+      $commandes = $paginatorInterface->paginate(
+                    $this->commandesRepository->findAllVisibleQuery(),
+                    $request->query->getInt('page' ,  1),
+                    5
+      );
       
-     
       return $this->render('admin/commande/index.html.twig', ['commandes' => $commandes]);
     }
 
@@ -123,4 +138,56 @@ class AdminCommandeController extends AbstractController
     return $this->redirectToRoute('admin_commande_show', ['user' => $user->getId()]);
 
     }
+
+     /**
+     * @Route("/factures/pdf/{id}", name="admin_facture_pdf")
+     */
+    public function facturePDF($id)
+    {
+       
+        $facture = $this->commandesRepository->findOneBy([
+            'user' => $this->getUser(),
+            'valider' => 1,
+            'id' => $id
+        ]);
+
+       
+          $this->getFacture->facture($facture);
+    }
+   
+     /**
+ * @Route("/user/factures/", name="admin_user_facture")
+ */
+    public function facture(CommandesRepository $commandesRepository)
+    {
+
+       
+        $factures = $commandesRepository->byFacture($this->getUser());
+        
+        return $this->render('user/default/facture.html.twig', [
+            'factures' => $factures
+        ]);
+    }
+
+    /* /**
+     *  @route("/imprimer/pdf", name="admin_print_pdf")
+     */
+   /*  public function printPdf(CommandesRepository $commandesRepository, \Knp\Snappy\Pdf $knpSnappy)
+    {
+     $factures = $commandesRepository->byFacture($this->getUser());
+      $html = $this->renderView('user/default/facture.html.twig', [
+            'factures' => $factures
+        ]);
+        $filename =  sprintf('facture-%s.pdf', date('d-m-Y'));
+
+        return new PdfResponse( 
+         $knpSnappy->getOutputFromHtml($html),
+          200,
+          [
+              'Content-Type' => 'application/pdf',
+              'Content-Disposition' => sprintf('attachment;  filename="%s"', $filename),
+          ]
+          );
+         
+    }  */
 }

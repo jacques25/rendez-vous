@@ -1,0 +1,229 @@
+{% extends 'base.html.twig' %}
+
+		{% block body %}
+
+			
+			<div class="row flex-row mt-5">
+
+
+				<div class="col-3">
+					<h1>Commande  </h1>
+					<p class="">Date: 	{{commande.dateCommande|date('d-m-Y') }}	</p>
+					<p class="">
+						Numero de commande:
+						{{ commande.numeroCommande }}
+					</p>
+				</div>
+				<div class="col-3 center mt-5">
+					<h3>
+						Adresse livraison
+					</h3>
+
+					<p class="">
+						{{commande.commande.livraison.lastname }}
+						{{commande.commande.livraison.firstname }}
+					</p>
+					<p class="">
+
+						{{commande.commande.livraison.address }}
+					</p>
+					<p class="">
+						{{commande.commande.livraison.cp }}
+
+						{{commande.commande.livraison.city }}
+						{{commande.commande.livraison.country }}
+					</p>
+
+
+				</div>
+						<div class="col-3 center mt-5">
+					<h3>
+						Adresse facturation
+					</h3>
+
+					<p class="">
+						{{commande.commande.facturation.lastname }}
+						{{commande.commande.facturation.firstname }}
+					</p>
+					<p class="">
+
+						{{commande.commande.facturation.address }}
+					</p>
+					<p class="">
+						{{commande.commande.facturation.cp }}
+
+						{{commande.commande.facturation.city }}
+						{{commande.commande.facturation.country }}
+					</p>
+
+
+				</div>
+			</div>
+
+			<div class="row">
+
+				{% if commande.commande.optionBijou is defined and commande.commande.optionBijou is not null %}
+       
+					<table class="table-fluid">
+
+
+						<thead class="table-thead">
+							<tr>
+								<th>
+								 {{'Référence'}}
+								</th>
+								<th>
+									Quantité
+								</th>
+										{% for option in commande.commande.optionBijou  %}
+								{% if option.taille is not null %}
+									<th>
+										Taille
+									</th>
+								{% endif %}
+								{% endfor %}
+								<th>
+									P.U
+								</th>
+								<th>
+								Sous total
+								</th>
+							</tr>
+						</thead>
+						<tbody class="table-tbody">
+							{% for option in commande.commande.optionBijou  %}
+							 
+									<tr>
+	             {#   <td><img src="{{vich_uploader_asset(option.bijou,'imageFile')}}" width="40"></td>  #}
+									<td>	{{ option.reference }}	</td>
+								
+									<td>{{ option.quantite }}</td>
+									<td>	{{option.taille}}</td>
+									<td>	{{ option.prix }}</td>
+
+									<td>
+										{{option.prix * option.quantite}}
+									</td>
+									</tr>
+							{% endfor %}
+
+						
+						</tbody>
+					    
+					</table>
+             
+				{% endif %}
+			</div>
+			{% if commande.commande.promo is defined and commande.commande.promo is not null %}
+				<div class="row mt-4">
+
+					<h3 class="titre">
+						Articles en promotion
+					</h3>
+
+
+					<table id="entity">
+						<tr>
+							<td width="180">
+								DESIGNATION
+							</td>
+							<td width="110">
+								QUANTITE
+							</td>
+							<td width="100">
+								P.U
+							</td>
+							<td width="180">
+								MONTANT REDUCTION
+							</td>
+							<td width="105">
+								MONTANT TTC
+							</td>
+						</tr>
+						{% for promo in commande.commande.promo %}
+							<tr>
+								<td class="color">
+									{{ promo.reference }}
+								</td>
+								<td class="color">
+									{{ promo.quantite }}
+								</td>
+								<td class="color">
+									{{promo.horsPromoTTC }}
+									€
+								</td>
+
+								<td class="color">
+									-
+									{{promo.prixReduit}}
+									€
+								</td>
+								<td class="color">
+									{{promo.totalPromo}}
+									€
+								</td>
+
+
+							</tr>
+						</table>
+
+						<table id="total">
+							<tr>
+
+								<td width="150">
+									REDUCTION
+									{{  promo.reduction.valeur }}
+									%
+								</td>
+								<td class="color" width="60">
+									{{promo.prixReduit }}
+									€
+								</td>
+							</tr>
+							<tr>
+								<td width="150">
+									FRAIS DE LIVRAISON
+								</td>
+								<td class="color" width="60">
+									{{commande.commande.fraisPort }}
+									€
+								</td>
+							</tr>
+							<tr>
+								<td width="150">
+									TOTAL TTC
+								</td>
+
+								<td class="color" width="60">
+									{{commande.commande.totalPromo * promo.quantite + commande.commande.fraisPort }}
+									€
+								</td>
+							</tr>
+						</table>
+
+
+					{% endfor %}
+				</div>
+			{% endif %}
+		
+				<div class="d-flex flex-row-reverse float-right">
+					<div class="col-12 mx-4" id="total">
+
+						TOTAL COMMANDE : {{commande.commande.totalCommande}} €
+					</div>
+
+				</div>
+			 
+			
+			<a class="btn btn-telechargement" href="{{ path('commande_pdf',{'id': commande.id}) }}" target="_blank">
+										<i class="fas fa-upload"></i> {{'téléchargement commande'|upper }}
+								  	</a>
+			<div class="row mt-5">
+				<div class="col-6">
+					<a class="btn btn-primary" href="{{path('account_profile')}}">
+						Retour
+					</a>
+				</div>
+			</div>
+      
+		{% endblock %}

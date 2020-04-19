@@ -1,0 +1,85 @@
+{% extends "admin_base.html.twig" %}
+
+{% block title %} Commandes {% endblock %}
+
+{% block body %}
+ 
+ <div class="container">
+  <div class="row">
+  {% for commande in commandes %}
+    
+  {% if commande.sendCommande == 0 %}
+    <div class="card flex-row w-100">
+     <div class="card-header col-6">
+      <h5>Date de commande <b style="font-size: 16px";>{{commande.dateCommande|date('d/m/Y, H:i')}}</b> </h5> 
+      <h6>Commande n° <b> {{commande.numeroCommande}}</b></h6>
+      {% if commande.valider == 1 %}
+        <div class="alert alert-success" style="color: #08a32e"><strong> {{'Commande validée '}}</strong></div>
+
+      {% else %}
+         <div class="alert alert-warning"><strong> {{'Commande non-validée '}}</strong></div>
+
+      {% endif %}
+       <p>
+        {% if commande.sendCommande == 0 %}
+           <a class="btn btn-info" href="{{path('admin_expedition', {'id': commande.id})}}"> Message expédition commande</a></p>
+        {% else %}
+           <div class="alert alert-success" style="color: #08a32e"><strong> {{'Commande expédié'}}</strong></div>
+        
+       {% endif %}
+        <p> {{ commande.user.lastname}} {{commande.user.firstname}} <br>
+               {{commande.user.email}} <br>   
+               <i class="fa fa-mobile"> </i> {{commande.commande.livraison.phone }} <br>
+          
+             <b> <i class="fa fa-truck">   </i>  {{commande.commande.livraison.address }}
+              {{ commande.commande.livraison.cp }}  {{ commande.commande.livraison.city }}</b> <br>
+
+             <b class="ml-1"> <i class="fa fa-receipt"> </i>  {{commande.commande.facturation.address }}
+              {{ commande.commande.facturation.cp }}  {{ commande.commande.facturation.city }}</b>
+             </p>
+     </div>
+      <div class="card-body  col-6">
+    
+             <table class="table table-fluid">
+              <thead>
+                <tr>
+                  <td>Réference</td>
+                  <td>Taille</td>
+                  <td>Prix</td>
+                  <td>Quantite</td>
+                  <td>Sous Total</td>
+                 
+               </tr>
+              </thead>
+              <tbody>
+            
+             
+               {% for option in commande.commande.optionBijou %}
+                  <tr> 
+                 <td>{{option.reference}} </td>
+                 <td> {{option.taille}} </td>
+                 <td> {{option.prix}} </td>
+                 <td> {{option.quantite}} </td>
+                 <td> {{option.prix * option.quantite}} € </td>
+               </tr>
+                 
+               {% endfor %}  
+               <tr style="background-color:#9f53fc; color:#fff;"> <td colspan="4">Total de la Commande</td><td> {{commande.commande.totalCommande}} € </td></tr>
+                  
+              
+              
+              </tbody>
+             </table>
+          <a class="btn btn-success" href="{{ path('admin_facture_pdf',{'id': commande.id}) }}"> Télécharger</a>
+       
+      </div>
+    </div>
+
+    {% endif %}
+  {% endfor %}
+  </div>
+ 
+ </div>
+
+
+{% endblock %}

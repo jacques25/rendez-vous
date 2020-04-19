@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 		{% block body %}
-			<div class="container mt-5">
+<div class="container mt-5">
 				<div class="row flex-auto justify-content-center">
 
-					<div class="col-md-6">
+	        <div class="col-md-6">
 						<div class="col">
 							<div class="column-left">
 								{% if bijou.filename %}
@@ -23,11 +23,14 @@
 
 									<div class="modal" id="myModal">
 										<span class="close" class="btn btn-danger">
-											<i class="fas fa-times"></i>
-											FERMER
+											<i class="fas fa-times-circle"></i>
+										
 										</span>
-										<img class="modal-content-body" id="modal-img">
-										<div id="caption"></div>
+										<img class="modal-content" id="modal-img">
+										<div class="title-caption">
+										<figure>{{bijou.title}}</figure>
+										
+										</div>
 									</div>
 
 								{% endif %}
@@ -63,8 +66,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-6">
+	        		</div>
+	        		<div class="col-md-6">
 
 						<div class="detail-bijou-container">
 
@@ -247,10 +250,11 @@
 
 							</div>
 						</div>
-					</div>
+	        		</div>
 				</div>
+	
 </div>
-
+  
 		{% endblock %}
 		{% block javascripts %}
 

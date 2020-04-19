@@ -23,50 +23,49 @@
 						</h1>
 				</div>	
 
-				{{form_start(form)}}
-				<div class="row">
-				
-					<div class="col-md-6">
-						
-						{{form_row(form.imageFile)}}
-					</div>
+				{{form_start(form,  {'attr' : {'id' : 'profile_user' }})}}
+				<div class="row mb-3">
 						<div class="col-md-6">
 
-						<div class="card-identity right">
-							<div class="card-header">
-								<h3>Identité	</h3>
-							</div>
-							<div class="card-body-adress">
-								{{form_row(form.firstName, {'attr': {'class': 'mb-3'}}
-								)}}
-								{{form_row(form.lastName, {'attr': {'class': 'mb-3'}}
-								)}}
-								{{form_row(form.email, {'attr': {'class': 'mb-3'}}
-								)}}
-								{{form_row(form.introduction, {'attr': {'class': 'mb-3', 'rows':6}}
-								)}}
-								{{form_row(form.description,  {'attr': {'class': 'mb-3', 'rows': 6}}
-								)}}
-							</div>
-						</div>
+				  	   	<div class="card-identity right">
+				  			<div class="card-header">
+				  				<h3>Identité	</h3>
+				  			</div>
+				  			<div class="card-body-adress">
+				  					{{form_row(form.imageFile)}}
+				  				{{form_row(form.firstName, {'attr': {'class': 'mb-3'}}
+				  				)}}
+				  				{{form_row(form.lastName, {'attr': {'class': 'mb-3'}}
+				  				)}}
+				  				{{form_row(form.email, {'attr': {'class': 'mb-3'}}
+				  				)}}
+				  				{{form_row(form.introduction, {'attr': {'class': 'mb-3', 'rows':6}}
+				  				)}}
+				  				{{form_row(form.description,  {'attr': {'class': 'mb-3', 'rows': 6}}
+				  				)}}
+				  			</div>
+				  	   	</div>
+					</div>
+					<div class="col-md-6">
+					  {{ render(controller('App\\Controller\\FrontEnd\\User\\CommandeController::commande')) }}
+           {{ render(controller('App\\Controller\\FrontEnd\\User\\FactureController::facture')) }}
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">
-						<div class="card-signin-address" id="address" data-prototype="{{ form_widget(form.addresses.vars.prototype)|e('html_attr') }}">
-							<div class="row flex-row">
+			
+						<div class="card-signin-address"  id="address" data-prototype="{{ form_widget(form.addresses.vars.prototype)|e('html_attr') }}">
 					
 
 								{% for row in form.addresses %}
-									<div class="col-6 float-right">
-										<div class="card-address">
+									<div class="col-sm-6 ">
+										<div class="card-address float-left">
 											<div class="card-header-address bg-card">
-												<a class="text-dark" href="#item-address">
-													Adresse 
+												<a class="text-dark" href="#item-address-{{row.vars.value.id}}" data-toggle="collapse">
+													Adresse {{row.vars.value.id}}
 													
 												</a>
 											</div>
-											<div class="card-body-address" id="item-address">
+											<div class="card-body-address" id="item-address-{{row.vars.value.id}}">
 												{{form_widget(row)}}
 											</div>
 											
@@ -77,10 +76,6 @@
 
 						</div>
 
-					</div>
-				  <div class="col-md-6">
-           {{ render(controller('App\\Controller\\FrontEnd\\User\\FactureController::facture')) }}
-					</div>
 					</div>
 					<div class="row">
 						<div class="col-7 p-3">

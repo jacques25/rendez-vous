@@ -53,3 +53,7 @@ $(function () {
         $('#sidebar, #content').toggleClass('active');
     });
 });
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});

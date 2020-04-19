@@ -35,7 +35,7 @@ $(document).ready(function () {
 
     $collectionHolder.data('index', index + 1);
     // create the card
-    var $card = $('<div class="col-md-6"><div class="card-address"><div class="card-header-address mb-2 p-3"><h3>Nouvelle Adresse</h3></div></div></div>');
+    var $card = $('<div class="card-address float-left"><div class="card-header-address mb-2 p-3"><h6>Nouvelle Adresse</h5></div></div>');
 
     // create the card body and append the form it
 
@@ -62,7 +62,7 @@ $(document).ready(function () {
 
     $removeButton.click(function (e) {
       e.preventDefault();
-      $(e.target).parents('.card-address').slideUp(1000, function () {
+      $(e.target).parents('.card-header').slideUp(1000, function () {
         $(this).remove();
       });
 

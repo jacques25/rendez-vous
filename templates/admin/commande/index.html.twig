@@ -6,14 +6,16 @@
         <h1>
           Liste des commandes
         </h1>
-        <table class="table-fluid">
-          <thead>
+        </div>
+        <div class="row-fluid">
+        <table class="table-fluid-commande">
+          <thead style="font-size:12px;">
             <tr>
               <th>Id</th>
-              <th>Title</th>
+              <th>Date</th>
              
               <th>Description</th>
-               <th> Total Commande</th>
+               <th> Total</th>
               <th>actions</th>
             </tr>
           </thead>
@@ -52,7 +54,7 @@
                 </td>
                 <td> {{commande.commande.totalCommande}} € </td>
                   <td>
-                    <a class="btn btn-primary" href="{{ path('admin_commande_show', {'id': commande.id}) }}"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-primary" href="{{ path('admin_commande_show', {'user': commande.id}) }}"><i class="fas fa-edit"></i></a>
                     <a class="btn btn-danger" href="{{ path('admin_commande_delete', {'id': commande.id}) }}"><i class="fas fa-trash"></i></a>
                   </td>
                 </tr>

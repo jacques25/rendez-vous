@@ -1,0 +1,150 @@
+<nav class="navbar navbar-expand-md  navbar-light bg-light">
+
+			<a class="navbar-brand" href="{{path('app_homepage')}}">
+				<img src="{{asset('/build/img/rdv.png') }}" alt="rendez-vous-avec-soi.fr" width="30">
+			</a>
+
+
+			<button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNav" data-toggle="collapse" type="button">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav mr-auto uppercase">
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('qui_suis_je')}}">
+							Qui Suis je ?
+						</a>
+					</li>
+					{% for category in categories %}
+              
+						<li class="nav-item dropdown">
+							<a id="navbar" class="nav-link" data-id="{{category.id}}">
+								{{ category.title }}
+							</a>
+							{% if category.articles|length != 0 %}
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+									{% for article in category.articles %}
+										<a id="menu-link" href="{{path('article_show', {'slug':article.slug})}}" class="dropdown-item nav-link">
+											{{article.title}}
+										</a>
+									{% endfor %}
+								</div>
+
+							</li>
+						{% elseif category.boutiques|length != 0 %}
+						
+							   <div class="dropdown-menu-second">
+								    {% for boutique in category.boutiques %}
+                
+								 
+										<a id="nav-link" href="#" class="nav-link">
+											{{ boutique.title}}
+										</a>
+              
+										{% if boutique.produits|length != 0 %}
+
+											<div class="sub-menu">
+												{% for produit in boutique.produits %}
+                          
+											
+													<a  id="link" href="{{path('produit_show', {'boutique': boutique.slug, 'slug': produit.slug})}}" class="nav-link">
+														{{produit.title}}
+													</a>
+												
+	
+												{% endfor %}
+											
+										{% endif %}
+								
+								    {% endfor %}
+								</div>
+								
+							
+
+
+
+						{% elseif category.seances|length != 0 %}
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								{% for seance in category.seances %}
+									<a id="menu-link"  href="{{path('seance_show', {'slug':seance.slug})}}" class="dropdown-item nav-link">
+										{{seance.title}}
+									</a>
+								{% endfor %}
+							</div>
+						{% endif %}
+					{% endfor %}
+				   </li>
+			  </ul>
+			      <ul class="navbar-nav ml-auto p-auto uppercase navbar-right">
+
+			  
+
+				   	{% if is_granted("ROLE_ADMIN") %}	
+					<li class="nav-item dropdown ">
+					
+				    
+						<a href="#" id="menu_user_admin" class="nav-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{% if app.user.filename %}
+								<img src="{{vich_uploader_asset(app.user, 'imageFile') }}" alt="" class="rounded-circle" width="30">
+
+							{% else %}
+								<img src="{{asset('/public/images/users/avatar.png')}}" class="rounded-circle" width="30">
+							{% endif %}
+
+		         {{app.user.firstName}} {{app.user.lastName}}
+						</a>
+						<div class="dropdown-menu" id="menu_user_admin" aria-labelledby="menu_user_admin">
+							<a href="{{path('account_profile')}}" class="nav-link">
+								Mes renseignements
+							</a>
+							<a href="{{path('account_logout')}}" class="nav-link">
+								Déconnexion
+							</a>
+							<a class="nav-link uppercase" href="{{path('admin')}}">
+								Administration
+							</a>
+						</div>
+            </li>
+					{% elseif  is_granted("ROLE_USER") %}
+					 <li class="nav-item dropdown">
+						<a href="#" id="menu_user" class="nav-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{% if app.user.filename %}
+								<img src="{{vich_uploader_asset(app.user, 'imageFile') }}" alt="" class="rounded-circle" width="30">
+
+							{% else %}
+								<img src="{{asset('/images/users/avatar.png')}}" class="rounded-circle" width="30">
+							{% endif %}
+
+							 {{app.user.firstName}} {{app.user.lastName}}
+						</a>
+						<div class="dropdown-menu" id="menu_user" aria-labelledby="menu_user">
+							<a href="{{path('account_profile')}}" class="nav-link">
+								Mes renseignements
+							</a>
+							<a href="{{path('account_logout')}}" class="nav-link">Déconnexion</a>
+						</div>
+					</li>
+			  	{% else %}
+
+
+					<li class="nav-item menu-item">
+						<a href="{{path('account_register')}}" class="nav-link">
+							Inscription
+						</a>
+					</li>
+
+					<li class="nav-item menu-item">
+						<a href="{{path('account_login')}}" class="nav-link">
+							Connexion
+						</a>
+					</li>
+
+			   	{% endif %}
+				<li class="nav-item">
+					{{ render(controller('App\\Controller\\FrontEnd\\PanierController::menu')) }}
+				</li>
+			   </ul>
+		  </div>
+	
+	</nav>
+
