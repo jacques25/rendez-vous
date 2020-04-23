@@ -2,17 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use DateTime;
-use App\Entity\Bijou;
-use App\Form\BijouType;
-use App\Repository\BijouRepository;
-use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use DateTime;
+use App\Repository\BijouRepository;
+use App\Form\RechercheType;
+use App\Form\BijouType;
+use App\Entity\Recherche;
+use App\Entity\Bijou;
 
 /**
  * @Route("/admin")
@@ -22,13 +24,22 @@ class AdminBijouController extends AbstractController
     /**
      * @Route("/bijou/liste", name="admin_bijou_index", methods={"GET"})
      */
-    public function index(BijouRepository $repository)
-    {
+    public function index(BijouRepository $repository, PaginatorInterface $paginatorInterface, Request $request)
+    {   
+         $search = new Recherche();
+         $form = $this->createForm(RechercheType::class,  $search);
+         $form->handleRequest($request);
 
-        $bijous = $repository->findAll();
+         $bijous = $paginatorInterface->paginate(
+             $repository->findAllVisibleQuery($search),
+             $request->query->getInt('page', 1),
+             20
+         );
+       
 
         return $this->render('admin/bijou/index.html.twig', [
             'bijous' => $bijous,
+            'form' => $form->createView()
         ]);
     }
 
@@ -37,6 +48,9 @@ class AdminBijouController extends AbstractController
      */
     public function new(Request $request): Response
     {
+           $referer =$request->getSession('referer');
+
+       
         $bijou = new Bijou();
 
         // original OptionBijou entity 
@@ -49,6 +63,8 @@ class AdminBijouController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+              $referer =$request->getSession('referer');
+
             $manager = $this->getDoctrine()->getManager();
             $slugger = new AsciiSlugger();
             $bijou->setSlug($slugger->slug(strtolower($bijou->getTitle())));
@@ -59,7 +75,7 @@ class AdminBijouController extends AbstractController
             $manager->persist($bijou);
             $manager->flush();
 
-            return $this->redirectToRoute('admin_bijou_index');
+            return $this->redirectToRoute('admin_bijou_index', ['referer' => $referer]);
         }
 
         return $this->render('admin/bijou/new.html.twig', [
@@ -82,7 +98,8 @@ class AdminBijouController extends AbstractController
      * @Route("/bijou/{id}/edit", name="admin_bijou_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, $id, Bijou $bijou): Response
-    {
+    {    
+     
         $manager = $this->getDoctrine()->getManager();
         $bijou = $manager->getRepository('App:Bijou')->findOneBy(['id' => $id]);
 
@@ -94,8 +111,9 @@ class AdminBijouController extends AbstractController
         }
         $form = $this->createForm(BijouType::class, $bijou);
         $form->handleRequest($request);
-
-
+ 
+       
+      
 
         if ($form->isSubmitted() && $form->isValid()) {
             //get rid of the ones that bijou got rid of in the interface(DOM)

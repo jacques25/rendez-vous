@@ -10,12 +10,11 @@
       {{ message }}</div>
     {% endfor %}
   </div>
-  <table class="table">
+  <table class="table-fluid table-fluid-index">
     <thead>
       <tr>
         <th>Id</th>
         <th>Title</th>
-        <th>Description</th>
         <th>Image</th>
         <th>Updated_at</th>
         <th>actions</th>
@@ -28,8 +27,7 @@
           {{ boutique.id }}</td>
         <td>
           {{ boutique.title }}</td>
-        <td>
-          {{ boutique.description }}</td>
+     
         <td>
           {% if boutique.filename %}
           <img src="{{ vich_uploader_asset(boutique, 'imageFile')}}" width="100">
@@ -38,7 +36,8 @@
         <td>
           {{ boutique.updatedAt ? boutique.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
         <td>
-          <a class="btn btn-primary" href="{{ path('admin_boutique_edit', {'id': boutique.id}) }}">edit</a>
+          <a class="btn btn-info mt-1" href="{{ path('admin_boutique_edit', {'id': boutique.id}) }}"><i class="fa fa-edit"></i></a>
+          {{include ('admin/boutique/_delete_form.html.twig')}}
         </td>
       </tr>
       {% else %}
@@ -51,7 +50,7 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-    <a class="btn btn-secondary" href="{{ path('admin_boutique_new') }}">Create new</a>
+    <a class="btn btn-info" href="{{ path('admin_boutique_new') }}"><i class="fa fa-plus-circle"></i> Nouveau</a>
   </div>
 </div>
 

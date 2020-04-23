@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\RechercheBijou;
+use App\Entity\Recherche;
 use App\Entity\Produit;
 use App\Entity\Bijou;
 use App\Data\SearchData;
@@ -95,7 +98,6 @@ class BijouRepository extends ServiceEntityRepository
           $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->where('b.id IN (:array)')
-
             ->setParameter('array', $array);
         return $qb->getQuery()->getResult();
     }
@@ -111,4 +113,53 @@ class BijouRepository extends ServiceEntityRepository
             
           $qb->getQuery()->getResult();
     }
+
+    public function findAllVisibleQuery(Recherche $search): Query
+    {
+        $query =  $this->findVisibleQuery() ;
+          if($search->getReference()) {
+               $query = $query->
+               andWhere('op.reference  LIKE  :ref ')
+               ->setParameter('ref',  $search->getReference());
+          }
+          if($search->getPrix()){
+              $query = $query
+              ->andWhere('op.prix < :prix ')
+              ->setParameter('prix', $search->getPrix());
+          }
+          if($search->getTitle()){
+              $query = $query
+              ->andWhere('b.title  LIKE  :title')
+              ->setParameter('title', $search->getTitle());
+                
+          }
+       
+       return  $query->getQuery();
+          
+    }
+
+    public function findVisibleQuery()
+    {
+        return $this->createQueryBuilder('b')
+                       ->join('b.option_bijou', 'op')
+                      ->addSelect('op')
+                      ->orderBy('b.title' , 'ASC')
+                      ;
+                  
+    }
+
+     public function findBijousByTitle($motcle)
+    {
+
+        $query = $this->createQueryBuilder('b')
+            ->where('b.title like  :motcle')
+
+            ->setParameter('motcle', '%' . $motcle . '%')
+            ->orderBy('b.id', 'ASC')
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+
 }

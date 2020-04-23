@@ -26,6 +26,9 @@ class BijouType extends ApplicationType
         $builder
             ->add('title')
             ->add('description', CKEditorType::class, [
+                'config' => [
+                    'height' => 300
+                ],
                 'label' => false
             ])
             ->add('imageFile', ImageType::class, [

@@ -4,17 +4,20 @@
 
 {% block body %}
 <div class="container">
-    <h1>Page index</h1>
-
-    <table class="table">
+<div class="row">
+    <h1 class="mx-1">Page index</h1>
+  <div class="navigation mt-3">
+                     {{ knp_pagination_render(pages) }}
+      </div>
+</div>
+<div class="row">
+    <table class="table-fluid table-fluid-index">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Slug</th>
-                <th>Created_at</th>
+                <th colspan="1">Id</th>
+                <th>Title</th> 
                 <th>Filename</th>
+                <th>Created_at</th>
                 <th>Updated_at</th>
                 <th>actions</th>
             </tr>
@@ -22,16 +25,15 @@
         <tbody>
         {% for page in pages %}
             <tr>
-                <td>{{ page.id }}</td>
+                <td colspan="1">{{ page.id }}</td>
                 <td>{{ page.title }}</td>
-             
-                <td>{{ page.slug }}</td>
+                <td> <img src="{{vich_uploader_asset(page, 'imageFile')}}" alt="" width=100> </td>
                 <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td> <img src="{{vich_uploader_asset(page, 'imageFile')}}" alt="" width=150> </td>
+               
                 <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_page_show', {'id': page.id}) }}">show</a>
-                    <a href="{{ path('admin_page_edit', {'id': page.id}) }}">edit</a>
+                    <a  class="btn btn-info mt-2" href="{{ path('admin_page_edit', {'id': page.id}) }}"><i class="fas fa-edit"></i></a>
+                     {{ include('admin/page/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
@@ -41,8 +43,9 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('admin_page_new') }}">Create new</a>
-    
+     </row>
+    <div class="row">
+    <a class="btn btn-primary mx-4" href="{{ path('admin_page_new') }}"><i class="fas fa-plus-circle"></i>  Nouveau</a>
+    </div>
     </div>
 {% endblock %}

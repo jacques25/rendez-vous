@@ -17,7 +17,7 @@ class BoutiqueController extends AbstractController
      */
     public function show(string $slug, Request $request, BoutiqueRepository $repo)
     {
-
+       
         $boutique = $repo->findOneBySlug(['slug' => $slug]);
 
 

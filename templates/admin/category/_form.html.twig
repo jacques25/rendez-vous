@@ -1,11 +1,29 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
+<div class="row">
+   <div class="col-sm-6">
+       {{form_row(form.title)}}
+    </div>
+    <div class="col-sm-6">
+      {{form_row(form.position)}}
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-6">
+      {{ form_row(form.description)}}
+   </div>
+   <div class="col-sm-6">
+      {{form_row(form.imageFile )}}
+   </div>
+   </div>
 
-
- 
+<div class="row">
+ <div class="col-md-3 ">
+ <a class="btn btn-primary mt-2" href="{{ path('admin.category.index') }}"><i class="fa fa-chevron-left"></i> Retour vers la liste</a>
+ </div>
 <div class="col-md-3 ">
-  <button class="btn btn-success float-left">
-    {{ button_label|default('Save') }}
+  <button class="btn btn-success mt-2">
+    {{ button_label|default('Enregistrer') }}
   </button>
+</div>
 </div>
 {{ form_end(form) }}

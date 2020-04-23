@@ -16,7 +16,8 @@
 
   <body id="page-top">
   
-    {{ include('admin/menu/admin_menu.html.twig') }}
+    {{ include('admin/menu/admin_menu.html.twig') }}	
+   
     <div class="page-content" id="content">
      {% for label, messages in app.flashes %}
          <div class="container" >
@@ -31,7 +32,7 @@
       
       {% block body %}{% endblock %}
    </div>
-  
+
     {% block javascripts %}
 <script src="https://kit.fontawesome.com/b0b2638830.js" crossorigin="anonymous"></script>
     {{ encore_entry_script_tags('admin' )}}

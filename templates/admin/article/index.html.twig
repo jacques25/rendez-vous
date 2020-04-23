@@ -6,13 +6,11 @@
         <h1>
           Liste des articles
         </h1>
-        <table class="table">
+        <table class="table-fluid table-fluid-index">
           <thead>
             <tr>
               <th>Id</th>
               <th>Title</th>
-             
-              <th>Description</th>
                <th> image</th>
               <th>actions</th>
             </tr>
@@ -20,31 +18,34 @@
           <tbody>
             {% for article in articles %}
               <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.title }}</td>
-               
-              
-           
-                <td>
-                {% if article.filename %}
- 
-                <img width="150" class="img-first img-fluid" src="{{ vich_uploader_asset(article, 'imageFile')}}">
-                {% endif %} 
-                  </td>
-                  <td>
-                    <a class="btn btn-primary" href="{{ path('admin.article.edit', {'id': article.id}) }}"><i class="fas fa-edit"></i></a>
-                    <a class="btn btn-danger" href="{{ path('admin.article.delete', {'id': article.id}) }}"><i class="fas fa-trash"></i></a>
-                  </td>
-                </tr>
-                {% else %}
-                <tr>
-                  <td colspan="4">no records found</td>
-                </tr>
+                   <td>{{ article.id }}</td>
+                   <td>{{ article.title }}</td>           
+                   <td>
+                        {% if article.filename %}
+                             <img width="150" class="img-first img-fluid" src="{{ vich_uploader_asset(article, 'imageFile')}}">
+                        {% endif %} 
+                   </td>
+                   <td>
+                       <a class="btn btn-info mt-1" href="{{ path('admin.article.edit', {'id': article.id}) }}"><i class="fas fa-edit"></i></a>
+                       {{ include('admin/article/_delete_form.html.twig') }}
+                     </td>
+              </tr>
+            {% else %}
+              <tr>
+                  <td colspan="4">Il n'y pas d'articles actuellement </td>
+              </tr>
               {% endfor %}
             </tbody>
-          </table>
-          <a class="btn btn-secondary" href="{{ path('admin.article.new') }}">Create new</a>
+        </table>
+       
+             <div class="navigation mt-3">
+                     {{ knp_pagination_render(articles) }}
+               </div>
         </div>
+          <div class="row">
+          <a class="btn btn-primary" href="{{ path('admin.article.new') }}"><i class="fas fa-plus-circle"></i> Nouveau</a>
+          
+          </div>
       </div>
     {% endblock %}
   

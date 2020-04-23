@@ -30,10 +30,6 @@ class Boutique
      */
     private $title;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
      /**
      * @ORM\Column(type="string" , length=255, nullable=true)
      */
@@ -59,13 +55,13 @@ class Boutique
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", mappedBy="boutiques",  fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", mappedBy="boutiques")
      */
 
     private $produits;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bijou", mappedBy="boutiques", indexBy="slug",  fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Bijou", mappedBy="boutiques", indexBy="slug")
      * 
      */
     private $bijous;
@@ -76,12 +72,20 @@ class Boutique
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\DescriptionProduit", mappedBy="boutiques")
+     * @ORM\JoinTable(name="boutique_description")
+     */
+    private $introductions;
+
     public function __construct()
     {
 
         $this->bijous = new ArrayCollection();
         $this->produits = new ArrayCollection();
         $this->produit = new ArrayCollection();
+        $this->descriptionProduit = new ArrayCollection();
+        $this->introductions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,19 +104,7 @@ class Boutique
 
         return $this;
     }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
+   
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -264,4 +256,34 @@ class Boutique
 
         return $this;
     }
+
+    /**
+     * @return Collection|DescriptionProduit[]
+     */
+    public function getIntroductions(): Collection
+    {
+        return $this->introductions;
+    }
+
+    public function addIntroduction(DescriptionProduit $introduction): self
+    {
+        if (!$this->introductions->contains($introduction)) {
+            $this->introductions[] = $introduction;
+            $introduction->addBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIntroduction(DescriptionProduit $introduction): self
+    {
+        if ($this->introductions->contains($introduction)) {
+            $this->introductions->removeElement($introduction);
+            $introduction->removeBoutique($this);
+        }
+
+        return $this;
+    }
+
+    
 }

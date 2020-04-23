@@ -68,3 +68,25 @@ $(document).ready(function () {
     });
   }
 });
+
+$(document).ready(function () {
+  var select = document.getElementById('produits')
+  if (select) {
+    new SlimSelect({
+      select: select,
+      placeholder: true
+
+    });
+  }
+});
+
+$(document).ready(function () {
+  var select = document.getElementById('boutiques')
+  if (select) {
+    new SlimSelect({
+      select: select,
+      placeholder: true
+
+    });
+  }
+});

@@ -1,1 +1,44 @@
+@import 'compass';
+@import '_vars';
+
+@media screen and (max-width:800px) {
+
+  .cropper-canvas-container {
+  margin-left:-13%;
+}
+.img-responsive {
+   width: 420px;
+
+}
+.cke {
+  width: 50%;
+}
+ .page-content {
+   margin-left:15%;
+   margin-right: 15%;
+
+ }
+
+ .table-fluid-index {
+  max-width: 500px;
+  margin-left: 5px;
+   margin-right: 5px;
+ }
+
+ 
+
+}
+
+
+@media (min-width: 768px) {
+
+    .sidebar .nav-item .nav-link {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 1rem;
+        width: 14rem;
+    }
+}
+
 

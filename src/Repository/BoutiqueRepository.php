@@ -49,8 +49,10 @@ class BoutiqueRepository extends ServiceEntityRepository
                 'boutique' => $boutique,
                 'slug' => $slug
             ]);
-        dd($slug, $boutique);
+   
         $qb->getQuery()
             ->getResult();
     }
+
+    
 }

@@ -2,18 +2,19 @@
 
 namespace App\Form;
 
-use App\Entity\Produit;
-use App\Form\PhotoType;
-use App\Entity\Boutique;
-use App\Entity\Category;
-use Jacques\ImageBundle\Form\Type\ImageType;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Jacques\ImageBundle\Form\Type\ImageType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use App\Form\PhotoType;
+use App\Entity\Produit;
+use App\Entity\Category;
+use App\Entity\Boutique;
 
 class BoutiqueType extends AbstractType
 {
@@ -22,7 +23,7 @@ class BoutiqueType extends AbstractType
         //$edit = (null !== $builder->getData()->getPicture());
         $builder
             ->add('title')
-            ->add('description')
+           
             ->add('imageFile', ImageType::class, [
                 'required' => false,
                 'label' => false,

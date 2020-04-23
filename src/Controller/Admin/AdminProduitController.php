@@ -52,7 +52,7 @@ class AdminProduitController extends AbstractController
     }
 
     /**
-     * @Route("/produit/{id}/edit", name="admin_produit_edit", methods={"GET","POST"})
+     * @Route("/produit/edit/{id}", name="admin_produit_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Produit $produit): Response
     {

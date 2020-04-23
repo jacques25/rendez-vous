@@ -3,9 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Produit;
-
-use App\Entity\Boutique;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -22,15 +19,16 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+  public function findByDescription($slug): Produit
+  {
+       $qb = $this->createQueryBuilder('p');
+       $qb->select('p')
+            ->andWhere('p.slug = :slug')
+              ->setParameter('slug' , $slug);
+              $qb->getQuery()->getOneOrNullResult();
+           
 
-    // public function findByBoutique($slug)
-    // {
-    //     $qb = $this->createQueryBuilder('p');
-    //     $qb
-    //         ->leftJoin('p.boutiques', 'b')
-    //         ->select('p, b')
-    //         ->where('b.slug = :slug')
-    //         ->setParameter('slug', $slug);
-    //     return $qb->getQuery()->getResult();
-    // }
+             
+  }
+    
 }

@@ -25,17 +25,17 @@ class BijouController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="bijou_show")
+     * @Route("/{slug}", name="bijou_show")
      * @param Bijou $bijou
      * @return JsonResponse
      */
 
 
-    public function show(BijouRepository $repo, Request $request, $id, OptionBijouService $options, SerializerInterface $serializer)
+    public function show(BijouRepository $repo, Request $request, $slug, OptionBijouService $options, SerializerInterface $serializer)
     {
 
 
-        $bijou = $repo->findOneBy(['id' => $id]);
+        $bijou = $repo->findOneBy(['slug' => $slug]);
 
         /*  $optionBijou = $options->findBy($bijou); */
         $optionBijous = $options->findBy($bijou);

@@ -4,35 +4,17 @@
 		{% endblock %}
 
 		{% block body %}
-			<div class="container-fluid">
+			<div class="container">		
+			
 				<h1>
 					Editer Bijou
-				</h1>
-				{{ form_start(form) }}
-				<div class="row flex-row mb-3">
-					<div class="col-6">
+				</h1>	
+				
 						{% include 'admin/bijou/_form.html.twig' %}
-					</div>
-				   	<div class="col-5">
-						{% include 'admin/bijou/nav-right.html.twig' %}
-				</div>
-				</div>
-				<div class="row mt-4 mb-3">
-					<div class="col-3 mb-4">
-						<a class="btn btn-primary" href="{{ path('admin_bijou_index') }}">
-							<i class="fas fa-save"></i>
-							Retour vers la liste
-						</a>
-					</div>
-					
-					<div class="col-3">
-						<button type="submit" class="btn btn-success">
-							<i class="fas fa-save"></i>
-							Enregister
-						</button>
-					</div>
-				</div>
-				{{ form_end(form) }}
+			
+		
+				
+			
 
 			</div>
 

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,10 +20,16 @@ class AdminArticleController extends AbstractController
     /**
      * @Route("/articles", name="admin.article.index", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository): Response
-    {
+    public function index(ArticleRepository $articleRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    {   
+        $articles = $paginatorInterface->paginate(
+             $articleRepository->findAll(),
+             $request->query->getInt('page', 1),
+              10
+  
+        );
         return $this->render('admin/article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles
         ]);
     }
 

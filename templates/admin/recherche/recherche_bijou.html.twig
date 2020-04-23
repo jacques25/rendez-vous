@@ -1,0 +1,79 @@
+{% extends "admin_base.html.twig" %}
+{% block title %} Recherche {{motcle}}{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="row">
+<h1 class="content-title mt-5"> {{'Recherche'}} {{ motcle}} </h1>
+</div>
+{% if bijous.getTotalItemCount  == 0 %}
+       <div class="alert alert-warning">
+			 <h5> Aucun article ne correspond à  votre recherche  avec :  {{motcle|upper}}</h5>
+			 </div>
+{% else %}
+<div class="row">
+    {% for bijou in bijous %}
+        
+ 
+  	<div class="col-sm-6 col-md-4 col-lg-3">
+		<div class="card">
+
+					{% if bijou.filename %}
+						<img class="card-img" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" alt="{{bijou.filename}}"/>
+	          {% if bijou.promo  %}
+						<div class="product-promo">
+							<span>
+								Promo
+							</span>
+							<span>
+								15 %
+							</span>
+						</div>
+					{% endif %}
+						
+			{% endif %}
+				
+
+			<div class="card-body">
+                           <a class="view_details" href="{{path('admin_bijou_edit', { 'id': bijou.id })}}">
+								Voir détails
+							</a>
+						<div class="card-title">
+           
+							<span class="sub-title uppercase mx-2">{{bijou.title}}</span>
+		         {% for option in bijou.optionBijou %}
+								 {% if loop.first %}
+								 <span class="options-prix font-italic mr-2">{{option.prix|round(2)}}€ </span>
+								 {% endif %}
+								 {% endfor %}
+						<div id="options-taille">
+						 {% for option in bijou.optionBijou %}
+							{% if option.taille|length != 0 %}
+							   
+				        <span class="rounded-taille" id="taille-name" data-string="{{option.taille}}">  {{option.taille}}</span>
+								
+						   {% endif %}
+						 	{% endfor %}
+								</div>
+						
+						</div>
+						
+
+			</div>
+
+		</div>
+
+	
+    </div>
+  	
+{% endfor %}
+
+<div class="col-sm-12">
+							<div class="navigation float-right mr-5">
+                     {{ knp_pagination_render(bijous) }}
+          </div>
+</div>
+{% endif %}
+</div>
+</div>
+{% endblock %}

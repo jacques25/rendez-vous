@@ -1,0 +1,14 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Edition Description du Produit{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Edition Description duProduit</h1>
+
+    {{ include('admin/description_produit/_form.html.twig', {'button_label': 'mettre à jour'}) }}
+</div>
+   
+{% endblock %}
+
+

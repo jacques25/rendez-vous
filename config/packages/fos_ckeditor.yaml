@@ -30,8 +30,8 @@ fos_ck_editor:
 
             filebrowserBrowseRouteParameters: []
             filebrowserBrowseRouteType: 0
-            height: 300
-            width: 400
+            height: 180
+            width: 100%
 
         contact:
            

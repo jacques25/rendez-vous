@@ -1,12 +1,57 @@
+{{ form_start(form) }}
+		<div class="row">
+	  		<div class="col-sm-6">
+			   	{{ form_row(form.title) }}
+		  	</div>
 
-      
-            {{ form_row(form.title) }}
-        
-            {{ form_row(form.description) }}
-        
+			<div class="col-sm-6">
+				<h6>Choisir une boutique</h6>
+        {{form_row(form.category, {'id' : 'category'})}}
+			</div>
+      </div>
+			<div class="row">
+				<div class="col-sm-6">
+				     	{{ form_row(form.description) }}
+				</div>
+				<div class="col-sm-6">
+				   	{{form_row(form.imageFile)}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="nav-item col-12" id="seance_option" data-prototype="{{form_widget(form.seanceOptions.vars.prototype)|e('html_attr')}}">
+						<div class="row flex-row">
+							{% for row in form.seanceOptions %}
 
+								<div class="card m-2">
+									<div class="card-header bg-warning">
+										<a href="#item" data-toggle="collapse">
+											options des séances
+										</a>
+									</div>
+									<div class="card-body collapse" id="item">
+										{{form_widget((row))}}
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
 
-   
-   
-
-
+      	<div class="row mt-4 mb-3">
+					<div class="col-sm-4 mt-1">
+						<a class="btn btn-primary" href="{{ path('admin_seance_index') }}">
+							<i class="fas fa-save"></i>
+							Retour vers la liste
+						</a>
+					</div>
+					
+					<div class="col-sm-4 mt-1">
+						<button type="submit" class="btn btn-success">
+							<i class="fas fa-save"></i>
+							Enregister
+						</button>
+					</div>
+				</div>
+{{ form_end(form) }}

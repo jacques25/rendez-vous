@@ -3,14 +3,13 @@
   {% block body %}
     <div class="container">
       <div class="row">
-        <h1>Liste des catégories</h1>
+        <h1 class="mx-3">Liste des catégories</h1>
      
-        <table class="table">
+        <table class="table-fluid table-fluid-index">
           <thead>
             <tr>
               <th>Id</th>
               <th>Title</th>
-              <th>Description</th>
               <th>actions</th>
             </tr>
           </thead>
@@ -23,9 +22,8 @@
                 <td>
                   {{ category.title }}</td>
                 <td>
-                  {{ category.description }}</td>
-                <td>
-                  <a class="btn btn-primary" href="{{ path('admin.category.edit', {'id': category.id}) }}">edit</a>
+                  <a class="btn btn-info mt-1" href="{{ path('admin.category.edit', {'id': category.id}) }}"><i class="fa fa-edit" ></i></a>
+                  {{include('admin/category/_delete_form.html.twig')}}
                 </td>
               </tr>
               </div>
@@ -36,7 +34,7 @@
             {% endfor %}
           </tbody>
         </table>
-        <a class="btn btn-secondary" href="{{ path('admin.category.new') }}">Create new</a>
+        <a class="btn btn-primary" href="{{ path('admin.category.new') }}"><i class="fa fa-plus-circle"></i> Nouveau</a>
       </div>
     </div>
   {% endblock %}

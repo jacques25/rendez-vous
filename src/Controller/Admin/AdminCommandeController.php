@@ -88,7 +88,7 @@ class AdminCommandeController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_commmande_index');
+        return $this->redirectToRoute('admin_commandes_index');
     }
     
     /**

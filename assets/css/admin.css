@@ -8,6 +8,7 @@
 @import "../css/admin-responsive.css";
 
 
+
 #content {
     width: auto;
 }
@@ -120,18 +121,6 @@ a.text-color:hover,
     background-color: rgb(137, 53, 206);
     top: 0;
 }
-
-@media (min-width: 768px) {
-
-    .sidebar .nav-item .nav-link {
-        display: block;
-        width: 100%;
-        text-align: left;
-        padding: 1rem;
-        width: 14rem;
-    }
-}
-
 /* TABLE */
 .table-fluid-commande {
        width: 100%;
@@ -281,25 +270,6 @@ input[type=checkbox] {
     margin: 0;
 }
 
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -17rem;
-    }
-
-    #sidebar.active {
-        margin-left: 0;
-    }
-
-    #content {
-        width: 100%;
-        margin: 0;
-    }
-
-    #content.active {
-        margin-left: 17rem;
-        width: calc(100% - 17rem);
-    }
-}
  .modal-container
 {
    display: flex;
@@ -469,4 +439,90 @@ input[type=checkbox] {
  display: flex ;
   justify-content: center;
   align-items: center;
+}
+
+/*NAVIGATION  */
+
+ .page-link {
+    border: 1px solid  #8935ce;
+    color: #8935ce;
+}
+.page-item.active .page-link{
+    background-color: #820b8d !important;
+    border-color: #820b8d;
+}
+.page-item.disabled .page-link{
+     border-color: #820b8d;
+     color: #8935ce;
+}
+
+.page-link:hover {
+    color: #fff;
+    border-color:  rgba(179, 93, 250, 0.746);
+    background-color: #820b8d;
+}
+.page-link:focus {
+     box-shadow: 0 0 0 0.2rem rgba(179, 93, 250, 0.746);
+}
+
+.btn-info, .btn-success, .btn-danger, .btn-primary .btn-warning {
+    height: 38px;
+}
+
+.view_details {
+    text-decoration: none;
+
+    border: 4px solid rgb(70, 160, 163);
+    color: rgb(70, 160, 163);
+    font-size: 19px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 10px;
+    width: 172px;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    background: #fff;
+}
+
+.view_details:hover {
+
+    color: rgb(70, 160, 163);
+    cursor: pointer;
+    text-decoration: none;
+
+}
+
+ .view_details {
+     position: relative;
+    opacity: 1;
+    width: 160px;
+    font-size: 15px;
+    margin-left: 20%;
+    transition: all 0.3s ease-out;
+    top: -28px;
+}
+
+
+.card-text {
+    padding: 2px 0 0;
+
+}
+
+.card-text strong {
+    font-weight: 700;
+    color: #393c45;
+    font-size: 14px;
+    position: relative;
+}
+
+.card-text span {
+    color: #969699;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.sub-title {
+    font-weight: 900;
 }

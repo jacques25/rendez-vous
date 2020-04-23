@@ -2,9 +2,12 @@
 {% block title %}New Boutique{% endblock %}
 {% block body %}
 <div class="container">
-<h1>Create new Boutique</h1>
+ <div class="row">
+ <h1 class="mx-3"> Nouvelle Boutique</h1>
+</div>
 {{ include('admin/boutique/_form_edit.html.twig') }}
-<a class="btn btn-primary" href="{{ path('admin_boutique_index') }}">back to list</a>
+
+
 </div>
 {% endblock %}
 

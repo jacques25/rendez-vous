@@ -1,0 +1,42 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Liste Description de Produits {% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Liste Description de Produits </h1>
+
+    <table class="table-fluid table-fluid-index">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Introduction</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for description_produit in description_produits %}
+            <tr>
+                <td>{{ description_produit.id }}</td>
+                <td>{{ description_produit.title }}</td>
+                <td>{{ description_produit.introduction|raw|u.truncate(155, true, '...') }}</td>
+                <td>
+                    
+                    <a class="btn btn-info"  href="{{ path('admin_description_produit_edit', {'id': description_produit.id}) }}"><i class="fa fa-edit"></i></a>
+                    {{include('admin/description_produit/_delete_form.html.twig' )}}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucune description de produit </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+   <div class="navigation mt-3">
+                     {{ knp_pagination_render(description_produits) }}
+ </div>
+    <a class="btn btn-primary" href="{{ path('admin_description_produit_new') }}"><i class="fa fa-plus-circle"></i> Nouveau</a>
+    </div>
+{% endblock %}

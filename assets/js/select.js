@@ -37,11 +37,11 @@ $(document).ready(function () {
 
     $collectionHolder.data('index', index + 1);
     // create the card
-    var $card = $('<div class="col"><div class="card"><div class="card-header bg-secondary">Nouvelle option </div></div></div> ');
+    var $card = $('<div class="card"><div class="card-header bg-success"><a class="nav-link" href="#card-bijou" data-toggle="collapse">Nouvelle option <i class="fas fa-chevron-down float-right"></i></div></a></div>');
 
     // create the card body and append the form to it
 
-    var $cardBody = $('<div class="card-body"></div>').append(newForm);
+    var $cardBody = $('<div class="card-body collapse" id="card-bijou"></div>').append(newForm);
 
     // append the body to the card
     $card.append($cardBody);
@@ -77,3 +77,5 @@ $(document).ready(function () {
     $card.append($cardFooter);
   }
 });
+
+

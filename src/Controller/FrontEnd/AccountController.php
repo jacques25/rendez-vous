@@ -39,7 +39,6 @@ class AccountController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils)
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-
             return $this->redirectToRoute('app_homepage');
         }
 
@@ -49,7 +48,7 @@ class AccountController extends AbstractController
          
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        if($error) {
+        if ($error) {
             $this->addFlash('danger', 'Vous devez vous inscrire pour continuer.');
             $this->redirectToRoute('account_login');
         }
@@ -75,7 +74,7 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/mon-compte/profil", name="account_profile")
-     * 
+     *
      * @IsGranted("ROLE_USER")
      * @return Response
      */
@@ -172,7 +171,6 @@ class AccountController extends AbstractController
         MailerInterface $mailer,
         TokenGeneratorInterface $tokenGenerator
     ): Response {
-
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $manager = $this->getDoctrine()->getManager();
@@ -186,7 +184,6 @@ class AccountController extends AbstractController
             $token = $tokenGenerator->generateToken();
 
             try {
-
                 $user->setResetToken($token);
                 $manager->flush();
             } catch (\Exception $e) {
@@ -220,10 +217,12 @@ class AccountController extends AbstractController
      * @Route("/reinitialiser-mot-de-passe/{token}", name="app_reset_password")
      */
 
-    public function resetPassword(UserRepository $userRepository, Request $request,  string $token, UserPasswordEncoderInterface $passwordEncoder
+    public function resetPassword(
+        UserRepository $userRepository,
+        Request $request,
+        string $token,
+        UserPasswordEncoderInterface $passwordEncoder
     ) {
-
-
         if ($request->isMethod('POST')) {
             $manager = $this->getDoctrine()->getManager();
 

@@ -5,12 +5,11 @@
 <div class="container">
   <div class="row">
     <h1>Liste des Produits</h1>
-    <table class="table">
+    <table class="table-fluid table-fluid-index">
       <thead>
         <tr>
           <th>Id</th>
           <th>Title</th>
-          <th>Description</th>
           <th>Filename</th>
           <th>actions</th>
         </tr>
@@ -22,8 +21,7 @@
             {{ produit.id }}</td>
           <td>
             {{ produit.title }}</td>
-          <td>
-            {{ produit.description }}</td>
+      
           <td>
             {% if produit.photo.filename is defined %}
             <img src="{{ vich_uploader_asset(produit.photo, 'imageFile') }}" width="150">
@@ -34,7 +32,8 @@
             {% endif %}
           </td>
           <td>
-            <a class="btn btn-primary" href="{{ path('admin_produit_edit', {'id': produit.id}) }}">edit</a>
+            <a class="btn btn-info" href="{{ path('admin_produit_edit', {'id': produit.id}) }}"><i class="fa fa-edit"></i></a>
+             <a class="btn btn-danger" href="{{ path('admin_produit_delete', {'id': produit.id}) }}"><i class="fa fa-trash"></i></a>
           </td>
         </tr>
         {% else %}
@@ -44,7 +43,7 @@
         {% endfor %}
       </tbody>
     </table>
-    <a class="btn btn-secondary" href="{{ path('admin_produit_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('admin_produit_new') }}"><i class="fas fa-plus-circle"></i> Nouveau</a>
   </div>
 </div>
 {% endblock %}

@@ -60,8 +60,7 @@ class CommandesRepository extends ServiceEntityRepository
 
     public function findCommandesByUser($user)
     {
-       return $this->findAllVisible()
-              ->select('c')
+       return $this->createQueryBuilder('c')
               ->leftJoin('c.user', 'u')
               ->addSelect('u')
               ->where('u.id = :user')

@@ -1,8 +1,15 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-				<div class="row content  mt-4">
-					<h1 class="">{{ produit.title|upper }} </h1></br>
+				<div class="row   mt-4">
+				<div class="col-sm-6">
+					<h1 class="content">{{ produit.title|upper }} </h1>
+					</div>
+					<div class="col-sm-6">
+					<div class="navigation float-right mx-5 mt-3 ">
+                     {{ knp_pagination_render(listeBijoux) }}
+          </div>
+					</div>
 			  </div>
 			 
 					<div class="row paragraph mb-5">
@@ -10,8 +17,24 @@
 								{% include 'produits/_card.html.twig' with {bijou: bijou} only %}
 
 							{% endfor %}
+
+						
 					</div>
-					
+					<div class="row flex-row">
+					<div class="col-sm-12">
+					  {% for des in description %}
+							   <h4> {{des.title}}</h4>
+								 <div class="paragraph">
+								    {{des.introduction|raw}}
+								 </div>
+						{% endfor %}
+					</div>
+					<div class="col-sm-12">
+							<div class="navigation float-right mr-5">
+                     {{ knp_pagination_render(listeBijoux) }}
+          </div>
+					</div>
+					</div>
         
 {% endblock %}
       

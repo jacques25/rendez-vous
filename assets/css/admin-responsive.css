@@ -1,0 +1,39 @@
+@media screen and (max-width: 800px) {
+  /* line 6, ../sass/admin-responsive.scss */
+  .cropper-canvas-container {
+    margin-left: -13%;
+  }
+
+  /* line 9, ../sass/admin-responsive.scss */
+  .img-responsive {
+    width: 420px;
+  }
+
+  /* line 13, ../sass/admin-responsive.scss */
+  .cke {
+    width: 50%;
+  }
+
+  /* line 16, ../sass/admin-responsive.scss */
+  .page-content {
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+
+  /* line 22, ../sass/admin-responsive.scss */
+  .table-fluid-index {
+    max-width: 500px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+@media (min-width: 768px) {
+  /* line 35, ../sass/admin-responsive.scss */
+  .sidebar .nav-item .nav-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    width: 14rem;
+  }
+}

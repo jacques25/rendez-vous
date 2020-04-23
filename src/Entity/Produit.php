@@ -32,12 +32,6 @@ class Produit
     private $title;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-
-    /**
      * @ORM\Column(type="string" , length=255, nullable=true)
      */
     private $filename;
@@ -59,7 +53,7 @@ class Produit
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Boutique", inversedBy="produits", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Boutique", inversedBy="produits")
      */
     private $boutiques;
 
@@ -77,12 +71,18 @@ class Produit
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\DescriptionProduit",  mappedBy="produits")
+     */
+    private $descriptionProduits;
+
 
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->bijous = new ArrayCollection();
         $this->boutiques = new ArrayCollection();
+        $this->descriptionProduits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,20 +101,6 @@ class Produit
 
         return $this;
     }
-
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
     /**
      * @return \DateTimeInterface|null
      */
@@ -173,15 +159,10 @@ class Produit
     }
 
 
-
-
-
     public function __toString()
     {
         return $this->title;
     }
-
-
 
     /**
      * @return Collection|Bijou[]
@@ -252,4 +233,34 @@ class Produit
 
         return $this;
     }
+
+    /**
+     * @return Collection|DescriptionProduit[]
+     */
+    public function getDescriptionProduits(): Collection
+    {
+        return $this->descriptionProduits;
+    }
+
+    public function addDescriptionProduit(DescriptionProduit $descriptionProduit): self
+    {
+        if (!$this->descriptionProduits->contains($descriptionProduit)) {
+            $this->descriptionProduits[] = $descriptionProduit;
+            $descriptionProduit->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDescriptionProduit(DescriptionProduit $descriptionProduit): self
+    {
+        if ($this->descriptionProduits->contains($descriptionProduit)) {
+            $this->descriptionProduits->removeElement($descriptionProduit);
+            $descriptionProduit->removeProduit($this);
+        }
+
+        return $this;
+    }
+
+    
 }

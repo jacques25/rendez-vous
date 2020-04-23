@@ -37,11 +37,11 @@ $(document).ready(function () {
 
     $collectionHolder.data('index', index + 1);
     // create the card
-    var $card = $('<div class="card"><div class="card-header bg-success"></div></div>');
+    var $card = $('<div class="card"><a class="nav-link" href="#card-body" data-toggle="collapse"><div class="card-header bg-success">Nouvelle option</div></a></div>');
 
     // create the card body and append the form to it
 
-    var $cardBody = $('<div class="card-body"></div>').append(newForm);
+    var $cardBody = $('<div class="card-body collapse" id="card-body"></div>').append(newForm);
 
     // append the body to the card
     $card.append($cardBody);

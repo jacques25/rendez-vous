@@ -52,9 +52,24 @@
 						 {% endif %}
 						 </li>
            {% endfor %}
+					 <li class="has-sub">
+					  	<a  href="{{ path('contact_me')}}"  data-toggle="modal"  data-target="#modal-response" >
+					        Me contactez 
+				       	</a>	
+							</li>
+		     
+				
             </ul>
          
           <ul class="menu-right">
+					<li class="has-sub">
+					  <form class="searchbox" method="get" action="{{path('recherche') }}">
+						<input class="searchbox-input" id="recherche" name="motcle" placeholder="Rechercher un bijou..." required type="search">
+						<input class="searchbox-submit" type="submit" value="">
+						<span class="searchbox-icon"><i class=" fa fa-search"></i></span>
+					</form>
+         </li>
+					{#  {% include "recherche/recherche_bijou.html.twig" %}#}
            	{% if is_granted("ROLE_ADMIN") %}	
 					<li class="has-sub">
 					

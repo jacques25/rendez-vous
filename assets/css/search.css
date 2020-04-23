@@ -1,0 +1,129 @@
+/* SEARCH FORM */
+/* line 3, ../sass/search.scss */
+.searchbox {
+  position: relative;
+  min-width: 50px;
+  width: 0;
+  overflow: hidden;
+  -webkit-transition: width 0.3s;
+  -moz-transition: width 0.3s;
+  -ms-transition: width 0.3s;
+  -o-transition: width 0.3s;
+  transition: width 0.3s;
+}
+
+/* line 15, ../sass/search.scss */
+.searchbox-input {
+  top: 2px;
+  right: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 100%;
+  margin: 0;
+  padding: 0px 55px 0px 20px;
+  font-size: 12px;
+  text-transform: capitalize;
+  color: #fff;
+}
+
+/* line 29, ../sass/search.scss */
+.searchbox-input::-webkit-input-placeholder {
+  color: #888;
+}
+
+/* line 33, ../sass/search.scss */
+.searchbox-input:-moz-placeholder {
+  color: #888;
+}
+
+/* line 37, ../sass/search.scss */
+.searchbox-input::-moz-placeholder {
+  color: #888;
+}
+
+/* line 41, ../sass/search.scss */
+.searchbox-input:-ms-input-placeholder {
+  color: #888;
+}
+
+/* line 45, ../sass/search.scss */
+.searchbox-icon,
+.searchbox-submit {
+  position: absolute;
+  top: 0;
+  font-size: 16px;
+  right: 10px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  /* line-height: 50px; */
+  text-align: center;
+  cursor: pointer;
+  color: #dcddd8;
+  background: none;
+  /* padding: 9px; */
+}
+
+/* line 64, ../sass/search.scss */
+.searchbox-icon {
+  /*   background-image: url("/build/img/search-white.png");*/
+  width: 15px;
+  height: 15px;
+  top: 13px;
+  display: block;
+}
+
+/* line 72, ../sass/search.scss */
+.btn-search[type="submit"] {
+  color: #ffffff;
+}
+
+/* line 76, ../sass/search.scss */
+button[type="submit"].btn-search {
+  border: none;
+  background: none;
+  font-size: 22px;
+}
+
+/* line 82, ../sass/search.scss */
+.fa-search:before {
+  color: #888;
+  top: 0;
+}
+
+/* line 87, ../sass/search.scss */
+.searchbox-open {
+  width: 250px;
+}
+
+/* line 91, ../sass/search.scss */
+.searchbox-open .searchbox-input, .searchbox-open .searchbox-icon {
+  background-color: #c4f2f2;
+  border-radius: 16px;
+  color: #888;
+}
+
+@media only screen and (max-width: 1138px) {
+  /* line 99, ../sass/search.scss */
+  .searchbox-input {
+    margin-top: 15px;
+    width: 250px;
+  }
+
+  /* line 104, ../sass/search.scss */
+  .searchbox .searchbox-open {
+    display: block !important;
+  }
+
+  /* line 107, ../sass/search.scss */
+  .searchbox-icon {
+    margin-top: 15px;
+  }
+
+  /* line 110, ../sass/search.scss */
+  .searchbox {
+    display: block;
+  }
+}

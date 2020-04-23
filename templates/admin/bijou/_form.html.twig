@@ -1,30 +1,107 @@
+	{{ form_start(form) }}
+<div class="row">
+     <div class="col-sm-6">
+		    	{{ form_row(form.title) }}
 
+		     	{{form_row(form.promo)}}
+     </div>
+     <div class="col-sm-6">
+			   <h6>	Choisir une boutique</h6>
+		    	{{ form_widget(form.boutiques, {'id': 'multiple'} ) }}
 
-						{{ form_row(form.title) }}  
-						
-      
-           
-						{{form_row(form.promo)}}
-						
-						{{ form_row(form.description) }}
-            
+			   <h6>Choisir un produit</h6>
+			   {{ form_widget(form.produits, {'id': 'optgroup'})}}
 
-						<div class="card">
-							<div class="card-header bg-card">
-								<a href="#item2" class="card-link text-color">
-									Autres propriétés
-									<i class="fas fa-chevron-down float-right"></i>
+			   {{form_label(form.popuptailles)}}
+			   {{ form_widget(form.popuptailles, {'id': 'multiple-popup'})}}
+     </div>
+</div>
+<div class="row">
+      <div class="col-sm-6">
+      			{{ form_row(form.description) }}
+      </div>
+      <div class="col-sm-6">
+      			{{ form_row(form.imageFile)}}
+      </div>
+</div>
+<div class="row">
+<div class="col-sm-6">
+			<div class="card">
+				<div class="card-header bg-card">
+					<a href="#card-body" data-toggle="collapse" class="card-link text-color">
+				
+					Autres Propiétés 	<i class="fas fa-chevron-down float-right"></i>
+					</a>
+				</div>
+
+				<div class="card-body collapse" id="card-body">
+					{{form_widget((form.properties_bijou))}}
+				</div>
+
+			</div>
+</div>
+<div class="col-sm-6">
+      <div id="option_bijou_list" data-prototype="{{form_widget(form.option_bijou.vars.prototype)|e('html_attr')}}">
+      			   <div class="row flex-row">
+      			
+      					{% for row in form.option_bijou %}	
+      					<div class="col-6 float-right">
+      						<div class="card m-3">
+      							<div class="card-header bg-card">
+      								<a class="text-dark" href="#item-{{row.children.reference.vars.value}}" data-toggle="collapse">
+      									{{row.children.reference.vars.name|capitalize}}
+      									:
+      									{{row.children.reference.vars.value}}
+												<i class="fas fa-chevron-down float-right"></i>
+      								</a>
+      							</div>
+      							<div class="card-body collapse" id="item-{{row.children.reference.vars.value}}">
+      								{{form_widget(row)}}
+      							</div>
+      						</div>
+      					</div>
+      					{% endfor %}
+      			
+      				</div>
+      </div>
+
+	<div class="card">
+					<div class="row flex justify-content-start flex-wrap">
+
+						{% for picture in bijou.pictures %}
+							<div class="col" style="flex:none; margin:5px; width:100px;">
+								<img class="img-thumb border-warning" width="100" src="{{vich_uploader_asset(picture, 'imageFile')}}" alt="">
+								<a href="{{path('admin_picture_delete', {'id': picture.id}) }}" class="btn btn-danger" data-delete data-token="{{csrf_token('delete' ~ picture.id)}}">
+									<i class="fas fa-trash"></i>
+									Supprimer
 								</a>
 							</div>
-
-							<div class="card-body">
-								{{form_widget((form.properties_bijou))}}
-							</div>
-							{# <div class="card-footer"></div> #}
+						{% endfor %}
+					</div>
 
 
-				
-
-
-					  </div>
-
+					<div class="col mt-5">
+						<h4 class="justify-content-center">
+							Ajouter des images
+						</h4>
+						{{ form_row(form.pictureFiles)}}
+					</div>
+				</div>
+</div>
+</div>
+	<div class="row mt-4 mb-3">
+					<div class="col-sm-3 mb-4">
+						<a class="btn btn-primary" href="{{ path('admin_bijou_index') }}">
+							<i class="fas fa-chevron-left"></i>
+							Retour vers la liste
+						</a>
+					</div>
+					
+					<div class="col-sm-3">
+						<button type="submit" class="btn btn-success">
+							<i class="fas fa-save"></i>
+							Enregister
+						</button>
+					</div>
+				</div>
+{{ form_end(form) }}

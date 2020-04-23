@@ -1,28 +1,30 @@
 {{ form_start(form) }}
-<div class="row flex-row">
-  <div class="col">
+<div class="row p-3">
+  <div class="col-sm-6">
     {{ form_row(form.title) }}
   </div>
-  <div class="col">
+  <div class="col-sm-6">
     {{ form_row(form.category,{'id' : 'multiple'}) }}
   </div>
-</div>
-
-  
-   
-
-
+  </div>
 <div class="row">
-  <div class="col-6">
-    {{ form_row(form.description)}}
+  <div class="col-sm-6">
+   
   </div> 
-  <div class="col-6">
-  {{ form_row(form.imageFile)}}
+  <div class="col-sm-6">
+     {{ form_row(form.imageFile)}}
   </div>
 </div>
+
 <div class="row">
-  <button class="btn btn-success">
-    {{ button_label|default('Save') }}</button>
-</div>
+ <div class="col-sm-3 float-left mx-1 mt-2">
+        <a class="btn btn-primary" href="{{ path('admin_boutique_index') }}"><i class="fa fa-chevron-left"></i> Retour vers la liste</a>
+      </div>
+      <div class="col-sm-3 float-right mt-2">
+<button class="btn btn-success float-left">
+    {{ button_label|default('Enregistrer') }}
+  </button>
+  </div>
+
 {{ form_end(form) }}
 

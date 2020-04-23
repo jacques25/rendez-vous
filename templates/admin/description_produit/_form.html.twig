@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+<div class="row">
+<div class="col-sm-6">
+    {{ form_row(form.title) }}
+</div>
+<div class="col-sm-6">
+    {{ form_row(form.introduction) }}
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-6">
+    {{ form_row(form.produits, {'id' : 'produits'}) }}
+</div>
+<div class="col-sm-6">
+    {{ form_row(form.boutiques,{'id': 'boutiques' }) }}
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+    <a class="btn btn-primary"  href="{{ path('admin_description_produit_index') }}"><i class="fa fa-chevron-left"></i> Retrour vers la liste </a>
+  </div> 
+    <div class="col-sm-4">
+     <button class="btn btn-success"><i class="fa fa-save"></i>{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    </div>
+{{ form_end(form) }}

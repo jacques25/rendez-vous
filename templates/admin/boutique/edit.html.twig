@@ -2,16 +2,14 @@
 {% block title %}Edit Boutique{% endblock %}
 {% block body %}
 <div class="container">
+<div class="row p-3">
   <h1>Edit Boutique</h1>
-  {{ include('admin/boutique/_form.html.twig', {'button_label': 'Update'}) }}
-  <div class="row flex-row">
-    <div class="col-4">
-      <a class="btn btn-primary" href="{{ path('admin_boutique_index') }}">back to list</a>
-    </div>
-    <div class="col-4">
-      {{ include('admin/boutique/_delete_form.html.twig') }}</div>
-  </div>
-</div>
+ </div>
+
+    {{ include('admin/boutique/_form_edit.html.twig') }}
+  
+ 
+   </div>
 {% endblock %}
 
 {% block javascripts %}

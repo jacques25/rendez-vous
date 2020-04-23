@@ -4,17 +4,18 @@
 
 {% block body %}
 <div class="container">
+<div class="row">
  <h1> Les utilisateurs </h1>
   
-   <table class="table-fluid mmx-2">
+
+   <table class="table-fluid table-fluid-index">
     <thead>
      <tr>
-        <td>Prénom</td>
-        <td>Nom</td>
-        <td>Email</td>
-        <td>Nombre de commandes</td>
-        <td> edition commandes</td>
-        <td> Action </td>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Nb commandes</th>
+        <th> Action </th>
      </tr>
     </thead>
 
@@ -26,20 +27,25 @@
       <td>{{user.email}}</td>
    
       {% if user.commandes %}
-       <td>  {{user.commandes|length}} </td>
+       <td>  {{user.commandes|length}}
+          <a class="btn btn-info mt-1"  href="{{path('admin_commande_show', {'user': user.id})}}" > <i class="fas fa-edit"></i></a></td>
       {% endif %}
-       <td><a href="{{path('admin_commande_show', {'user': user.id})}}" > <i class="fas fa-edit"></i></a></td>
+        
          <td> 
-         <a href="#" > <i class="fas fa-envelope"></i></a>
-         <a href="{{path('admin_user_edit', {'id': user.id})}}" > <i class="fas fa-edit"></i></a>
-     
+         <a class="btn btn-info mt-1" href="#" > <i class="fas fa-envelope"></i></a>
+         <a class="btn btn-info mt-1" href="{{path('admin_user_edit', {'id': user.id})}}" > <i class="fas fa-edit"></i></a>
          </td>
+   
     </tr>
+   
       {% endfor %}
     </tbody>
-   
+     
    </table>
-   
+   </div>
+    <div class="navigation mt-3">
+                     {{ knp_pagination_render(users) }}
+               </div>
 </div>
 
 {% endblock %}

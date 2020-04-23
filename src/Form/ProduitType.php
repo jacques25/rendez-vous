@@ -2,15 +2,16 @@
 
 namespace App\Form;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Jacques\ImageBundle\Form\Type\ImageType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use App\Entity\Produit;
 use App\Entity\Boutique;
-use Symfony\Component\Form\AbstractType;
-use Jacques\ImageBundle\Form\Type\ImageType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
+use App\Entity\DescriptionProduit;
 
 class ProduitType extends AbstractType
 {
@@ -18,7 +19,7 @@ class ProduitType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('description')
+        
             ->add('imageFile', ImageType::class, [
                 'required' => false,
                 'label' => false
@@ -30,7 +31,15 @@ class ProduitType extends AbstractType
                 'by_reference' => false,
                 'multiple' => true
 
+            ])
+             ->add('descriptionProduits', EntityType::class, [
+                "required" => false,
+                'class' => DescriptionProduit::class,
+                'choice_label' => 'title',
+                'multiple' => true,
+                'expanded' => false
             ]);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver)

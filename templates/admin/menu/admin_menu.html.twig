@@ -20,36 +20,33 @@
 						<img width="16" style="position:relative;margin-top:-5px;" src="{{asset('/build/img/shop.png') }}">
 						La boutique
 					</a>
+				
 					<div class="collapse" id="link">
+					      <a class="nav-link" href="{{path('admin_boutique_index')}}">
+							    <img width="16" style="position:relative; margin-right:5px; margin-top:-5px;" src="{{asset('/build/img/category.png') }}">
+							   Les catégories
+					    	</a>
 
-						<a class="nav-link" href="{{path('admin_boutique_index')}}">
-							<img width="16" style="position:relative; margin-right:5px; margin-top:-5px;" src="{{asset('/build/img/category.png') }}">
-							Les catégories
-						</a>
-
-						<a class="nav-link" href="{{path('admin_produit_index')}}">
-							<img src="{{asset('/build/img/product.png')}}" width="16">
-							Les Produits
-						</a>
-
-            <a href="#link2" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link2">
-						  	<i class="fas fa-gem"></i> Les Bijous
-						</a>
-						<div class="collapse" id="link2">
-						<a class="nav-link" href="{{path('admin_bijou_index')}}">
-						
-							Les Bijous
-						</a>
-						<a class="nav-link" href="{{path('admin_popup_taille_index')}}">
-							
-							Tableaux de taille
-						</a>
-						
-						</div>
-
-					</div>
-
-				</li>
+						   <a href="#link2" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link2">
+							    <img src="{{asset('/build/img/product.png')}}" width="16">	Les Produits</a>
+                  <div class="collapse" id="link2">
+                     <a class="nav-link" href="{{path('admin_produit_index')}}">
+											   <img width="16" style="position:relative; margin-right:5px; margin-top:-5px;" src="{{asset('/build/img/product.png') }}">
+								           Liste des produits</a>
+								      <a class="nav-link"  href="{{path('admin_description_produit_index')}}"> Description des produits</a>
+							    <div>
+				
+			
+				
+					     <a href="#link3" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link3">
+						  		        <img src="{{asset('/build/img/product.png')}}" width="16"> Liste des Bijous</a>
+						             <div class="collapse" id="link3">
+						               <a class="nav-link" href="{{path('admin_bijou_index')}}"> <i class="fas fa-gem"></i> Les Bijous	</a>
+						               <a class="nav-link" href="{{path('admin_popup_taille_index')}}">Tableaux de taille</a>
+					               </div>
+         
+ 	        </div>	
+			  </li>
 
 
 				<li class="nav-item">
@@ -93,9 +90,9 @@
 		 <small class="text-uppercase font-weight-bold">Menu</small></button>
 
 					<!-- Topbar Search -->
-					<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+					<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="get" action="{{path('admin_recherche') }}">
 						<div class="input-group">
-							<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+							<input type="text" class="form-control bg-light border-0 small" placeholder="Rechercher un bijou..." aria-label="Search" name="motcle"  aria-describedby="basic-addon2">
 							<div class="input-group-append">
 								<button class="btn btn-primary" type="button">
 									<i class="fas fa-search fa-sm"></i>
@@ -114,9 +111,9 @@
 							</a>
 							<!-- Dropdown - Messages -->
 							<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-								<form class="form-inline mr-auto w-100 navbar-search">
+								<form class="form-inline mr-auto w-100 navbar-search" method="get" action="{{path('admin_recherche') }}"">
 									<div class="input-group">
-										<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+										<input type="text" class="form-control bg-light border-0 small" placeholder="Rechercher un bijou" aria-label="Search" name="motcle"  aria-describedby="basic-addon2">
 										<div class="input-group-append">
 											<button class="btn btn-primary" type="button">
 												<i class="fas fa-search fa-sm"></i>

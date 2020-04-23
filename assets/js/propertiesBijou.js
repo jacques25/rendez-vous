@@ -35,11 +35,11 @@
 
          $collectionHolder.data('index', index++);
          // create the card
-         var $card = $('<div class="card"><div class="card-header alert alert-warning"></div></div>');
+         var $card = $('<div class="card"><a href="#card-body" data-toggle="collapse"><div class="card-header"></div></a></div>');
 
          // create the card body and append the form it
 
-         var $cardBody = $('<div class="card-body"></div>').append(newForm);
+         var $cardBody = $('<div class="card-body collapse" id="card-body"></div>').append(newForm);
 
          // append the body to the card
          $card.append($cardBody);
