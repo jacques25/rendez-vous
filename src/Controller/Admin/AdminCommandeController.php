@@ -31,7 +31,7 @@ class AdminCommandeController extends AbstractController
    
    
    public function __construct(CommandesRepository $commandesRepository, GetReference $getReference, GetFacture $getFacture)
-   {
+   {  
       $this->commandesRepository = $commandesRepository;  
       $this->getReference = $getReference;
       $this->getFacture = $getFacture;
@@ -45,7 +45,7 @@ class AdminCommandeController extends AbstractController
             ->findLastCommandes(
                 array(),  
             );
-        return $this->render('admin/commande/nav-commande.html.twig',[
+        return $this->render('admin/commande/block/nav-commande.html.twig',[
                 'commandes' => $commandes, 
                 'commandesCount' => $commandeCount
         ]);

@@ -1,6 +1,9 @@
-var $ = require('jquery')
+var $ = require('jquery');
+require('jquery-ui');
 require('bootstrap');
 require('popper.js');
+global.moment = require('moment');
+
 import 'cropper/dist/cropper.min';
 import * as Cropper from '../../public/bundles/image/js/cropper';
 import SlimSelect from 'slim-select';
@@ -11,15 +14,12 @@ require('./propertiesBijou');
 require('./medias');
 require('./select');
 require('../css/admin.css');
-
-
-
+require('./bootstrap-datetimepicker.min.js');
 $(function () {
     $('.cropper').each(function () {
         new Cropper($(this));
     });
 });
-
 
 // Suppression des éléments
 
@@ -55,5 +55,47 @@ $(function () {
 });
 
 $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();   
+    $('[data-toggle="tooltip"]').tooltip();   
+    
+  
 });
+
+	$(function () {
+    // Datetime picker initialization.
+		// See https://eonasdan.github.io/bootstrap-datetimepicker/
+		
+    $('.datetimepicker').datetimepicker({
+		  	locale: 'fr',
+        autoclose: true,
+        todayHighlight: true,
+        icons: {
+            time: 'fa fa-clock-o',
+            date: 'fa fa-calendar',
+            up: 'fa fa-chevron-up',
+            down: 'fa fa-chevron-down',
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-check-circle-o',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+				}
+				
+		});
+		 $('.datetimepicker2').datetimepicker({
+			 	locale: 'fr',
+             autoclose: true,
+              
+        icons: {
+            time: 'fa fa-clock-o',
+            date: 'fa fa-calendar',
+            up: 'fa fa-chevron-up',
+            down: 'fa fa-chevron-down',
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-check-circle-o',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+        }
+    });
+});
+

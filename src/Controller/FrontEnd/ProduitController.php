@@ -14,6 +14,7 @@ use App\Entity\Recherche;
 use App\Entity\Produit;
 use App\Entity\DescriptionProduit;
 use App\Entity\Boutique;
+use App\Entity\OptionBijou;
 
 class ProduitController extends AbstractController
 {
@@ -27,14 +28,15 @@ class ProduitController extends AbstractController
         $form = $this->createForm(RechercheType::class, $search);
         $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
-
+        
+    
         $produit = $em->getRepository('App\Entity\Produit')
             ->findOneBy(['slug' => $slug]);
     
         $description = $em->getRepository(DescriptionProduit::class)->findByBoutique(['slug' =>$boutique], $produit);
-      
+    
         $listeBijoux = $paginatorInterface->paginate(
-          $bijouRepository->findAllByBoutique(['slug' => $boutique], $produit),
+         $bijouRepository->findAllByBoutique(['slug' => $boutique], $produit),
         $request->query->getInt('page', 1),
         16
         );

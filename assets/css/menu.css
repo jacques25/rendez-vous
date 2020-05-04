@@ -23,14 +23,14 @@ a {
   right: 0;
   height: 66px;
   line-height: 66px;
-  color: #fff;
-  background-color: #8f725c;
-  box-shadow: 2px 2px 11px 3px #8f725ce8;
+  color: #8f725c;
+  background-color: #fffaf5;
+  box-shadow: 4px 3px 8px 0px rgba(109, 160, 167, 0.452);
   z-index: 1000;
 }
 /* line 31, ../sass/menu.scss */
 .header a {
-  color: #fff;
+  color: #8f725c;
 }
 /* line 35, ../sass/menu.scss */
 .header a:hover {
@@ -61,10 +61,10 @@ a {
 .menu-left .nav-hub {
   display: none;
   color: inherit;
-  background-color: #8f725c;
+  background-color: #e2e1e0;
   z-index: 10000;
-  box-shadow: 4px 3px 8px 0px rgba(62, 47, 35, 0.71);
   position: absolute;
+  box-shadow: 4px 3px 8px 0px rgba(102, 100, 99, 0.71);
 }
 /* line 69, ../sass/menu.scss */
 .menu-left .nav-hub a {
@@ -77,11 +77,11 @@ a {
 .menu-left .nav-boutique {
   display: none;
   color: inherit;
-  background-color: #8f725c;
   z-index: 10000;
-  box-shadow: 4px 3px 8px 0px rgba(62, 47, 35, 0.71);
+  background-color: #e2e1e0;
   position: absolute;
   margin-left: -335px;
+  box-shadow: 4px 3px 8px 0px rgba(102, 100, 99, 0.71);
 }
 /* line 89, ../sass/menu.scss */
 .menu-left .nav-produits {
@@ -91,7 +91,7 @@ a {
 }
 /* line 95, ../sass/menu.scss */
 .menu-left .nav-produits a {
-  color: #fff;
+  color: #8f725c;
   display: block;
   font-style: italic;
   text-align: justify;
@@ -157,11 +157,11 @@ a {
 .menu-right .sub-user-right {
   display: none;
   color: inherit;
-  background-color: #8f725c;
   z-index: 10000;
-  box-shadow: 4px 3px 8px 0px rgba(62, 47, 35, 0.71);
+  box-shadow: 4px 3px 8px 0px rgba(102, 100, 99, 0.71);
   position: absolute;
   margin-left: -25px;
+  background-color: #fffaf5;
 }
 /* line 183, ../sass/menu.scss */
 .menu-right a {
@@ -220,7 +220,7 @@ a {
   display: none;
   position: absolute;
   right: 0;
-  background-color: #8f725c;
+  background-color: #e2e1e0;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;

@@ -4,33 +4,18 @@
 		{% endblock %}
 
 		{% block body %}
-			<div class="container-fluid">
+			<div class="container">
+			<div class="row">
 				<h1 class="mx-3">	Editer Séance
 				</h1>
+				</div>
 				{{ form_start(form) }}
-				<div class="row mb-3">
+				
 					
 						{% include 'admin/seance/_form.html.twig' %}
 					
-					
-						{% include 'admin/seance/navbar_right.html.twig' %}
-					
-				</div>
-				<div class="row mt-4 mb-3">
-					<div class="col-sm-3 mb-4">
-						<a class="btn btn-primary" href="{{ path('admin_seance_index') }}">
-							<i class="fas fa-chevron-left"></i>
-							Retour vers la liste
-						</a>
-					</div>
-					
-					<div class="col-sm-3">
-						<button type="submit" class="btn btn-success">
-							<i class="fas fa-save"></i>
-							Enregister
-						</button>
-					</div>
-				</div>
+				
+		
 				{{ form_end(form) }}
 
 			</div>
@@ -40,7 +25,7 @@
 
 		{% block javascripts %}
 			{{ parent() }}
-		{{ encore_entry_script_tags('seance' )}}
+		 {{ encore_entry_script_tags('seance' )}}
 			{{ encore_entry_script_tags('select' )}}
 		{% endblock %}
 

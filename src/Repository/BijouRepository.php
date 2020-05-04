@@ -38,10 +38,10 @@ class BijouRepository extends ServiceEntityRepository
 
         $query = $this
             ->createQueryBuilder('b')
-            ->select('p', 'b', 'op')
+            ->select('p', 'b', 'op', 'promo')
             ->join('b.produits', 'p')
-            ->join('b.option_bijou', 'op');
-
+            ->join('b.option_bijou', 'op')
+           ->join('op.promo', 'pr');
         if (!empty($search->q)) {
             $query = $query
                 ->andWhere('b.title LIKE :q')
@@ -60,7 +60,7 @@ class BijouRepository extends ServiceEntityRepository
 
         if (!empty($search->promo)) {
             $query = $query
-                ->andWhere('b.promo = 1');
+                ->andWhere('pr.is_active = 1');
         }
 
         if (!empty($search->produits)) {
@@ -86,7 +86,8 @@ class BijouRepository extends ServiceEntityRepository
             ->leftJoin('b.pictures', 'pic')
             ->addSelect('pic')
             ->andWhere('p.id = :id')
-            ->setParameter('id', $produit);
+            ->setParameter('id', $produit) ;
+   
 
 
         return $qb->getQuery()->getResult();

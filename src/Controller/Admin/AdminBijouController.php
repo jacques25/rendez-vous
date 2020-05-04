@@ -6,14 +6,17 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 use App\Repository\BijouRepository;
 use App\Form\RechercheType;
+use App\Form\PromoType;
 use App\Form\BijouType;
 use App\Entity\Recherche;
+use App\Entity\Promo;
 use App\Entity\Bijou;
 
 /**
@@ -58,20 +61,21 @@ class AdminBijouController extends AbstractController
         foreach ($bijou->getOptionBijou() as $optionBijou) {
             $originalOptionBijou->add($optionBijou);
         }
+     
         $form = $this->createForm(BijouType::class, $bijou);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
               $referer =$request->getSession('referer');
-
+             
             $manager = $this->getDoctrine()->getManager();
-            $slugger = new AsciiSlugger();
-            $bijou->setSlug($slugger->slug(strtolower($bijou->getTitle())));
-
+           
+        
+          
             $bijou->setCreatedAt(new DateTime());
             $bijou->setUpdatedAt(new DateTime());
-
+          
             $manager->persist($bijou);
             $manager->flush();
 
@@ -105,13 +109,16 @@ class AdminBijouController extends AbstractController
 
         // original OptionBijou entity 
         $originalOptionBijou = new ArrayCollection();
-
+   
         foreach ($bijou->getOptionBijou() as $optionBijou) {
             $originalOptionBijou->add($optionBijou);
         }
+
         $form = $this->createForm(BijouType::class, $bijou);
         $form->handleRequest($request);
- 
+        
+     
+     
        
       
 
@@ -123,9 +130,11 @@ class AdminBijouController extends AbstractController
                     $manager->remove($optionBijou);
                 }
             }
-            $slugger = new AsciiSlugger();
-            $bijou->setSlug($slugger->slug(strtolower($bijou->getTitle())));
+          
             $bijou->setUpdatedAt(new DateTime());
+           
+            $manager->persist($bijou);
+       
             $manager->flush();
 
             return $this->redirectToRoute('admin_bijou_index', [
@@ -136,6 +145,7 @@ class AdminBijouController extends AbstractController
         return $this->render('admin/bijou/edit.html.twig', [
             'bijou' => $bijou,
             'form' => $form->createView(),
+           
         ]);
     }
 

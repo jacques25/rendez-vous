@@ -55,5 +55,8 @@ security:
         - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/panier/livraison, role: ROLE_USER }
+        - { path: ^/panier/validation, role: ROLE_CLIENT}
         - { path: ^/panier/commandes, role: ROLE_CLIENT }
+        - { path: ^/annulation/commande/, role: ROLE_CLIENT}
+        - { path: ^/api/banque/,  role: ROLE_CLIENT}
       

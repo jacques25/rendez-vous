@@ -16,12 +16,13 @@
           <table> 
         <tr>
             <td width="360">
-             <h4>Facture n°  {{ facture.NumeroCommande }}   du <span> {{facture.DateCommande|date('d M Y')  }}</span> </h4>
+             <h4>Facture n°  {{ facture.NumeroCommande }} </h4>   
+             
+              <h4>Date de la commande : {{facture.DateCommande|format_datetime('full', 'none', locale='fr')|capitalize  }}</h4>
             </td>
             <td width="180"></td>
             <td width="180">
 
-           
       
               <address id="coordonnes">
                <p class="address-top"> <em>{{facture.commande.facturation.lastname }}</em>
@@ -43,27 +44,26 @@
   
           <table class="footer_pdf">
           <tr class="footer-tr">
-          <td width="180">
+          <td width="250">
            <img class="img" src="https://localhost:8000/build/img/rdv.png" width="30">
+           <h6>Rendez Vous Avec Soi</h6>
           </td>
         
-          <td width="180">
-           <em><img class="img-left" src="https://localhost:8000/build/img/email-blanc.png" width="14" style="margin-right:5px;"> {{contact_email}}</em>
+          <td width="300">
+           <span><img src="https://localhost:8000/build/img/email.png" width="16" style="margin-right:5px;"><em> {{contact_email}}</em></span><br>
 
-           <em> <img class="img-left" src="https://localhost:8000/build/img/adresse-blanc.png" width="14" style="margin-right:5px;"> 
-             {{site_street}} {{site_cp}} {{site_city}}</em>
+           <span><img  src="https://localhost:8000/build/img/adresse.png" width="16" style="margin-right:5px;"> 
+            <em>  {{site_street}} {{site_cp}} {{site_city}}</em></span>
           
           </td>  
-          <td width="180"></td>
+          
           <td  width="180">
-          
-          
-           <em class="telephone_fixe"> <img class="img-left" src="https://localhost:8000/build/img/fixe-blanc.png" width="14" style="margin-right:5px;">{{telephone_fixe}}
-           </em>
+         <span> <img  src="https://localhost:8000/build/img/fixe.png" width="16" style="margin-right:5px;"> <em> {{telephone_fixe}}
+           </em></span><br>
 
 
-           <em><img class="img-left" src="https://localhost:8000/build/img/mobile-blanc.png" width="14" style="margin-right:5px;">
-               {{telephone_mobile}}</em> 
+          <span> <img  src="https://localhost:8000/build/img/mobile.png" width="16" style="margin-right:5px;">
+             <em>  {{telephone_mobile}}</em> </span>
 
           </td>
           
@@ -80,14 +80,13 @@
     .header {
       border-bottom: 1px solid #888;
       position: relative;
-      background-color: #8f725c ;
       height: 60px;
       width:1250px;
       left: -28px;
       box-shadow: 0px 2px 0px 2px #ddd;
     }
-    .header h2 {
-      color: #fff;
+    .header h3 {
+      color: #000;
       font-size: 18px;
       display: block;
       position: relative;
@@ -105,7 +104,7 @@
     }
      .img {
       position: relative;
-      top: 30px;
+    
       left: 30px;
       width: 30px;
       height: 30px;
@@ -165,23 +164,16 @@
 
 
     table#total {
-     
-      margin-left: 580px;
-      margin-top: 0;
+     border: 0px 1px 1px 1px solid #23a2b8;
+    
+      margin-top:  10px;
      position: relative;
+     padding: 13px;
+   
     }
 
-    table#total_promo {
-      float: right;
-      margin-left: 465px;
-      border-bottom: 2px solid #5c6eef;
-      border-left: 2px solid #5c6eef;
-      border-right: 2px solid #5c6eef;
-      margin-top: 0;
-    }
 
-    table#total td,
-    table#total_promo td {
+    table#total td {
       height: 20px;
     }
 
@@ -192,18 +184,18 @@
     }
 
     .footer_pdf {
+       border-top: 1px solid #888;
       width:1250px;
       height: 30px;
       position:relative;
       margin-bottom:0px;
-      color: #fff;
-      background-color: #8f725c;
+      color: #888;
       left: -28px;
       padding:0px 25px 25px 25px;
      
     }
     .footer_tr {
-      padding: 10px 0px 0px 0px;
+      padding: 5px 0px 0px 0px;
     }
 
     .float-right {
@@ -213,10 +205,16 @@
       display: block;
       position: relative;
     }
-
+   .text-right {
+      text-align: right;
+   }
+   .text-left {
+     text-align: left;
+   }
     
     .img-left {
       float: left;
+      color: #000;
     }
     .address-top {
       padding-top: 55px;
@@ -255,108 +253,46 @@
               <td class="color">{{ option.reference }}</td>
               <td class="color"> {{ option.quantite }} </td>
               <td class="color"> {{ option.taille }}</td>
-              <td class="color">{{ option.prix }}</td>
-              <td class="color">{{ option.prix* option.quantite }}</td>
+             {% if option.bijou.promoIsActive ==  true %}
+         
+             <td class="color">{{ ((option.prix * option.bijou.multiplicate ) * option.quantite)|number_format(2) }}</td>
+             {% else %}
+                    <td class="color">{{ option.prix* option.quantite }}</td>
+             {% endif %}
+               {% if option.bijou.promoIsActive ==  true %}
+         
+             <td class="color">{{ ((option.prix * option.bijou.multiplicate ) * option.quantite)|number_format(2) }}</td>
+             {% else %}
+                    <td class="color">{{ option.prix* option.quantite }}</td>
+             {% endif %}
             </tr>
             </tbody>
           {% endfor %}
         </table>
 
-        <table id="total">
-         
-         
-          <tr>
-            <td width="90">
-              TOTAL TTC</td>
-            <td class="color" width="40">{{facture.commande.totalCommande }} €</td>
-          </tr>
+        <table id="total" align="right">
+            {% for option in facture.commande.optionBijou %}
+           
+           
+            
+                 {% if option.bijou.promoIsActive %}
+                   {% set port = option.bijou.port %}
+                <tr>  <td colspan="4"> Sous Total :</td> <td class="text-right">{{(facture.commande.totalCommande - port)|number_format(2)}} € </td></tr>
+                <tr>  <td colspan="4">Frais de livraison : </td> <td class="text-right"> {{port|number_format(2)}}  € </td>  </tr>
+            {% endif %}
+                     {% endfor %}
+               <tr> <td colspan="4">Total  : </td> <td class="text-right"> {{facture.commande.totalCommande|number_format(2) }} € </td></tr>
+                 
+              
+          
+          
+  
         </table>
 
 
       {% endif %}
 
-     {#  {% if facture.commande.promo is defined and facture.commande.promo is not null %}
-        <h2 class="titre">
-          Articles en promotion</h2>
-
-
-        <table id="entity">
-
-
-          <tr>
-            <td width="180">
-              DESIGNATION</td>
-            <td width="110">
-              QUANTITE</td>
-            <td width="100">
-              P.U</td>
-            <td width="180">
-              MONTANT REDUCTION</td>
-            <td width="105">
-              MONTANT TTC</td>
-          </tr>
-          {% for promo in facture.commande.promo %}
-            <tr>
-              <td class="color">{{ promo.reference }}</td>
-              <td class="color">
-                {{ promo.quantite }}
-              </td>
-              <td class="color">
-                {{promo.horsPromoTTC }}
-                €</td>
-
-              <td class="color">
-                -
-                {{promo.prixReduit}}€
-              </td>
-              <td class="color">
-                {{promo.totalPromo}}€
-              </td>
-
-
-            </tr>
-          </table>
-
-          <table id="total">
-            <tr>
-
-              <td width="150">REDUCTION
-                {{  promo.reduction.valeur }}
-                %
-              </td>
-              <td class="color" width="60">
-                {{promo.prixReduit }}€
-              </td>
-
-            </tr>
-            <tr>
-              <td width="150">
-                FRAIS DE LIVRAISON</td>
-              <td class="color" width="60">{{facture.commande.fraisPort }}
-                €</td>
-            </tr>
-            <tr>
-              <td width="150">
-                TOTAL TTC
-              </td>
-
-              <td class="color" width="60">
-                {{facture.commande.totalPromo * promo.quantite + facture.commande.fraisPort }}
-                €</td>
-            </tr>
-          </table>
-
-
-        {% endfor %}
-        <table class="total-commande" id="total">
-          <tr>
-            <td width="150">TOTAL COMMANDE :
-            </td>
-            <td  width="60">{{facture.commande.totalCommande  }}
-              €</td>
-          </tr>
-        </table>
-      {% endif %} #}   
+    
     </div> 
  </page>
 

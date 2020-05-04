@@ -4,54 +4,47 @@
 		{% block title %}	Panier	{% endblock %}
 			{% set totalBijou = 0 %}
 				{% set totalPrix = 0 %}
+				{% set refReduction = { } %}
+         {% set totalPromo = 0 %}
+         {% set remise = 0 %}
+{% for item in items %}
+	{% for promo in item.bijou.promo %}
+    {% set refReduction = refReduction|merge({ ('%'~ promo.reduce.percent) : 0 }) %}
+
+									
+  {% endfor %}
+{% endfor %}
+
         
 		{% block body %}
 
-		  <div class="row mt-4">
-       <div class="col-12">
+		  <div class="row">
+       <div class="col-12 mt-4">
 		  	<h1> Votre Panier</h1>
-	    </div>
-			</div>
-	  <div class="row">
-		 {% for label, messages in app.flashes %}
+				 {% for label, messages in app.flashes %}
          
-          
               {% for message in messages %} 
 							<div class="col-12 w-100 text-center alert alert-{{ label }}">
                       {{ message}} 
 							 </div>
               {% endfor %}
-          
-        
        {% endfor %}
-
-    
-		
-	  
+	    </div>
+			</div>
+	  <div class="row">
+		  
 			{% if items|length  == 0 %} 
 			 
 				<div class="col-12 alert alert-success w-100 text-center"> Aucun article dans votre panier</div>
-						
-   
 			
      {% else %}
-			 </div>
+		
 			         
         				<table class="table table-fluid">
         						<thead class="table-thead">
         								<tr>
-                          
-														
-													
         									<th>Référence</th>
         	                 <th> designation </th>
-												{% for item in items %}
-													
-													 {% if  item.bijou.promo == true %}
-        									 <th> Promo </th>
-													 {% endif %}
-													 
-													 	{% endfor %}
         									<th>  taille </th>
         									<th>	prix	</th>
         									<th>	quantité </th>
@@ -66,24 +59,26 @@
 						    <td>	{{item.reference}}	</td>
 					      <td>
 						     	{% if item.bijou.filename %}
-								 <img class="img-responsive" src="{{vich_uploader_asset(item.bijou, 'imageFile')}}" width="60">
+								 <img class="img-responsive img-panier" src="{{vich_uploader_asset(item.bijou, 'imageFile')}}" width="60">
 							
 							   {% endif %}
 
 						    </td>
-	 {% if item.bijou.promo == true %}
-                <td>
-						     
-							    	<span class=" mt-5 p-2 bg-warning rounded-pill text-dark font-weight-bold">
-								     	Promo !
-								    </span>
-							   
-							  </td>
-								{% endif %}
+							
 								{% if item.taille == true %}
 						    <td>	{{item.taille}}	</td>
+								{% else %}
+									<td>      </td>
                {% endif %}
-						    <td>	{{item.prix}}</td>
+							  	  
+								
+						
+						 {% if item.bijou.promoIsActive == true %}
+						  <td> {{item.prix * item.bijou.multiplicate}}	</td>
+						 {% else %}
+							 <td> {{item.prix}}</td>
+						 {% endif %}
+									
 						    <td>
 						     	<form action={{path('panier_add', {'id': item.id} )}}>
 							   	 <select class="span1" name="qte" onchange="this.form.submit()">
@@ -95,9 +90,23 @@
 							  	 </select>
 						 	   </form>
 						    </td>
-                <td> {{item.prix * panier[item.id]}}
-					         	{% set  totalBijou = totalBijou + ( item.prix * panier[item.id] )%}
-										 </td>
+
+                <td>  
+						
+								 {% if  item.bijou.promoIsActive == true  %}
+							        	 {% set totalPromo  = ( item.prix * item.bijou.multiplicate) * panier[item.id] %}
+							          {{totalPromo}}
+											
+									
+									{% else %}
+								        {% set totalBijou =  totalBijou + (item.prix * panier[item.id]) %}
+						
+										   	 {{totalBijou}}
+							
+											 {% endif %}
+							
+										 </td> 
+				
 						    <td>
 						    	<a href="{{ path('panier_remove', {'id': item.id})}}" class="btn btn-sm btn-danger">
 							    	<i class="fas fa-trash"></i>
@@ -110,7 +119,8 @@
                {% if items |length != 0 %}
 					    <tr>
 				     	  {% set Total = 0 %}	
-			  	      {% set Total = totalBijou %}
+			  	      {% set Total = totalBijou + totalPromo %}
+								
 				 	       <td colspan="12" class="font-weight-bold text-uppercase">
 					         <span class="float-lg-right">Total : {{ Total }}€</span>
 					      </td>

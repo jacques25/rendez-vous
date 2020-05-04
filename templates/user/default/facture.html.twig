@@ -19,14 +19,6 @@
             	<tr>
 								<th>Facture n°</th>
 								<th>Date</th>
-								
-							
-								{# {% if facture.commande.totalPromo is defined %}
-																																																																										                <th class="col-2">Promo</th>
-																																																																										                <th class="col-2">Port</th>
-																																																																										               {% endif %} 
-																																																																										            #}
-
 								<th>	Total</th>
 								<th>Téléchargement</th>
 
@@ -49,18 +41,10 @@
 									{{ facture.dateCommande|date('d/m/Y') }}
 								</td>
 							
-								{% if  facture.commande.totalPromo is defined and facture.commande.totalPromo is not null %}
-									<td class="col">
-										{{facture.commande.totalPromo }}
-										€
-									</td>
-									<td class="col">
-										{{facture.commande.fraisPort }}
-										€
-									</td>
+								
 
 
-								{% endif %}
+							
 
 								<td>
 									{{facture.commande.totalCommande}} €

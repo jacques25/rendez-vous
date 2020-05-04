@@ -21,7 +21,7 @@ class SeanceOptionType extends AbstractType
                     'Enfants' => 'Enfants'
                 ]
             ])
-            ->add('prix', MoneyType::class)
+            ->add('prix',TextType::class)
             ->add('duree', TextType::class);
     }
 

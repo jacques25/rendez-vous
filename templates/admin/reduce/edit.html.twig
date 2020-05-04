@@ -1,0 +1,14 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Editer Remise{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Editer  Remise</h1>
+
+    {{ include('admin/reduce/_form.html.twig', {'button_label': 'Mette à jour'}) }}
+
+    <a class="btn btn-primary" href="{{ path('admin_reduce_index') }}"><i class="fa fa-chevron-left"></i> Retour vers la liste</a>
+</div>
+    
+{% endblock %}

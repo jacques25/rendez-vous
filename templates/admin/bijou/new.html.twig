@@ -1,4 +1,5 @@
 {% extends 'admin_base.html.twig' %}
+{% }
 		{% block title %}
 			Nouveau Bijou
 		{% endblock %}
@@ -25,4 +26,10 @@
 			{{ parent() }}
 			{{ encore_entry_script_tags('optSelect' )}}
 			{{ encore_entry_script_tags('select' )}}
+			{{ encore_entry_script_tags('promo' )}}
+		       <script>
+        $('#datetimepicker').datepicker({
+            format: 'dd.MM.yyyy',
+            });
+    </script>
 		{% endblock %}

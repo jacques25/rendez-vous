@@ -35,9 +35,10 @@
               <thead>
                 <tr>
                   <td>Réference</td>
-                  <td>Taille</td>
-                  <td>Prix</td>
+                  <td>Taille</td> 
                   <td>Quantite</td>
+                  <td>Prix</td>
+                 
                   <td>Sous Total</td>
                  
                </tr>
@@ -48,16 +49,44 @@
                {% for option in commande.commande.optionBijou %}
                   <tr> 
                  <td>{{option.reference}} </td>
-                 <td> {{option.taille}} </td>
-                 <td> {{option.prix}} </td>
-                 <td> {{option.quantite}} </td>
-                 <td> {{option.prix * option.quantite}} € </td>
-               </tr>
+                 <td> {{option.taille}} </td> 
+                  <td> {{option.quantite}} </td>
+                 <td>
+                       {% if option.bijou.promoIsActive %}
                  
-               {% endfor %}  
-               <tr style="background-color:#9f53fc; color:#fff;"> <td colspan="4">Total de la Commande</td><td> {{commande.commande.totalCommande}} € </td></tr>
+                      {{(option.prix * option.bijou.multiplicate) * option.quantite}}€
+                 {% else %}
+                    
+                 {{option.prix * option.quantite}} € 
+                   {% endif %}
+                  </td>
+
+                              {% if option.bijou.promoIsActive %}
+                 
+                    <td>    {{(option.prix * option.bijou.multiplicate) * option.quantite}}€  </td>
+                     
+                     
+                 {% else %}
+                    
+                <td> {{option.prix * option.quantite}} €  </td>
+                   {% endif %}
                   
-              
+               </tr>
+            {% endfor %}  
+            {% for option in commande.commande.optionBijou %}
+           
+           
+            
+                 {% if option.bijou.promoIsActive %}
+                   {% set port = option.bijou.port %}
+                <tr style="background-color:#9f53fc; color:#fff;">  <td colspan="4">frais de livraison</td> <td> {{port}}  € </td>  </tr> 
+                 {% endif %}
+             
+            {% endfor %}
+              <tr style="background-color:#9f53fc; color:#fff;">  <td colspan="4">Total de la Commande</td> <td> {{commande.commande.totalCommande }} € </td>
+               
+             
+                
               
               </tbody>
        </table>

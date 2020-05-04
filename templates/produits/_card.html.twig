@@ -1,19 +1,30 @@
+{% set refReduction = { } %}
 
+{% set remise = 0 %}
+
+ 
 	<div class="col-sm-6 col-md-4 col-lg-3">
 		<div class="card">
 
 					{% if bijou.filename %}
 						<img class="card-img" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" alt="{{bijou.filename}}"/>
-	{% if bijou.promo  %}
-						<div class="product-promo">
-							<span>
-								Promo
-							</span>
-							<span>
-								15 %
-							</span>
-						</div>
-					{% endif %}
+          
+	      {% if bijou. promoIsActive == true %}
+				<div class="product-promo">
+				          <span>{{bijou.promo|capitalize}} </span> <br>
+									{% for option in bijou.optionBijou %}
+									{% if loop.first  %}
+									{% set remise = option.prix * bijou.multiplicate %}
+								   	  {% set   prixRemise = option.prix - remise %}
+											
+									   {% set percent = (prixRemise*100)/ option.prix %}
+										<span>{{percent}} %</span>
+										{% endif %}
+									{% endfor %}
+									
+				</div>
+				{% endif %}
+				
 						<div class="image_overlay">
 						
 							<a class="view_details" href="{{path('bijou_show', { 'slug': bijou.slug })}}">
@@ -28,11 +39,21 @@
 						<div class="card-title">
            
 							<span class="sub-title uppercase mx-2">{{bijou.title}}</span>
-		         {% for option in bijou.optionBijou %}
-								 {% if loop.first %}
-								 <span class="options-prix font-italic mr-2">{{option.prix|round(2)}}€ </span>
-								 {% endif %}
-								 {% endfor %}
+				 
+					       
+															{% for option in bijou.optionBijou %} 
+											
+								          	{% if loop.first  %}
+																		 {% if bijou.promoIsActive == true %}
+															<span id="promo" class="float-right mx-3">{{ option.prix * bijou.multiplicate }}€</span>
+												       <span id="option-prix" class="line float-right">{{ option.prix}}€</span>
+															{% else %}
+																    <span id="option-prix" class="float-right">{{ option.prix}}€</span>
+															 {% endif %}
+															 {% endif %}
+															 {% endfor%}
+								  
+								 
 						<div id="options-taille">
 						 {% for option in bijou.optionBijou %}
 							{% if option.taille|length != 0 %}

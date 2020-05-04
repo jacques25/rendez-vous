@@ -1,50 +1,57 @@
 <?php
 
 namespace App\Controller\FrontEnd;
-use App\Entity\Commandes;
-use App\Entity\UserAdress;
 use function random_bytes;
-use App\Entity\OptionBijou;
-use App\Repository\CommandesRepository;
-use App\Service\GetReference;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Service\GetReference;
+use App\Repository\CommandesRepository;
+use App\Entity\UserAdress;
+use App\Entity\OptionBijou;
+use App\Entity\Commandes;
+use App\Repository\OptionBijouRepository;
 
 class CommandesController extends AbstractController
 {  
    private $getReference;
-   public function __construct(GetReference $getReference){
+   private $optionBijouRepository;
+  
+   public function __construct(GetReference $getReference, OptionBijouRepository $optionBijouRepository){
 
     $this->getReference = $getReference;
+    $this->optionBijouRepository = $optionBijouRepository;
+
    }
   
   public function facture(Request $request)
   {
-
     $em = $this->getDoctrine()->getManager();
     $generator = random_bytes(20);
     $session = $request->getSession();
-
+    
     $adresse = $session->get('address');
     $panier = $session->get('panier');
-
-    $totalTTC = 0;
+    
+    $prixBijou = 0;
+    $totalBijou = 0;
+    $prixPromo = 0;
+    $totalPromo = 0;
     $commande = array();
-   
+     
 
       $facturation = $em->getRepository(UserAdress::class)->find($adresse['facturation']);
       $livraison = $em->getRepository(UserAdress::class)->find($adresse['livraison']);
  
-     $optionBijous = $em->getRepository(OptionBijou::class)->findArray(array_keys($session->get('panier')));
-  
-    /* $promos = $em->getRepository('BoutiqueBundle:Promo')->findArray(array_keys($session->get('panier'))); */
-
+     $optionBijous = $this->optionBijouRepository->findArray(array_keys($session->get('panier')));
+    
+    
     foreach ($optionBijous as $optionBijou) {
        
        $commande['optionBijou'][$optionBijou->getId()] = array(
@@ -52,14 +59,28 @@ class CommandesController extends AbstractController
         'taille' => $optionBijou->getTaille(),
         'prix' => $optionBijou->getPrix(),
         'quantite' => $panier[$optionBijou->getId()],
-        'bijou'  => $optionBijou->getBijou()
+        'bijou' => $optionBijou->getBijou(),
+        'date_start' =>$optionBijou->getBijou()->getDateStart(),
+        'date_end' =>  $optionBijou->getBijou()->getDateEnd(),
+        'port' => $optionBijou->getBijou() ->getPort(),
+        'multiplicate' => $optionBijou->getBijou()->getMultiplicate(),
+        'isActive' => $optionBijou->getBijou()->getPromoIsActive()
       ); 
-       $totalPrix = ($optionBijou->getPrix() * $panier[$optionBijou->getId()]);
-       $totalTTC += $totalPrix;
+              if($optionBijou->getBijou()->getPromoIsActive() == true)
+              {
+                 $prixPromo = ( $optionBijou->getPrix() *$optionBijou->getBijou()->getMultiplicate() ) * $panier[$optionBijou->getId()];
+                 $totalPromo += $prixPromo;
+              }else {
+                  $prixBijou  = $optionBijou->getPrix() * $panier[$optionBijou->getId()] ;
+                  $totalBijou += $prixBijou;
+              }
+             
+              $isActive = $optionBijou->getBijou()->getPromoIsActive();
+              $port =  number_format( $optionBijou->getBijou() ->getPort(), 2);
+              dd($port);
     }
-       
-   
-    $commande['livraison'] = array(
+  
+       $commande['livraison'] = array(
       'firstname' => $livraison->getFirstName(),
       'lastname' => $livraison->getLastName(),
       'phone' => $livraison->getPhone(),
@@ -81,22 +102,24 @@ class CommandesController extends AbstractController
       'complement' => $facturation->getComplement()
     );
     
-
     $commande['token'] = bin2Hex($generator);
-    $commande['totalCommande'] = $totalTTC;
+    $commande['port'] = number_format($port, 2);
+    $commande['isActive'] = $isActive;
+    $commande['totalCommande'] = $totalBijou + $totalPromo + $port ;
     
     return $commande;
   }
 
   public function prepareCommande(Request $request)
   {
-    $session = $request->getSession();
-
+    $session = $request->getSession(); 
+   
     $em = $this->getDoctrine()->getManager();
 
 
     if(!$session->has('commande')) 
       $commande = new Commandes();
+
     else
 
   
@@ -107,9 +130,10 @@ class CommandesController extends AbstractController
     $commande->setValider(0);
     $commande->setNumeroCommande(0);
     $commande->setCommande($this->facture($request));
-    
+     
     
     if (!$session->has('commande')) {
+      
       $em->persist($commande);
 
       $em->flush();
@@ -126,7 +150,6 @@ class CommandesController extends AbstractController
      */
 
   /**
-   *
    * @Route("/api/banque/{id}", name="validation_commande")
    */
   public function validationCommande(Request $request, $id, MailerInterface $mailer)
@@ -135,8 +158,9 @@ class CommandesController extends AbstractController
     $em = $this->getDoctrine()->getManager();
 
     $commande = $em->getRepository(Commandes::class)->find($id);
+ 
     if (!$commande) {
-      
+          
       throw $this->createNotFoundException('La commande n\'existe pas');
     }
      
@@ -145,6 +169,7 @@ class CommandesController extends AbstractController
       $commande->setValider(1);
       $commande->setNumeroCommande($this->getReference->reference());
       $em->flush();
+      
       $email = $user->getEmail();
       $username = $user->getLastName();
       $url = $this->generateUrl('show_facture', ['id' => $commande->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -193,4 +218,6 @@ class CommandesController extends AbstractController
          return $this->redirectToRoute('panier');
          }
   }
+
+  
 }

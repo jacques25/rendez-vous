@@ -1,0 +1,13 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Nouvelle Remise{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Créer une nouvelle Remise</h1>
+
+    {{ include('admin/reduce/_form.html.twig') }}
+
+    <a class="btn btn-primary" href="{{ path('admin_reduce_index') }}"><i class="fa fa-chevron-left"> </i> Retour vers la liste</a>
+    </div>
+{% endblock %}

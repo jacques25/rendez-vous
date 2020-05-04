@@ -26,7 +26,7 @@ class PropertiesBijou
     /**
      * @ORM\Column(type="decimal", precision=2, scale=2, nullable=true)
      */
-    private $puissance_aimant;
+    private $puissance_aimant = 0.12;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

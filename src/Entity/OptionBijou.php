@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -51,10 +53,13 @@ class OptionBijou
 
 
     /**
+     * @Groups("bijou")
      * @ORM\ManyToOne(targetEntity="Bijou", inversedBy="option_bijou")
      * @ORM\JoinColumn(name="bijou_id", referencedColumnName="id")
      */
     private $bijou;
+
+
 
     public function getId(): ?int
     {
@@ -132,4 +137,8 @@ class OptionBijou
 
         return $this;
     }
+
+    
+
+    
 }

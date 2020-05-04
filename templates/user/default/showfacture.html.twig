@@ -69,156 +69,66 @@
 
 						<thead class="table-thead">
 							<tr>
-								<th>
-								 {{'Référence'}}
-								</th>
-								<th>
-									Quantité
-								</th>
-										{% for option in facture.commande.optionBijou  %}
-								{% if option.taille is not null %}
-									<th>
-										Taille
-									</th>
-								{% endif %}
-								{% endfor %}
-								<th>
-									P.U
-								</th>
-								<th>
-								Sous total
-								</th>
+								<th> {{'Référence'}}</th>
+								<th>	Quantité	</th>
+				        <th> Taille</th>
+					      <th> P.U</th>
+								<th>	Sous total</th>
 							</tr>
 						</thead>
 						<tbody class="table-tbody">
 							{% for option in facture.commande.optionBijou  %}
 							 
 									<tr>
-	             {#   <td><img src="{{vich_uploader_asset(option.bijou,'imageFile')}}" width="40"></td>  #}
 									<td>	{{ option.reference }}	</td>
 								
 									<td>{{ option.quantite }}</td>
 									<td>	{{option.taille}}</td>
-									<td>	{{ option.prix }}</td>
-
+										{% if option.bijou.promoIsActive == true %}
+										<td>{{(option.prix* option.bijou.multiplicate)|number_format(2)}}
+										 <td>{{((option.prix* option.bijou.multiplicate) * option.quantite)|number_format(2) }}</td>
+										 {% else %}
+											 			<td>{{option.prix|number_format(2)}}</td>
 									<td>
-										{{option.prix * option.quantite}}
+										{{(option.prix * option.quantite)|number_format(2)}}
 									</td>
+										{% endif %}
+							
 									</tr>
 							{% endfor %}
-
-						
-						</tbody>
-					    
+							
+							
+					</tbody>
+					<tfoot>	 
+					{% for option in facture.commande.optionBijou  %}
+									
+									 {% if option.bijou.promoIsActive == true %}		
+								
+							 <tr><dl colspan="4">Sous Total de la commande : </dl><dt> {{(facture.commande.totalCommande - option.bijou.port)|number_format(2)}}</dt>
+						  <dl colspan="4"> Frais de livraison</dl><dt> {{option.bijou.port|number_format(2)}}</dt>	</tr>
+							{% endif %}	
+							
+							   {% endfor %}
+					  
+							</tfoot>
+			
 					</table>
              
 				{% endif %}
-			</div>
-			{% if facture.commande.promo is defined and facture.commande.promo is not null %}
-				<div class="row mt-4">
-
-					<h3 class="titre">
-						Articles en promotion
-					</h3>
-
-
-					<table id="entity">
-						<tr>
-							<td width="180">
-								DESIGNATION
-							</td>
-							<td width="110">
-								QUANTITE
-							</td>
-							<td width="100">
-								P.U
-							</td>
-							<td width="180">
-								MONTANT REDUCTION
-							</td>
-							<td width="105">
-								MONTANT TTC
-							</td>
-						</tr>
-						{% for promo in facture.commande.promo %}
-							<tr>
-								<td class="color">
-									{{ promo.reference }}
-								</td>
-								<td class="color">
-									{{ promo.quantite }}
-								</td>
-								<td class="color">
-									{{promo.horsPromoTTC }}
-									€
-								</td>
-
-								<td class="color">
-									-
-									{{promo.prixReduit}}
-									€
-								</td>
-								<td class="color">
-									{{promo.totalPromo}}
-									€
-								</td>
-
-
-							</tr>
-						</table>
-
-						<table id="total">
-							<tr>
-
-								<td width="150">
-									REDUCTION
-									{{  promo.reduction.valeur }}
-									%
-								</td>
-								<td class="color" width="60">
-									{{promo.prixReduit }}
-									€
-								</td>
-							</tr>
-							<tr>
-								<td width="150">
-									FRAIS DE LIVRAISON
-								</td>
-								<td class="color" width="60">
-									{{facture.commande.fraisPort }}
-									€
-								</td>
-							</tr>
-							<tr>
-								<td width="150">
-									TOTAL TTC
-								</td>
-
-								<td class="color" width="60">
-									{{facture.commande.totalPromo * promo.quantite + facture.commande.fraisPort }}
-									€
-								</td>
-							</tr>
-						</table>
-
-
-					{% endfor %}
-				</div>
-			{% endif %}
-		
+	</div>
 				<div class="d-flex flex-row-reverse float-right">
 					<div class="col-12 mx-4" id="total">
 
 						TOTAL COMMANDE : {{facture.commande.totalCommande}} €
 					</div>
 
-				</div>
+		      </div>
 			 
 			
 			<a class="btn btn-telechargement" href="{{ path('facture_pdf',{'id': facture.id}) }}"  target="_blank">
 										<i class="fas fa-upload"></i> {{'téléchargement facture'|upper }}
 								  	</a>
-			<div class="row mt-5">
+		<div class="row mt-5">
 				<div class="col-6">
 					<a class="btn btn-primary" href="{{path('account_profile')}}">
 						Retour

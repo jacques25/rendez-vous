@@ -39,7 +39,7 @@ class SeanceType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'title',
                 'multiple' => false,
-                'label' => 'Categories',
+                'label' => 'Choisir une catégorie',
                 'attr' => ['class' => 'select']
             ])
             ->add('imageFile', ImageType::class, [

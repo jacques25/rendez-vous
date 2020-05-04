@@ -8,11 +8,17 @@
 
 
 			<div class="container">
-				<h1>
-					Messages
-				</h1>
-
+			  <div class="row">
+			         <div class="col-sm-6"><h1>Messages	</h1> </div>
+			         <div class="col-sm-6">
+			             <div class="navigation mt-3">
+                                 {{ knp_pagination_render(contacts) }}
+                    </div>
+				        </div>
+      </div>
+			<div class="row">
 				{%  for contact  in contacts  %}
+				<div class="col-sm-6">
 					<div class="table-fluid">
 					  <fieldset class="fieldset bg-fluid">
 						     <a href="{{path('admin_contact_show', { 'id': contact.id })}}" data-toggle="tooltip" data-placement="bottom"  title="Lire le message">
@@ -37,13 +43,13 @@
               </tbody>
 					 </table>
 					
-					<table class="table table-striped mt-4">
+					<table class="table mt-4">
 					  <thead class="bg-fushia">
 				      	<tr>
 								    <th>	Téléphone</th>
 					         	<th>Message	</th>
 							     	<th>Date Message</th>
-							     	<th>	action	</th>
+							  
 								</tr>
 					  </thead>
             <tbody>
@@ -52,28 +58,26 @@
 							      <td>	{{ contact.message}}	</td>
 							      <td>	{{ contact.dateMessage|date('d/m/Y H:i' )}}
 							      </td>
-
-							     <td>
+                </tr>
+							   <tr>  
 							     	{% if contact.messageLu != true  %}
-							     		<a class="btn btn-info" href="{{ path('admin_contact_show', {'id': contact.id})}}">Lire
+							     	<td>	<a class="btn btn-info" href="{{ path('admin_contact_show', {'id': contact.id})}}">Lire
 							     		</a>
-
-							     	
+                     </td>
+							     	</tr>
 							     	{% else %}
-							     		<div class="bg-success btn text-white">
-							     			Message  Lu
-							     		</div>
+							     <tr><td>		<div class="bg-success btn text-white">	Message  Lu</div></td>
+										<td>	 {% include "admin/contact/_delete_form.html.twig" %}  </td></tr>
 							     	{% endif %}
-
-							     </td>
-
+                         
+							   
 							  </tr>
 						</tbody>
 					</table>
           </div>
-                
+           </div>     
                 {% endfor %}
 
-
+  </div>
 			</div>
 		{% endblock %}

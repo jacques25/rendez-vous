@@ -21,6 +21,9 @@
 
 		{% block javascripts %}
 			{{ parent() }}
+	
 			{{ encore_entry_script_tags('optSelect' )}}
 			{{ encore_entry_script_tags('select' )}}
+		
+        
 		{% endblock %}

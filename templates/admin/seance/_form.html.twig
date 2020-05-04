@@ -1,24 +1,23 @@
 {{ form_start(form) }}
 		<div class="row">
-	  		<div class="col-sm-6">
-			   	{{ form_row(form.title) }}
-		  	</div>
+	     		<div class="col-sm-6">
+	    		   	{{ form_row(form.title) }}
+	    	  	</div>
 
-			<div class="col-sm-6">
-				<h6>Choisir une boutique</h6>
-        {{form_row(form.category, {'id' : 'category'})}}
-			</div>
-      </div>
-			<div class="row">
+	    		<div class="col-sm-6">
+              {{form_row(form.category, {'id' : 'category'})}}
+	    		</div>
+    </div>
+		<div class="row">
 				<div class="col-sm-6">
 				     	{{ form_row(form.description) }}
 				</div>
 				<div class="col-sm-6">
 				   	{{form_row(form.imageFile)}}
 				</div>
-			</div>
+		</div>
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-12">
 					<div class="nav-item col-12" id="seance_option" data-prototype="{{form_widget(form.seanceOptions.vars.prototype)|e('html_attr')}}">
 						<div class="row flex-row">
 							{% for row in form.seanceOptions %}

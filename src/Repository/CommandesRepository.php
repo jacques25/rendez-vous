@@ -29,7 +29,6 @@ class CommandesRepository extends ServiceEntityRepository
             ->where('c.user = :user')
             ->andWhere('c.valider = 1')
             ->andWhere('c.numero_commande != 0')
-
             ->orderBy('c.id')
             ->setParameter('user', $user);
 
@@ -40,6 +39,7 @@ class CommandesRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('commandes')
             ->select('COUNT(commandes.id)')
+            ->orderBy('commandes.date_commande', 'ASC')
             ->getQuery()
             ->getSingleScalarResult();
     }

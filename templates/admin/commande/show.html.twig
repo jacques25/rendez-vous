@@ -1,7 +1,7 @@
 {% extends "admin_base.html.twig" %}
 
 {% block title %} Commandes {% endblock %}
-
+ 
 {% block body %}
  
  <div class="container-fluid">
@@ -13,7 +13,8 @@
        {% else %}
  
  
-         {% for commande in commandes %}
+         {% for commande in commandes %} 
+      
               {{include('admin/commande/block/block-commande.html.twig')}}
         {% endfor %}   
     

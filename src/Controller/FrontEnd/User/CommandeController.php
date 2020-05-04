@@ -87,7 +87,7 @@ class CommandeController extends AbstractController
             'valider' => 1,
             'id' => $id
         ]);
-         dump($facture);
+         
         return $this->render('user/default/commande.html.twig', ['commande' => $commande]);
     }
 

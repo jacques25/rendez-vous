@@ -60,7 +60,7 @@
       height: 0;
       top: 16px;
       left: 15px;
-      @include box-shadow(0 10px 0 1px #fff, 0 16px 0 1px #fff, 0 22px 0 1px #fff)
+      @include box-shadow(0 10px 0 1px #383636, 0 16px 0 1px #383636, 0 22px 0 1px #383636)
     }
   }
 
@@ -73,7 +73,7 @@
     bottom: 0;
     top: 0;
     width: $menu-width;
-    background-color: #8f725c;
+    background-color: #e2e1e0;
     height: 100%;
     @include transform(translateX($menu-width * -1));
     @include transition-duration(0.3s);
@@ -149,13 +149,13 @@
     .nav-boutique {
       margin-left: 0;
       color: inherit;
-      background-color: #543521;
+      background-color: #c5c4c2;
       width: 250px;
       z-index: 0;
       text-align: center;
       position: relative;
       padding: 2px;
-      box-shadow: 1px 3px 5px 0px rgba(62, 47, 35, 0.71);
+     /*   box-shadow: 1px 3px 5px 0px rgba(62, 47, 35, 0.71);*/
 
       li {
         border-bottom: 1px solid #8f725c;
@@ -170,7 +170,7 @@
     .nav-produits {
 
       color: inherit;
-      background-color: #543521;
+      background-color: #e2e1e0;
       width: 256px;
       z-index: 0;
       position: relative;
@@ -181,7 +181,7 @@
 
     .nav-hub {
       color: inherit;
-      background-color: #543521;
+      background-color: #c5c4c2;
       width: 250px;
       z-index: 0;
       text-align: center;
@@ -193,7 +193,7 @@
 
 
       a {
-        color: #fff;
+        color: #8f725c;
         text-decoration: none;
         text-align: center;
         font-style: italic;
@@ -215,7 +215,7 @@
     .nav-produits li.has-sub div {
       display: none;
       color: inherit;
-      background-color: #8f725c;
+      background-color: #e2e1e0;
 
       z-index: 1000;
 

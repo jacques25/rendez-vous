@@ -70,9 +70,10 @@ class PanierController extends AbstractController
   {
 
     $session = $request->getSession();
+  
     if (!$session->has('panier')) $session->set('panier', []);
     $items = $optionBijouRepository->findArray(array_keys($session->get('panier')));
-
+   
     return $this->render('panier/panier.html.twig', [
       'items' => $items,
       'panier' => $session->get('panier'),
@@ -92,7 +93,7 @@ class PanierController extends AbstractController
 
     $panier = $session->get('panier');
 
-
+    
 
     if (array_key_exists($id, $panier)) {
       if ($request->query->get('qte') != null) $panier[$id] = $request->query->get('qte');
@@ -165,17 +166,16 @@ class PanierController extends AbstractController
 
 
   /**
-   *
    * @Route("/panier/validation", name="panier_validation",requirements={"user"="\d+"})
    * 
    */
   public function validation(Request $request )
   { 
 
-  /*  if ($request == null) {
+    if ($request == null) {
       $this->addFlash('warning', 'Votre panier est vide');
        $this->redirectToRoute('app_homepage');
-    } */
+    } 
     
     if ($request->getMethod() == 'POST')
       $this->setLivraisonOnSession($request);
@@ -184,8 +184,7 @@ class PanierController extends AbstractController
     
       $prepareCommande = $this->forward('App\Controller\FrontEnd\CommandesController:prepareCommande');
       $commande = $em->getRepository(Commandes::class)->find($prepareCommande->getContent());
-      
-     
+   
        return $this->render('panier/validation.html.twig', [
         'commande' => $commande
        ]);

@@ -2,15 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\OptionBijou;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-
+use Symfony\Component\Form\AbstractType;
+use App\Entity\OptionBijou;
 
 class OptionBijouType extends AbstractType
 {
@@ -24,10 +22,7 @@ class OptionBijouType extends AbstractType
             ->add('taille', TextType::class, [
                 'required' => false,
             ])
-            ->add(
-                'dimensions',
-                TextType::class,
-                [
+            ->add('dimensions',TextType::class, [
                     'required' => false
                 ]
             )
@@ -37,10 +32,8 @@ class OptionBijouType extends AbstractType
                     'disponible' => true,
                     'indisponible' => false
                 ]
-
-
-
-            ]);
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

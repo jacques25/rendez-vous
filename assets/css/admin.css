@@ -6,8 +6,11 @@
 @import "bootstrap-tagsinput.css";
 @import "../css/font.css";
 @import "../css/admin-responsive.css";
+@import "../css/bootstrap-datetimepicker.min.css";
 
-
+.datetimepicker-days  .table-condensed thead, tbody{
+    color: rgb(11, 57, 88);
+}
 
 #content {
     width: auto;

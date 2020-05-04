@@ -11,6 +11,7 @@
     {% block stylesheets %}
     <link rel="icon" type="image/png" href="{{asset('/build/img/rdv.png')}}" />
     {{ encore_entry_link_tags('admin')}}
+        
     {% endblock %}
   </head>
 
@@ -34,9 +35,10 @@
    </div>
 
     {% block javascripts %}
-<script src="https://kit.fontawesome.com/b0b2638830.js" crossorigin="anonymous"></script>
+   
+   <script src="https://kit.fontawesome.com/b0b2638830.js" crossorigin="anonymous"></script>
     {{ encore_entry_script_tags('admin' )}}
-    
+   
     {% endblock %}
   </body>
 

@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
-use App\Entity\Picture;
-use App\Entity\OptionBijou;
-use App\Entity\PropertiesBijou;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
-use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\PropertiesBijou;
+use App\Entity\Picture;
+use App\Entity\OptionBijou;
+use DateTime;
+Use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BijouRepository")
@@ -21,6 +24,7 @@ class Bijou
 {
 
     /**
+     * @Groups("bijou")
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -35,11 +39,12 @@ class Bijou
     /**
      * @var string
      * @ORM\Column(name="slug", type="string", length=128)
+     * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
@@ -68,7 +73,7 @@ class Bijou
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Produit",inversedBy="bijous")
+     * @ORM\ManyToMany(targetEntity="Produit", inversedBy="bijous")
      * )
      * 
      */
@@ -82,20 +87,21 @@ class Bijou
     private $boutiques;
 
     /**
+     * @Groups("bijou")
      * @ORM\OneToMany(targetEntity="OptionBijou", mappedBy="bijou", cascade={"persist", "remove"})
      * @ORM\OrderBy({"taille"="ASC"})
      */
     private $option_bijou;
 
-
+    
 
     /**
-     * @ORM\ManyToOne(targetEntity="PropertiesBijou", inversedBy="bijous",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PropertiesBijou", inversedBy="bijous", cascade={"persist"})
      * @ORM\JoinColumn(name="properties_bijou", referencedColumnName="id", )
      */
     private $properties_bijou;
 
-
+    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="bijou", cascade={"persist"}, orphanRemoval=true)
      */
@@ -109,17 +115,47 @@ class Bijou
      */
     private $pictureFiles;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $promo = false;
+
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\PopupTaille", inversedBy="bijous",  cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\PopupTaille", inversedBy="bijous",  cascade={"persist"},  orphanRemoval=true)
      */
     private $popuptailles;
 
+         /**
+     * @ORM\Column(name="promoIsActive", type="boolean", nullable=true)
+     *
+     */
+    private $promoIsActive =  false;
+   /**
+    * @ORM\Column(type="string", nullable=true)
+    */
+   private $promo;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @param DateTime|null 
+     */
+    private $date_start;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @param DateTime|null 
+     */
+    private $date_end;
+
+    /**
+     *
+     * @ORM\Column(type="float",   scale=2, nullable=true)
+     */
+    private $port = 2.00;
+
+      /**
+     * @ORM\Column(type="float",  scale=2, nullable=true)
+     */
+    private $multiplicate;
+
+
+   
 
     public function __construct()
     {
@@ -129,6 +165,8 @@ class Bijou
         $this->boutiques = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->popuptailles = new ArrayCollection();
+        $this->date_start = new DateTime();
+      
     }
 
 
@@ -318,6 +356,8 @@ class Bijou
         return $this;
     }
 
+  
+
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -385,17 +425,7 @@ class Bijou
         return $this;
     }
 
-    public function getPromo(): ?bool
-    {
-        return $this->promo;
-    }
-
-    public function setPromo(bool $promo): self
-    {
-        $this->promo = $promo;
-
-        return $this;
-    }
+ 
 
     /**
      * @return Collection|PopupTaille[]
@@ -442,4 +472,79 @@ class Bijou
 
         return $this;
     }
+   
+  
+
+    public function getPromo(): ?string
+    {
+        return $this->promo;
+    }
+
+    public function setPromo(?string $promo): self
+    {
+        $this->promo = $promo;
+
+        return $this;
+    }
+
+    public function getDateStart(): ?\DateTimeInterface
+    {
+        return $this->date_start;
+    }
+
+    public function setDateStart(?\DateTimeInterface $date_start): self
+    {
+        $this->date_start = $date_start;
+
+        return $this;
+    }
+
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->date_end;
+    }
+
+    public function setDateEnd(?\DateTimeInterface $date_end): self
+    {
+        $this->date_end = $date_end;
+
+        return $this;
+    }
+
+    public function getPort(): ?float
+    {
+        return $this->port;
+    }
+
+    public function setPort(?float $port): self
+    {
+        $this->port = $port;
+
+        return $this;
+    }
+
+    public function getMultiplicate(): ?float
+    {
+        return $this->multiplicate;
+    }
+
+    public function setMultiplicate(?float $multiplicate): self
+    {
+        $this->multiplicate = $multiplicate;
+
+        return $this;
+    }
+
+    public function getPromoIsActive(): ?bool
+    {
+        return $this->promoIsActive;
+    }
+
+    public function setPromoIsActive(?bool $promoIsActive): self
+    {
+        $this->promoIsActive = $promoIsActive;
+
+        return $this;
+    }
+
 }

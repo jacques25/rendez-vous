@@ -1,4 +1,4 @@
-var $ = require('jquery')
+var $ = require('jquery');
 var $collectionHolder;
 
 // Add new item (OptionBijou forms)

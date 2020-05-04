@@ -63,7 +63,8 @@ Encore
     .addEntry('address', './assets/js/address.js')
     .addEntry('optSelect', './assets/js/optSelect.js')
     .addEntry('seance', './assets/js/seanceOption.js')
-    .addEntry('select', './assets/js/select.js')
+    .addEntry('select','./assets/js/select.js')
+    .addEntry('promo','./assets/js/promo.js') 
     .addStyleEntry('css/font', './assets/css/font.css')
     .addStyleEntry('user', './assets/css/user.css')
     //.addEntry('page1', './assets/js/page1.js')
@@ -95,8 +96,10 @@ Encore
         config.corejs = 3;
     })
 
+
+
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -110,10 +113,17 @@ Encore
     .addAliases({
         puglins: path.resolve(__dirname, 'public/build/plugins')
     })
+    .autoProvideVariables({
+        $: 'jquery',
+        moment: 'moment'
+    })
     // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
 
-
+  .addAliases( {
+    // Force all modules to use the same jquery version.
+    'jquery': path.join(__dirname, 'node_modules/jquery/src/jquery')
+})
 // uncomment if you use API Platform Admin (composer req api-admin)
 //.enableReactPreset()
 //.addEntry('admin', './assets/js/admin.js')

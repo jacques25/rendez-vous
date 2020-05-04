@@ -1,9 +1,10 @@
 	{{ form_start(form) }}
 <div class="row">
      <div class="col-sm-6">
-		    	{{ form_row(form.title) }}
+		    	{{ form_row(form.title, {'attr' :{'autocomplete': 'autocomplete'}}) }}
 
-		     	{{form_row(form.promo)}}
+          {% include "admin/promo/_promo_form.html.twig" %}
+     
      </div>
      <div class="col-sm-6">
 			   <h6>	Choisir une boutique</h6>
@@ -25,7 +26,7 @@
       </div>
 </div>
 <div class="row">
-<div class="col-sm-6">
+   <div class="col-sm-12">
 			<div class="card">
 				<div class="card-header bg-card">
 					<a href="#card-body" data-toggle="collapse" class="card-link text-color">
@@ -35,20 +36,40 @@
 				</div>
 
 				<div class="card-body collapse" id="card-body">
-					{{form_widget((form.properties_bijou))}}
+			 <div class="row">
+				 <div class="col-sm-3">
+					{{form_row(form.properties_bijou.aimant)}}
+					{{form_row(form.properties_bijou.puissance_aimant)}}	
+					
+					</div>
+					<div class="col-sm-3">
+					 {{form_row(form.properties_bijou.matiere)}}
+						{{form_row(form.properties_bijou.revetement)}}
+						</div>
+						<div class="col-sm-3">
+							{{form_row(form.properties_bijou.finition)}}
+								{{form_row(form.properties_bijou.couleur_pierre)}}
+					</div>
+					<div class="col-sm-3">
+						{{form_row(form.properties_bijou.couleur)}}
+							{{form_row(form.properties_bijou.autre_propriete)}}
+						
+					</div>
+					</div>
+
 				</div>
 
 			</div>
-</div>
-<div class="col-sm-6">
-      <div id="option_bijou_list" data-prototype="{{form_widget(form.option_bijou.vars.prototype)|e('html_attr')}}">
-      			   <div class="row flex-row">
-      			
+   </div>
+
+  <div class="col-sm-12">
+      <div  id="option_bijou_list" data-prototype="{{form_widget(form.option_bijou.vars.prototype)|e('html_attr')}}">
+      			 
       					{% for row in form.option_bijou %}	
-      					<div class="col-6 float-right">
+      		
       						<div class="card m-3">
       							<div class="card-header bg-card">
-      								<a class="text-dark" href="#item-{{row.children.reference.vars.value}}" data-toggle="collapse">
+      								<a class="text-dark" href="#item-{{row.children.reference.vars.value}}" data-toggle="collapse" aria-controls="#item-{{row.children.reference.vars.value}}">
       									{{row.children.reference.vars.name|capitalize}}
       									:
       									{{row.children.reference.vars.value}}
@@ -59,12 +80,15 @@
       								{{form_widget(row)}}
       							</div>
       						</div>
-      					</div>
+      			
       					{% endfor %}
       			
-      				</div>
+      				
       </div>
-
+  </div>
+</div>
+<div class="row">
+ <div class="col-sm-12">
 	<div class="card">
 					<div class="row flex justify-content-start flex-wrap">
 
@@ -87,9 +111,10 @@
 						{{ form_row(form.pictureFiles)}}
 					</div>
 				</div>
+  </div>
+	</div>
 </div>
-</div>
-	<div class="row mt-4 mb-3">
+	<div class="row mt-4 mb-3 mx-5">
 					<div class="col-sm-3 mb-4">
 						<a class="btn btn-primary" href="{{ path('admin_bijou_index') }}">
 							<i class="fas fa-chevron-left"></i>

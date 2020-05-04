@@ -1,0 +1,41 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Liste des Remises{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Liste des remise</h1>
+
+    <table class="table-fluid">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Pourcentage</th>
+                <th>Multiplicateur</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reduce in reduces %}
+            <tr>
+                <td>{{ reduce.id }}</td>
+                <td>{{ reduce.title }}</td>
+                <td>{{ reduce.percent }}</td>
+                <td>{{ reduce.multiplicate }}</td>
+                <td>
+                  
+                    <a class="btn btn-info" href="{{ path('admin_reduce_edit', {'id': reduce.id}) }}"><i class="fa fa-edit"></i></a>
+                    {% include "admin/reduce/_delete_form.html.twig" %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary"  href="{{ path('admin_reduce_new') }}"><i class="fa fa-plus-circle"></i> Nouveau</a>
+{% endblock %}

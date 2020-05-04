@@ -64,9 +64,9 @@
     height: 0;
     top: 16px;
     left: 15px;
-    -moz-box-shadow: 0 10px 0 1px #fff, 0 16px 0 1px #fff, 0 22px 0 1px #fff;
-    -webkit-box-shadow: 0 10px 0 1px #fff, 0 16px 0 1px #fff, 0 22px 0 1px #fff;
-    box-shadow: 0 10px 0 1px #fff, 0 16px 0 1px #fff, 0 22px 0 1px #fff;
+    -moz-box-shadow: 0 10px 0 1px #383636, 0 16px 0 1px #383636, 0 22px 0 1px #383636;
+    -webkit-box-shadow: 0 10px 0 1px #383636, 0 16px 0 1px #383636, 0 22px 0 1px #383636;
+    box-shadow: 0 10px 0 1px #383636, 0 16px 0 1px #383636, 0 22px 0 1px #383636;
   }
 
   /* line 69, ../sass/responsive.scss */
@@ -77,7 +77,7 @@
     bottom: 0;
     top: 0;
     width: 250px;
-    background-color: #8f725c;
+    background-color: #e2e1e0;
     height: 100%;
     -moz-transform: translateX(-250px);
     -ms-transform: translateX(-250px);
@@ -151,13 +151,13 @@
   .menu .nav-boutique {
     margin-left: 0;
     color: inherit;
-    background-color: #543521;
+    background-color: #c5c4c2;
     width: 250px;
     z-index: 0;
     text-align: center;
     position: relative;
     padding: 2px;
-    box-shadow: 1px 3px 5px 0px rgba(62, 47, 35, 0.71);
+    /*   box-shadow: 1px 3px 5px 0px rgba(62, 47, 35, 0.71);*/
   }
   /* line 160, ../sass/responsive.scss */
   .menu .nav-boutique li {
@@ -170,7 +170,7 @@
   /* line 170, ../sass/responsive.scss */
   .menu .nav-produits {
     color: inherit;
-    background-color: #543521;
+    background-color: #e2e1e0;
     width: 256px;
     z-index: 0;
     position: relative;
@@ -180,7 +180,7 @@
   /* line 182, ../sass/responsive.scss */
   .menu .nav-hub {
     color: inherit;
-    background-color: #543521;
+    background-color: #c5c4c2;
     width: 250px;
     z-index: 0;
     text-align: center;
@@ -190,7 +190,7 @@
   }
   /* line 195, ../sass/responsive.scss */
   .menu .nav-hub a {
-    color: #fff;
+    color: #8f725c;
     text-decoration: none;
     text-align: center;
     font-style: italic;
@@ -209,7 +209,7 @@
   .menu .nav-produits li.has-sub div {
     display: none;
     color: inherit;
-    background-color: #8f725c;
+    background-color: #e2e1e0;
     z-index: 1000;
   }
   /* line 224, ../sass/responsive.scss */

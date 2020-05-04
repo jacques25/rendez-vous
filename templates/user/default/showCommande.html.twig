@@ -75,13 +75,12 @@
 								<th>
 									Quantité
 								</th>
-										{% for option in commande.commande.optionBijou  %}
-								{% if option.taille is not null %}
-									<th>
-										Taille
-									</th>
-								{% endif %}
-								{% endfor %}
+									
+									<th>	Taille</th>
+								
+								
+							
+								
 								<th>
 									P.U
 								</th>
@@ -99,11 +98,19 @@
 								
 									<td>{{ option.quantite }}</td>
 									<td>	{{option.taille}}</td>
-									<td>	{{ option.prix }}</td>
-
-									<td>
-										{{option.prix * option.quantite}}
+									 {% if option.bijou.promoIsActive == true %}
+									          <td> {{(option.prix * option.bijou.multiplicate)|number_format(2)}}</td>
+								
+								    <td> {{((option.prix * option.bijou.multiplicate) * option.quantite)|number_format(2)}}</td>
+									 {% else %}
+										 <td>	{{ option.prix|number_format(2) }}</td>
+										 	<td>
+										{{(option.prix * option.quantite)|number_format(2)}}
 									</td>
+									 {% endif %}
+									
+                
+								
 									</tr>
 							{% endfor %}
 
@@ -114,102 +121,11 @@
              
 				{% endif %}
 			</div>
-			{% if commande.commande.promo is defined and commande.commande.promo is not null %}
-				<div class="row mt-4">
-
-					<h3 class="titre">
-						Articles en promotion
-					</h3>
-
-
-					<table id="entity">
-						<tr>
-							<td width="180">
-								DESIGNATION
-							</td>
-							<td width="110">
-								QUANTITE
-							</td>
-							<td width="100">
-								P.U
-							</td>
-							<td width="180">
-								MONTANT REDUCTION
-							</td>
-							<td width="105">
-								MONTANT TTC
-							</td>
-						</tr>
-						{% for promo in commande.commande.promo %}
-							<tr>
-								<td class="color">
-									{{ promo.reference }}
-								</td>
-								<td class="color">
-									{{ promo.quantite }}
-								</td>
-								<td class="color">
-									{{promo.horsPromoTTC }}
-									€
-								</td>
-
-								<td class="color">
-									-
-									{{promo.prixReduit}}
-									€
-								</td>
-								<td class="color">
-									{{promo.totalPromo}}
-									€
-								</td>
-
-
-							</tr>
-						</table>
-
-						<table id="total">
-							<tr>
-
-								<td width="150">
-									REDUCTION
-									{{  promo.reduction.valeur }}
-									%
-								</td>
-								<td class="color" width="60">
-									{{promo.prixReduit }}
-									€
-								</td>
-							</tr>
-							<tr>
-								<td width="150">
-									FRAIS DE LIVRAISON
-								</td>
-								<td class="color" width="60">
-									{{commande.commande.fraisPort }}
-									€
-								</td>
-							</tr>
-							<tr>
-								<td width="150">
-									TOTAL TTC
-								</td>
-
-								<td class="color" width="60">
-									{{commande.commande.totalPromo * promo.quantite + commande.commande.fraisPort }}
-									€
-								</td>
-							</tr>
-						</table>
-
-
-					{% endfor %}
-				</div>
-			{% endif %}
-		
+	
 				<div class="d-flex flex-row-reverse float-right">
 					<div class="col-12 mx-4" id="total">
 
-						TOTAL COMMANDE : {{commande.commande.totalCommande}} €
+						TOTAL COMMANDE : {{(commande.commande.totalCommande)|number_format(2)}} €
 					</div>
 
 				</div>

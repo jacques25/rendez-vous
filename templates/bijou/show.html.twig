@@ -1,4 +1,10 @@
 {% extends 'base.html.twig' %}
+{% set refReduction = { } %}
+
+{% set remise = 0 %}
+
+ {#    {% set refReduction = refReduction|merge({ ('%'~ reduce : 0) }) %} #}
+  
 		{% block body %}
 <div class="container mt-5">
 				<div class="row flex-auto justify-content-center">
@@ -6,18 +12,25 @@
 	        <div class="col-md-6">
 						<div class="col">
 							<div class="column-left">
-								{% if bijou.filename %}
-									{% if bijou.promo %}
-										<div class="bijou-promo">
-											<span class="promo">
-												Promo
-											</span>
-											<span class="percent">
-												15 %
-											</span>
-
-										</div>
-									{% endif %}
+								{% if bijou.filename %}	
+ 			
+					         {% if bijou. promoIsActive == true %}
+				<div class="product-promo">
+				          <span>{{bijou.promo|capitalize}} </span> <br>
+									{% for option in bijou.optionBijou %}
+									{% if loop.first  %}
+									{% set remise = option.prix * bijou.multiplicate %}
+								   	  {% set   prixRemise = option.prix - remise %}
+											
+									   {% set percent = (prixRemise*100)/ option.prix %}
+										<span>{{percent}} %</span>
+										{% endif %}
+									{% endfor %}
+									
+				</div>
+				{% endif %}
+									
+								
 									<img id="myImg" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" class="img-modal img" data-toggle="tooltip" title="Agrandir l'image">
 
 
@@ -76,16 +89,19 @@
 									{{ bijou.title|upper }}
 								</h1>
 							</div>
-
-							<div class="prix-bijou row align-content-bottom">
-								<div id="option-prix" style="margin-left: 25px;"></div>
-
-
-								<div id="option-disponible" style="font-size:12px; margin-left:15px; margin-top:9px;"></div>
+               {% for option in bijou.optionBijou %}
+								 
+					  
+						          	      <div class="prix-bijou row align-content-bottom">
+														
+												      <div id="promo-prix"   style="margin-left: 25px;"></div>
+						                	 <div id="option-prix" style="margin-left: 25px;"></div><div id="prix"></div>
+						                   <div id="option-disponible" class="mx-5 mt-2"></div>
+								         
 
 							
 							</div>
-
+            {% endfor	%}
 							<form class="form mb-5 mx-2" id="form-panier" method="get">
 
 								<select class="span1" name="qte" onchange="this.form.submit()">
@@ -96,6 +112,7 @@
 									{% endfor %}
 								</select>
 								<select id="select-taille" class="taille mr-5" name="taille"></select>
+								<input type="hidden" id="promo-prix" name="prixPromo" value="">
 								<button id="btn-submit-panier" class="btn btn-info btn-panier mx-3" type="submit">
 									<i class="fa fa-shopping-bag"></i>
 									 Ajouter au panier
@@ -263,8 +280,9 @@
 			<script>
 
 				/* <![DATA[ */
-var context = {{ options|raw }};
-var bijou = {{ bijou.id }};
+var context = {{ options|raw}} ;
+
+var contextPromo = {{ promo|raw }};
 
 /*]]>*/
 			</script>

@@ -1,10 +1,15 @@
 {% extends "base.html.twig" %}
 {% block title %} Validation de commande {% endblock %}
+{% set refReduction = { } %}
+{% set totalBijou = 0 %}
+{% set totalPromo = 0 %}
+{% set prixPromo  = 0   %}
 
+         {% set remise = 0 %}
+				 {% set quantite = 0 %}
 {% block body %}
 
-	
- 
+
 <div class="row">
    <div class="col-12 mt-5">
      <h2> Validation de votre commande </h2>
@@ -36,7 +41,7 @@
 
 									
 											<th>Taille</th>
-								
+							
 										<th>P.U</th>
 										<th>Total</th>
                    
@@ -52,14 +57,42 @@
                                 <td> <img src="{{vich_uploader_asset(optionBijou.bijou, 'imageFile') }}" width="50"></td>
                                 <td> {{optionBijou.quantite}}</td> 
                                 <td> {{optionBijou.taille}}</td>
-                                <td> {{ optionBijou.prix }}</td>
-                                <td> {{optionBijou.prix * optionBijou.quantite }}€</td>
+	                               
+														
+															 	<td>	 
+																 		 {% if optionBijou.prix is defined and optionBijou.bijou.promoIsActive == true  %}
+																 	{{optionBijou.prix * optionBijou.bijou.multiplicate }}    
+																			 
+														      	{% else  %}
+																  
+                                         
+															        {{optionBijou.prix }}</td>
+																		
+					                    {% endif %}
+										            
+													    	
+                                <td> 
+														
+							             	              {% if optionBijou.bijou.promoIsActive == true%}	
+																				
+							                            	 {% set totalPromo =  (optionBijou.prix * optionBijou.bijou.multiplicate) * optionBijou.quantite %}
+							                                    {{totalPromo }}
+
+							             			        
+							             		    
+							                         		{% else  %}
+							             	                   {{optionBijou.prix * optionBijou.quantite}}
+							                          {% set totalBijou = optionBijou.prix * optionBijou.quantite %}
+							             			         	 {% endif %}
+							             							
+							             			</td>
+															
+                           </tr>      
+				   			       {% endfor %}    
+                           
 																
 							       		 
-                           </tr>      
-				   			
-                           	  {% endfor %}
-                           <tr>
+                        
 									
 									<tfoot>		
 									<tr>
@@ -68,7 +101,8 @@
 													 <th> </th>
 													 <th> </th>
 													 <th> </th>
-													 <th class="">{{'Total'|upper}} {{ commande.commande.totalCommande }}€</th>
+													   
+													 <th class="">{{'Total'|upper}} {{  totalBijou+ totalPromo }}€</th>
 				                </tr>  
                   </tfoot>           
 			                  

@@ -5,7 +5,7 @@
 {% block body %}
  <div class="row">
  {% if page.filename is defined %}
-    <div class="jumbotron" style="background: url({{ vich_uploader_asset(page, 'imageFile')}});" ></div>
+     <img class="jumbotron img-fluid"  src="{{ vich_uploader_asset(page, 'imageFile')}}" >
  {% endif %}    
  {% if page %}  
      
