@@ -149,13 +149,16 @@ class BijouRepository extends ServiceEntityRepository
                   
     }
 
-     public function findBijousByTitle($motcle)
+     public function findBijousByMotCle($motcle)
     {
 
         $query = $this->createQueryBuilder('b')
-            ->where('b.title like  :motcle')
-
+          ->where('b.title like  :motcle')
+            ->innerJoin('b.option_bijou', 'ob')
+            ->addSelect('ob')  
+            ->andWhere('ob.reference like :motcle')
             ->setParameter('motcle', '%' . $motcle . '%')
+            
             ->orderBy('b.id', 'ASC')
             ->getQuery();
 

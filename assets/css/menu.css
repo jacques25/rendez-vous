@@ -13,10 +13,11 @@ a {
   padding-left: 15%;
   padding-right: 15%;
   max-width: none;
+  min-height: 100%;
 }
 
 /* HEADER */
-/* line 19, ../sass/menu.scss */
+/* line 20, ../sass/menu.scss */
 .header {
   position: fixed;
   left: 0;
@@ -28,24 +29,24 @@ a {
   box-shadow: 4px 3px 8px 0px rgba(109, 160, 167, 0.452);
   z-index: 1000;
 }
-/* line 31, ../sass/menu.scss */
+/* line 32, ../sass/menu.scss */
 .header a {
   color: #8f725c;
 }
-/* line 35, ../sass/menu.scss */
+/* line 36, ../sass/menu.scss */
 .header a:hover {
   text-decoration: none;
   color: #960b06;
 }
 
-/* line 41, ../sass/menu.scss */
+/* line 42, ../sass/menu.scss */
 .header__logo {
   font-weight: bold;
   padding: 0 25px;
   float: left;
 }
 
-/* line 49, ../sass/menu.scss */
+/* line 50, ../sass/menu.scss */
 .img_logo {
   float: left;
   top: 20px;
@@ -53,11 +54,11 @@ a {
 }
 
 /*   Menu      */
-/* line 57, ../sass/menu.scss */
+/* line 58, ../sass/menu.scss */
 .menu-left {
   line-height: 35px;
 }
-/* line 60, ../sass/menu.scss */
+/* line 61, ../sass/menu.scss */
 .menu-left .nav-hub {
   display: none;
   color: inherit;
@@ -66,14 +67,14 @@ a {
   position: absolute;
   box-shadow: 4px 3px 8px 0px rgba(102, 100, 99, 0.71);
 }
-/* line 69, ../sass/menu.scss */
+/* line 70, ../sass/menu.scss */
 .menu-left .nav-hub a {
   display: inherit;
   margin: 10px;
   padding: 0px 12px;
   line-height: 22px;
 }
-/* line 78, ../sass/menu.scss */
+/* line 79, ../sass/menu.scss */
 .menu-left .nav-boutique {
   display: none;
   color: inherit;
@@ -83,52 +84,52 @@ a {
   margin-left: -335px;
   box-shadow: 4px 3px 8px 0px rgba(102, 100, 99, 0.71);
 }
-/* line 89, ../sass/menu.scss */
+/* line 90, ../sass/menu.scss */
 .menu-left .nav-produits {
   margin: 5px 18px;
   border: 0.8px solid #e2b3892e;
   margin-left: -10px;
 }
-/* line 95, ../sass/menu.scss */
+/* line 96, ../sass/menu.scss */
 .menu-left .nav-produits a {
   color: #8f725c;
   display: block;
   font-style: italic;
   text-align: justify;
 }
-/* line 108, ../sass/menu.scss */
+/* line 109, ../sass/menu.scss */
 .menu-left li {
   float: left;
   list-style-type: none;
 }
-/* line 113, ../sass/menu.scss */
+/* line 114, ../sass/menu.scss */
 .menu-left a {
   padding: 0 10px;
 }
-/* line 117, ../sass/menu.scss */
+/* line 118, ../sass/menu.scss */
 .menu-left a:hover {
   color: #960b06;
   text-decoration: none;
 }
 
-/* line 127, ../sass/menu.scss */
+/* line 128, ../sass/menu.scss */
 .menu-left li.tap div {
   display: block;
   animation: slideIn 0.3s;
 }
-/* line 131, ../sass/menu.scss */
+/* line 132, ../sass/menu.scss */
 .menu-left li.tap div a {
   opacity: 1;
   animation: slideIn 0.3s;
 }
 
-/* line 137, ../sass/menu.scss */
+/* line 138, ../sass/menu.scss */
 .menu-left li.tap ul {
   display: block;
   animation: slideIn 0.3s;
   height: auto;
 }
-/* line 143, ../sass/menu.scss */
+/* line 144, ../sass/menu.scss */
 .menu-left li.tap ul div,
 .menu-left li.tap ul ul,
 .menu-left li.tap ul a {
@@ -137,23 +138,23 @@ a {
 }
 
 /* MENU RIGHT */
-/* line 155, ../sass/menu.scss */
+/* line 156, ../sass/menu.scss */
 .menu-right {
   float: right;
   line-height: 40px;
   text-align: center;
   padding-right: 15px;
 }
-/* line 161, ../sass/menu.scss */
+/* line 162, ../sass/menu.scss */
 .menu-right li {
   list-style-type: none;
   float: left;
 }
-/* line 166, ../sass/menu.scss */
+/* line 167, ../sass/menu.scss */
 .menu-right .sub-menu-img {
   position: fixed;
 }
-/* line 170, ../sass/menu.scss */
+/* line 171, ../sass/menu.scss */
 .menu-right .sub-user-right {
   display: none;
   color: inherit;
@@ -163,24 +164,24 @@ a {
   margin-left: -25px;
   background-color: #fffaf5;
 }
-/* line 183, ../sass/menu.scss */
+/* line 184, ../sass/menu.scss */
 .menu-right a {
   display: inherit;
   margin: 0px 15px 0px 15px;
 }
-/* line 189, ../sass/menu.scss */
+/* line 190, ../sass/menu.scss */
 .menu-right a:hover {
   color: #960b06;
   text-decoration: none;
 }
 
-/* line 196, ../sass/menu.scss */
+/* line 197, ../sass/menu.scss */
 .menu-right li.tap div {
   height: 125px;
   display: block;
   animation: slideIn 0.3s;
 }
-/* line 201, ../sass/menu.scss */
+/* line 202, ../sass/menu.scss */
 .menu-right li.tap div a {
   opacity: 1;
   animation: slideIn 0.3s;
@@ -209,13 +210,13 @@ a {
     opacity: 1;
   }
 }
-/* line 236, ../sass/menu.scss */
+/* line 237, ../sass/menu.scss */
 .dropdown:hover .nav-panier-content {
   display: block;
   transition: slideIn 0.3s;
 }
 
-/* line 242, ../sass/menu.scss */
+/* line 243, ../sass/menu.scss */
 .nav-panier-content {
   display: none;
   position: absolute;
@@ -227,7 +228,7 @@ a {
   border-bottom: 1px solid #888;
 }
 
-/* line 254, ../sass/menu.scss */
+/* line 255, ../sass/menu.scss */
 .nav-panier-content span {
   text-decoration: none;
   display: block;
@@ -235,19 +236,19 @@ a {
   font-size: 12px;
 }
 
-/* line 260, ../sass/menu.scss */
+/* line 261, ../sass/menu.scss */
 .sub-panier {
   border-bottom: 1px solid #888;
 }
 
-/* line 264, ../sass/menu.scss */
+/* line 265, ../sass/menu.scss */
 .panier-float-left {
   float: left;
   padding: 15px 15px 0px;
   position: relative;
 }
 
-/* line 270, ../sass/menu.scss */
+/* line 271, ../sass/menu.scss */
 .panier-float-right {
   text-align: center;
   top: 0px;
@@ -255,7 +256,7 @@ a {
   line-height: 15px;
 }
 
-/* line 277, ../sass/menu.scss */
+/* line 278, ../sass/menu.scss */
 .footer-sub-panier {
   position: relative;
   bottom: 0;

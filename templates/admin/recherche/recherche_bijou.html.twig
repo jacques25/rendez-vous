@@ -1,14 +1,14 @@
 {% extends "admin_base.html.twig" %}
-{% block title %} Recherche {{motcle}}{% endblock %}
+{% block title %} Recherche {{search}}{% endblock %}
 
 {% block body %}
 <div class="container">
 <div class="row">
-<h1 class="content-title mt-5"> {{'Recherche'}} {{ motcle}} </h1>
+<h1 class="content-title mt-5"> {{'Recherche'}} {{ search}} </h1>
 </div>
 {% if bijous.getTotalItemCount  == 0 %}
        <div class="alert alert-warning">
-			 <h5> Aucun article ne correspond à  votre recherche  avec :  {{motcle|upper}}</h5>
+			 <h5> Aucun article ne correspond à  votre recherche  avec :  {{search|upper}}</h5>
 			 </div>
 {% else %}
 <div class="row">

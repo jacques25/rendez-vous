@@ -16,23 +16,27 @@
     box-sizing: border-box;
 }
 
-html,
-body {
-    padding: 0;
-    margin: 0;
+html {
+  
+  height: 100vh;
 }
 
-body {
+body {  
+    
+    padding: 0;
+    margin: 0;
     background-color: #c4f2f2;
-    font-family: 'Sheherazade', sans-serif;
+    font-family: 'Sheherazade', sans-serif;  
+   min-height: 100%;
 } 
 
 
 .site-container {
-    height: 100%;
+    min-height: 100%;
     margin-bottom: 40px;
     width: 100%;
 }
+
 
 .jumbotron {
     padding: 0;
@@ -848,4 +852,9 @@ h4.panier-title {
 
 .option-prix-promo h4 {
     color: #d40707;
+}
+
+.paragraph {
+   padding-bottom: 20%;
+   
 }

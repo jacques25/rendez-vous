@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Bijou;
+use App\Entity\Recherche;
+use App\Repository\BijouRepository;
 
 /**
  * Description of RechercheController
@@ -19,14 +21,13 @@ class RechercheController extends AbstractController
      *
      * @Route("/recherche", name="recherche")
      */
-    public function recherche(Request $request, PaginatorInterface $paginatorInterface)
+    public function recherche(Request $request, PaginatorInterface $paginatorInterface, BijouRepository $bijouRepository)
     {
 
-        $motcle = $request->get('motcle');
+        $search = new Recherche();
+        
 
-        $em = $this->getDoctrine()->getManager();
-
-        $listeBijoux = $em->getRepository(Bijou::class)->findBijousByTitle($motcle);
+        $listeBijoux = $bijouRepository->findAllVisibleQuery($search);
 
 
         if ($request->isMethod('GET')) {
@@ -40,7 +41,7 @@ class RechercheController extends AbstractController
 
         return $this->render('recherche/recherche_bijou.html.twig', [
             'bijous' => $bijous,
-            'motcle' => $motcle
+            'search' => $search
         ]);
     }
 }

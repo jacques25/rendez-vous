@@ -12,7 +12,7 @@
 					</div>
 			  </div>
 			 
-					<div class="row paragraph mb-5">
+					<div class="row">
 							{% for bijou in listeBijoux %}
 								{% include 'produits/_card.html.twig' with {bijou: bijou} only %}
 
@@ -20,13 +20,13 @@
 
 						
 					</div>
-					<div class="row flex-row">
+					<div class="row">
 					<div class="col-sm-12">
 					  {% for des in description %}
 							   <h4> {{des.title}}</h4>
-								 <div class="paragraph">
+								
 								    {{des.introduction|raw}}
-								 </div>
+								
 						{% endfor %}
 					</div>
 					<div class="col-sm-12">

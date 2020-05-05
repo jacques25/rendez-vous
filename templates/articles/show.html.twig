@@ -2,23 +2,25 @@
 {% block title %} {{article.title}}{% endblock %}
 {% block body %}
 
-    <div class="row"> 
-    <div class="jumbotron" style="background:url({{ vich_uploader_asset(article, 'imageFile')}}) no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-     background-size: cover;">   </div>
-      
- 
-        <div class="col-md-6 col-md-12">
+ <div class="row">
+ {% if article.filename is defined %}
+     <img class="jumbotron img-fluid"  src="{{ vich_uploader_asset(article, 'imageFile')}}" >
+ {% endif %}    
+ {% if article %}  
+     
+      <div class="col-sm-12 col-md-12 col-lg-12">
            <h1 class="mt-3">{{article.title }}</h1>
-         </div>
-        <div class="col-md-6 col-md-12 mb-5">
-          <article class="paragraph mb-5"> {{ article.description|raw }}   </article>
-        </div>
-    </div>
-    
+      </div>
+     
+          <div class="col-sm-12 col-md-12 col-lg-12"> 
+          {{ article.description|raw }}
+   
+   </div>
+   {% endif %}
+   </div>
 {% endblock %}
+
+
 
 
     

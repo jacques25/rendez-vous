@@ -28,10 +28,4 @@ class SearchData
    */
   public $min = 0;
 
-
-  /**
-   * @var boolean
-   */
-
-  public $promo = false;
 }
