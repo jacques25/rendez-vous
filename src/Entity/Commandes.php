@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +37,12 @@ class Commandes
      * @ORM\Column(type="integer")
      */
     private $numero_commande;
+    
+      /**
+     * @ORM\Column(type="datetime",nullable= true)
+     *  @Assert\DateTime
+     */
+    private $date_expedition;
 
     /**
      * @ORM\Column(type="array")
@@ -51,7 +58,6 @@ class Commandes
     {
         $this->sendCommande = false;
         $this->valider = false;
-       
     }
 
     public function getId(): ?int
@@ -130,4 +136,18 @@ class Commandes
 
         return $this;
     }
+
+    public function getDateExpedition(): ?\DateTimeInterface
+    {
+        return $this->date_expedition;
+    }
+
+    public function setDateExpedition(\DateTimeInterface $date_expedition): self
+    {
+        $this->date_expedition = $date_expedition;
+
+        return $this;
+    }
+
+    
 }

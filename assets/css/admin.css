@@ -273,24 +273,44 @@ input[type=checkbox] {
     margin: 0;
 }
 
- .modal-container
+/* .modal {
+    background: rgba(34, 34, 34, 0.8);
+    width: 100%;
+    padding: 50px;
+}
+*/
+.modal .modal-container
 {
-   display: flex;
+   display: none;
+}
+.modal .modal-container .show {
+display: flex ;
   justify-content: center;
   align-items: center;
- 
-  width: 80vw;
+  width: 100%; 
+  z-index: 1000;
+  background-color: #000;
+  opacity: 0.8;
+}
+.modal-backdrop {
+  display:none;
+   
 }
 .contact-me {
    box-shadow: 4px 4px 10px 0px rgba(99, 86, 78, 0.6);  
    border-radius: 16px;
    background-color: #fff;
    padding:10px;
-   z-index :10000;
    height:  auto;
     width: 600px;
-    margin-top: 15%;
+    z-index: 10000;
+    margin: 125px auto;
 }
+.contact-me  h2 {
+    color: #212529;
+    font-size: 1.6rem;
+}
+
 
 .contact-message {
    box-shadow: 4px 4px 10px 0px rgba(99, 86, 78, 0.6);  
@@ -528,4 +548,26 @@ input[type=checkbox] {
 
 .sub-title {
     font-weight: 900;
+}
+.button__add {
+     width: 55px;
+  height: 55px;
+  line-height: 55px;
+  text-align: center;
+  color: #fff;
+  font-size: 30px;
+  background-color: #347bff ;
+  display:block;
+  border-radius: 50%;
+  position: absolute; 
+  left: 30px;
+  text-decoration: none;
+  transition: transform 0.3s;
+  box-shadow: 0 6px 10px 0 #0000001a, 0 1px 18px 0 #0000001a, 0 3px 5px -1px #0003;
+}
+
+.button__add:hover {
+  text-decoration: none;
+  color: #fff;
+     transform: scale(1.2) ;
 }

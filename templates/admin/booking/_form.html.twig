@@ -1,0 +1,18 @@
+  
+  <div class="align-items-center mb-2">
+ {#  <div class="text-light text-center bg-info border-rounded w-30 p-2 ">Durée de votre séance  {{booking.seanceOption.duree|format_time('short')}} heure</div> #}
+  </div>
+  
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  <div class=" form-group">
+  
+
+      {{ form_row(form.beginAt, {'attr': {'class': 'mb-2'}})}}
+       {{form_row(form.endAt)}}
+     
+       </div>
+       <button class="btn btn-success left "><i class="fa fa-save"></i> {{ button_label|default('Enregistrer') }}</button>
+    
+{{ form_end(form) }} 
+

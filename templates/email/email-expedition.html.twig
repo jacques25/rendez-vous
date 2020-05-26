@@ -1,7 +1,7 @@
 {% apply inky_to_html|inline_css(source('@styles/foundation-email.css'), source('@styles/email.css') ) %}
 
 <container>
-	<spacer size="16"></spacer>
+	   <spacer size="16"></spacer>
 			<row class="header">
 				<columns large="4" small="12">
 					<a href="{{url('app_homepage') }}">
@@ -17,13 +17,13 @@
 				<columns>
          <spacer size="30"></spacer>
 					<h1 class="title">	
-          <center>	Bonjour {{commande.commande.livraison.firstname}} {{commande.commande.livraison.lastname}} 	</center>
+          <center>	Bonjour {{app.user.gender}} {{ name}} 	</center>
 					</h1>
 					<spacer size="16"></spacer>
 
 					<callout class="secondary">
 						<row>
-							<columns large="6">
+							<columns large="7">
 								<p>
 									<strong>	Mode de paiement</strong>
 									<br/>
@@ -31,53 +31,28 @@
                    Mme Françoise Forite
 
 								</p>
-								<p>
-									<strong>	Numéro de commande	</strong>
-									<br/>
-									 {{commande.numeroCommande}}
-								</p>
+								<p>	<strong>commande n°	: </strong>{{numeroCommande}}</p>
+								<p><strong>Date d'expédition : </strong> 	{{dateExpedition|format_datetime('full', 'none', locale='fr')|capitalize}}</p>
 							</columns>
-							<columns large="6">
-              	<p>
-									<strong>
-										Adresse Email
-									</strong>
+							<columns large="5">
+              	<p><strong>	Adresse Email</strong>
 									<br/>
-									{{user.email}}
+									{{contactEmail}}
 								</p>
-								<p>
-									<strong>Adresse de livraison	</strong>
-									<br/>
-									{{commande.commande.livraison.firstname}}
-									{{commande.commande.livraison.lastname}}
-									<br/>
-									{{commande.commande.livraison.address}}
-									<br/>
-									{{commande.commande.livraison.cp}}
-									{{commande.commande.livraison.city}}
-								</p>
-
+								<p>	<strong>Adresse de livraison	</strong><br> </p>
+								     {{name}} <br>
+                     {{ address}}
+										 {{cpCity}}
 							</columns>
 						</row>
 					</callout>
 					<row>
-				
-			
-					<callout>
+					<callout class="command-body">
 					
-					<p>
-							<center>
-									Votre commande {{ commande.numeroCommande }} a été éxpédiée. Elle arrivera Bientôt chez vous.	<br>
-								Nous sommes à votre disposition pour tous renseignements supplémentaires. <br>
-								Votre facture est disponible  dans votre espace personnel en cliquant sur le lien ci-dessous. <br>
-								Cordialement L'équipe de rendez-vous-avec-soi.fr
-							</center>
-					</p>
+					<p>	<center>{{message}}	</center>	</p>
             	<spacer size="10"></spacer>
 						<center>
-							<a class="btn-url" href="{{ url('user_facture')}}">
-								 Facture
-							</a>
+							<a class="btn-url" href="{{ url('user_facture')}}"> Facture	</a>
 						</center>
 
 

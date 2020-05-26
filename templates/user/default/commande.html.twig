@@ -37,7 +37,7 @@
 									{{commande.NumeroCommande}}
 								</td>
 								<td>
-									{{ commande.dateCommande|date('d/m/Y') }}
+									{{commande.dateCommande|format_datetime('full', 'none', locale='fr')|capitalize }}	
 								</td>
 							
 								{% if  commande.commande.totalPromo is defined and commande.commande.totalPromo is not null %}

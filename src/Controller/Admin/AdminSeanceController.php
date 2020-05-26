@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Seance;
+use App\Form\DataTransformer\TimestampToDateTimeTransformer;
 use App\Form\SeanceType;
 use App\Repository\SeanceRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\Validator\Constraints\Time;
 
 /**
  * @Route("/admin")
@@ -69,7 +71,7 @@ class AdminSeanceController extends AbstractController
     /**
      * @Route("/seance/{id}/edit", name="admin_seance_edit", methods={"GET","POST"})
      */
-    public function edit($id, Request $request, Seance $seance): Response
+    public function edit($id, Request $request, Seance $seance, TimestampToDateTimeTransformer $timestampToDateTimeTransformer): Response
     {
         $manager = $this->getDoctrine()->getManager();
         $seance = $manager->getRepository('App:Seance')->findOneBy(['id' => $id]);
@@ -77,6 +79,7 @@ class AdminSeanceController extends AbstractController
         $originalOptionSeance = new ArrayCollection();
 
         foreach ($seance->getSeanceOptions() as $seanceOption) {
+         
             $originalOptionSeance->add($seanceOption);
         }
 
@@ -94,8 +97,7 @@ class AdminSeanceController extends AbstractController
                     $manager->remove($seanceOption);
                 }
             }
-            $slugger = new AsciiSlugger();
-            $seance->setSlug($slugger->slug(strtolower($seance->getTitle())));
+            
             $manager->flush();
 
             return $this->redirectToRoute('admin_seance_index');

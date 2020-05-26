@@ -58,26 +58,26 @@ class FooterController extends AbstractController
      * @param Contact $contact
      * @return Response
      */
-    public function contact(Request $request, ContactNotication $notification): Response
+    public function contact(Request $request, ContactNotication $contactNotication ): Response
     {
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-           $notification->notify($contact);
+       
+           if ($request->isMethod('POST')) {
+           
+           
             $em = $this->getDoctrine()->getManager();
-
             $em->persist($contact);
-            $em->flush();
-
-
+            $em->flush(); 
+            $contactNotication->notify($contact); 
             $this->addFlash('success', 'Votre mail à été envoyé, nous vous répondrons dans les plus bref délais.');
-
-            /* return $this->redirectToRoute('app_homepage'); */
+            return $this->redirectToRoute('app_homepage'); 
         }
 
-        return $this->render('pages/contact.html.twig', ['form' => $form->createView(),  'contact' => $contact]);
+        return $this->render('email/contact.html.twig', [
+            'form' => $form->createView(), 
+           'contact' => $contact
+           ]);
     }
 }

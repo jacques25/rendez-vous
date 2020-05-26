@@ -29,12 +29,11 @@ class AdminBijouController extends AbstractController
      */
     public function index(BijouRepository $repository, PaginatorInterface $paginatorInterface, Request $request)
     {   
-         $search = new Recherche();
-         $form = $this->createForm(RechercheType::class,  $search);
-         $form->handleRequest($request);
+          
+        $motcle =  $request->get('motcle');
 
          $bijous = $paginatorInterface->paginate(
-             $repository->findAllVisibleQuery($search),
+             $repository->findBijousByReference($motcle),
              $request->query->getInt('page', 1),
              20
          );
@@ -42,7 +41,7 @@ class AdminBijouController extends AbstractController
 
         return $this->render('admin/bijou/index.html.twig', [
             'bijous' => $bijous,
-            'form' => $form->createView()
+            'motcle' => $motcle
         ]);
     }
 

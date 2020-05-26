@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200502225502 extends AbstractMigration
+final class Version20200521092023 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,8 @@ final class Version20200502225502 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE migration');
-        $this->addSql('ALTER TABLE option_bijou ADD promo_is_active TINYINT(1) DEFAULT NULL, ADD promo VARCHAR(255) DEFAULT NULL, ADD date_start DATETIME DEFAULT NULL, ADD date_end DATETIME DEFAULT NULL, ADD port NUMERIC(10, 2) DEFAULT NULL, ADD multiplicate DOUBLE PRECISION DEFAULT NULL');
+        $this->addSql('ALTER TABLE user CHANGE subscribedToNewsletter subscribedToNewsletter TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE user_formation CHANGE subscribedToNewsletter subscribedToNewsletter TINYINT(1) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -31,7 +31,7 @@ final class Version20200502225502 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE migration (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
-        $this->addSql('ALTER TABLE option_bijou DROP promo_is_active, DROP promo, DROP date_start, DROP date_end, DROP port, DROP multiplicate');
+        $this->addSql('ALTER TABLE user CHANGE subscribedToNewsletter subscribedToNewsletter TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE user_formation CHANGE subscribedToNewsletter subscribedToNewsletter TINYINT(1) NOT NULL');
     }
 }

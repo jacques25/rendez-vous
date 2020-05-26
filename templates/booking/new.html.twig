@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choisir un  rendez-vous{% endblock %}
+{% block stylesheets %}
+   {{ parent()}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+ {% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <h1>Prendre  un  rendez-vous</h1>
+      {{include ('agenda/agenda.html.twig')}}
+    {{ include('booking/_form.html.twig') }}
+
+    <a href="{{ path('booking_index') }}">back to list</a>
+    
+    </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+  		{{ encore_entry_script_tags('rendez-vous' )}}
+{% endblock %}
+

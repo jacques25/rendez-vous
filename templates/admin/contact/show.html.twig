@@ -60,21 +60,21 @@
 						</div>
 					</div>
      
-                    <div class="modal" role="dialog"  id="modal-response-{{contact.id}}">
-                       	   <div class="container modal-container">
+                    <div class="modal modal-container" role="dialog"  id="modal-response-{{contact.id}}">
+                       	   
                             
-                                    <div class="contact-me">
+                      <div class="contact-me">
 							    				<div class="card-contact">
-												<div class="card-header">             
+				        							<div class="card-header">             
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                       <span aria-hidden="true">&times;</span>
                                                     </button>
-													<h2 class="text-center font-italic">Réponse	</h2>
+												            	<h2 class="text-center font-italic">Réponse	</h2>
                                        
-												</div>
-												<div class="card-body-contact">
+				        							</div>
+				        							<div class="card-body-contact">
 
-													<form action="{{ path('admin_contact_response', {'id' : contact.id})}}" method="POST">
+				        								<form action="{{ path('admin_contact_response', {'id' : contact.id})}}" method="POST">
 														<h4 class="mt-3 text-center text-info">
 															Object du message :
 															{{contact.subject}}
@@ -101,11 +101,11 @@
 														</button>
                   
 													
-													</form>
-												</div>
-							    				</div>
-						           </div>
-                                </div> 
+				        								</form>
+				        							</div>
+				        		    				</div>
+						             </div>
+                      </div> 
                            
                    </div>
 				</div>

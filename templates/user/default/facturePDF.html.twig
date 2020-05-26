@@ -17,7 +17,6 @@
         <tr>
             <td width="360">
              <h4>Facture n°  {{ facture.NumeroCommande }} </h4>   
-             
               <h4>Date de la commande : {{facture.DateCommande|format_datetime('full', 'none', locale='fr')|capitalize  }}</h4>
             </td>
             <td width="180"></td>
@@ -25,8 +24,11 @@
 
       
               <address id="coordonnes">
-               <p class="address-top"> <em>{{facture.commande.facturation.lastname }}</em>
-                <em>{{facture.commande.facturation.firstname }}</em></p>
+               <p class="address-top"> 
+                <em>{{app.user.gender }}</em> 
+                <em>{{facture.commande.facturation.firstname }}</em>
+               <em>{{facture.commande.facturation.lastname }}</em>
+               </p>
             
                <p class="address-bottom"><em>{{facture.commande.facturation.address }}</em>
                <em>{{facture.commande.facturation.cp }}</em>
@@ -255,15 +257,15 @@
               <td class="color"> {{ option.taille }}</td>
              {% if option.bijou.promoIsActive ==  true %}
          
-             <td class="color">{{ ((option.prix * option.bijou.multiplicate ) * option.quantite)|number_format(2) }}</td>
+             <td class="color">{{ (option.prix * option.bijou.multiplicate )|number_format(2) }}</td>
              {% else %}
-                    <td class="color">{{ option.prix* option.quantite }}</td>
+                    <td class="color">{{ (option.prix)|number_format(2)}}</td>
              {% endif %}
                {% if option.bijou.promoIsActive ==  true %}
          
-             <td class="color">{{ ((option.prix * option.bijou.multiplicate ) * option.quantite)|number_format(2) }}</td>
+             <td class="color">{{ ((option.prix * option.bijou.multiplicate) * option.quantite)|number_format(2) }}</td>
              {% else %}
-                    <td class="color">{{ option.prix* option.quantite }}</td>
+                    <td class="color">{{ (option.prix* option.quantite)|number_format(2) }}</td>
              {% endif %}
             </tr>
             </tbody>

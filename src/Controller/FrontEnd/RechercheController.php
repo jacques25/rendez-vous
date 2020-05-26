@@ -24,10 +24,10 @@ class RechercheController extends AbstractController
     public function recherche(Request $request, PaginatorInterface $paginatorInterface, BijouRepository $bijouRepository)
     {
 
-        $search = new Recherche();
+     $motcle = $request->get('motcle');
         
 
-        $listeBijoux = $bijouRepository->findAllVisibleQuery($search);
+        $listeBijoux = $bijouRepository->findBijousByMotCle($motcle);
 
 
         if ($request->isMethod('GET')) {
@@ -38,10 +38,9 @@ class RechercheController extends AbstractController
             );
         }
 
-
         return $this->render('recherche/recherche_bijou.html.twig', [
             'bijous' => $bijous,
-            'search' => $search
+            'motcle' => $motcle
         ]);
     }
 }

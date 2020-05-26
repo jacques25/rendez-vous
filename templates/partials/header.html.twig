@@ -4,6 +4,7 @@
 					 <img class="img_logo" src="{{asset('/build/img/rdv.png')}}" width="30"></a>
           <nav class="menu" id="menu">
            <ul class="menu-left" id="menu-left">
+					<li class="has-sub"><a href="{{path('app_homepage')}}" >Présentation</a> </li>
 					 <li class="has-sub"><a href="{{path('qui_suis_je')}}" > Qui-suis-je?</a> </li>
            {% for category in categories  %}
              <li class="has-sub"><a href="#">{{category.title}}</a>
@@ -39,24 +40,30 @@
 								 {% endfor %}
 								 	</ul>
 							
-							 {% elseif category.seances|length != 0 %}
-						<div class="nav-hub">
+								{% elseif category.seances|length != 0  %}
+						<div class="nav-hub">	 
+				
 								{% for seance in category.seances %}
                  
 								    <a id="menu-link"  href="{{path('seance_show', {'slug':seance.slug})}}">
 										{{seance.title}}
 									</a>
-								
-								{% endfor %}
-							</div>
-						 {% endif %}
+						
+								{% endfor %} 		
+								</div>
+								{% elseif category.formations|length  != 0 %}
+										<div class="nav-hub">	 
+								         {% for formation in category.formations %}
+													 	      <a id="menu-link"  href="{{path('formation_show', {'slug':formation.slug})}}"> 
+										 {{formation.title}} 	</a>
+												 {% endfor %}
+								 </div>
+								{% endif %}
+                 
+						
 						 </li>
            {% endfor %}
-					 <li class="has-sub">
-					  	<a  href="{{ path('contact_me')}}"  data-toggle="modal"  data-target="#modal-response" >
-					        Me contactez 
-				       	</a>	
-							</li>
+				
 		     
 				
             </ul>
@@ -69,6 +76,11 @@
 						<span class="searchbox-icon"><i class=" fa fa-search"></i></span>
 					</form>
          </li>
+				 	 <li class="has-sub">
+					  	<a  href="{{ path('contact_me')}}"  data-toggle="modal"  data-target="#modal-response" >
+					        Me contactez 
+				       	</a>	
+							</li>
 					{#  {% include "recherche/recherche_bijou.html.twig" %}#}
            	{% if is_granted("ROLE_ADMIN") %}	
 					<li class="has-sub">

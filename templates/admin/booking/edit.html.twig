@@ -1,0 +1,88 @@
+{% extends 'admin_base.html.twig' %}
+
+
+     {% block title %}Edition  {{booking}} {% endblock %}
+
+   
+
+{% block body %}
+<div class="container">
+<div class="row">
+    <div class="modal-form col-md-6" aria-hidden="true">
+		 <div class="modal-dialog" role="document">
+		   
+		   <div class="modal-content">
+			 <div class="modal-header">
+					 <h5 id="modal-title">Modification de votre  {{booking.title}} </h5>
+                </div>
+               <div class="modal-body">
+                {{ include('admin/booking/_form.html.twig') }}
+           
+               </div>
+                <div class="modal-footer">
+               </div>
+             </div>
+             </div>
+   </div>
+  <div class="col-md-6 mt-4">
+   {% if booking.formation != null  %}
+   {% for user in booking.formation.userFormations %}
+         <table class="table table-fluid ">
+            <thead>
+               <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Date Naissance</th>
+                    <th>Téléphone</th>
+                    <th>Actions</th>
+               </tr>
+            </thead>
+             <tbody>
+                  <tr>
+                       <td> {{user.lastName}}</td>
+                       <td> {{user.firstName }}</td>
+                       <td> {{ user.email }}</td>
+                       <td> {{user.dateNaissance|format_date() }}</td>
+                       <td>{{ user.phone }}</td>
+                       <td>
+                                  {{ include('admin/booking/_delete_form.html.twig') }}
+                       </td>
+                  </tr>
+             </tbody>
+         
+         </table>
+                      
+                {% endfor %}
+    {% endif %}
+
+      {% if booking.seanceOption != null  %}
+ 
+         <table class="table table-fluid">
+            <thead>
+               <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Actions</th>
+               </tr>
+            </thead>
+             <tbody>
+                  <tr>
+                       <td> {{booking.userSeance.lastName}}</td>
+                       <td> {{booking.userSeance.firstName }}</td>
+                       <td> {{booking.userSeance.email }}</td>
+                       <td>{{ booking.userSeance.phone }}</td>
+                       <td></td>
+                  </tr>
+             </tbody>
+         
+         </table>
+                      
+                
+    {% endif %}
+    </div>
+    </div>
+    </div>
+{% endblock %}

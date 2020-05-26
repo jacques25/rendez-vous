@@ -10,11 +10,11 @@ import SlimSelect from 'slim-select';
 // any CSS you require will output into a single css file (app.css in this case)
 
 //require('bootstrap-hover-dropdown');
+require("./bootstrap-datetimepicker.min.js")
 require('./propertiesBijou');
 require('./medias');
 require('./select');
 require('../css/admin.css');
-require('./bootstrap-datetimepicker.min.js');
 $(function () {
     $('.cropper').each(function () {
         new Cropper($(this));
@@ -59,16 +59,46 @@ $(document).ready(function(){
     
   
 });
+var modal1 = document.getElementById("modal1");
+  var open = document.getElementById("open");
+
+  if (modal1 !== null) {
+    open.onclick = function () {
+      modal1.style.display = "block";
+    }; // Get the <span> element that closes the modal
+
+    var span = document.getElementsByClassName("close-modal")[0]; // When the user clicks on <span> (x), close the modal
+
+    span.onclick = function () {
+      modal1.style.display = "none";
+    };
+  }
+
 
 	$(function () {
-    // Datetime picker initialization.
-		// See https://eonasdan.github.io/bootstrap-datetimepicker/
-		
-    $('.datetimepicker').datetimepicker({
+        var datetimepicker = this.getElementsByClassName('datetimepicker-input');
+
+     $('.datetimepicker').datetimepicker({
 		  	locale: 'fr',
-        autoclose: true,
-        todayHighlight: true,
-        icons: {
+            autoclose: true,
+         icons: {
+             time: 'fa fa-clock-o',
+             date: 'fa fa-calendar',
+             up: 'fa fa-chevron-up',
+             down: 'fa fa-chevron-down',
+             previous: 'fa fa-chevron-left',
+             next: 'fa fa-chevron-right',
+             today: 'fa fa-check-circle-o',
+             clear: 'fa fa-trash',
+             close: 'fa fa-remove'
+         }
+        })
+
+    $('.datetimepicker3').datetimepicker({
+		  	locale: 'fr',
+            format: 'hh:ii',
+            autoclose: true,
+	      icons: {
             time: 'fa fa-clock-o',
             date: 'fa fa-calendar',
             up: 'fa fa-chevron-up',
@@ -78,7 +108,7 @@ $(document).ready(function(){
             today: 'fa fa-check-circle-o',
             clear: 'fa fa-trash',
             close: 'fa fa-remove'
-				}
+        }
 				
 		});
 		 $('.datetimepicker2').datetimepicker({
@@ -96,6 +126,15 @@ $(document).ready(function(){
             clear: 'fa fa-trash',
             close: 'fa fa-remove'
         }
+         });
+        var dateExpedition = document.getElementById('dateExpedition');
+         $('#dateExpedition').datetimepicker({
+			 	locale: 'fr',
+             autoclose: true,
+             onSelect: function () {
+                 dateExpedition = this.datetimepicker.value;
+            },
+            
     });
 });
 

@@ -5,6 +5,7 @@ namespace App\Notification;
 use Twig\Environment;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mailer\MailerInterface;
+
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\Entity\Contact;
 
@@ -18,26 +19,31 @@ class ContactNotication
           $this->renderer = $renderer;
       }
        public  function notify(Contact $contact){
-            $contactEmail = $contact->getEmail();
-            $name = ($contact->getFirstname() . ' ' .  $contact->getLastname());
-            $phone = $contact->getPhone();
-            $subject = $contact->getSubject();
-
-           $mail = (new TemplatedEmail())
-        ->from(new Address($contact->getEmail(), $name))
+               
+               $gender = $contact->getGender();
+               $contactEmail  = $contact->getEmail();
+               $lastname = $contact->getLastname();
+               $firstname= $contact->getFirstname();
+               $username = $gender . " " .$lastname . " " . $firstname;
+               $phone = $contact->getPhone();
+               $subject = $contact->getSubject();
+               $messageMail = $contact->getMessage();
+        
+        
+               $mail = (new TemplatedEmail())
+        ->from(new Address($contactEmail, $username))
         ->to(new Address('jacques19611@live.fr', 'Rendez-vous Avec Soi'))
         ->subject($subject)
         ->htmlTemplate('email/email-contact.html.twig')
         ->context([
-           'name' => $name,
-            'contactEmail' => $contactEmail,
+           'name' => $username,
+           'contactEmail' => $contactEmail,
            'phone'=> $phone,
-           'message'=> $contact->getMessage(),
-           'subject' => $contact->getSubject()
+           'messageMail'=> $messageMail,
+           'subject' => $subject
         ]);
+          
 
-
-
-           $this->mailer->send($mail);
+               $this->mailer->send($mail);
+           }
        }
-}

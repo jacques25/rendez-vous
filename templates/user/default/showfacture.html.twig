@@ -7,12 +7,11 @@
 
 
 				<div class="col-3">
-					<h1>Facture  </h1>
-					<p class="">Date: 	{{facture.dateCommande|date('d-m-Y') }}	</p>
-					<p class="">
-						Numero de commande:
-						{{ facture.numeroCommande }}
-					</p>
+					<h1>Facture  </h1>	
+					 <p class=""><strong>Numero de commande:	{{ facture.numeroCommande }}</strong>	</p>
+					<p class=""><strong><em>Commandé le: 	{{facture.dateCommande|format_datetime('full', 'none', locale='fr')|capitalize }}	</em></strong></p>
+						<p class=""><strong><em>Expédié le: 	{{facture.dateExpedition|format_datetime('full', 'none', locale='fr')|capitalize}}</em></strong>	</p>
+				
 				</div>
 				<div class="col-3 center mt-5">
 					<h3>
@@ -20,6 +19,7 @@
 					</h3>
 
 					<p class="">
+					  {{app.user.gender}}
 						{{facture.commande.livraison.lastname }}
 						{{facture.commande.livraison.firstname }}
 					</p>
@@ -42,6 +42,7 @@
 					</h3>
 
 					<p class="">
+						{{app.user.gender}}
 						{{facture.commande.facturation.lastname }}
 						{{facture.commande.facturation.firstname }}
 					</p>
@@ -96,44 +97,38 @@
 							
 									</tr>
 							{% endfor %}
-							
-							
-					</tbody>
-					<tfoot>	 
-					{% for option in facture.commande.optionBijou  %}
+							{% for option in facture.commande.optionBijou  %}
 									
 									 {% if option.bijou.promoIsActive == true %}		
 								
-							 <tr><dl colspan="4">Sous Total de la commande : </dl><dt> {{(facture.commande.totalCommande - option.bijou.port)|number_format(2)}}</dt>
-						  <dl colspan="4"> Frais de livraison</dl><dt> {{option.bijou.port|number_format(2)}}</dt>	</tr>
+							 <tr><td></td><td></td><td></td><td style="text-align:right">Sous Total de la commande : </td><td> {{(facture.commande.totalCommande - option.bijou.port)|number_format(2)}}</td></tr>
+						 <tr><td></td><td></td><td></td><td style="text-align:right"> Frais de livraison:  </td><td>{{option.bijou.port|number_format(2)}}</td>	</tr>
+							 <tr><td></td><td></td><td></td><td style="text-align:right">TOTAL COMMANDE :</td><td>	 {{(facture.commande.totalCommande)|number_format(2)}} €</td></tr>
 							{% endif %}	
 							
 							   {% endfor %}
-					  
-							</tfoot>
+							
+					</tbody>
+						 	
 			
 					</table>
-             
+             <table class=" table">
+				
+						 </table>
 				{% endif %}
 	</div>
-				<div class="d-flex flex-row-reverse float-right">
-					<div class="col-12 mx-4" id="total">
-
-						TOTAL COMMANDE : {{facture.commande.totalCommande}} €
-					</div>
-
-		      </div>
-			 
+				<div class="row">
+				<div class="col-6">
+					<a class="btn btn-primary" href="{{path('account_profile')}}">
+						<i class="fa fa-chevron-left"> </i> Retour
+					</a>
+				</div>
 			
 			<a class="btn btn-telechargement" href="{{ path('facture_pdf',{'id': facture.id}) }}"  target="_blank">
 										<i class="fas fa-upload"></i> {{'téléchargement facture'|upper }}
 								  	</a>
-		<div class="row mt-5">
-				<div class="col-6">
-					<a class="btn btn-primary" href="{{path('account_profile')}}">
-						Retour
-					</a>
-				</div>
-			</div>
+
+			
+		
       
 		{% endblock %}

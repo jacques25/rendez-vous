@@ -406,6 +406,26 @@ article:last-child  {
  width:100% !important;
 }
 
+#calendar-holder{
+  font-family: "Muli", sans-serif;
+  padding: 15px;
+  min-width: 400px;
+  margin: 0 ;
+  background-color: rgb(255, 255, 255);
+}
+.fc-toolbar > * > :not(:first-child){
+  float:left;
+  font-size: 13px;
+}
+.fc-button-group
+{
+  font-size: 13px !important;
+  margin-left:0 !important;
+}
+.fc-toolbar h2{
+   font-size:1.25rem !important;
+}
+
 }
 
 .contact-me {

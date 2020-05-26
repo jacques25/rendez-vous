@@ -51,7 +51,6 @@ class CommandesController extends AbstractController
  
      $optionBijous = $this->optionBijouRepository->findArray(array_keys($session->get('panier')));
     
-    
     foreach ($optionBijous as $optionBijou) {
        
        $commande['optionBijou'][$optionBijou->getId()] = array(
@@ -77,7 +76,7 @@ class CommandesController extends AbstractController
              
               $isActive = $optionBijou->getBijou()->getPromoIsActive();
               $port =  number_format( $optionBijou->getBijou() ->getPort(), 2);
-              dd($port);
+          
     }
   
        $commande['livraison'] = array(
@@ -106,7 +105,7 @@ class CommandesController extends AbstractController
     $commande['port'] = number_format($port, 2);
     $commande['isActive'] = $isActive;
     $commande['totalCommande'] = $totalBijou + $totalPromo + $port ;
-    
+   
     return $commande;
   }
 
@@ -124,8 +123,7 @@ class CommandesController extends AbstractController
 
   
     $commande = $em->getRepository(Commandes::class)->find($session->get('commande'));
-   
-    $commande->setDateCommande(new \DateTime());
+    $commande->setDateCommande(new \DateTime('now'));
     $commande->setUser($this->container->get('security.token_storage')->getToken()->getUser());
     $commande->setValider(0);
     $commande->setNumeroCommande(0);
@@ -169,9 +167,11 @@ class CommandesController extends AbstractController
       $commande->setValider(1);
       $commande->setNumeroCommande($this->getReference->reference());
       $em->flush();
-      
+      $gender =  $user->getGender();
+      $firstname = $user->getFirstName();
+      $lastname = $user->getLastName();
       $email = $user->getEmail();
-      $username = $user->getLastName();
+      $username =  $gender . " " . $firstname . " " . $lastname;
       $url = $this->generateUrl('show_facture', ['id' => $commande->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
       $mail = (new TemplatedEmail())
         ->from(new Address('contact@rvas.site', 'Rendez-vous Avec Soi'))

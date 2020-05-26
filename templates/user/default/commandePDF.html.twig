@@ -25,8 +25,11 @@
 
       
               <address id="coordonnes">
-               <p class="address-top"> <em>{{commande.commande.facturation.lastname }}</em>
-                <em>{{commande.commande.facturation.firstname }}</em></p>
+               <p class="address-top">
+               <em>{{app.user.gender}}</em> 
+               <em>{{commande.commande.facturation.firstname }}</em>
+                <em>{{commande.commande.facturation.lastname }}</em>
+               </p>
             
                <p class="address-bottom"><em>{{commande.commande.facturation.address }}</em>
                <em>{{commande.commande.facturation.cp }}</em>
@@ -255,15 +258,15 @@
               <td class="color"> {{ option.taille }}</td>
                {% if option.bijou.promoIsActive ==  true %}
          
-             <td class="color">{{ ((option.prix * option.bijou.multiplicate ) * option.quantite)|number_format(2) }}</td>
+             <td class="color">{{ (option.prix * option.bijou.multiplicate )|number_format(2) }}</td>
              {% else %}
-                    <td class="color">{{ option.prix* option.quantite }}</td>
+                    <td class="color">{{ option.prix|number_format(2)}}</td>
              {% endif %}
                {% if option.bijou.promoIsActive ==  true %}
          
              <td class="color">{{ ((option.prix * option.bijou.multiplicate ) * option.quantite)|number_format(2) }}</td>
              {% else %}
-                    <td class="color">{{ option.prix* option.quantite }}</td>
+                    <td class="color">{{ (option.prix* option.quantite)|number_format(2) }}</td>
              {% endif %}
             </tr>
             </tbody>
@@ -272,8 +275,6 @@
 
         <table id="total" align="right">
                {% for option in commande.commande.optionBijou %}
-           
-           
             
                  {% if option.bijou.promoIsActive %}
                    {% set port = option.bijou.port %}

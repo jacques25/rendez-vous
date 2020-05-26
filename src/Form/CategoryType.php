@@ -19,13 +19,6 @@ class CategoryType extends ApplicationType
     {
         $builder
             ->add('title', TextType::class, $this->getConfiguration("Titre" , "Titre"))
-            ->add('description', CKEditorType::class, [
-                    'config' => [
-                        'toolbar' => 'toolbar2',
-                        'height' => 200,
-                    ],
-                'required' => false
-            ])
             ->add('position', ChoiceType::class, [
                 'choices' => [
                     '1' => '1',
@@ -36,10 +29,6 @@ class CategoryType extends ApplicationType
                     '6' => '6',
                     '7' => '7'
                 ]
-            ])
-            ->add('imageFile', ImageType::class, [
-                'required' => false,
-                'label' => false
             ]);
     }
 

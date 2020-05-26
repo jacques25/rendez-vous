@@ -1,0 +1,16 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Nouvelle Formation{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Create nouvelle Formation</h1>
+  
+    {{ include('admin/formation/_form.html.twig') }}
+    </div>
+    
+{% endblock %}
+{% block javascripts %}
+  {{parent()}}
+  	{{ encore_entry_script_tags('booking' )}}
+{% endblock %}

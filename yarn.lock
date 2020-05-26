@@ -743,6 +743,60 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@fullcalendar/core@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-4.4.0.tgz#79dbc0cca836ce628a07e739a456da11ff141373"
+  integrity sha512-PC4mmXHJHAlXmUEmZVnePyA8yYCOBdxBNq8yjJqedEtT1X0x36yTFz/Y0Ux6bniICZDqYtk0xoxe6jaxi++e0g==
+
+"@fullcalendar/daygrid@^4.4.0", "@fullcalendar/daygrid@~4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-4.4.0.tgz#25fcae7226b62688b4e086a611582e72253b5229"
+  integrity sha512-pDfvL0XZxKHTZ4VFOmwaYe3LmuABEIZsEopeqQ8y5O6BDen9KCbJqgHeCI8FpASSBd6bNlUx7il7EHdSoHhgIw==
+
+"@fullcalendar/interaction@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/interaction/-/interaction-4.4.0.tgz#fc8f8baaf5cb3533d6ce0a684d6f9952a4430685"
+  integrity sha512-nGu0ZzYYlNpIhqfyv3JupteWKFETs3W1MzbRJcEZkuPncn4BooEi4A2blgHfacHAmmpaNkT84tAmhzi734MFBA==
+
+"@fullcalendar/list@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/list/-/list-4.4.0.tgz#8edab49d06903b7de0ca68eefc1d44d0a58860a9"
+  integrity sha512-uUDSPS71czNTK5Z3x3HzeE3KIvqkCfvhY+mGFdaAL6+7VpCwEIfB6s3GIJOjzu9TONmczMk4jdq0b1WUFLY5PQ==
+
+"@fullcalendar/moment@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/moment/-/moment-4.4.0.tgz#a83a4340427aedc46bc5216164465ecd595e839b"
+  integrity sha512-sW2F7z0E1+kBvBduGiXVYJtIWj2AWeUQQoiLA+xgprsyljzigwnI+9J2iviaB9uL7LIbCSnPrOZmhpVTufmPvQ==
+
+"@fullcalendar/resource-common@~4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/resource-common/-/resource-common-4.4.0.tgz#eed6aa5ce4a85d2179db402a8e96568695cd2c5d"
+  integrity sha512-pR7LNBCeqrCsKbNzhdDSg/yiaJe/HUp9axStl2J9GgJF73bXFqYywCJ1WcGp1WLejzT3zq6cXHYBKq9gSzLywQ==
+
+"@fullcalendar/resource-daygrid@~4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/resource-daygrid/-/resource-daygrid-4.4.0.tgz#6ca4aee965a57be37b8b2f944f7d7eba3e4fb44e"
+  integrity sha512-b/Rdy2yqzxl5QWMCclpsDEMywOqqg/CV70J0QQgzhGEUdxftWLajU8KuiDN01K+3vJBwHWAwNz+2xudlw4pYkA==
+  dependencies:
+    "@fullcalendar/daygrid" "~4.4.0"
+    "@fullcalendar/resource-common" "~4.4.0"
+
+"@fullcalendar/resource-timegrid@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/resource-timegrid/-/resource-timegrid-4.4.0.tgz#0ee20c992fa6065cc186915c977dd5c367d2cd0c"
+  integrity sha512-0Vn+WQbysgqBsp0JtRsOkGWACCRFY0oq/Thxgldfz6MXrDFXC64HZU1FTwSZFdfCd01n36SqBcBr1eoAOz5J4g==
+  dependencies:
+    "@fullcalendar/resource-common" "~4.4.0"
+    "@fullcalendar/resource-daygrid" "~4.4.0"
+    "@fullcalendar/timegrid" "~4.4.0"
+
+"@fullcalendar/timegrid@^4.4.0", "@fullcalendar/timegrid@~4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/timegrid/-/timegrid-4.4.0.tgz#c5837cfd676afff0d95535ac4cc054ed65965976"
+  integrity sha512-QwJ9oM87/ZTbXaE8PMIVp20GPtVCFmroaeR1GydJ6BKYtbxG/nsaSv7RhqvDa2jLjHaTWC2NjHo9hRfjQjtCZA==
+  dependencies:
+    "@fullcalendar/daygrid" "~4.4.0"
+
 "@symfony/webpack-encore@^0.28.2":
   version "0.28.3"
   resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-0.28.3.tgz#45b590f7b86beb7bb6918a95df89f42f72b796d0"
@@ -3894,9 +3948,9 @@ jquery@^1.12.4:
   integrity sha1-AeHfuikP5z3rp3zurLD5ui/sngw=
 
 jquery@^3.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.0.tgz#9980b97d9e4194611c36530e7dc46a58d7340fc9"
-  integrity sha512-Xb7SVYMvygPxbFMpTFQiHh1J7HClEaThguL15N/Gg37Lri/qKyhRGZYzHRyLH8Stq3Aow0LsHO2O2ci86fCrNQ==
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
+  integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
 
 js-base64@^2.1.8:
   version "2.5.2"
@@ -4390,6 +4444,13 @@ mkdirp@0.5.3:
   dependencies:
     minimist "^1.2.5"
 
+moment-timezone@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.4.1.tgz#81f598c3ad5e22cdad796b67ecd8d88d0f5baa06"
+  integrity sha1-gfWYw61eIs2teWtn7NjYjQ9bqgY=
+  dependencies:
+    moment ">= 2.6.0"
+
 moment-timezone@^0.5.11, moment-timezone@^0.5.28:
   version "0.5.28"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.28.tgz#f093d789d091ed7b055d82aa81a82467f72e4338"
@@ -4397,7 +4458,12 @@ moment-timezone@^0.5.11, moment-timezone@^0.5.28:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.22.2, moment@^2.24.0:
+"moment@>= 2.6.0", moment@^2.22.2:
+  version "2.25.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.25.3.tgz#252ff41319cf41e47761a1a88cab30edfe9808c0"
+  integrity sha512-PuYv0PHxZvzc15Sp8ybUCoQ+xpyPWvjOuK72a5ovzp2LI32rJXOiIfyoFoYvG3s6EwwrdkMyWuRiEHSZRLJNdg==
+
+"moment@>= 2.9.0", moment@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
@@ -6586,6 +6652,15 @@ tempusdominus-bootstrap-4@^5.1.2:
     moment "^2.22.2"
     moment-timezone "^0.5.11"
     popper.js "^1.14.3"
+
+tempusdominus-core@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/tempusdominus-core/-/tempusdominus-core-5.0.3.tgz#808642e47a83f45d7ef18c1597fd7b1d413d69e5"
+  integrity sha512-52lClmU33gb6J6I/S9uGDrgQwccq3Yw9SlZerTgGLOzOB3Sc9pgIVBirfPMsMcx8nPsg6mA5ItFAH/5BZiQThg==
+  dependencies:
+    jquery "^3.0"
+    moment "^2.22.2"
+    moment-timezone "^0.4.0"
 
 terser-webpack-plugin@^1.1.0, terser-webpack-plugin@^1.4.3:
   version "1.4.3"

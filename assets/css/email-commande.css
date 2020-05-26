@@ -2,7 +2,7 @@
     .header {
       border-bottom: 1px solid #888;
       position: relative;
-      background-color: #8f725c ;
+      background-color: #44828a ;
       height: 60px;
       width:1250px;
       left: -28px;
@@ -114,12 +114,11 @@
     }
 
     .footer_pdf {
-      width:1250px;
-      height: 30px;
+      height: 20px;
       position:relative;
       margin-bottom:0px;
       color: #fff;
-      background-color: #8f725c;
+      background-color: #44828a;
       left: -28px;
       padding:0px 25px 25px 25px;
      

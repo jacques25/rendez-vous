@@ -32,6 +32,11 @@ class User implements UserInterface, Serializable
      * @ORM\Column(type="integer")
      */
     private $id;
+    
+    /**
+     * @ORM\Column(type="string" ,  length=20)
+     */
+    private $gender;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -50,6 +55,17 @@ class User implements UserInterface, Serializable
      * @Assert\Email(message="Veuillez renseigner un email valide!")
      */
     private $email;
+    
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true) 
+     * @Assert\Length(
+     *  min=10 , 
+     * max=10,  
+     * minMessage="Le numéro de téléphone doit avoir 10 chiffres",  
+     * maxMessage="Le numéro de téléphone doit avoir 10 chiffres max")
+    */
+
+    private $phone; 
 
     /**
      * @ORM\Column(type="json_array")
@@ -112,7 +128,7 @@ class User implements UserInterface, Serializable
     private $enabled;
 
     /**
-     * @ORM\Column(name="subscribedToNewsletter", type="boolean")
+     * @ORM\Column(name="subscribedToNewsletter", type="boolean", nullable=true)
      */
     private $subscribedToNewsletter;
     /**
@@ -468,7 +484,31 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
-   
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+ 
 
    
 }

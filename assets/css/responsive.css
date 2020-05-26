@@ -411,8 +411,34 @@
     position: relative;
     width: 100% !important;
   }
+
+  /* line 409, ../sass/responsive.scss */
+  #calendar-holder {
+    font-family: "Muli", sans-serif;
+    padding: 15px;
+    min-width: 400px;
+    margin: 0;
+    background-color: white;
+  }
+
+  /* line 416, ../sass/responsive.scss */
+  .fc-toolbar > * > :not(:first-child) {
+    float: left;
+    font-size: 13px;
+  }
+
+  /* line 420, ../sass/responsive.scss */
+  .fc-button-group {
+    font-size: 13px !important;
+    margin-left: 0 !important;
+  }
+
+  /* line 425, ../sass/responsive.scss */
+  .fc-toolbar h2 {
+    font-size: 1.25rem !important;
+  }
 }
-/* line 411, ../sass/responsive.scss */
+/* line 431, ../sass/responsive.scss */
 .contact-me {
   width: 100% !important;
   margin-left: auto;
@@ -421,7 +447,7 @@
   left: -15px;
 }
 
-/* line 419, ../sass/responsive.scss */
+/* line 439, ../sass/responsive.scss */
 .paragraph {
   padding-bottom: 10%;
 }

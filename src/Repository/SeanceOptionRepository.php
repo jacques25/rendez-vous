@@ -19,6 +19,7 @@ class SeanceOptionRepository extends ServiceEntityRepository
         parent::__construct($registry, SeanceOption::class);
     }
 
+  
     // /**
     //  * @return SeanceOption[] Returns an array of SeanceOption objects
     //  */

@@ -1,0 +1,48 @@
+	<div class="contact-me">
+					<div class="card-contact">
+						<div class="card-header">
+							<h2 class="text-center font-italic">	Expedition de la commande {{commande.numeroCommande}}
+							 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button></h2>
+						</div>
+						<div class="card-body-contact">
+						        
+					    	   <form name="expedition" action="{{ path('admin_expedition', {'id': commande.id})}}" method="POST">
+									  <div class="form-group">
+										 <input type="hidden"  name="expedition[numeroCommande]" value="{{commande.numeroCommande}}">
+										 	 <input type="hidden"  name="expedition[street]" value="{{commande.commande.livraison.address}}">
+											 <input type="hidden"  name="expedition[cp]" value="{{commande.commande.livraison.cp}}">
+											<input type="hidden"  name="expedition[city]" value="{{commande.commande.livraison.city}}">
+										</div>
+										<div class="form-group">
+					    		      <input class="form-control" type="text" name="expedition[gender]" value="{{commande.user.gender}}">
+					    		 </div>
+					    		  <div class="form-group">
+					    		      <input class="form-control" type="text" name="expedition[firstname]" value="{{commande.user.firstname}}">
+					    		 </div>
+                    <div class="form-group">
+					    		    <input class="form-control" type="text" name="expedition[lastname]" value="{{commande.user.lastname}}">
+					    		   </div>
+                      <div class="form-group">
+					    		     <input class="form-control" type="text" name="expedition[email]" value="{{commande.user.email}}">
+					    	       </div>
+											 <div class="form-group">
+					    		     <input class="form-control" type="text" name="expedition[subject]" value="Expédition de votre commande">
+					    	       </div>
+
+                       <div class="form-group">
+					              <textarea class="form-control mt-2"  name="expedition[message]" rows="8"  columns="10" placeholder="Votre message..."></textarea>
+                        </div>
+					       
+					    	       <div class="form-group">
+					    			    <input type="text" id="dateExpedition" name="expedition[dateExpedition]" class="datetimepicker3" class="form-control" value="">
+					    			   </div> 
+    
+					    		         <button type="submit" class="btn btn-success">	Envoyer</button>
+										
+					    		</form> 
+						</div>
+					</div>
+	</div>
+	

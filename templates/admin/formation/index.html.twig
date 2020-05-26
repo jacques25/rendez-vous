@@ -1,0 +1,53 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Liste Formation {% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="row">
+    <h1>Liste des Formations </h1>
+
+    <table class="table table-fluid">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formation in formations %}
+            <tr>
+                <td>{{ formation.id }}</td>
+                <td>{{ formation.title }}</td>
+                <td>{{ formation.description|raw|u.truncate(45, true, '...') }}</td>
+                   {% for booking in formation.booking %}
+                              <td> du {{ booking.beginAt|format_datetime('full') }}<br>
+                          au {{ booking.endAt|format_datetime('full') }}</td>
+                   {% endfor %}
+         
+                <td>{{ formation.prix}} €</td>
+                <td>
+            
+                    <a href="{{ path('admin_formation_edit', {'id': formation.id}) }}" class="btn btn-info"> <i class="fa fa-edit"></i></a>
+                     {{ include('admin/formation/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+         
+    </table>
+    </div>
+    <div class="row">
+   <div class="col-3"> <a href="{{ path('admin_formation_new') }}" class="button__add">+</a></div>
+   </div>
+
+    </div>
+{% endblock %}

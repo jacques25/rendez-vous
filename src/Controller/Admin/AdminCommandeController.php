@@ -2,23 +2,23 @@
 
 namespace App\Controller\Admin;
 
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Knp\Component\Pager\PaginatorInterface;
+use DateTime;
 use App\Service\GetReference;
 use App\Service\GetFacture;
 use App\Repository\CommandesRepository;
-use App\Entity\User;
+use App\Entity\Expedition;
 use App\Entity\Commandes;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Knp\Component\Pager\PaginatorInterface;
-use Knp\Snappy\Pdf;
-
+use App\Form\Contact\ExpeditionType;
+use App\Notification\ExpeditionNotification;
 
 /**
  * @Route("/admin")
@@ -92,50 +92,41 @@ class AdminCommandeController extends AbstractController
     }
     
     /**
-     * @Route("/expdition/commande/{id}", name="admin_expedition")
+     * @Route("/expedition/commande/{id}", name="admin_expedition")
      *
      * @param [type] $id
      * @param Request $request
      * @param MailerInterface $mailer
      * @return void
      */
-    public function EnvoiMessage( $id, Request $request , MailerInterface $mailer)
+    public function EnvoiMessage( $id, Request $request , CommandesRepository $commandesRepository, ExpeditionNotification $expeditionNotification)
     {
-       $em = $this->getDoctrine()->getManager();
-
-    $commande = $em->getRepository(Commandes::class)->find($id);
-    if (!$commande) {
-      
-      throw $this->createNotFoundException('La commande n\'existe pas');
-    }
-     
+  
+    $commande = $commandesRepository->find($id);
+    $user = $commande->getUser();
     
-      $user = $commande->getUser();
-      $commande->setSendCommande(1);
-      $commande->setNumeroCommande($this->getReference->reference());
-      $em->flush();
-      $email = $user->getEmail();
-      $username = $user->getLastName();
-      $url = $this->generateUrl('show_facture', ['id' => $commande->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-      $mail = (new TemplatedEmail())
-        ->from(new Address('contact@rvas.site', 'Rendez-vous Avec Soi'))
-        ->to(new Address($email, $username))
-        ->subject("Expédition de votre commande")
-        ->htmlTemplate('email/email-expedition.html.twig')
-        ->context( [
-           'user' => $user,
-           'username' => $username,
-           'url'=> $url,
-           'commande'=> $commande
-        ]);
+     $expedition = new Expedition();
+     $form = $this->createForm(ExpeditionType::class, $expedition);
+     $form->handleRequest($request);
+      
+     if ($request->isMethod('POST')) { 
+         $commande->setSendCommande(1);
+         $commande->setNumeroCommande($this->getReference->reference());
+         $commande->setDateExpedition($expedition->getDateExpedition());
+         $em= $this->getDoctrine()->getManager();
+         $em->persist($commande);
+         $em->flush(); 
+         if ($commande !== null) {
+           
+             $expeditionNotification->notify($expedition, $commande);
+         
+             $this->addFlash('success', 'Message envoyé');
+             return $this->redirectToRoute('admin_commande_show', ['user' => $user->getId()]);
+         }
+     }
+                 
 
-      $mailer->send($mail);
-
-
-   
-   
-      $this->addFlash('success', 'Message envoyé');
-    return $this->redirectToRoute('admin_commande_show', ['user' => $user->getId()]);
+          return $this->render('email/expedition.html.twig', ['commande'=> $commande,  'form' => $form->createView(), 'expedition' => $expedition]);
 
     }
 

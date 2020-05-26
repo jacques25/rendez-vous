@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+Use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SeanceRepository")
@@ -34,7 +35,7 @@ class Seance
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SeanceOption", mappedBy="seance",cascade={"persist"} )
+     * @ORM\OneToMany(targetEntity="App\Entity\SeanceOption", mappedBy="seance",cascade={"persist", "remove"} )
      * 
      */
     private $seanceOptions;
@@ -45,8 +46,10 @@ class Seance
     private $category;
 
 
+
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
     /**
@@ -68,10 +71,11 @@ class Seance
      */
     private $updated_at;
 
-
+   
 
     public function __construct()
     {
+       
         $this->seanceOptions = new ArrayCollection();
     }
 
@@ -233,4 +237,7 @@ class Seance
 
         return $this;
     }
+
+   
+ 
 }

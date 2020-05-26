@@ -6,6 +6,7 @@ use App\Entity\User;
 
 use App\Form\ApplicationType;
 use Jacques\ImageBundle\Form\Type\ImageType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,6 +18,12 @@ class AccountType extends ApplicationType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('gender', ChoiceType::class, [
+                 'choices' => [
+                     'Madame' => 'Madame',
+                     'Monsieur' => 'Monsieur'
+                 ]
+            ])
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('email', EmailType::class)

@@ -62,9 +62,7 @@ context.forEach(function (index) {
       id: id,
     })
     form.setAttribute("action", url)
-      console.log(disponible)
-
- 
+     
   }
 
 
@@ -75,7 +73,9 @@ context.forEach(function (index) {
     dispo = disponible;
     t = taille;
     ident = id;
-
+   
+    var prixPromo = (prix * multiplicate);
+    console.log(prixPromo)
     e.preventDefault();
  
     if (this.value === taille && isActive ===true) {
@@ -90,13 +90,14 @@ context.forEach(function (index) {
       document.getElementById('option-dimensions').innerHTML = '<strong>Dimensions: </strong>' + dim;
       
       
-       if (isActive == true) { 
-         
-          document.getElementById("option-prix").innerHTML = '<h4>' + prixPromo + '€</h4>'; 
-        
-            document.getElementById("option-prix").innerHTML = '<h4>' + cout + '€</h4>';
-  } 
-    
+      if (isActive ==true  ) {
+      document.getElementById("promo-prix").innerHTML = '<h4>' + prixPromo + '€</h4>';
+      document.getElementById("option-prix").innerHTML = '<h4 class="line">' + cout + '€</h4>';
+     
+    } else { 
+   
+            document.getElementById("prix").innerHTML = '<h4>' + cout + '€</h4>';
+    } 
        
       // document.getElementById("input-reference").value = ref;
       // document.getElementById("input-prix").value = prix;

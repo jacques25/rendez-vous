@@ -18,6 +18,8 @@
   color: #084425;
   border-color: #39a718d1;
   height: auto;
+  text-align:center;
+  font-size:18px;
 }
 
 .alert-danger {
@@ -25,6 +27,17 @@
   background-color: #dc3545;
   color: #fff;
   border-color: #dc3545;
+  text-align: center;
+  font-size: 18px;
+}
+
+.alert-warning {
+    color: #fff;
+    background-color: #f6b853;
+    border-color: #f6b853;
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .user h1 {

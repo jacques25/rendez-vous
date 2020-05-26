@@ -6,12 +6,12 @@ class Recherche
 {      
        /**
         *
-        * @var int|null
+        * @var string|null
         */
          private $reference;
          
          /**
-          * @var int|null
+          * @var string|null
           */
          private $prix; 
          
@@ -33,7 +33,7 @@ class Recherche
          /**
           * Set the value of reference
           *
-          * @param  int|null  $reference
+          * @param  string|null  $reference
           *
           * @return  self
           */ 
@@ -47,9 +47,9 @@ class Recherche
          /**
           * Get the value of prix
           *
-          * @return  int|null
+          * @return  string|null
           */ 
-         public function getPrix(): ?int
+         public function getPrix(): ?string
          {
                   return $this->prix;
          }
@@ -57,11 +57,11 @@ class Recherche
          /**
           * Set the value of prix
           *
-          * @param  int|null  $prix
+          * @param  string|null  $prix
           *
           * @return  self
           */ 
-         public function setPrix(int $prix): Recherche
+         public function setPrix(string $prix): Recherche
          {
                   $this->prix = $prix;
 
@@ -91,4 +91,6 @@ class Recherche
 
                   return $this;
          }
+
+       
 }

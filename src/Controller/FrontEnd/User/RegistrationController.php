@@ -21,9 +21,6 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class RegistrationController extends AbstractController
 {
-
-
-
   /**
 
    * @Route("/inscription", name="account_register")

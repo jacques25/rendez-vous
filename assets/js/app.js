@@ -2,21 +2,21 @@ import "bootstrap";
 import "cropper/dist/cropper.min";
 import * as Cropper from "../../public/bundles/image/js/cropper";
 import * as ImageZoom from "js-image-zoom";
+global.moment = require('moment');
 
 // any CSS you require will output into a single css file (app.css in this case)
-require("../css/app.css");
+
 require("../css/user.css");
-
-var $ = require("jquery");
-
 require("bootstrap");
+require("./bootstrap-datetimepicker.min.js")
+require("./locales/bootstrap-datetimepicker.fr");
+require("../css/app.css");
 require("popper.js");
 require("bootstrap-hover-dropdown");
 require("./bootstrap-tagsinput.js");
 require("./typeahead.js");
 require("./select");
 require("./menu_responsive");
-
 $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
   $('[data-toggle="popover"]').popover();
@@ -27,6 +27,8 @@ $(function () {
     new Cropper($(this));
   });
 });
+
+
 
 window.onload = function () {
   var modal = document.getElementById("myModal");
@@ -155,5 +157,33 @@ btn.on("click", function () {
   }
 });
 
+/* 	$(function () {
+    // Datetime picker initialization.
+		// See https://eonasdan.github.io/bootstrap-datetimepicker/
+		
+
+    $('#beginAt').datetimepicker({
+    language: 'fr',
+      autoclose: true,
+     viewMode:  'month',
+      format: 'yyyy-mm-dd hh:ii',
+        todayHighlight: true,
+        icons: {
+            time: 'fa fa-clock-o',
+            date: 'fa fa-calendar',
+            up: 'fa fa-chevron-up',
+            down: 'fa fa-chevron-down',
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-check-circle-o',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+				}
+         }); 
+      
+  });
+*/
+ 
+      
 
 console.log("Hello Webpack Encore! Edit me in assets/js/app.js");

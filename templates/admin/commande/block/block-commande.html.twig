@@ -8,16 +8,24 @@
              {% else %}
             <div class="alert alert-warning"><strong> {{'Commande non-validée '}}</strong></div>
             {% endif %}
-            <p>
+          
              {% if commande.sendCommande == 0 %}
-                <a class="btn btn-info" href="{{path('admin_expedition', {'id': commande.id})}}"> Message expédition commande</a></p>
+              	<a class="btn btn-info"  href="{{path('admin_expedition', {'id': commande.id})}}"  data-toggle="modal"  data-target="#modal-expedition" >
+                 Message expédition commande</a>
+
+                 	<div class="modal modal-container" role="dialog"  id="modal-expedition">
+                       	   
+		                 {{ render(controller('App\\Controller\\Admin\\AdminCommandeController::EnvoiMessage', {'id': commande.id}))}}	
+				                 
+				       </div><br>
              {% elseif commande.sendCommande == 1 %}
                
-                <div class="alert alert-success" style="color: #08a32e"><strong> {{'Commande expédié'}}</strong></div>
+                <div class="alert alert-success" style="color: #08a32e"><strong> Commande expédié le:  {{ commande.dateExpedition|format_datetime('full', 'none', locale='fr')|capitalize }}</strong></div>
              {% else %}
                <div class="alert alert-success" style="color: #08a32e"><strong> aucune commande</strong></div>
             {% endif %}
-             <p> {{ commande.user.lastname}} {{commande.user.firstname}} <br>
+            <div>
+                    {{ commande.user.lastname}} {{commande.user.firstname}} <br>
                     {{commande.user.email}} <br>   
                     <i class="fa fa-mobile"> </i> {{commande.commande.livraison.phone }} <br>
                
@@ -26,7 +34,7 @@
 
                   <b class="ml-1"> <i class="fa fa-receipt"> </i>  {{commande.commande.facturation.address }}
                    {{ commande.commande.facturation.cp }}  {{ commande.commande.facturation.city }}</b>
-                  </p>
+                  </div>
                
     </div>
     <div class="card-body">

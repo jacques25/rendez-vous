@@ -1,0 +1,21 @@
+  {% if booking.seanceOption %}
+  <div class="align-items-center mb-2">
+  <div class="text-light text-center bg-info border-rounded w-30 p-2 ">Durée de votre séance  {{booking.seanceOption.duree|format_time('short')}} heure</div>
+  </div>
+  
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+       <button class="btn btn-success left "><i class="fa fa-save"></i> {{ button_label|default('Enregistrer') }}</button>
+    
+{{ form_end(form) }} 
+
+
+{% else  %}
+         
+        
+          <div class="content">
+          Du {{booking.beginAt|format_datetime('full')}} au {{booking.endAt|format_datetime('full')}} <br>
+        <strong> Nombre de places maximales :  </strong> {{booking.formation.nbUsers}}
+         <strong> Nombre de places restantes :  </strong> {{booking.formation.nbUsers - nbUsers}}
+     </div>
+{% endif %}

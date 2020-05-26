@@ -74,8 +74,6 @@ class Bijou
 
     /**
      * @ORM\ManyToMany(targetEntity="Produit", inversedBy="bijous")
-     * )
-     * 
      */
     private $produits;
 

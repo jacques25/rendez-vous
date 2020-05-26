@@ -20,7 +20,7 @@ class RechercheType extends AbstractType
                 'label' => false,
                 'attr' => ['placeholder' => 'Référence ex: 439-2']
             ])
-            ->add('prix', IntegerType::class ,     [
+            ->add('prix', TextType::class ,     [
                 'required' => false,
                 'label' => false,
                 'attr' => ['placeholder' => 'Prix']

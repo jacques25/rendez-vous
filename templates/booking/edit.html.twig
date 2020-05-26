@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+
+     {% block title %} {{booking.title}} {% endblock %}
+
+   
+
+{% block body %}
+{% if booking.formation  != null %}
+    <div id="modalFormEdit" class="modal-form" aria-hidden="true">
+		 <div class="modal-dialog" role="document">
+		   
+		      <div class="modal-content">
+					    <div class="modal-header">
+									 <h5 id="modal-title">  {{booking.title}} </h5>
+             </div>
+             <div class="modal-body">
+                        {{ include('booking/_form.html.twig') }}
+             </div>
+             <div class="modal-footer">
+                <a class="btn btn-info" href="{{path('formation_booking', {'id' : booking.formation.id})}}">s'incrire </a>
+  
+          </div>
+
+    
+   </div>
+{% endif %}
+{% if booking.seanceOption != null %}
+     
+
+    <div id="modalFormEdit" class="modal-form" aria-hidden="true">
+		 <div class="modal-dialog" role="document">
+		   
+		      <div class="modal-content">
+					    <div class="modal-header">
+									 <h5 id="modal-title">  {{booking.title}} </h5>
+             </div>
+             <div class="modal-body">
+                            
+                                <legend>{{booking.userSeance.gender}}
+                                  {{booking.userSeance.firstName}}
+                              {{booking.userSeance.lastName}} </legend>
+                               <fieldset><strong>Email:  </strong>{{booking.userSeance.email}}</fieldset>
+                            
+                               
+                       <div class="body-text">   <strong> Date de votre rendez-vous :  </strong> </div>
+                           Le {{booking.beginAt|format_date('medium') }} 
+                              de {{booking.beginAt|format_time('short')}} heure
+                              à   {{booking.endAt|format_time('short')}} heure
+                            
+                          
+             </div>
+             <div class="modal-footer">
+                <a class="btn btn-info" href="{{path('booking_delete', {'id' : booking.id})}}">Annuler votre rendez-vous </a>
+  
+          </div>
+
+  
+   </div> 
+   
+    {% endif %}
+{% endblock %}

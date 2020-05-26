@@ -285,5 +285,25 @@ class Boutique
         return $this;
     }
 
+    public function addBijou(Bijou $bijou): self
+    {
+        if (!$this->bijous->contains($bijou)) {
+            $this->bijous[] = $bijou;
+            $bijou->addBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBijou(Bijou $bijou): self
+    {
+        if ($this->bijous->contains($bijou)) {
+            $this->bijous->removeElement($bijou);
+            $bijou->removeBoutique($this);
+        }
+
+        return $this;
+    }
+
     
 }

@@ -2,13 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\SeanceOption;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\AbstractType;
+
+use App\Entity\SeanceOption;
+use DateTime;
+use Symfony\Component\Intl\DateFormatter\DateFormat\HourTransformer;
 
 class SeanceOptionType extends AbstractType
 {
@@ -17,12 +20,15 @@ class SeanceOptionType extends AbstractType
         $builder
             ->add('genre', ChoiceType::class, [
                 'choices' => [
-                    'Adultes' => 'Adultes',
-                    'Enfants' => 'Enfants'
+                    'Adulte' => 'Adulte',
+                    'Adolescent' => "Adolescent",
+                    'Enfant' => 'Enfant'
                 ]
             ])
             ->add('prix',TextType::class)
-            ->add('duree', TextType::class);
+            ->add('duree', TimeType::class)
+            ;
+       
     }
 
     public function configureOptions(OptionsResolver $resolver)

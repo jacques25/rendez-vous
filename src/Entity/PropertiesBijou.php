@@ -203,4 +203,27 @@ class PropertiesBijou
 
         return $this;
     }
+
+    public function addBijou(Bijou $bijou): self
+    {
+        if (!$this->bijous->contains($bijou)) {
+            $this->bijous[] = $bijou;
+            $bijou->setPropertiesBijou($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBijou(Bijou $bijou): self
+    {
+        if ($this->bijous->contains($bijou)) {
+            $this->bijous->removeElement($bijou);
+            // set the owning side to null (unless already changed)
+            if ($bijou->getPropertiesBijou() === $this) {
+                $bijou->setPropertiesBijou(null);
+            }
+        }
+
+        return $this;
+    }
 }

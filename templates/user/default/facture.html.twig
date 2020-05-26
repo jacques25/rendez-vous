@@ -38,7 +38,7 @@
 									{{facture.NumeroCommande}}
 								</td>
 								<td>
-									{{ facture.dateCommande|date('d/m/Y') }}
+									{{facture.dateCommande|format_datetime('full', 'none', locale='fr')|capitalize }}
 								</td>
 							
 								

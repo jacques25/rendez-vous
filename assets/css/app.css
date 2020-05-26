@@ -6,6 +6,8 @@
 @import "../css/responsive.css";
 @import "../css/search.css";
 @import "../css/card.css";
+@import "../css/bootstrap-datetimepicker.min.css";
+
 
 @viewport {
     width: device-width;
@@ -114,6 +116,11 @@ h1 {
 .title {
     font-size: 2.8rem;
     margin-top: 15px;
+}
+.seance-title {
+    font-size: 2rem;
+    margin-top: 15px;
+    text-transform: uppercase;
 }
 
 #tooltip {
@@ -233,6 +240,7 @@ a.close-modal:hover {
   background: #888;
 }
 
+
 .modal-content {
   width: 100%;
   max-width: 500px;
@@ -242,7 +250,7 @@ a.close-modal:hover {
 
 /* Add Animation */
 
-.modal-content
+.modal-content, .modal-content-calendar
  {
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.6s;
@@ -807,6 +815,7 @@ h4.panier-title {
     color: #fff;
     text-align: center;
     border-radius: 16px;
+    font-size: 12px;
 }
 
 .btn-telechargement:hover{
@@ -857,4 +866,8 @@ h4.panier-title {
 .paragraph {
    padding-bottom: 20%;
    
+}
+
+ .td-right:nth-of-type(2) {
+    text-align:right;
 }

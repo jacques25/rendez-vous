@@ -8,11 +8,8 @@
 
 				<div class="col-3">
 					<h1>Commande  </h1>
-					<p class="">Date: 	{{commande.dateCommande|date('d-m-Y') }}	</p>
-					<p class="">
-						Numero de commande:
-						{{ commande.numeroCommande }}
-					</p>
+					<p class=""><strong>Commandé le : </strong><em>		{{commande.dateCommande|format_datetime('full', 'none', locale='fr')|capitalize }}</em>		</p>
+					<p class=""><strong> Commande n° : </strong><em>	{{ commande.numeroCommande }}</em>	</p>
 				</div>
 				<div class="col-3 center mt-5">
 					<h3>
@@ -20,6 +17,7 @@
 					</h3>
 
 					<p class="">
+					  {{app.user.gender}}
 						{{commande.commande.livraison.lastname }}
 						{{commande.commande.livraison.firstname }}
 					</p>
@@ -42,6 +40,7 @@
 					</h3>
 
 					<p class="">
+					{{app.user.gender }}
 						{{commande.commande.facturation.lastname }}
 						{{commande.commande.facturation.firstname }}
 					</p>
@@ -132,7 +131,7 @@
 			 
 			
 			<a class="btn btn-telechargement" href="{{ path('commande_pdf',{'id': commande.id}) }}" target="_blank">
-										<i class="fas fa-upload"></i> {{'téléchargement commande'|upper }}
+										<i class="fas fa-upload"></i> {{'téléchargement du bon de commande'|upper }}
 								  	</a>
 			<div class="row mt-5">
 				<div class="col-6">

@@ -2,11 +2,8 @@
 
 namespace App\Controller\FrontEnd\User;
 
-use App\Entity\Commandes;
 use App\Service\GetFacture;
 use App\Repository\CommandesRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -27,7 +24,6 @@ class FactureController extends AbstractController
     public function facture(CommandesRepository $commandesRepository)
     {
 
-       
         $factures = $commandesRepository->byFacture($this->getUser());
         
         return $this->render('user/default/facture.html.twig', [
@@ -58,7 +54,6 @@ class FactureController extends AbstractController
     public function showFacture($id)
     {
       
-       
        $facture = $this->commandesRepository->findOneBy([
             
             'user' => $this->getUser(),
@@ -66,7 +61,7 @@ class FactureController extends AbstractController
             'id' => $id
         ]);
    
-       
+    
         if (!$facture) {
            
             return $this->redirectToRoute('user_facture');

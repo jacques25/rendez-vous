@@ -1,0 +1,41 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Agenda{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Agenda liste</h1>
+
+    <table class="table table-fluid">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>BeginAt</th>
+                <th>EndAt</th>
+                <th>Title</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.title }}</td>
+                <td>
+                    <a href="{{ path('admin_booking_edit', {'id': booking.id}) }}" class="button__edit"><i class="fa fa-edit"></i></a>
+                     {{ include('admin/booking/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+    </div>
+{% endblock %}

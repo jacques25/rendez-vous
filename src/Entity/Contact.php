@@ -16,6 +16,11 @@ class Contact
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $gender;
   /**
    * @ORM\Column(type="string", length=255)
    * @Assert\NotBlank()
@@ -267,4 +272,24 @@ class Contact
   }
 
   
+
+    /**
+     * Get the value of gender
+     */ 
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set the value of gender
+     *
+     * @return  self
+     */ 
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
 }

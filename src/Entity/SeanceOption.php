@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SeanceOptionRepository")
@@ -27,15 +30,29 @@ class SeanceOption
     private $prix;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $duree;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Seance", inversedBy="seanceOptions")
-     * @ORM\JoinColumn(name="seance_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="seance_option_id", referencedColumnName="id")
      */
     private $seance;
+     
+  
+
+     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking",  mappedBy="seanceOption")
+     */
+    private $bookings;
+
+    
+    public function __construct()
+    {
+         $this->userSeances= new ArrayCollection();
+         $this->bookings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -66,18 +83,6 @@ class SeanceOption
         return $this;
     }
 
-    public function getDuree(): ?string
-    {
-        return $this->duree;
-    }
-
-    public function setDureeSeance(string $duree): self
-    {
-        $this->duree = $duree;
-
-        return $this;
-    }
-
     public function getSeance(): ?Seance
     {
         return $this->seance;
@@ -90,10 +95,61 @@ class SeanceOption
         return $this;
     }
 
-    public function setDuree(string $duree): self
+
+    public function getBooking(): ?Booking
+    {
+        return $this->Booking;
+    }
+
+    public function setBooking(?Booking $Booking): self
+    {
+        $this->Booking = $Booking;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setSeanceOption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->contains($booking)) {
+            $this->bookings->removeElement($booking);
+            // set the owning side to null (unless already changed)
+            if ($booking->getSeanceOption() === $this) {
+                $booking->setSeanceOption(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDuree(): ?\DateTimeInterface
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?\DateTimeInterface $duree): self
     {
         $this->duree = $duree;
 
         return $this;
     }
+
+   
 }

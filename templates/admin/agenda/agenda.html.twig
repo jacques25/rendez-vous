@@ -1,0 +1,24 @@
+{% extends "admin_base.html.twig" %}
+
+		{% block title %}	rendez-vous		{% endblock %}
+		{% block stylesheets %}
+		 {{ parent()}}
+		   {{ encore_entry_link_tags('calendarFormation')}}
+		{% endblock %}
+		{% block body %}
+		<div class="container">
+	
+		    <div class="calendar mt-4"  id="calendar-holder" data-events-url="{{ path('fc_load_events') }}">
+		
+				</div>
+</div>
+
+					
+      
+				{% endblock %}
+
+     {% block javascripts %}
+		  {{ parent() }}
+			{{ encore_entry_script_tags('calendarFormation')}}
+		 
+		 {% endblock %}

@@ -6,6 +6,7 @@ namespace App\Controller\FrontEnd;
 use App\Entity\Commandes;
 use App\Entity\UserAdress;
 use App\Form\UserAdressType;
+use App\Repository\CommandesRepository;
 use Symfony\Component\Mime\Email;
 use App\Repository\OptionBijouRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -169,7 +170,7 @@ class PanierController extends AbstractController
    * @Route("/panier/validation", name="panier_validation",requirements={"user"="\d+"})
    * 
    */
-  public function validation(Request $request )
+  public function validation(Request $request , CommandesRepository $commandesRepository)
   { 
 
     if ($request == null) {
@@ -179,12 +180,11 @@ class PanierController extends AbstractController
     
     if ($request->getMethod() == 'POST')
       $this->setLivraisonOnSession($request);
-      $em = $this->getDoctrine()->getManager();
-      
-    
+     
       $prepareCommande = $this->forward('App\Controller\FrontEnd\CommandesController:prepareCommande');
-      $commande = $em->getRepository(Commandes::class)->find($prepareCommande->getContent());
-   
+      
+      $commande = $commandesRepository->find($prepareCommande->getContent());
+    
        return $this->render('panier/validation.html.twig', [
         'commande' => $commande
        ]);

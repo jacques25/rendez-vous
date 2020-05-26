@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200503101011 extends AbstractMigration
+final class Version20200525085625 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,8 @@ final class Version20200503101011 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE bijou CHANGE promo_is_active promoIsActive TINYINT(1) DEFAULT NULL');
+        $this->addSql('DROP INDEX UNIQ_404021BF3826374D ON formation');
+        $this->addSql('ALTER TABLE formation DROP begin_at, DROP end_at');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +31,7 @@ final class Version20200503101011 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE bijou CHANGE promoisactive promo_is_active TINYINT(1) DEFAULT NULL');
+        $this->addSql('ALTER TABLE formation ADD begin_at DATETIME NOT NULL, ADD end_at DATETIME DEFAULT NULL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_404021BF3826374D ON formation (begin_at)');
     }
 }

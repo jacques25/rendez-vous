@@ -7,7 +7,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 class Response 
-{
+{                        
+     /**
+      * @Assert\NotBlank()
+   * @Assert\Length(max=20)
+   * @var string|null
+      */
+
+      private $gender;
      /**
    * @Assert\NotBlank()
    * @Assert\Length(min=2, max=100)
@@ -184,4 +191,24 @@ class Response
     return $this;
   }
 
+
+      /**
+       * Get the value of gender
+       */ 
+      public function getGender()
+      {
+            return $this->gender;
+      }
+
+      /**
+       * Set the value of gender
+       *
+       * @return  self
+       */ 
+      public function setGender($gender)
+      {
+            $this->gender = $gender;
+
+            return $this;
+      }
 }

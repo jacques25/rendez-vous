@@ -34,6 +34,9 @@
 										<th scope="col">
 											Prix de la séance
 										</th>
+										<th scope="col">
+                          Prendre un rendez-vous
+										</th>
 									</tr>
 								</thead>
 
@@ -44,11 +47,15 @@
 										 {{ option.genre}}	{% if option.genre == 'Enfants' %} {{'<span class="asterix-color">*</span>'}} {% endif %}
 										</td>
 										<td>
-										{% if option.duree != null %}	{{ option.duree }} {% endif %}
+					              {{ option.duree|format_time( 'short') }}
 										</td>
 
 										<td>
-											{{option.prix}} €
+											{{option.prix}} 
+										</td>
+										<td>
+                           <a href="{{path('seance_booking', {'id' : option.id})}}" class="btn btn-info" >Prendre un rendez -vous</a>
+													  <a href="{{path('seance_booking', {'id' : option.id})}}" class="btn btn-info" >Voir le calendrier</a>
 										</td>
 
 									{% endfor %}

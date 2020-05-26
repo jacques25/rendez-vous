@@ -94,4 +94,24 @@ class PopupTaille
 
         return $this;
     }
+
+    public function addBijou(Bijou $bijou): self
+    {
+        if (!$this->bijous->contains($bijou)) {
+            $this->bijous[] = $bijou;
+            $bijou->addPopuptaille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBijou(Bijou $bijou): self
+    {
+        if ($this->bijous->contains($bijou)) {
+            $this->bijous->removeElement($bijou);
+            $bijou->removePopuptaille($this);
+        }
+
+        return $this;
+    }
 }

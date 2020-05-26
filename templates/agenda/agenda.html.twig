@@ -1,0 +1,74 @@
+{% extends "base.html.twig" %}
+
+		{% block title %}	Calendrier	{% endblock %}
+		{% block stylesheets %}
+		 {{ parent()}}
+		   {{ encore_entry_link_tags('calendar')}}
+		{% endblock %}
+		{% block body %}
+	
+		{% if seanceOption  %}
+		<div id="modalForm" class="modal  fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		 <div class="modal-dialog" role="document">
+		   
+		      <div class="modal-content">
+					    <div class="modal-header">
+									 <h5 id="modal-title">	Rendez-vous </h5> 
+									  <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+							</div>  
+						  <form action ="{{path('seance_booking', {'id' :seanceOption.id})}}" method="post">
+	
+             <div class="modal-body" id="modalBody">
+						       	<ul class=" list-group list-group-horizontal mb-5">
+				               	<li class="list-group-item p-2 ml-2">	Seance :	{{ seanceOption.genre}} </li>
+     
+				               	<li class="list-group-item  p-2 ml-2">Durée :  {{seanceOption.duree|format_time('medium') }} 	</li>
+				               	<li class="list-group-item  p-2 ml-4">Prix :	{{seanceOption.prix}} €</li>
+										</ul>
+						        	
+                      		<div class="col mt-3">
+                                      {{form_row(form.gender)}}
+                                     {{form_row(form.firstName)}}
+                                      {{form_row(form.lastName)}}	 
+                      				
+                      		</div>   
+                         <div class="col mt-3">
+												         <input type="datetime" name="booking[beginAt]"  id="beginAt"  data-date="" >  
+                      			      
+                      			      		{{form_row(form.email, {'attr': { 'validate': 'validate'}})}}
+                                    {{form_row(form.phone)}}
+                      		</div>
+                      		
+						 </div>
+             <div class="modal-footer">
+						 <input type="hidden" id="user_seance__token" name="user_seance[_token]" value="{{csrf_token ('user_seance')}}">
+          			<button type="submit" class="btn btn-success">
+							                <i class="fa fa-save"></i> Confirmez
+                      		</button>		
+												
+				   	</div>
+						 
+				             	 </form> 
+         </div>	
+		
+		 </div>
+		
+		
+		</div>
+{% endif %}
+		    <div class="calendar mt-4"  id="calendar-holder" data-events-url="{{ path('fc_load_events') }}">
+		
+				</div>
+</div>
+
+					
+      
+				{% endblock %}
+
+     {% block javascripts %}
+		  {{ parent() }}
+			{{ encore_entry_script_tags('calendar')}}
+		 
+		 {% endblock %}

@@ -148,22 +148,33 @@ class BijouRepository extends ServiceEntityRepository
                       ;
                   
     }
-
+    
      public function findBijousByMotCle($motcle)
     {
-
+     
         $query = $this->createQueryBuilder('b')
-          ->where('b.title like  :motcle')
-            ->innerJoin('b.option_bijou', 'ob')
-            ->addSelect('ob')  
-            ->andWhere('ob.reference like :motcle')
-            ->setParameter('motcle', '%' . $motcle . '%')
-            
-            ->orderBy('b.id', 'ASC')
+         ->select('b')
+         ->andWhere('b.title LIKE :title')
+        ->setParameter('title', '%' . $motcle . '%')
+        ->getQuery();
+          
+        return $query->getResult();
+    }
+     public function findBijousByReference($motcle)
+    {
+     
+        $query = $this->createQueryBuilder('b')
+         ->select('b')
+         ->leftJoin('b.option_bijou', 'ob')
+         ->addSelect('ob')
+         ->andWhere('ob.reference LIKE :ref')
+        ->setParameter('ref', '%' . $motcle . '%')
+     
             ->getQuery();
-
+          
         return $query->getResult();
     }
 
-
+   
+   
 }

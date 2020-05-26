@@ -43,11 +43,6 @@ class Category
 
 
     /**
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
      */
     private $articles;
@@ -63,19 +58,9 @@ class Category
     private $seances;
 
     /**
-     * @ORM\Column(type="string" , length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Formation", mappedBy="category")
      */
-    private $filename;
-
-    /**
-     * @var File|null
-     * @Assert\Image(mimeTypes="image/*")
-     * @Vich\UploadableField(mapping="category_images", fileNameProperty="filename")
-     *
-     * @var File
-     */
-    private $imageFile;
-
+    private $formations;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -90,6 +75,7 @@ class Category
         $this->boutiques = new ArrayCollection();
         $this->seances = new ArrayCollection();
         $this->pages = new ArrayCollection();
+        $this->formations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -241,39 +227,7 @@ class Category
         return $this;
     }
 
-    public function getFilename(): ?string
-    {
-        return $this->filename;
-    }
-
-    public function setFilename(?string $filename): self
-    {
-        $this->filename = $filename;
-
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param File|null $imageFile
-     */
-    public function setImageFile(?File $imageFile): self
-    {
-        $this->imageFile = $imageFile;
-
-        if ($this->imageFile instanceof UploadedFile) {
-            $this->updated_at = new \DateTime('now');
-        }
-
-        return $this;
-    }
+   
 
     /**
      * @return \DateTimeInterface|null
@@ -293,6 +247,37 @@ class Category
     public function setUpdatedAt(\DateTimeInterface $updated_at): Category
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Seance[]
+     */
+    public function getFormations(): Collection
+    {
+        return $this->formations;
+    }
+
+    public function addFormation(Seance $formation): self
+    {
+        if (!$this->formations->contains($formation)) {
+            $this->formations[] = $formation;
+            $formation->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Seance $formation): self
+    {
+        if ($this->formations->contains($formation)) {
+            $this->formations->removeElement($formation);
+            // set the owning side to null (unless already changed)
+            if ($formation->getCategory() === $this) {
+                $formation->setCategory(null);
+            }
+        }
 
         return $this;
     }

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Bijou;
+use App\Repository\BijouRepository;
 
 /**
  * @Route("/admin")
@@ -17,14 +18,13 @@ class AdminRechercheController extends AbstractController
      *
      * @Route("/recherche", name="admin_recherche")
      */
-    public function recherche(Request $request, PaginatorInterface $paginatorInterface)
+    public function recherche(Request $request, PaginatorInterface $paginatorInterface, BijouRepository $bijouRepository)
     {
 
         $motcle = $request->get('motcle');
      
-        $em = $this->getDoctrine()->getManager();
          
-        $listeBijoux = $em->getRepository(Bijou::class)->findBijousByTitle($motcle);
+        $listeBijoux = $bijouRepository->findBijousByReference($motcle);
 
 
         if ($request->isMethod('GET')) {
