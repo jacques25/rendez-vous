@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\FormationRepository;
-
 use App\Form\UserFormationType;
-use App\Form\FormAccount\AccountType;
 use App\Entity\UserFormation;
-use App\Entity\User;
+
 use App\Entity\Booking;
+
+use App\Notification\FormationNotification;
 
 class FormationController extends AbstractController
 {
@@ -44,30 +44,34 @@ class FormationController extends AbstractController
      *
      * @return void
      */
-    public function inscriptionFormation($id, Request $request) {
+    public function inscriptionFormation($id, Request $request, FormationNotification $formationNotification) {
                
 
                      if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {  
                        $this->addFlash('warning', 'Vous devez  créer un compte et vous connectez afin de vous inscrire à cette formation');
                     return $this->redirectToRoute('account_login');
                      }
-          
+           
+              
                  $user = new UserFormation();
-            
+              
                  $form = $this->createForm(UserFormationType::class, $user);
                  $form->handleRequest($request);
-             
+                 
                  $formation = $this->formationRepository->findOneBy(['id' => $id]);
-                  
+                 
                  if ($form->isSubmitted() and $form->isValid()) {
-                    
+                     
                      $em = $this->getDoctrine()->getManager();
                      $user->setFormation($formation);
-                    
+                   $notify =  $formationNotification->notify($formation, $user); 
+                
+                   $this->addFlash('success', 'Votre mail à été envoyé, nous vous répondrons dans les plus bref délais.');
+               
                      $em->persist($user);
                      $em->flush();
-                     $this->addFlash('success', 'Vous êtes enregistré');
-                     $this->redirectToRoute('app_homepage');
+                  
+            return $this->redirectToRoute('app_homepage'); 
                  
           
                 

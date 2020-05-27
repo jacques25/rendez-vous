@@ -94,6 +94,10 @@ h1 {
     box-shadow: 3px 4px 10px 1px rgba(106, 149, 175, 0.5);
     max-width: 100%;
 }
+.box-content td {
+    box-shadow: 3px 4px 10px 1px rgba(106, 149, 175, 0.5);
+   padding: 10px;
+}
 
 .grid {
     display: grid;

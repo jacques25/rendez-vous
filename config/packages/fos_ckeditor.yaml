@@ -7,7 +7,7 @@ fos_ck_editor:
             colorButton_colors: 'C4f2f2,91715b,CF5D4E,454545,FFF,CCC,DDD,CCEAEE,66AB16,C01800'
             # contentsCss : 'build/css/font-awesome.min.css'
             font_names: 'Arial;Times New Roman;Verdana; Calibri; Scheherazade; Junge'
-            extraPlugins: 'lineheight, html5video, lineutils, youtube'
+            extraPlugins: 'lineheight, html5video, lineutils, youtube, xmas'
             filebrowsers:
                 - VideoBrowse
                 - VideoUpload
@@ -41,7 +41,7 @@ fos_ck_editor:
     toolbars:
         configs:
             my_toolbar:
-                [ ['Undo','Redo','Source','Lineutils'],['Link', 'Unlink', 'Anchor', 'Table', 'Scayt'],['Maximize'], '/',['Bold', 'Italic', 'Underline', 'CkeditorFa'], ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],['JustifyLeft','JustifyRight','JustifyCenter','JustifyBlock'], ['Image','Html5video','Iframe', 'Youtube'] , ['Format','Font','FontSize','lineheight','TextColor','BGColor' ] ]
+                [ ['Undo','Redo','Source','Lineutils'],['Link', 'Unlink', 'Anchor', 'Table', 'Scayt'],['Maximize'], '/',['Bold', 'Italic', 'Underline', 'CkeditorFa'], ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],['JustifyLeft','JustifyRight','JustifyCenter','JustifyBlock'], ['Image','Html5video','Iframe', 'Youtube', 'xmas'] , ['Format','Font','FontSize','lineheight','TextColor','BGColor' ] ]
 
             toolbar2:
                 [ ['Table'],['Bold', 'Italic', 'Underline',  'Image'],['Link', 'Unlink'], ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],['JustifyLeft','JustifyRight','JustifyCenter','JustifyBlock'],['TextColor','BGColor'] ]
@@ -68,6 +68,13 @@ fos_ck_editor:
         
         ckeditorfa:
             path: '/ckeditor/plugins/ckeditorfa/'
+            filename: 'plugin.js'
+        
+        dialog: 
+            path: '/ckeditor/plugins/dialog/'
+            filename: 'plugin.js'
+        xmas:
+            path: '/ckeditor/plugins/xmas/'
             filename: 'plugin.js'
 
         

@@ -1,7 +1,9 @@
 {% apply inky_to_html|inline_css(source('@styles/foundation-email.css'), source('@styles/email.css') ) %}
 
 <container>
-	   <spacer size="16"></spacer>
+	
+<container>
+	<spacer size="16"></spacer>
 			<row class="header">
 				<columns large="4" small="12">
 					<a href="{{url('app_homepage') }}">
@@ -17,41 +19,38 @@
 				<columns>
          <spacer size="30"></spacer>
 					<h1 class="title">	
-          <center>	Bonjour {{app.user.gender}} {{ name}} 	</center>
+          <center>	Bonjour {{ name }} 	</center>
 					</h1>
 					<spacer size="16"></spacer>
 
 					<callout class="secondary">
 						<row>
 							<columns large="7">
+								<p>
+									<strong>	Mode de paiement</strong>
+									<br/>
+									Par chèque à l'ordre de:<br>
+                   Mme Françoise Forite<br>
+									 3 Rue Robespierre 26500 Bourg Les Valence (Drôme)
+
+								</p>
 							
-								<p><strong>Formation  {{ formation }} </strong> 	
-                 Le {{date_debut|format_date('short')}} de {{date_debut|format_time('short')}} à {{date_fin|format_time('short')}}
-                  
-                  </p>
 							</columns>
 							<columns large="5">
-              	<p><strong>	Adresse Email</strong>
-									<br/>
+              	<p><strong>Adresse Email</strong>
+									<br>
 									{{contactEmail}}
 								</p>
-								<p>	<strong>Téléphone</strong> {{phone}} </p>
-								   
 							</columns>
 						</row>
 					</callout>
 					<row>
-					<callout class="command-body">
-					
-					<p>	<center>{{message}}	</center>	</p>
-            	<spacer size="10"></spacer>
-						<center>
-						
-						</center>
-
-
-					</callout>
-				</columns>
+					<columns class="command-body">
+					<spacer size="16"></spacer>
+					<h4> {{formation.title}}</h4>
+					<p> {{message}}</p>
+					<p><strong> 
+					</colummns>
 	  	</row>
 		  <row class="footer text-center">
 			  <columns large="3">
@@ -62,6 +61,5 @@
 			  </columns>
 		  </row>
 </container>
-
 
 	{% endapply %}
