@@ -38,7 +38,29 @@
                {{form_row(form.nb_users)}}
                {{form_row(form.category)}}
        </div>
-   
+      <table class="table-fluid mt-3">
+      <h4>Nombre d'Inscrits</h4>
+         <thead>
+            <tr>
+               <th>Prénom</th>
+               <th>Nom</th>
+               <th>Email</th>
+               <th>Téléphone</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+          <tr>
+           {% for user in formation.users %}
+             <td> {{user.firstname}} </td>
+             <td>  {{user.lastname}}</td>
+             <td> {{user.username}}</td>
+             <td>{{user.phone}}</td>
+             <td></td> 
+             {% endfor %}
+          </tr>
+         </tbody>
+      </table>
    </div>
 </div>
  

@@ -1,33 +1,92 @@
 {% extends "base.html.twig" %}
 
-{% block title %} inscription {{formation.title}} {% endblock %}
+		{% block title %}
+			inscription
+			{{formation.title}}
+		{% endblock %}
 
-{% block body %}
-<div class="container"> 
+		{% block body %}
+			<div class="container">
 
-<div class="row mt-5">
-<h1>{{formation.title}}</h1>
-</div>
+				<div class="row mt-5">
+					<h1></h1>
+				</div>
+				<div class="contat" {# role="dialog" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true" #}>
+				{# 	<div class="modal-dialog" {# role="document" >#}
 
-<div class="row">
-   {{form_start(form, {'attr': {'class': 'modalForm' , 'id': 'modalForm' }}) }}
+					{# 	<div class="modal-content"> 
+							<div class="modal-header"> #}
 
- 
-  <div class="form-group">
-       {{form_row(form.gender)}}
-      {{form_row(form.firstName,  {'attr': {'class': 'ml-2 mr-2'}})}}
-       {{form_row(form.lastName,  {'attr': {'class': 'ml-2'}})}}
-      {{form_row(form.email)}}
-  </div>
-  <div class="form-group"> 
-        {{form_row(form.date_naissance,  {'attr': {'class': 'ml-2'}})}}
-        
-        {{form_row(form.phone, {'attr' : {'class': 'form-control-sm'}})}}
-  </div>
-   <button type="submit" class="btn btn-success"> S'inscrire </button>
-   {{form_end(form)}}      
-</div>
-</div>
- </div>
-{% endblock %}
+								<h5 id="modal-title">
+									{{formation.title}}
+								</h5>
+							{# 	<button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">
+										&times;
+									</span>
+								</button> #}
 
+
+							</div>
+							<div class="modal-body" id="modalBody">
+                   <div  class="modal-header mt-0 mb-2">			
+									 {% for booking  in formation.booking %}
+										Le  {{booking.beginAt|format_date('short')}} de {{booking.beginAt|format_time('short')}} à  {{booking.endAt|format_time('short')}}
+										{% endfor %}
+									</div>
+									<div class="modal-body">
+					         {{form_start(form)}}
+  <div class="row">
+							
+									<div class="col-sm-6 mb-2">
+										<div class="form-group">
+										   
+								  
+													 {{form_row(form.gender , {'attr': {'autocomplete' : 'autocomplete'}})}}
+												   {{form_row(form.firstName, {'attr': {'autocomplete' : 'autocomplete'}})}}
+													 {{form_row(form.lastName)}}
+													 
+										
+					              
+										</div> 
+										</div>
+										<div class="col-sm-6">
+										<div class="form-group">
+												  
+												
+										        {{form_row(form.email)}}
+												           	{% if app.user.dateNaissance is empty %}
+													  {{form_row(form.date_naissance)}}
+														{% else %}
+																 <label for="_date_naissance">Date Naissance</label>
+															  <input type="text" id="_date_naissance" name="_date_naissance" value="{{app.user.dateNaissance|date('Y-m-d')}}" class="form-control mb-3">
+				
+													 {% endif %}
+									
+                                  	{% if app.user.phone is empty %}
+													  {{form_row(form.phone)}}
+
+														{% else %}
+																 <label for="_phone">Téléphone</label>
+															  <input type="text" id="_phone" name="_phone" value="{{app.user.phone}}" class="form-control mb-3">
+				
+													 {% endif %}
+                               
+										</div>
+                    </div> 
+                      		
+						 </div> 
+             <div class="modal-footer">
+						
+          			<button type="submit" class="btn btn-success">
+							                <i class="fa fa-save"></i> Confirmez
+                      		</button>		
+								
+				   	</div>
+				
+         {{form_end(form)}}
+
+						</div>
+					</div>
+				</div>
+			{% endblock %}

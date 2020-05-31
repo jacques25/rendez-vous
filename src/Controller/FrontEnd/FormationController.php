@@ -2,17 +2,19 @@
 
 namespace App\Controller\FrontEnd;
 
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Repository\UserRepository;
 use App\Repository\FormationRepository;
-use App\Form\UserFormationType;
-use App\Entity\UserFormation;
-
-use App\Entity\Booking;
-
 use App\Notification\FormationNotification;
+use App\Form\UserBookingType;
+use App\Form\FormAccount\AccountType;
+use App\Entity\User;
+
 
 class FormationController extends AbstractController
 {
@@ -31,7 +33,7 @@ class FormationController extends AbstractController
   { 
    
     $formation = $repo->findOneBy(['slug' => $slug]);
-      $nbUsers = count($formation->getUserFormations());
+      $nbUsers = count($formation->getUsers());
      
     return $this->render('formations/show.html.twig', [
       'formation' => $formation,
@@ -44,40 +46,47 @@ class FormationController extends AbstractController
      *
      * @return void
      */
-    public function inscriptionFormation($id, Request $request, FormationNotification $formationNotification) {
+    public function inscriptionFormation($id, Request $request, FormationNotification $formationNotification,  Security  $security) {
                
-
+                  
+               
                      if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {  
                        $this->addFlash('warning', 'Vous devez  créer un compte et vous connectez afin de vous inscrire à cette formation');
                     return $this->redirectToRoute('account_login');
                      }
-           
-              
-                 $user = new UserFormation();
-              
-                 $form = $this->createForm(UserFormationType::class, $user);
+
+              $user = $this->getUser();  
+            
+             
+                 
+                 $form = $this->createForm(UserBookingType::class, $user);
                  $form->handleRequest($request);
                  
                  $formation = $this->formationRepository->findOneBy(['id' => $id]);
-                 
+             
                  if ($form->isSubmitted() and $form->isValid()) {
-                     
-                     $em = $this->getDoctrine()->getManager();
-                     $user->setFormation($formation);
-                   $notify =  $formationNotification->notify($formation, $user); 
-                
-                   $this->addFlash('success', 'Votre mail à été envoyé, nous vous répondrons dans les plus bref délais.');
                
+                     $em = $this->getDoctrine()->getManager();
+                     
+                     $user->addRole("ROLE_FORMATION");
+                     $user->setFormation($formation);
+                     
+                     $formationNotification->notify($id, $formation, $user);
+                     $this->addFlash('success', 'Votre mail à été envoyé, nous vous répondrons dans les plus bref délais.');
+                     
                      $em->persist($user);
                      $em->flush();
+                      
                   
-            return $this->redirectToRoute('app_homepage'); 
-                 
-          
-                
-             }
+                     return $this->redirectToRoute('app_homepage');
+                 }
+             
              
   
-            return $this->render('formations/inscription.html.twig' , ['form' => $form->createView(),  'formation' => $formation, 'user' => $user]);
+            return $this->render('formations/inscription.html.twig' , [
+              'form' => $form->createView(),  
+              'formation' => $formation, 
+              'user' => $user, 
+             ]);
     }
 }

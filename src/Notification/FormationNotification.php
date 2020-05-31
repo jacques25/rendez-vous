@@ -2,17 +2,16 @@
 
 namespace App\Notification;
 
+use App\Entity\Formation;
 use Twig\Environment;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\Repository\FormationRepository;
 
-use App\Entity\Booking;
-use App\Entity\Formation;
-use App\Entity\UserFormation;
 use App\Repository\BookingRepository;
+use App\Entity\User;
+
 
 class FormationNotification
 {
@@ -27,10 +26,11 @@ class FormationNotification
          $this->formation = $formation;
          $this->booking = $booking;
       }
-       public  function notify($id, UserFormation $user)
+       public  function notify($id, Formation $formation, User $user )
        {   
-            
+           
             $contactEmail =  $user->getEmail();
+           
              $formation = $this->formation->findOneBy(['id' => $id]);     
             $gender = $user->getGender();
             $firstname = $user->getFirstname();

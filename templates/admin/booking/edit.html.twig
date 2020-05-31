@@ -26,6 +26,7 @@
    </div>
   <div class="col-md-6 mt-4">
    {% if booking.formation != null  %}
+   
    {% for user in booking.formation.userFormations %}
          <table class="table table-fluid ">
             <thead>
@@ -56,7 +57,7 @@
                 {% endfor %}
     {% endif %}
 
-      {% if booking.seanceOption != null  %}
+{#       {% if booking.seanceOption != null  %}
  
          <table class="table table-fluid">
             <thead>
@@ -81,7 +82,7 @@
          </table>
                       
                 
-    {% endif %}
+    {% endif %} #}
     </div>
     </div>
     </div>

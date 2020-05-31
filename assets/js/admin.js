@@ -76,8 +76,39 @@ var modal1 = document.getElementById("modal1");
 
 
 	$(function () {
-        var datetimepicker = this.getElementsByClassName('datetimepicker-input');
-
+       /*  var datetimepicker = this.getElementsByClassName('datetimepicker-input'); */
+     
+          $('.beginAt').datetimepicker({
+		  	locale: 'fr',
+            autoclose: true,
+         icons: {
+             time: 'fa fa-clock-o',
+             date: 'fa fa-calendar',
+             up: 'fa fa-chevron-up',
+             down: 'fa fa-chevron-down',
+             previous: 'fa fa-chevron-left',
+             next: 'fa fa-chevron-right',
+             today: 'fa fa-check-circle-o',
+             clear: 'fa fa-trash',
+             close: 'fa fa-remove'
+         }
+          })
+        
+          $('.endAt').datetimepicker({
+		  	locale: 'fr',
+            autoclose: true,
+         icons: {
+             time: 'fa fa-clock-o',
+             date: 'fa fa-calendar',
+             up: 'fa fa-chevron-up',
+             down: 'fa fa-chevron-down',
+             previous: 'fa fa-chevron-left',
+             next: 'fa fa-chevron-right',
+             today: 'fa fa-check-circle-o',
+             clear: 'fa fa-trash',
+             close: 'fa fa-remove'
+         }
+        })
      $('.datetimepicker').datetimepicker({
 		  	locale: 'fr',
             autoclose: true,

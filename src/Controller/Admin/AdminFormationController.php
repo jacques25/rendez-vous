@@ -40,7 +40,7 @@ class AdminFormationController extends AbstractController
         $form->handleRequest($request);
        
         if ($form->isSubmitted() && $form->isValid()) { 
-           $booking = new Booking();
+      
           
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($formation);

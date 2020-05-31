@@ -53,9 +53,9 @@ class Booking
     private $formation;
 
       /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\UserSeance",  inversedBy="bookings")
+    * @ORM\ManyToOne(targetEntity="App\Entity\User",  inversedBy="bookings")
     */
-   private $userSeance;
+   private $user;
 
 
 
@@ -146,6 +146,18 @@ class Booking
     public function setFormation(Formation $formation): self
     {
         $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

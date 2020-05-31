@@ -92,7 +92,7 @@ class AccountController extends AbstractController
 
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return  $this->redirectToRoute('account_login');
-            $this->addFlash('danger', " Mais vous n' êtes pas connecté !");
+            $this->addFlash('danger', " Vous n' êtes pas connecté !");
         } elseif ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $form = $this->createForm(ProfileType::class, $user);
             $form->handleRequest($request);

@@ -289,12 +289,14 @@ display: flex ;
   align-items: center;
   width: 100%; 
   z-index: 1000;
-  background-color: #000;
   opacity: 0.8;
 }
 .modal-backdrop {
   display:none;
    
+}
+.modal-container {
+        background: #000000c2;
 }
 .contact-me {
    box-shadow: 4px 4px 10px 0px rgba(99, 86, 78, 0.6);  

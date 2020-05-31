@@ -6,18 +6,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Service\OptionSeanceService;
-use App\Repository\SeanceOptionRepository;
-use App\Repository\FormationRepository;
+use App\Repository\UserRepository;
 use App\Repository\BookingRepository;
-use App\Form\UserSeanceType;
-use App\Form\UserBookingType;
 use App\Form\BookingType;
-use App\Entity\SeanceOption;
-use App\Entity\Seance;
+use App\Entity\User;
 use App\Entity\Booking;
-use App\Entity\UserSeance;
-use App\Repository\UserSeanceRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 /**
  * @Route("/rendez-vous")
@@ -25,14 +20,14 @@ use App\Repository\UserSeanceRepository;
 class BookingController extends AbstractController
 {   
     
-    private $seanceOptionRepository;
-    private $formationRepository;
-    private $userSeanceRepository;
-    public function __construct(SeanceOptionRepository $seanceOptionRepository, FormationRepository $formationRepository, UserSeanceRepository $userSeanceRepository){
+    
+    private $security;
+    private $userRepository;
+    public function __construct(UserRepository $userRepository){
                   
-        $this->seanceOptionRepository = $seanceOptionRepository;
-        $this->formationRepository = $formationRepository;
-        $this->userSeanceRepository = $userSeanceRepository;
+        $this->userRepository = $userRepository;
+      
+    
     }
     /**
      * @Route("/",  name="booking_calendar", methods ={"GET"})
@@ -58,8 +53,8 @@ class BookingController extends AbstractController
     public function new(Request $request): Response
     {
         $booking = new Booking();
-        $user = new UserSeance();
-        $form = $this->createForm(UserSeanceType::class, $user);
+        $user = new User();
+        $form = $this->createForm(BookingType::class, $user);
         $form->handleRequest($request);
           
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,31 +89,46 @@ class BookingController extends AbstractController
      */
     public function edit(Request $request, Booking $booking): Response
     {   
-               $formation = $booking->getFormation();
-             $nb_Users = 0;
-          if($formation !== null) {
-            $nb_Users = count($formation->getUserFormations());
-            } 
-         
-        $form = $this->createForm(BookingType::class, $booking);
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-          
-            
-      
-             $this->getDoctrine()->getManager()->flush();
 
-           return $this->redirectToRoute('seance_booking', ['id' => $seanceOption->getId() , 'id' => $formation->getId()]);
-        }
-       
+           
+               $user = $this->getUser();
+     
+
+           if (!$this->isGranted('ROLE_USER_SEANCE')  ) {  
+                       $this->addFlash('warning', 'vous n\êtes pas connecté ');
+                    return $this->redirectToRoute('account_login');
+                     }
+             
+             if($booking->getUser()->getId() !== $user->getId()) {
+              
+                 $this->addFlash('danger' , 'Vous ne pouvez pas modifier ce rendez-vous');
+                 return $this->redirectToRoute('seance_booking', ['id' => $booking->getId()]);
+             } 
+           
+             else {
+                 $formation = $booking->getFormation();
+                 $nb_Users = 0;
+                 if ($formation !== null) {
+                     $nb_Users = count($formation->getUsers());
+                 }
+         
+                 $form = $this->createForm(BookingType::class, $booking);
+                 $form->handleRequest($request);
+    
+                 if ($form->isSubmitted() && $form->isValid()) {
+                     $this->getDoctrine()->getManager()->flush();
+
+                     return $this->redirectToRoute('seance_booking', [ 'id' => $booking->getId()]);
+                 }
+             }
         return $this->render('booking/edit.html.twig', [
             'booking' => $booking,
          /*    'seanceOption' => $seanceOption,
              'user' => $user,
              'formation' => $formation, */
             'form' => $form->createView(),
-            'nbUsers' => $nb_Users
+            'nbUsers' => $nb_Users,
+            'user' => $user
         ]);
     } 
 

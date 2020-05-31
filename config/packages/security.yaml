@@ -5,8 +5,10 @@ security:
             algorithm: auto
 
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USER, 
+        ROLE_ADMIN: [ROLE_USER, ROLE_CLIENT, ROLE_FORMATION, ROLE_USER_SEANCE ] 
         ROLE_CLIENT: [ROLE_USER, ROLE_CLIENT]
+        ROLE_FORMATION: [ROLE_USER, ROLE_FORMATION]
+        ROLE_USER_SEANCE: [ROLE_USER, ROLE_USER_SEANCE]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:

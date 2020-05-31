@@ -30,16 +30,15 @@
 					<div class="col-md-12">	
 							<table class="table table-hover table-font-size">
 								<thead>
-									
+									<tr>
 									<th scope="col">	Date de la  formation</th>
 										<th scope="col"> 	Prix de la formation</th>
 										<th scope="col">S'incrire</th>
 									</tr>
 								</thead>
-
-                
 					
 									<tbody>
+									<tr>
 								 {% for booking in formation.booking %}
 									 <td>
 					             Le  {{ booking.beginAt|format_date( 'full') }} de {{booking.beginAt|format_time('medium')}} à {{booking.endAt|format_time('medium' )}}
@@ -51,17 +50,17 @@
 											{{formation.prix}} 
 										</td>
 										<td>
-                            <a href="{{path('formation_booking', {'id' : formation.id})}}" class="btn btn-info" >S'incrire à la formation</a>
+                            <a href="{{path('formation_booking', {'id': formation.id})}}" class="btn btn-info" {# data-toggle="modalForm" data-target="modalForm" #}>S'incrire à la formation</a>
 													  <a href="{{path('seance_booking', {'id' : formation.id})}}" class="btn btn-info" >Voir le calendrier</a> 
 										</td>
 
-				
+				  </tr>
 						
 								</tbody>
 							</table>
               <div class="paragraph">	{{formation.description|raw}}</div>
           </div>
-
+                 
 			</div>
 			
 {% endblock %}

@@ -76,10 +76,10 @@ class Formation
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserFormation",  mappedBy="formation", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\User",  mappedBy="formation", cascade={"persist", "remove"})
      *  @ORM\JoinColumn(name="formation_id", referencedColumnName="id")
      */
-    private $userFormations;
+    private $users;
 
   /**
      * @Groups("formation")
@@ -97,8 +97,9 @@ class Formation
     public function __construct()
     {
         
-        $this->userFormations = new ArrayCollection();
+        $this->users = new ArrayCollection();
         $this->booking= new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -243,39 +244,6 @@ class Formation
         return $this;
     }
 
-
-
-    /**
-     * @return Collection|UserFormation[]
-     */
-    public function getUserFormations(): Collection
-    {
-        return $this->userFormations;
-    }
-
-    public function addUserFormation(UserFormation $userFormation): self
-    {
-        if (!$this->userFormations->contains($userFormation)) {
-            $this->userFormations[] = $userFormation;
-            $userFormation->setFormation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserFormation(UserFormation $userFormation): self
-    {
-        if ($this->userFormations->contains($userFormation)) {
-            $this->userFormations->removeElement($userFormation);
-            // set the owning side to null (unless already changed)
-            if ($userFormation->getFormation() === $this) {
-                $userFormation->setFormation(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getNbUsers(): ?int
     {
         return $this->nb_users;
@@ -312,6 +280,37 @@ class Formation
             // set the owning side to null (unless already changed)
             if ($booking->getFormation() === $this) {
                 $booking->setFormation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getFormation() === $this) {
+                $user->setFormation(null);
             }
         }
 

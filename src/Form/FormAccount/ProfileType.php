@@ -39,8 +39,6 @@ class ProfileType extends ApplicationType
         'attr' => ['id' => 'image-profile']
       ])
 
-      ->add('introduction', TextType::class, $this->getConfiguration('Introduction', "Présentez vous en quelques mots..."))
-      ->add('description', TextareaType::class, $this->getConfiguration("Description détaillée", "C'est le moment de vous présenter en détails !"))
       ->add('addresses', CollectionType::class, [
         'label' => false,
         'entry_type' => UserAdressType::class,

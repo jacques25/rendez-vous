@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -68,7 +69,7 @@ class User implements UserInterface, Serializable
     private $phone; 
 
     /**
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json")
      */
     private $roles = [];
 
@@ -88,9 +89,20 @@ class User implements UserInterface, Serializable
      */
     private $bookings;
 
+
+        /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date_naissance;
+
+       /**
+     * @ORM\ManytoOne(targetEntity="App\Entity\Formation", inversedBy="users")
+     */
+    private $formation;
+
     /**
      * @ORM\Column(type="string", length=255)
-     *
+     * @Gedmo\Slug(fields={"firstName"})
      */
     private $slug;
 
@@ -330,10 +342,8 @@ class User implements UserInterface, Serializable
             $this->email,
             $this->password,
             $this->enabled,
-            $this->confirmToken
-
-
-
+            $this->confirmToken,
+         
         ));
     }
 
@@ -345,8 +355,6 @@ class User implements UserInterface, Serializable
             $this->password,
             $this->enabled,
             $this->confirmToken,
-
-
         ) = unserialize($serialized, array('allowed_classes' => false));
     }
 
@@ -510,6 +518,30 @@ class User implements UserInterface, Serializable
                $booking->setUserSeance(null);
            }
        }
+
+       return $this;
+   }
+
+   public function getDateNaissance(): ?\DateTimeInterface
+   {
+       return $this->date_naissance;
+   }
+
+   public function setDateNaissance(\DateTimeInterface $date_naissance): self
+   {
+       $this->date_naissance = $date_naissance;
+
+       return $this;
+   }
+
+   public function getFormation(): ?Formation
+   {
+       return $this->formation;
+   }
+
+   public function setFormation(?Formation $formation): self
+   {
+       $this->formation = $formation;
 
        return $this;
    }
