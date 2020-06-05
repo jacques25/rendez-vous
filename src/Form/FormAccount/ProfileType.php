@@ -16,6 +16,8 @@ use Jacques\ImageBundle\Form\Type\ImageType;
 use App\Form\UserAdressType;
 use App\Form\ApplicationType;
 use App\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class ProfileType extends ApplicationType
 {
@@ -33,6 +35,13 @@ class ProfileType extends ApplicationType
       ->add('firstName', TextType::class, $this->getConfiguration("Prénom", "Votre prénom..."))
       ->add('lastName', TextType::class, $this->getConfiguration("Nom", "Votre nom de famille..."))
       ->add('email', EmailType::class, $this->getConfiguration("Email", "Votre adresse email..."))
+      ->add('date_naissance', BirthdayType::class,  [
+          'label' => 'Date Naissance',
+          'widget' => 'single_text',
+          'html5' => false,
+          
+      ])
+      ->add('phone', TextType::class, ['label' => 'Téléphone'])
       ->add('imageFile', ImageType::class, [
         'required' => false,
         'label' => false,

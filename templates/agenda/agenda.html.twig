@@ -31,29 +31,29 @@
 										
 										<div class="col-sm-6 mb-2">
 										<div class="form-group">
-										{{form_start(form)}}
+									<form action={{ path('seance_booking', {'id' : seanceOption.id})}} method="post">
 									
-									    <label for="user_formation_gender">Civilité</label>
-												{% if user.gender is empty %}
-										    	{{form_row(form.gender)}}
-												{% else %}
-												<input type="text" id="user_formation_gender"name="user_formation_gender"  value="{{user.gender}}" class="form-control mb-3">
-												{% endif %}
-												 <label for="user_formation_firstName">Prénom </label>
-												<input type="text" id="user_formation_firstName" name="user_formation_firstName"  value="{{user.firstName}}" class="form-control mb-3">
-												 <label for="user_formation_lastname">Nom</label>
-											   <input type="text" id="user_formation_lastName" name="user_formation_lastName" value="{{user.lastName}}" class="form-control mb-3">
-					               	
-					               {{form_row(form.phone)}}
+									    <label for="user_seance_user_gender">Civilité</label>
+												<input type="text" id="user_seance_user_gender"name="user_seance[user][gender]"  value="{{user.gender}}" class="form-control mb-3">
+							
+												 <label for="user_seance_user_firstName">Prénom </label>
+												<input type="text" id="user_seance_user_firstName" name="user_seance[user][firstName]"  value="{{user.firstName}}" class="form-control mb-3">
+												 <label for="user_seance_user_lastname">Nom</label>
+											   <input type="text" id="user_seance_user_lastName" name="user_seance[user][lastName]" value="{{user.lastName}}" class="form-control mb-3">
+					               	 <label for="user_seance_user_phone">Téléphone</label>
+					              <input type="text" id="user_seance_user_phone" name="user_seance[user][phone]"  value = "{{user.phone}}" class="form-control">
 										</div> 
 										</div>
 										<div class="col-sm-6">
 										<div class="form-group">
-										  <label  for="beginAt">Date du rendez-vous </label>
-												  <input type="datetime" name="booking[beginAt]"  id="beginAt"  data-date=""  class="form-control mb-3" >  
-													<label for="user_formation_email">Email</label>
-										       <input type="email" name="user_email"  id="user__email" value="{{app.user.email}}" class="form-control mb-3">
-													 	{{form_row(form.date_naissance)}}
+										  <label  for="user_booking[beginAt]">Date du rendez-vous </label>
+												  <input type="text" name="booking[beginAt]"  id="beginAt"  data-date=""  class="form-control mb-3" >  
+													<label for="user_seance_user_email">Email</label>
+										       <input type="email" name="user_seance_user_email"  id="user_seance[user][email]" value="{{app.user.email}}" class="form-control mb-3">
+										       
+
+												<label for="user_seance_user_date_naissance">Date Naissance</label>
+										<input type="text" id="user_seance_user_date_naissance" name="user_seance[user][date_naissance]" value="{{app.user.dateNaissance|date('Y-m-d')}}" class="form-control mb-3">
 										</div>
                        
                     
@@ -61,6 +61,8 @@
                     </div>
                       		
 						 </div> 
+						 	
+	
              <div class="modal-footer">
 						 
           			<button type="submit" class="btn btn-success">
@@ -68,7 +70,9 @@
                       		</button>		
 								
 				   	</div>
-						 {{form_end(form)}}
+				
+		 	</form>  
+
          </div>	
 		
 		 </div>

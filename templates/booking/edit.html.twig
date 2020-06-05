@@ -36,23 +36,25 @@
 									 <h5 id="modal-title">  {{booking.title}} </h5>
              </div>
              <div class="modal-body">
-                            
+                           
+                                
+                      
                                 <legend>{{booking.user.gender}}
                                   {{booking.user.firstName}}
                               {{booking.user.lastName}} </legend>
                                <fieldset><strong>Email:  </strong>{{booking.user.email}}</fieldset>
                             
-                               
+                                
                        <div class="body-text">   <strong> Date de votre rendez-vous :  </strong> </div>
                            Le {{booking.beginAt|format_date('medium') }} 
                               de {{booking.beginAt|format_time('short')}} heure
                               à   {{booking.endAt|format_time('short')}} heure
                             
                           
-             </div>
+             </div>     
+        
              <div class="modal-footer">
-                <a class="btn btn-info" href="{{path('booking_delete', {'id' : booking.id})}}">Annuler votre rendez-vous </a>
-  
+                    {{ include('booking/_delete_form.html.twig') }}
           </div>
 
   

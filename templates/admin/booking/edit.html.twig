@@ -13,7 +13,7 @@
 		   
 		   <div class="modal-content">
 			 <div class="modal-header">
-					 <h5 id="modal-title">Modification de votre  {{booking.title}} </h5>
+					 <h5 id="modal-title">Modification de la  {{booking.title}} </h5>
                 </div>
                <div class="modal-body">
                 {{ include('admin/booking/_form.html.twig') }}
@@ -27,7 +27,7 @@
   <div class="col-md-6 mt-4">
    {% if booking.formation != null  %}
    
-   {% for user in booking.formation.userFormations %}
+   {% for user in booking.users %}
          <table class="table table-fluid ">
             <thead>
                <tr>
@@ -57,7 +57,7 @@
                 {% endfor %}
     {% endif %}
 
-{#       {% if booking.seanceOption != null  %}
+      {% if booking.seanceOption != null  %}
  
          <table class="table table-fluid">
             <thead>
@@ -82,7 +82,7 @@
          </table>
                       
                 
-    {% endif %} #}
+    {% endif %} 
     </div>
     </div>
     </div>

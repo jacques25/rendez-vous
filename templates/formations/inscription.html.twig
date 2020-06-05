@@ -9,23 +9,12 @@
 			<div class="container">
 
 				<div class="row mt-5">
-					<h1></h1>
-				</div>
-				<div class="contat" {# role="dialog" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true" #}>
-				{# 	<div class="modal-dialog" {# role="document" >#}
+				
 
-					{# 	<div class="modal-content"> 
-							<div class="modal-header"> #}
-
-								<h5 id="modal-title">
+								<h2 id="modal-title">
 									{{formation.title}}
-								</h5>
-							{# 	<button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">
-										&times;
-									</span>
-								</button> #}
-
+								</h2>
+							
 
 							</div>
 							<div class="modal-body" id="modalBody">
@@ -35,19 +24,15 @@
 										{% endfor %}
 									</div>
 									<div class="modal-body">
-					         {{form_start(form)}}
+					         <form action="{{path('formation_booking', {'id': formation.id})}}" method="post">
   <div class="row">
 							
 									<div class="col-sm-6 mb-2">
 										<div class="form-group">
-										   
 								  
 													 {{form_row(form.gender , {'attr': {'autocomplete' : 'autocomplete'}})}}
 												   {{form_row(form.firstName, {'attr': {'autocomplete' : 'autocomplete'}})}}
 													 {{form_row(form.lastName)}}
-													 
-										
-					              
 										</div> 
 										</div>
 										<div class="col-sm-6">
@@ -55,37 +40,28 @@
 												  
 												
 										        {{form_row(form.email)}}
-												           	{% if app.user.dateNaissance is empty %}
+												      
 													  {{form_row(form.date_naissance)}}
-														{% else %}
-																 <label for="_date_naissance">Date Naissance</label>
-															  <input type="text" id="_date_naissance" name="_date_naissance" value="{{app.user.dateNaissance|date('Y-m-d')}}" class="form-control mb-3">
-				
-													 {% endif %}
+													
 									
-                                  	{% if app.user.phone is empty %}
 													  {{form_row(form.phone)}}
 
-														{% else %}
-																 <label for="_phone">Téléphone</label>
-															  <input type="text" id="_phone" name="_phone" value="{{app.user.phone}}" class="form-control mb-3">
-				
-													 {% endif %}
+													
                                
 										</div>
                     </div> 
                       		
 						 </div> 
              <div class="modal-footer">
-						
+						  
           			<button type="submit" class="btn btn-success">
-							                <i class="fa fa-save"></i> Confirmez
+							                <i class="fa fa-save"></i> Confirmez votre inscription
                       		</button>		
 								
 				   	</div>
 				
-         {{form_end(form)}}
-
+         
+</form>
 						</div>
 					</div>
 				</div>

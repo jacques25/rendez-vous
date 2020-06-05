@@ -1,0 +1,30 @@
+	 <table class="table-fluid mt-3">
+      <h4>Nombre d'Inscrits</h4>
+         <thead>
+            <tr>
+               <th>Prénom</th>
+               <th>Nom</th>
+               <th>Email</th>
+               <th>Téléphone</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+        
+					     
+							 {% for user in booking.users %}
+								 
+					
+           <tr>
+             <td> {{user.firstname}} </td>
+             <td>  {{user.lastname}}</td>
+             <td> {{user.username}}</td>
+             <td>{{user.phone}}</td>
+             <td>
+             <a href="{{path('admin_seance_user_delete', {id : user.id}) }}"><i class="fa fa-trash"></i></a>
+             </td> 
+               </tr>
+             {% endfor %}
+        	
+         </tbody>
+      </table>

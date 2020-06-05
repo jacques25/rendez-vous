@@ -3,5 +3,101 @@
 {% block body %}
 <div class="container">
 <h1>Administration du site  </h1>
+
+        
+  
+    <div class="row">
+        <div class="col-sm-4 mt-3">
+            <div class="card w-100">
+                <div class="card-header admin-header">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-stats"></span>
+                        Stats</h3>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{{path('admin_bijou_index')}}">
+                                {{'nombre de bijoux'|trans}} <span class="badge-bijou">
+                                {{ bijouCount }}
+                            </span> 
+                            </a>
+                          
+
+                        </li>
+
+                        <li class="list-group-item">   
+                        <p>{{'nombre de bijoux disponible'|trans}}
+                              {% if bijouCount == publishedBijouCount %}
+                                 <span class="badge-bijoux-dispo">{{ publishedBijouCount }}</span></p>
+                               {% else %}
+                                 
+                                   <span class="badge-bijoux-indispo">{{ publishedBijouCount }}</span></p>
+                              {% endif %}
+                         
+                         
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 mt-3 ">
+            <div class="card w-100">
+
+
+                <div class="card-header admin-header">
+
+                    <h3 class="panel-title center">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        Commandes</h3>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{{path('admin_commandes_index') }}">
+                                {{'nombre de commandes '|trans }}
+
+                            </a>
+                            <span class="badge-commandes">{{ commandesCount }}</span>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% if randomBijou.title is defined %}
+            <div class="col-sm-3 mt-3  card-block">
+                <div class="card">
+                    <div class="card-header admin-header">
+                        <h3 class="panel-title">{{ randomBijou.title }}</h3>
+                    </div>
+
+                    <div class="card-img ">
+
+                        <img src="{{ vich_uploader_asset(randomBijou, 'imageFile') }}" class="img img-fluid"/>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">
+                            {{ randomBijou.title }}
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <a href="{{ path('admin_bijou_show', {entity: 'Bijou', action: 'show', id: randomBijou.id}) }}" class="btn btn-primary">
+                            {{ 'voir les infos' }}
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
 </div>
 {% endblock %}

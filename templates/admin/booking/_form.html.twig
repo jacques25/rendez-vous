@@ -2,11 +2,16 @@
   <div class="align-items-center mb-2">
  {#  <div class="text-light text-center bg-info border-rounded w-30 p-2 ">Durée de votre séance  {{booking.seanceOption.duree|format_time('short')}} heure</div> #}
   </div>
-  
+    <div>
+ 
+      <strong>{{booking.seanceOption.seance.title}} </strong>
+     <p> {{booking.user.gender}}  {{booking.user.firstName}}  {{booking.user.lastName}} </p>
+    </div>
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
   <div class=" form-group">
-  
+      
+      {{form_row(form.title)}}
 
       {{ form_row(form.beginAt, {'attr': {'class': 'mb-2'}})}}
        {{form_row(form.endAt)}}

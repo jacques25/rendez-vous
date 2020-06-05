@@ -2,18 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Seance;
-use App\Form\DataTransformer\TimestampToDateTimeTransformer;
-use App\Form\SeanceType;
-use App\Repository\SeanceRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints\Time;
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\SeanceRepository;
+use App\Form\SeanceType;
+use App\Form\DataTransformer\TimestampToDateTimeTransformer;
+use App\Entity\Seance;
+use App\Entity\Booking;
 
 /**
  * @Route("/admin")
@@ -71,19 +72,24 @@ class AdminSeanceController extends AbstractController
     /**
      * @Route("/seance/{id}/edit", name="admin_seance_edit", methods={"GET","POST"})
      */
-    public function edit($id, Request $request, Seance $seance, TimestampToDateTimeTransformer $timestampToDateTimeTransformer): Response
+    public function edit($id, Request $request, Seance $seance): Response
     {
         $manager = $this->getDoctrine()->getManager();
         $seance = $manager->getRepository('App:Seance')->findOneBy(['id' => $id]);
+      
+
+     
         // original SeanceOption entity 
         $originalOptionSeance = new ArrayCollection();
-
+        $bookings = new ArrayCollection();
         foreach ($seance->getSeanceOptions() as $seanceOption) {
          
-            $originalOptionSeance->add($seanceOption);
+            $originalOptionSeance->add($seanceOption);  
+          
+         
         }
-
-
+       
+       
         $form = $this->createForm(SeanceType::class, $seance);
         $form->handleRequest($request);
 
@@ -106,6 +112,7 @@ class AdminSeanceController extends AbstractController
         return $this->render('admin/seance/edit.html.twig', [
             'seance' => $seance,
             'form' => $form->createView(),
+           'seanceOption' => $seanceOption
         ]);
     }
 
@@ -121,5 +128,22 @@ class AdminSeanceController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_seance_index');
+    }
+
+
+    /**
+     * @Route("/suppression/utilisateur/{id}" ,  name="admin_seance_user_delete")
+     *
+     * @return void
+     */
+    public function userDelete(Request $request, Seance $seance) : Response {
+        $user =  $this->getUser();
+        if ($user) {
+            $seance = $user->getBooking()->getId();
+            $em = $this->getDoctrine()->getManager();
+            $user->setFormation(null);
+            $em->flush();
+            return $this->redirectToRoute('admin_formation_edit', ['id' => $seance->getId()]);
+        }
     }
 }

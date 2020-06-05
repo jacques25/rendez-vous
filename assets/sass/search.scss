@@ -1,50 +1,36 @@
 /* SEARCH FORM */
+.dropdown-menu-search{
+    left: 0;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 1rem 0;
+    font-size: 1rem;
+   background-color: #e2e1e0;
+    z-index: 10000;
+    box-shadow: 4px 3px 8px 0px rgba(102, 100, 99, 0.71);
 
-.searchbox {
-    position: relative;
-    min-width: 50px;
-    width: 0;
-    overflow: hidden;
-    -webkit-transition: width 0.3s;
-    -moz-transition: width 0.3s;
-    -ms-transition: width 0.3s;
-    -o-transition: width 0.3s;
-    transition: width 0.3s;
+    text-align: left;
+    list-style: none;
+    border-radius: .25rem;
 }
 
-.searchbox-input {
-    top: 2px;
-    right: 0;
-    border: 0;
-    outline: 0;
-    background: none;
-    width: 100%;
-    margin: 0;
-    padding: 0px 55px 0px 20px;
-    font-size: 12px;
-   text-transform: capitalize;
-    color: #fff;
+.form-search {
+    padding:10px;
+    width:100%;
+}
+input[type="search"]{
+      border: none;
+    outline-style: auto;
+    outline-offset: 0.5pt;
+    outline-color: #8f725c;
+    margin-bottom: 10px;
+
 }
 
- .searchbox-input::-webkit-input-placeholder {
-    color: #888;
-}
-
-.searchbox-input:-moz-placeholder {
-   color: #888;
-}
-
-.searchbox-input::-moz-placeholder {
-     color: #888;
-}
-
-.searchbox-input:-ms-input-placeholder {
-      color: #888;
-}
- 
 .searchbox-icon,
 .searchbox-submit {
-   position: absolute;
+  
     top: 0;
     font-size: 16px;
     right: 10px;
@@ -55,18 +41,15 @@
     /* line-height: 50px; */
     text-align: center;
     cursor: pointer;
-    color: #dcddd8;
+    color: #8f725c;
     background: none;
     /* padding: 9px; */
 }
 
 
 .searchbox-icon {
-    /*   background-image: url("/build/img/search-white.png");*/
-     width:15px;
-     height: 15px;
+
     top: 13px;
-    display: block;
 }
 
 .btn-search[type="submit"] {
@@ -88,11 +71,6 @@ button[type="submit"].btn-search {
     width: 250px;
 }
 
- .searchbox-open .searchbox-input, .searchbox-open .searchbox-icon{
-    background-color: #c4f2f2;
-    border-radius: 16px;
-    color: #888;
-}
 
 @media only screen and (max-width: 1138px) 
 {

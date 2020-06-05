@@ -1,0 +1,51 @@
+	          {% if is_granted("ROLE_USER_SEANCE") %}
+                <a class="btn btn-success" href="#"  data-toggle="modal" data-target="#modalComment" > Ecrire  un commentaire </a> 
+          <div class="modal show" id="modalComment">
+                  <div class="modal-dialog" role="document">
+                       <div class="modal-content p-5">
+                          <div class="modal-title">
+                              <h5>Ecrire un commentaire</h5>      
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                             </button>  
+                          </div>   
+
+                          <div class="modal_body">
+                          {{form_start(form)}}
+                              {{form_widget(form.authorName, {'attr': {'class':' mb-3', 'placeholder': 'Votre prénom' }})}}
+                          {{form_widget(form.content,  {'attr': {'class':' mb-3', 'placeholder' : 'Votre message(500 caractères max)', 'rows':8, 'columns' : 10}}) }}
+                          <div id="compteur" style="text-align:right"> 0</div>
+                           <input class="btn btn-success" type="submit" value="Commenter">
+                       {{form_end(form)}}
+                      
+                        </div> 
+            </div>                     
+                                                  
+           </div>
+           </div>
+                     {% else %}
+                       <div class="alert alert-warning"> <strong>Attention Vous ne pouvez écrire un commentaire qu' une fois connecté  </strong>
+                                  <a href="{{path('account_login')}}" class="btn btn-primary btn-sm">se connecter </a>
+                       </div>
+                     {% endif %}      
+                     <div class="d-flex">
+
+            {% for comment in seance.comments %}
+             {% if comment.approved == true  %}
+              <div class="carbonads bg-light p-5  m-3">
+                  <div class="carbonads-header mb-2">
+                    <p> Le {{comment.createdAt|format_date('full')}} par  {{comment.authorName}}</p>
+                  </div>
+              <div class="carbonads-body">
+                {{comment.content}}
+              </div>
+						
+                       </div>			 
+                         {% endif %}
+ 
+		{% endfor %}	
+            </div>
+                  
+             
+              
+                </div>

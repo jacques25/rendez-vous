@@ -225,23 +225,23 @@ class AccountController extends AbstractController
     ) {
         if ($request->isMethod('POST')) {
             $manager = $this->getDoctrine()->getManager();
-
+ 
             $user = $userRepository->findOneByResetToken($token);
-
+             
             if ($user === null) {
                 $this->addFlash('danger', "Token inconnu");
                 return $this->redirectToRoute("app_forget_password");
             }
 
             $user->setResetToken(null);
+             $password = $request->get('password');
+            $passwordConfirm = $request->get('passwordConfirm');
+            
 
-            $passwordConfirm = $passwordEncoder->encodePassword($user, $request->get('passwordConfirm'));
-
-
-            if ($request->get('password') !== $passwordConfirm) {
+            if ($password !== $passwordConfirm) {
                 $this->addFlash('warning', 'Les mots de passe ne sont pas identiques');
             } else {
-                $password = $passwordEncoder->encodePassword($user, $request->get('password'));
+                $password =  $passwordEncoder->encodePassword($user, $request->get('password'));
                 $user->setPassword($password);
                 $manager->flush();
                 $this->addFlash('success', 'Réinitialiation de votre mot de passe réussie !');

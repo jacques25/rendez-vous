@@ -74,13 +74,6 @@ class Formation
      */
     private $updated_at;
 
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User",  mappedBy="formation", cascade={"persist", "remove"})
-     *  @ORM\JoinColumn(name="formation_id", referencedColumnName="id")
-     */
-    private $users;
-
   /**
      * @Groups("formation")
      * @ORM\OneToMany(targetEntity="Booking", mappedBy="formation", cascade={"persist", "remove"})
@@ -94,12 +87,26 @@ class Formation
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="formation",  orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+     * @Groups("formation")
+     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="formations")
+     * @ORM\JoinTable(name="formation_user")
+     * 
+     */
+     private $users;
+
     public function __construct()
     {
         
-        $this->users = new ArrayCollection();
         $this->booking= new ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->users = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -256,7 +263,39 @@ class Formation
         return $this;
     }
    
-      /**
+    
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getFormation() === $this) {
+                $comment->setFormation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection|Booking[]
      */
     public function getBooking(): Collection
@@ -266,9 +305,10 @@ class Formation
 
     public function addBooking(Booking $booking): self
     {
-        $this->booking[] = $booking;
-        $booking->setFormation($this);
-
+        if (!$this->booking->contains($booking)) {
+            $this->booking[] = $booking;
+            $booking->setFormation($this);
+        }
 
         return $this;
     }
@@ -298,7 +338,7 @@ class Formation
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->setFormation($this);
+            $user->addFormation($this);
         }
 
         return $this;
@@ -308,19 +348,13 @@ class Formation
     {
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getFormation() === $this) {
-                $user->setFormation(null);
-            }
+            $user->removeFormation($this);
         }
 
         return $this;
     }
-    
+
+   
 
 
-    
-
-    
- 
 }

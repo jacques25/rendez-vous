@@ -52,8 +52,9 @@ class Booking
     
     private $formation;
 
-      /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\User",  inversedBy="bookings")
+    /**
+    * @ORM\ManyToOne(targetEntity="App\Entity\User",  inversedBy="booking")
+    * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
     */
    private $user;
 
@@ -120,18 +121,7 @@ class Booking
         return $this;
     }
 
-    public function getUserSeance(): ?UserSeance
-    {
-        return $this->userSeance;
-    }
-
-    public function setUserSeance(?UserSeance $userSeance): self
-    {
-        $this->userSeance = $userSeance;
-
-        return $this;
-    }
-
+  
    
     public function __toString()
     {
@@ -162,6 +152,5 @@ class Booking
         return $this;
     }
 
-
-
+    
 }

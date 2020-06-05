@@ -11,6 +11,7 @@ import SlimSelect from 'slim-select';
 
 //require('bootstrap-hover-dropdown');
 require("./bootstrap-datetimepicker.min.js")
+require("./locales/bootstrap-datetimepicker.fr");
 require('./propertiesBijou');
 require('./medias');
 require('./select');
@@ -79,7 +80,7 @@ var modal1 = document.getElementById("modal1");
        /*  var datetimepicker = this.getElementsByClassName('datetimepicker-input'); */
      
           $('.beginAt').datetimepicker({
-		  	locale: 'fr',
+		  	 language: 'fr',
             autoclose: true,
          icons: {
              time: 'fa fa-clock-o',
@@ -108,6 +109,11 @@ var modal1 = document.getElementById("modal1");
              clear: 'fa fa-trash',
              close: 'fa fa-remove'
          }
+          })
+        
+        $('#dateExpedition').datetimepicker({
+             	locale: 'fr',
+            autoclose: true,
         })
      $('.datetimepicker').datetimepicker({
 		  	locale: 'fr',

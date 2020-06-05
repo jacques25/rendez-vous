@@ -175,6 +175,36 @@ class BijouRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-   
+   public function getBijousCount()
+    {
+        return $this->createQueryBuilder('bijou')
+            ->select('COUNT(bijou.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getPublishedBijouCount()
+    {
+        return $this->createQueryBuilder('bijou')
+            ->select('COUNT(bijou.id)')
+           /*  ->where('bijou.disponible = :disponible')
+            ->setParameter('disponible', true) */
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+    public function findRandomBijou()
+    {
+        // very dirty way to get a "random" result - don't use in a real project!
+        $results = $this->createQueryBuilder('bijou')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->execute();
+
+        if (!$results == null) {
+            return $results[array_rand($results)];
+        }
+    }
    
 }

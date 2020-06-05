@@ -1,0 +1,51 @@
+      {% for comment in formation.comments %}
+       {% if comment.approved == true  %}
+              <div class="carbonads col-10 bg-light p-5  m-3">
+                  <div class="carbonads-header mb-2">
+                    <p> Le {{comment.createdAt|format_date('full')}} par  {{comment.authorName}}</p>
+                  </div>
+              <div class="carbonads-body">
+                {{comment.content|raw}}
+              </div>
+					{% endif %}				   
+ 
+                       </div>
+		{% endfor %}
+    {% if is_granted("ROLE_FORMATION") %}
+                
+          <div class="modal show" id="modalComment">
+                  <div class="modal-dialog" role="document">
+                       <div class="modal-content p-5">
+                          <div class="modal-title">
+                              <h5>Ecrire un commentaire</h5>      
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                             </button>  
+                          </div>   
+
+                          <div class="modal_body">
+                          {{form_start(form)}}     
+                           <span class="help-block pull-left" id="counter"></span>
+                          {{form_widget(form.authorName, {'attr': {'class':' mb-3', 'placeholder': 'Votre prénom' }})}}
+                          {{form_widget(form.content,  {'attr': {'class':' mb-3', 'placeholder' : 'Votre message', 'rows':8, 'columns' : 10, 'maxlength' : 500}}) }}
+                          <div id="compteur" style="text-align:right"> 500</div>
+                           <input class="btn btn-success" type="submit" value="Commenter">
+                       {{form_end(form)}}
+                        </div> 
+            </div>                     
+                                                  
+           </div>
+           </div>
+            <a class="btn btn-success" href="#"  data-toggle="modal" data-target="#modalComment" > Ecrire  un commentaire </a>
+                     {% else %}
+                       <div class="alert alert-warning"><strong> Attention Vous ne pouvez écrire un commentaire qu' une fois connecté  </strong> 
+                       <a href="{{path('account_login')}}" class="btn  btn-primary btn-sm" >se connecter</a>
+                       </div>
+                    
+                     {% endif %}      
+                     
+            	
+         
+      
+              
+                </div>

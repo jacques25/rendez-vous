@@ -1,0 +1,67 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-email.css'), source('@styles/email.css') ) %}
+
+<container>
+	
+<container>
+	<spacer size="16"></spacer>
+			<row class="header">
+				<columns large="4" small="12">
+					<a href="{{url('app_homepage') }}">
+						<img src="{{email.image('@img/rdv.png')}}" class="logo" alt="logo_site">
+					</a>
+				</columns>
+				<columns large="8" small="12">
+				 	<h2>	Rendez-vous avec soi</h2>
+					
+				</columns>
+			</row>
+			<row class="content">
+				<columns>
+         <spacer size="30"></spacer>
+					<h1 class="title">	
+          <center>	Bonjour {{ name }} 	</center>
+					</h1>
+					<spacer size="16"></spacer>
+
+					<callout class="secondary">
+						<row>
+							<columns large="7">
+								<p>
+									<strong>	Mode de paiement</strong>
+									<br/>
+									Par chèque à l'ordre de:<br>
+                   Mme Françoise Forite<br>
+									 3 Rue Robespierre <br>
+									 26500 Bourg Les Valence (Drôme)
+
+								</p>
+							
+							</columns>
+							<columns large="5">
+              	<p><strong>Adresse Email</strong>
+									<br>
+									{{contactEmail}}
+								</p>
+							</columns>
+						</row>
+					</callout>
+					<row>
+					<columns class="command-body">
+					<spacer size="16"></spacer>
+					<h4> {{booking.title}}</h4>
+					<span><strong> Séance du {{booking.beginAt|format_date('full')}} à {{booking.beginAt|format_time('short')}}
+					<p> {{message}}</p>
+					<p><strong> 
+					</colummns>
+	  	</row>
+		  <row class="footer text-center">
+			  <columns large="3">
+				<spacer size="20"></spacer>
+			  	<a class="btn-login"  href="{{url('account_login')}}" >
+					Connexion
+				</a>
+			  </columns>
+		  </row>
+</container>
+
+	{% endapply %}

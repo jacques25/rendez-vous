@@ -36,6 +36,8 @@ class BookingType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Booking::class,
+              'csrf_protection' => false,
+           
         ]);
     }
 }

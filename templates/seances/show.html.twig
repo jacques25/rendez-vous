@@ -58,13 +58,21 @@
 													  <a href="{{path('seance_booking', {'id' : option.id})}}" class="btn btn-info" >Voir le calendrier</a>
 										</td>
 
-									{% endfor %}
+											{% endfor %}
 						
 								</tbody>
 							</table>
-              <div class="paragraph">	{{seance.description|raw}}</div>
+						
+              <div >	{{seance.description|raw}}</div>  
+							
+							<section class="comments" id="comments">
+        <section class="previous-comments">
+            <h3>Ils ont donné leur avis</h3>
+            {% include 'comment/seance_comment.html.twig' with { 'comments': seance.comments } %}
+        </section>
+    </section>
           </div>
-
+               
 			</div>
-			
+		
 {% endblock %}

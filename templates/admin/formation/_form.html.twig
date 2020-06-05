@@ -13,7 +13,7 @@
             {{form_row(form.imageFile)}}  
             {{form_row(form.prix, { 'attr': {'class': 'form-control'}})}}
        </div>
-        <div  id="booking" data-prototype="{{form_widget(form.booking.vars.prototype)|e('html_attr')}}">
+        <div  id="booking_formation" data-prototype="{{form_widget(form.booking.vars.prototype)|e('html_attr')}}">
       			 
       					{% for row in form.booking %}	
       		
@@ -50,15 +50,19 @@
             </tr>
          </thead>
          <tbody>
-          <tr>
-           {% for user in formation.users %}
+         
+            {% for user in formation.users %} 
+           <tr>
              <td> {{user.firstname}} </td>
              <td>  {{user.lastname}}</td>
              <td> {{user.username}}</td>
              <td>{{user.phone}}</td>
-             <td></td> 
-             {% endfor %}
-          </tr>
+             <td>
+             <a href="{{path('admin_formation_user_delete', {id : user.id}) }}"><i class="fa fa-trash"></i></a>
+             </td> 
+               </tr>
+             {% endfor %} 
+        
          </tbody>
       </table>
    </div>

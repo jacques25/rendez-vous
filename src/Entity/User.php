@@ -84,22 +84,23 @@ class User implements UserInterface, Serializable
 
     public $passwordConfirm;
 
-  /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking",  mappedBy="user")
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="user")
+     *
      */
-    private $bookings;
+    private $booking;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Formation::class, inversedBy="users")
+     */
 
-        /**
+    private $formations;
+     /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $date_naissance;
 
-       /**
-     * @ORM\ManytoOne(targetEntity="App\Entity\Formation", inversedBy="users")
-     */
-    private $formation;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Slug(fields={"firstName"})
@@ -160,15 +161,18 @@ class User implements UserInterface, Serializable
      */
     private $commandes;
 
+ 
+
     public function __construct()
     {
         $this->enabled = false;
         $this->subscribedToNewsletter = false;
         $this->addresses = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->booking = new ArrayCollection();
+        $this->formations = new ArrayCollection();
+      
   
-       $this->bookings = new ArrayCollection();
-   
     }
 
     public function getId(): ?int
@@ -491,37 +495,7 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
-   /**
-    * @return Collection|booking[]
-    */
-   public function getBookings(): Collection
-   {
-       return $this->bookings;
-   }
-
-   public function addBooking(booking $booking): self
-   {
-       if (!$this->bookings->contains($booking)) {
-           $this->bookings[] = $booking;
-           $booking->setUserSeance($this);
-       }
-
-       return $this;
-   }
-
-   public function removeBooking(booking $booking): self
-   {
-       if ($this->bookings->contains($booking)) {
-           $this->bookings->removeElement($booking);
-           // set the owning side to null (unless already changed)
-           if ($booking->getUserSeance() === $this) {
-               $booking->setUserSeance(null);
-           }
-       }
-
-       return $this;
-   }
-
+   
    public function getDateNaissance(): ?\DateTimeInterface
    {
        return $this->date_naissance;
@@ -534,18 +508,63 @@ class User implements UserInterface, Serializable
        return $this;
    }
 
-   public function getFormation(): ?Formation
+   /**
+    * @return Collection|Booking[]
+    */
+   public function getBooking(): Collection
    {
-       return $this->formation;
+       return $this->booking;
    }
 
-   public function setFormation(?Formation $formation): self
+   public function addBooking(Booking $booking): self
    {
-       $this->formation = $formation;
+       if (!$this->booking->contains($booking)) {
+           $this->booking[] = $booking;
+           $booking->setUser($this);
+       }
 
        return $this;
    }
 
+   public function removeBooking(Booking $booking): self
+   {
+       if ($this->booking->contains($booking)) {
+           $this->booking->removeElement($booking);
+           // set the owning side to null (unless already changed)
+           if ($booking->getUser() === $this) {
+               $booking->setUser(null);
+           }
+       }
 
-   
+       return $this;
+   }
+
+   /**
+    * @return Collection|Formation[]
+    */
+   public function getFormations(): Collection
+   {
+       return $this->formations;
+   }
+
+   public function addFormation(Formation $formation): self
+   {
+       if (!$this->formations->contains($formation)) {
+           $this->formations[] = $formation;
+       }
+
+       return $this;
+   }
+
+   public function removeFormation(Formation $formation): self
+   {
+       if ($this->formations->contains($formation)) {
+           $this->formations->removeElement($formation);
+       }
+
+       return $this;
+   }
+
+  
+
 }

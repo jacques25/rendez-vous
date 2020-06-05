@@ -40,17 +40,18 @@ class SeanceOption
      */
     private $seance;
      
-  
 
+    
      /**
      * @ORM\OneToMany(targetEntity="App\Entity\Booking",  mappedBy="seanceOption")
      */
     private $bookings;
 
-    
+  
+
     public function __construct()
     {
-         $this->userSeances= new ArrayCollection();
+      
          $this->bookings = new ArrayCollection();
     }
 
@@ -95,15 +96,14 @@ class SeanceOption
         return $this;
     }
 
-
-    public function getBooking(): ?Booking
+    public function getDuree(): ?\DateTimeInterface
     {
-        return $this->Booking;
+        return $this->duree;
     }
 
-    public function setBooking(?Booking $Booking): self
+    public function setDuree(?\DateTimeInterface $duree): self
     {
-        $this->Booking = $Booking;
+        $this->duree = $duree;
 
         return $this;
     }
@@ -139,17 +139,7 @@ class SeanceOption
         return $this;
     }
 
-    public function getDuree(): ?\DateTimeInterface
-    {
-        return $this->duree;
-    }
-
-    public function setDuree(?\DateTimeInterface $duree): self
-    {
-        $this->duree = $duree;
-
-        return $this;
-    }
+    
 
    
 }

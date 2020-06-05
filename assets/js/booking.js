@@ -5,7 +5,7 @@ var $ = require('jquery')
 
  $(document).ready(function () {
      // obtient la collection exp
-     $collectionHolder = $('#booking');
+     $collectionHolder = $('#booking_formation');
      // appending the addNewItem to the collectionHolder
      $collectionHolder.append($addNewItem);
 

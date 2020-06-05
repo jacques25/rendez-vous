@@ -58,7 +58,17 @@
 						
 								</tbody>
 							</table>
-              <div class="paragraph">	{{formation.description|raw}}</div>
+              <div>	{{formation.description|raw}}</div>
+
+											<section class="comments" id="comments">
+        <section class="previous-comments">
+            <h3>Ils ont donné leur avis</h3>   
+					     {% include 'comment/formation_comment.html.twig' with { 'comments': formation.comments } %}
+            
+   
+      
+    </section>
+          </div>
           </div>
                  
 			</div>

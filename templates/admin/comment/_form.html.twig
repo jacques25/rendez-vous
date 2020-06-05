@@ -1,0 +1,34 @@
+	{{ form_start(form) }}
+<div class="row">
+     <div class="col-sm-6">
+		    	{{ form_row(form.authorName, {'attr' :{'autocomplete': 'autocomplete'}}) }}
+
+        
+     
+     </div>
+    
+</div>
+<div class="row">
+      <div class="col-sm-6">
+      			{{ form_row(form.content) }}		
+						{{ form_row(form.approved) }}
+      </div>
+    
+</div>
+
+	<div class="row mt-4 mb-3 mx-5">
+					<div class="col-sm-3 mb-4">
+						<a class="btn btn-primary" href="{{ path('admin_comments_list') }}">
+							<i class="fas fa-chevron-left"></i>
+							Retour vers la liste
+						</a>
+					</div>
+					
+					<div class="col-sm-3">
+						<button type="submit" class="btn btn-success">
+							<i class="fas fa-save"></i>
+							Enregister
+						</button>
+					</div>
+				</div>
+{{ form_end(form) }}

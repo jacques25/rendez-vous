@@ -2,22 +2,28 @@
 
 namespace App\EventSubcriber;
 
+use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use CalendarBundle\Entity\Event;
 use CalendarBundle\Event\CalendarEvent;
+use CalendarBundle\Entity\Event;
 use CalendarBundle\CalendarEvents;
+use App\Repository\UserRepository;
 use App\Repository\BookingRepository;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class CalendarSubscriber implements EventSubscriberInterface
 {
     private $bookingRepository;
     private $router;
+    private $authorizationChecker;
 
-    public function __construct( BookingRepository $bookingRepository, UrlGeneratorInterface $router)
+    public function __construct( BookingRepository $bookingRepository, UrlGeneratorInterface $router, AuthorizationCheckerInterface $authorizationChecker)
      {
         $this->bookingRepository = $bookingRepository;
         $this->router = $router;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
      public static  function  getSubscribedEvents ()
@@ -29,11 +35,11 @@ class CalendarSubscriber implements EventSubscriberInterface
 
      public function onCalendarSetData(CalendarEvent  $calendar)
     {
-
+        
           $start = $calendar->getStart();
         $end = $calendar->getEnd();
         $filters = $calendar->getFilters();
-
+       
         // Modify the query to fit to your entity and needs
         // Change booking.beginAt by your start date property
         $bookings = $this->bookingRepository
@@ -50,7 +56,9 @@ class CalendarSubscriber implements EventSubscriberInterface
             $bookingEvent = new Event( 
                 $booking->getTitle(),
                 $booking->getBeginAt(),
-                $booking->getEndAt()  // If the end date is null or not defined, a all day event is created.
+                $booking->getEndAt(),
+             
+                 // If the end date is null or not defined, a all day event is created.
             );
 
             /*
@@ -64,17 +72,22 @@ class CalendarSubscriber implements EventSubscriberInterface
                 'backgroundColor' => '#3d9cd3',
                 'borderColor' => '#3d9cd3',
             ]);
-            $bookingEvent->addOption(
-                'url',
-                $this->router->generate('booking_edit', [
+
+           
+         if($this->authorizationChecker->isGranted('ROLE_USER')){
+         
+                $bookingEvent->addOption(
+                    'url',
+                    $this->router->generate('booking_edit', [
                     'id' => $booking->getId(),
                 ])
-            );
-
+                );
+            
+            }
             // finally, add the event to the CalendarEvent to fill the calendar
             $calendar->addEvent($bookingEvent);
         }
     }
     
-
+  /*  */
 }

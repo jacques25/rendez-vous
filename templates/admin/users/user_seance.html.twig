@@ -1,0 +1,40 @@
+	{% extends "admin_base.html.twig" %}
+
+   {% block title %} inscrits aux seance {% endblock %}
+  
+  {% block body %}
+  
+   <div class="container">
+    <h2> Seances</h2>
+   <table class="table table-fluid">
+    <thead>
+       <tr>
+            <th>Client</th>
+            <th>Seance</th>
+            <th>Date de début</th>
+            <th>Date de fin</th>
+            <th>Durée</th>
+       </tr>
+    </thead>
+     <tbody> 
+      {% for user in users %}
+     {% for booking  in user.booking %}
+          <tr> 
+            <td> {{booking.user.firstName}}{{booking.user.lastName}}</td>
+            <td>  {{booking.title}}</td>
+            <td> {{booking.beginAt|format_datetime('short') }}</td>
+            <td>  {{booking.EndAt|format_datetime('short') }}</td>
+            <td> {{booking.seanceOption.duree|format_time('short')}} H </td>
+           
+          </tr>  
+          {% endfor %}
+           {% endfor %}
+     </tbody>
+ 
+   
+   </table>
+   
+   
+   </div>
+  
+  {% endblock %}

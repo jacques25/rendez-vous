@@ -10,6 +10,8 @@ require("../css/user.css");
 require("bootstrap");
 require("./bootstrap-datetimepicker.min.js")
 require("./locales/bootstrap-datetimepicker.fr");
+require("./datepicker/bootstrap-datepicker.min.js")
+require('./datepicker/locales/bootstrap-datepicker.fr.min.js')
 require("../css/app.css");
 require("popper.js");
 require("bootstrap-hover-dropdown");
@@ -17,6 +19,7 @@ require("./bootstrap-tagsinput.js");
 require("./typeahead.js");
 require("./select");
 require("./menu_responsive");
+
 $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
   $('[data-toggle="popover"]').popover();
@@ -93,7 +96,7 @@ $(window).on("scroll", function() {
   }
 });
 
-$(document).ready(function () {
+/* $(document).ready(function () {
   var submitIcon = $('.searchbox-icon');
   var inputBox = $('.searchbox-input');
   var searchBox = $('.searchbox');
@@ -122,7 +125,7 @@ $(document).ready(function () {
     }
   });
 });
- 
+  */
 
   $(".card").hover(
     function () {
@@ -157,12 +160,12 @@ btn.on("click", function () {
   }
 });
 
-/* 	$(function () {
+ 	$(function () {
     // Datetime picker initialization.
 		// See https://eonasdan.github.io/bootstrap-datetimepicker/
 		
 
-    $('#beginAt').datetimepicker({
+    $('#profile_date_naissance').datepicker({
     language: 'fr',
       autoclose: true,
      viewMode:  'month',
@@ -182,8 +185,18 @@ btn.on("click", function () {
          }); 
       
   });
-*/
+/* $(document).ready(function () {
+  const zoneTexte = document.getElementById('comment_content');
+  const compteur = document.getElementById("compteur")
  
-      
+
+  zoneTexte.addEventListener('keyup',() => {
+    let counterContent = Number(compteur.textContent);
+    compteur.innerHTML = counterContent - zoneTexte.value.length
+    if (compteur.innerHTML < 0) {
+      zoneTexte.onkeyup = null;
+    }
+  })
+}) */
 
 console.log("Hello Webpack Encore! Edit me in assets/js/app.js");

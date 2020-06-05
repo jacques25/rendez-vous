@@ -60,8 +60,9 @@ class BookingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
         
             $entityManager = $this->getDoctrine()->getManager();
+          
             $entityManager->persist($booking);
-            $entityManager->persist($user);
+          
             $entityManager->flush();
 
             return $this->redirectToRoute('seance_booking');
@@ -90,16 +91,15 @@ class BookingController extends AbstractController
     public function edit(Request $request, Booking $booking): Response
     {   
 
-           
                $user = $this->getUser();
-     
-
+            
            if (!$this->isGranted('ROLE_USER_SEANCE')  ) {  
                        $this->addFlash('warning', 'vous n\êtes pas connecté ');
                     return $this->redirectToRoute('account_login');
                      }
              
-             if($booking->getUser()->getId() !== $user->getId()) {
+           
+             if(! $user->getId()) {
               
                  $this->addFlash('danger' , 'Vous ne pouvez pas modifier ce rendez-vous');
                  return $this->redirectToRoute('seance_booking', ['id' => $booking->getId()]);
@@ -107,7 +107,8 @@ class BookingController extends AbstractController
            
              else {
                  $formation = $booking->getFormation();
-                 $nb_Users = 0;
+                
+                 
                  if ($formation !== null) {
                      $nb_Users = count($formation->getUsers());
                  }
@@ -116,7 +117,10 @@ class BookingController extends AbstractController
                  $form->handleRequest($request);
     
                  if ($form->isSubmitted() && $form->isValid()) {
-                     $this->getDoctrine()->getManager()->flush();
+                    $em =  $this->getDoctrine()->getManager();
+                    $booking->setUser($user);
+                    $em->persist($booking);
+                    $em->flush();
 
                      return $this->redirectToRoute('seance_booking', [ 'id' => $booking->getId()]);
                  }
@@ -133,7 +137,7 @@ class BookingController extends AbstractController
     } 
 
     /**
-     * @Route("/{id}", name="booking_delete", methods={"DELETE"})
+     * @Route("/{id}/supprimer", name="booking_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Booking $booking): Response
     {    

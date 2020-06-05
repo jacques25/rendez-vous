@@ -50,14 +50,14 @@
 									</a>
 						
 								{% endfor %} 		
-								</div>
-								{% elseif category.formations|length  != 0 %}
-										<div class="nav-hub">	 
-								         {% for formation in category.formations %}
+     {% for formation in category.formations %}
 													 	      <a id="menu-link"  href="{{path('formation_show', {'slug':formation.slug})}}"> 
 										 {{formation.title}} 	</a>
 												 {% endfor %}
-								 </div>
+
+								</div>
+
+						
 								{% endif %}
                  
 						
@@ -70,11 +70,14 @@
          
           <ul class="menu-right">
 					<li class="has-sub">
-					  <form class="searchbox" method="get" action="{{path('recherche') }}">
-						<input class="searchbox-input" id="recherche" name="motcle" placeholder="Rechercher un bijou..." required type="search">
-						<input class="searchbox-submit" type="submit" value="">
-						<span class="searchbox-icon"><i class=" fa fa-search"></i></span>
-					</form>
+							<a href="#" id="sub-search"  role="button" data-toggle="dropdown-search" aria-haspopup="true" aria-expanded="false">	<span class="searchbox-icon"><i class=" fa fa-search"></i></span></a>
+
+				    	 <div class="dropdown-menu-search" id="dropdown-search">
+		                  <form method="get" action="{{path('recherche') }}" class="form-search">
+		                   	<input class="search" id="recherche" name="motcle" placeholder="Rechercher un bijou..." required  type="search">
+		                   	<input class="btn btn-success" type="submit" value="Rechercher">
+		                </form>
+				    	 </div>
          </li>
 				 	 <li class="has-sub">
 					  	<a  href="{{ path('contact_me')}}"  data-toggle="modal"  data-target="#modal-response" >

@@ -10,6 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 Use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SeanceRepository")
@@ -45,8 +46,11 @@ class Seance
      */
     private $category;
 
-
-
+     
+      /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="seance")
+     */
+     private $comments;
     /**
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Slug(fields={"title"})
@@ -71,12 +75,13 @@ class Seance
      */
     private $updated_at;
 
-   
 
     public function __construct()
     {
-       
         $this->seanceOptions = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+      
+        
     }
 
 
@@ -238,6 +243,39 @@ class Seance
         return $this;
     }
 
-   
- 
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getSeance() === $this) {
+                $comment->setSeance(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
+
+  
+
 }

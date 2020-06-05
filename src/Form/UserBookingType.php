@@ -26,7 +26,9 @@ class UserBookingType  extends AccountType
             ])
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('email', EmailType::class);
+            ->add('email', EmailType::class)
+            ->add('date_naissance', BirthdayType::class)
+            ->add('phone', TextType::class);
           
            
     }
@@ -35,9 +37,7 @@ class UserBookingType  extends AccountType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'csrf_protection' => true,
-            'csrf_fieldname' => '_token',
-            'csrf_token_id' => 'user_item'
+           'csrf_protection' => false,
         ]);
     }
 }

@@ -9,7 +9,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="{{path('admin.category.index')}}">
 						<i class="fas fa-list"></i>
-						Categories Menu
+						 Navigation Menu
 						<span class="sr-only">
 							(current)
 						</span>
@@ -17,11 +17,11 @@
 				</li>
 				<li class="nav-item">
 					<a href="#link" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link">
-						<img width="16" style="position:relative;margin-top:-5px;" src="{{asset('/build/img/shop.png') }}">
-						La boutique
+				      		<img width="16" style="position:relative;margin-top:-5px;" src="{{asset('/build/img/shop.png') }}">
+					          	La boutique
 					</a>
 				
-					<div class="collapse" id="link">
+					<ul class="collapse" id="link">
 					      <a class="nav-link" href="{{path('admin_boutique_index')}}">
 							    <img width="16" style="position:relative; margin-right:5px; margin-top:-5px;" src="{{asset('/build/img/category.png') }}">
 							   Les catégories
@@ -31,21 +31,18 @@
 							    <img src="{{asset('/build/img/product.png')}}" width="16">	Les Produits</a>
                   <div class="collapse" id="link2">
                      <a class="nav-link" href="{{path('admin_produit_index')}}">
-											   <img width="16" style="position:relative; margin-right:5px; margin-top:-5px;" src="{{asset('/build/img/product.png') }}">
-								           Liste des produits</a>
+								      <i class="fa fa-list"></i>  Liste des produits</a>
 								      <a class="nav-link"  href="{{path('admin_description_produit_index')}}"> Description des produits</a>
-							    <div>
+							    <div> 
 				
-			
-				
-					     <a href="#link3" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link3">
-						  		        <img src="{{asset('/build/img/product.png')}}" width="16"> Liste des Bijoux</a>
-						             <div class="collapse" id="link3">
-						               <a class="nav-link" href="{{path('admin_bijou_index')}}"> <i class="fas fa-gem"></i> Les Bijoux	</a>
+					         <a  href="#link3" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link3">
+						  		        <i class="fas fa-gem"></i>  Les Bijoux </a>
+						              <div class="collapse" id="link3">
+						               <a class="nav-link" href="{{path('admin_bijou_index')}}"> <i class="fa fa-list"></i>  Liste des Bijoux	</a>
 						               <a class="nav-link" href="{{path('admin_popup_taille_index')}}">Tableaux de taille</a>
-					               </div>
-         
- 	        </div>	
+					               </div> 
+          
+ 	        </ul>	
 			  </li>
       
 
@@ -76,20 +73,27 @@
 						Les formations
 					</a>
 				</li>
-				<li class="nav-item">
-					<a href="{{path('admin_booking_index')}}" class="nav-link">
-					      Agenda 
-					
-					</a>
-				</li>
-
+			
         <li class="nav-item">
-					<a href="{{path('admin_users_index')}}" class="nav-link">
+				   <a href="#link-user"  class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link-user">
+					 	<i class="fas fa-users"></i>Utilisateurs</a>
+				 <div class="collapse" id="link-user">
+					<a href="{{path('admin_users_index')}}" class="nav-link">	 Liste des inscrits</a>
+					<a href="{{path('admin_inscrits_seance')}}" class="nav-link"> Inscrits aux seances</a>
+					<a href="{{path('admin_inscrits_formation')}}" class="nav-link"> Inscrits formation</a>
+					</div>
+				</li>
+        <li class="nav-item">
+					<a href="{{path('admin_booking_calendar')}}" class="nav-link">
+						<i class="fas fa-calendar"></i> Calendrier
+			    </a>
+					</li>
+           <li class="nav-item">
+					<a href="{{path('admin_comments_list')}}" class="nav-link">
 						<i class="fas fa-users"></i>
-						Utilisateurs
+						Les commentaires
 					</a>
 				</li>
-
 		</ul>
 		</div>
 	

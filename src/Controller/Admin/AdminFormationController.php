@@ -10,6 +10,7 @@ use App\Repository\FormationRepository;
 use App\Repository\BookingRepository;
 use App\Form\FormationType;
 use App\Form\BookingType;
+use App\Entity\User;
 use App\Entity\Formation;
 use App\Entity\Booking;
 
@@ -104,6 +105,26 @@ class AdminFormationController extends AbstractController
 
         return $this->redirectToRoute('admin_formation_index');
     }
+    
+    /**
+     * @Route("/suppression/utilisateur/{id}" ,  name="admin_formation_user_delete")
+     *
+     * @return void
+     */
+    public function userDelete(Request $request, Formation $formation) : Response {
+           
 
+             $user =  $this->getUser();
+              if ($user) { 
+                 
+              $formation = $user->getFormation()->getId(); 
+                  $em = $this->getDoctrine()->getManager();
+                  $user->setFormation(null);
+                  $em->flush();
+                  return $this->redirectToRoute('admin_formation_edit', ['id' => $formation->getId()]);
+              }
+              
+
+    }
  
 }

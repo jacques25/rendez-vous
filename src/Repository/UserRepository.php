@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\User;
+use App\Entity\Formation;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -72,4 +73,14 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
                ->getQuery()
                ->getResult();
     }
+
+   public  function findUserByFormation(){
+            
+     $sql = $this->createQueryBuilder('u');
+      $sql ->select('u')
+                ->join('u.formations', 'f')
+                ->addSelect('f');
+           
+           $sql->getQuery() ->getResult();
+   }
 }
