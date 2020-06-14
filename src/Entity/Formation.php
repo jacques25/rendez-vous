@@ -2,20 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\FormationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-Use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+Use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
- * @ORM\Entity(repositoryClass=FormationRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\FormationRepository")
  * @Vich\Uploadable()
+ * 
  */
 class Formation
 {
@@ -23,6 +24,7 @@ class Formation
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("formation")
      */
     private $id;
 
@@ -75,11 +77,12 @@ class Formation
     private $updated_at;
 
   /**
-     * @Groups("formation")
-     * @ORM\OneToMany(targetEntity="Booking", mappedBy="formation", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"beginAt"="ASC"})
+   *  @Groups("formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking",  mappedBy="formation", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"beginAt" = "ASC"})
      */
     private $booking;
+    
     
 
      /**
@@ -88,14 +91,13 @@ class Formation
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="formation",  orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="formation",  orphanRemoval=true, fetch="EXTRA_LAZY")
      */
     private $comments;
 
     /**
-     * @Groups("formation")
-     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="formations")
-     * @ORM\JoinTable(name="formation_user")
+     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="formations", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="formation_users")
      * 
      */
      private $users;
@@ -103,10 +105,11 @@ class Formation
     public function __construct()
     {
         
-        $this->booking= new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->users = new ArrayCollection();
-       
+        $this->booking = new ArrayCollection();
+    
+     
     }
 
     public function getId(): ?int
@@ -305,10 +308,10 @@ class Formation
 
     public function addBooking(Booking $booking): self
     {
-        if (!$this->booking->contains($booking)) {
+      
             $this->booking[] = $booking;
             $booking->setFormation($this);
-        }
+        
 
         return $this;
     }
@@ -355,6 +358,5 @@ class Formation
     }
 
    
-
-
+   
 }

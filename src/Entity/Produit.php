@@ -58,7 +58,7 @@ class Produit
     private $boutiques;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Bijou", mappedBy="produits")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Bijou", mappedBy="produits", fetch="EXTRA_LAZY")
      * 
      */
 

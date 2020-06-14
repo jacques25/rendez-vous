@@ -24,11 +24,6 @@
                 <td>{{ formation.id }}</td>
                 <td>{{ formation.title }}</td>
                 <td>{{ formation.description|raw|u.truncate(45, true, '...') }}</td>
-                   {% for booking in formation.booking %}
-                              <td> du {{ booking.beginAt|format_datetime('full') }}<br>
-                          au {{ booking.endAt|format_datetime('full') }}</td>
-                   {% endfor %}
-         
                 <td>{{ formation.prix}} €</td>
                 <td>
             

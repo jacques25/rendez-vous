@@ -77,9 +77,9 @@ var modal1 = document.getElementById("modal1");
 
 
 	$(function () {
-       /*  var datetimepicker = this.getElementsByClassName('datetimepicker-input'); */
+      /*    var datetimepicker = this.getElementsByClassName('datetimepicker-input'); */
      
-          $('.beginAt').datetimepicker({
+      /*    $('.beginAt').datetimepicker({
 		  	 language: 'fr',
             autoclose: true,
          icons: {
@@ -108,9 +108,10 @@ var modal1 = document.getElementById("modal1");
              today: 'fa fa-check-circle-o',
              clear: 'fa fa-trash',
              close: 'fa fa-remove'
-         }
-          })
+         }  
+          })*/
         
+         
         $('#dateExpedition').datetimepicker({
              	locale: 'fr',
             autoclose: true,

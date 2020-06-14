@@ -7,10 +7,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use DateTime;
+use App\Repository\SeanceRepository;
 use App\Repository\SeanceOptionRepository;
+use App\Notification\SeanceNotification;
 use App\Form\BookingType;
 use App\Entity\Booking;
-use App\Notification\SeanceNotification;
 
 class SeanceOptionController extends AbstractController
 {
@@ -19,7 +20,7 @@ class SeanceOptionController extends AbstractController
   *
   * @return void
   */
-  public function seanceBooking($id, Request $request, SeanceOptionRepository $seanceOptionRepository, SeanceNotification $seanceNotification)
+  public function seanceBooking($id, Request $request, SeanceRepository $seanceRepository, SeanceOptionRepository $seanceOptionRepository, SeanceNotification $seanceNotification)
   {
            
           if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {  
@@ -27,15 +28,15 @@ class SeanceOptionController extends AbstractController
                     return $this->redirectToRoute('account_login');
                      }
      
-        $user = $this->getUser();
-    
+         $user = $this->getUser();
+         $seanceOption = $seanceOptionRepository->findOneBy(['id' => $id]); 
+       
+         $seance = $seanceOption->getSeance();
+       
         $booking = new Booking();     
         
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
-         
-        $seanceOption = $seanceOptionRepository->findOneBy(['id' => $id]); 
-     
          $start = $request->get('booking');
   
         if($form->isSubmitted() && $form->isValid()){  
@@ -66,12 +67,14 @@ class SeanceOptionController extends AbstractController
                $booking->setBeginAt(new \Datetime($beginAt));
                $booking->setEndAt(new \Datetime($dureeH));
                $booking->setTitle($titleSeance);
+
                $booking->setSeanceOption($seanceOption);
              
                 if (!$this->container->get('security.authorization_checker')->isGranted('ROLE_USER_SEANCE')) {
                     $user->addRole("ROLE_USER_SEANCE");
                 }
-                $booking->setUser($this->getUser());
+                $seance->addUser($this->getUser());
+                $seanceOption->addUser($this->getUser());
                $em->persist($booking);
              
                  $seanceNotification->notify($id, $booking, $user);

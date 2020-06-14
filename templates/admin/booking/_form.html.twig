@@ -4,8 +4,8 @@
   </div>
     <div>
  
-      <strong>{{booking.seanceOption.seance.title}} </strong>
-     <p> {{booking.user.gender}}  {{booking.user.firstName}}  {{booking.user.lastName}} </p>
+      <strong>{{booking.title}} </strong>
+     {# <p> {{booking.user.gender}}  {{booking.user.firstName}}  {{booking.user.lastName}} </p> #}
     </div>
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
@@ -15,7 +15,6 @@
 
       {{ form_row(form.beginAt, {'attr': {'class': 'mb-2'}})}}
        {{form_row(form.endAt)}}
-     
        </div>
        <button class="btn btn-success left "><i class="fa fa-save"></i> {{ button_label|default('Enregistrer') }}</button>
     

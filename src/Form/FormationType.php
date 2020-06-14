@@ -7,11 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Jacques\ImageBundle\Form\Type\ImageType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use App\Form\BookingType;
 use App\Form\ApplicationType;
 use App\Entity\Formation;
 use App\Entity\Category;
@@ -27,14 +27,6 @@ class FormationType extends ApplicationType
                 'label' => false,
             ])
            
-            ->add('booking',  CollectionType::class,  $this->getConfiguration(false, '',  [
-                'entry_type' =>BookingType::class,
-                'by_reference' => false,
-                'allow_add' => true,
-                'allow_delete' => true,
-
-            ]))
-            
             ->add('prix', MoneyType::class, [
                 'label' => 'Tarif'
             ])
@@ -47,6 +39,13 @@ class FormationType extends ApplicationType
             ])
             ->add('nb_users', IntegerType::class ,[
                 'label' => 'Nombre de participants maximum'
+            ])
+
+            ->add('booking', CollectionType::class, [
+                'entry_type' => BookingType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
             ])
         ;
     }

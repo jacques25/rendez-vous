@@ -7,18 +7,7 @@
 		{% block body %}
 			<div class="container-fluid mt-4">
 				<div class="row">
-        
-					{% for label, messages in app.flashes %}
-						<div class="container">
-							<div class="alert alert-{{ label }}">
-								{% for message in messages %}
-									<p>
-										{{ message}}
-									</p>
-								{% endfor %}
-							</div>
-						</div>
-					{% endfor %}
+            {% include "messages/flash-message.html.twig" %}
 						<h1>	Modification du profil
 						</h1>
 				</div>	
@@ -40,10 +29,10 @@
 				  				)}}
 				  				{{form_row(form.email, {'attr': {'class': 'mb-3'}}
 				  				)}}
-				  	      	{{form_row(form.date_naissance, {'attr': {'class': 'datetimepicker mb-3'}}
-				  				)}}
+				  	      	{{form_row(form.date_naissance)}}
+				
 
-									   	{{form_row(form.phone, {'attr': {'class': 'datetimepicker mb-3'}}
+									   	{{form_row(form.phone, {'attr': {'class': ''}}
 				  				)}}
 				  			</div>
 				  	   	</div>

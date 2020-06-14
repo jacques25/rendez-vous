@@ -20,32 +20,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class BookingController extends AbstractController
 {   
     
-    
-    private $security;
-    private $userRepository;
-    public function __construct(UserRepository $userRepository){
-                  
-        $this->userRepository = $userRepository;
-      
-    
-    }
     /**
-     * @Route("/",  name="booking_calendar", methods ={"GET"})
+     * @Route("/calendrier",  name="booking_calendar", methods ={"GET"})
      */
-    public function calendar(): Response
-    {
-         
+    public function calendar(Booking $booking): Response
+    {           
+                dd($booking);
+                 $this->removeoldBooking($booking);
                return $this->render('agenda/agenda.html.twig');
     }
-    /**
-     * @Route("/", name="booking_index", methods={"GET"})
-     */
-    public function index(BookingRepository $bookingRepository): Response
-    {
-        return $this->render('booking/index.html.twig', [
-            'bookings' => $bookingRepository->findAll(),
-        ]);
-    }
+   
 
     /**
      * @Route("/nouveau", name="booking_new", methods={"GET","POST"})
@@ -53,7 +37,7 @@ class BookingController extends AbstractController
     public function new(Request $request): Response
     {
         $booking = new Booking();
-        $user = new User();
+        $user = $this->getUser();
         $form = $this->createForm(BookingType::class, $user);
         $form->handleRequest($request);
           
@@ -92,7 +76,7 @@ class BookingController extends AbstractController
     {   
 
                $user = $this->getUser();
-            
+               
            if (!$this->isGranted('ROLE_USER_SEANCE')  ) {  
                        $this->addFlash('warning', 'vous n\êtes pas connecté ');
                     return $this->redirectToRoute('account_login');
@@ -105,13 +89,7 @@ class BookingController extends AbstractController
                  return $this->redirectToRoute('seance_booking', ['id' => $booking->getId()]);
              } 
            
-             else {
-                 $formation = $booking->getFormation();
-                
-                 
-                 if ($formation !== null) {
-                     $nb_Users = count($formation->getUsers());
-                 }
+             
          
                  $form = $this->createForm(BookingType::class, $booking);
                  $form->handleRequest($request);
@@ -123,7 +101,7 @@ class BookingController extends AbstractController
                     $em->flush();
 
                      return $this->redirectToRoute('seance_booking', [ 'id' => $booking->getId()]);
-                 }
+                 
              }
         return $this->render('booking/edit.html.twig', [
             'booking' => $booking,
@@ -131,7 +109,7 @@ class BookingController extends AbstractController
              'user' => $user,
              'formation' => $formation, */
             'form' => $form->createView(),
-            'nbUsers' => $nb_Users,
+         
             'user' => $user
         ]);
     } 
@@ -142,7 +120,7 @@ class BookingController extends AbstractController
     public function delete(Request $request, Booking $booking): Response
     {    
          $seanceOption = $booking->getSeanceOption();
-       
+          
         if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($booking);
@@ -150,5 +128,18 @@ class BookingController extends AbstractController
         } 
          
            return $this->redirectToRoute('seance_booking', ['id' => $seanceOption->getId()]);
+    }
+
+
+       public function removeOldBooking(Booking $booking){
+          $em = $this->getDoctrine()->getManager();
+            $endDate = date_format($booking->getEndAt(), 'Y-m-d H:i');
+            $now = date_format(new \DateTime('now'),  'Y-m-d H:i');
+            dd($endDate);
+            if ($endDate < $now) {
+             $em->remove($booking);
+             $em->flush();
+         }
+
     }
 }

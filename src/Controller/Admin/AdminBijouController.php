@@ -105,7 +105,7 @@ class AdminBijouController extends AbstractController
      
         $manager = $this->getDoctrine()->getManager();
         $bijou = $manager->getRepository('App:Bijou')->findOneBy(['id' => $id]);
-
+        
         // original OptionBijou entity 
         $originalOptionBijou = new ArrayCollection();
    
@@ -116,10 +116,6 @@ class AdminBijouController extends AbstractController
         $form = $this->createForm(BijouType::class, $bijou);
         $form->handleRequest($request);
         
-     
-     
-       
-      
 
         if ($form->isSubmitted() && $form->isValid()) {
             //get rid of the ones that bijou got rid of in the interface(DOM)
@@ -128,8 +124,14 @@ class AdminBijouController extends AbstractController
                 if ($bijou->getOptionBijou()->contains($optionBijou) === false) {
                     $manager->remove($optionBijou);
                 }
-            }
-          
+            } 
+            
+           
+           if($bijou->getDateEnd() == new DateTime('now'))
+           {      
+             
+                 $bijou->getPromoIsActive(false);
+           }
             $bijou->setUpdatedAt(new DateTime());
            
             $manager->persist($bijou);
@@ -160,5 +162,18 @@ class AdminBijouController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_bijou_index');
+    }
+
+    /**
+     * @Route("/promotions/liste", name="admin_promo_list")
+     *
+     * @param Bijou $bijou
+     * @return void
+     */
+    public function BijouPromo($promoIsActive = true, BijouRepository $bijouRepository)
+    {
+             $promos = $bijouRepository->findBy(['promoIsActive' => $promoIsActive]);
+
+             return $this->render('admin/bijou/promo_bijou.html.twig', ['promos'=> $promos]);
     }
 }

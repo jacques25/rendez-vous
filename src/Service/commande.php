@@ -7,16 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class commande
-{
-  public function __construct(ContainerInterface $container)
+{  
+ 
+  public function Commande($commande , ContainerInterface $containerInterface)
   {
-
-    $this->container = $container;
-  }
-
-  public function Commande($commande)
-  {
-    $html = $this->container->get('templating')->render('user/default/commandePDF.html.twig', ['commande' => $commande]);
+    $html = $containerInterface->get('templating')->render('user/default/commandePDF.html.twig', ['commande' => $commande]);
 
 
     $html2pdf = new Html2Pdf('P', 'A4', 'fr');

@@ -14,25 +14,30 @@
 			
  <div class="user-connect">	
 
-			
+                       {% for message in app.flashes %}
+										<div class="modal modal-message" id="modal-message" role="dialog">
+				                <div class="modal-dialog modal-lg">
+						                <div class="modal-content">
+                           	   <div class="modal-body">
+                                  
+                                             <p> {{ message}} </p>
+                                         
+                             
+																</div>
+																</div>
+											</div>
+									 </div>			
+             {% endfor %}
 					<div class="connect bg-light py-3 px-3">
-      
+                
 							<h4 class="text-center font-italic">Connectez vous !</h4>
 						
+						     {% if error %}  
+								 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }} </div>   
+								 {% endif %} 
 	          
 							<form form-signin action="{{path('account_login')}}" method="POST">
-						 	{% if error %}
-                  <div class="alert alert-danger text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-									{% for label, messages in app.flashes %}
-               
-                   <div class="alert alert-{{ label }} text-center">
-                      {% for message in messages %}
-                        <p> {{ message}} </p>
-                      {% endfor %}
-                   </div>
-               
-               {% endfor %}
-              {% endif %} 
+						 	
 								<div class="form-group p-2">
 
 									<input type="email" name="_username" id="username" class="form-control" autocomplete="username"  placeholder="Adresse email..." required  autofocus value="{{last_username}}">

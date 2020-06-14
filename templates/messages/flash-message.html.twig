@@ -1,0 +1,23 @@
+{% for label, messages in app.flashes %}
+
+			{% for message in messages %}
+				<div class="modal modal-message" id="modal-message" role="dialog">
+
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+
+							<div class="modal-body">
+								<strong>
+									{{ message}}
+								</strong>
+								<button type="button" class="close-message">
+									&times;
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+
+
+{% endfor %}

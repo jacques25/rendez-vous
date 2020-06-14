@@ -2,67 +2,80 @@
 
 		{% block title %}
 			inscription
-			{{formation.title}}
+	{# 		{{formation.booking.title}} #}
 		{% endblock %}
 
 		{% block body %}
-			<div class="container">
+	 {% for label, messages in app.flashes %}
+                 <div class="alert alert-{{ label }} mt-2">
+                                        {% for message in messages %}
+                                         <p><strong> {{ message}} </strong></p>
+                                      {% endfor %}
+                                      </div>
+    
+                                  {% endfor %}
+			<div id="modalFormEdit" class="modal-form" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<form action="{{path('formation_booking', {'id': formation.id})}}" method="post">
+						<div class="modal-content" width="700">
+							<div class="modal-body">
+								<div class="row">
 
-				<div class="row mt-5">
-				
-
-								<h2 id="modal-title">
-									{{formation.title}}
-								</h2>
-							
-
-							</div>
-							<div class="modal-body" id="modalBody">
-                   <div  class="modal-header mt-0 mb-2">			
-									 {% for booking  in formation.booking %}
-										Le  {{booking.beginAt|format_date('short')}} de {{booking.beginAt|format_time('short')}} à  {{booking.endAt|format_time('short')}}
-										{% endfor %}
-									</div>
-									<div class="modal-body">
-					         <form action="{{path('formation_booking', {'id': formation.id})}}" method="post">
-  <div class="row">
-							
 									<div class="col-sm-6 mb-2">
 										<div class="form-group">
-								  
-													 {{form_row(form.gender , {'attr': {'autocomplete' : 'autocomplete'}})}}
-												   {{form_row(form.firstName, {'attr': {'autocomplete' : 'autocomplete'}})}}
-													 {{form_row(form.lastName)}}
-										</div> 
+											<label for="user_booking_gender">
+												Civilité
+											</label>
+											<input type="text" id="user_booking_gender" name="user_booking[gender]" autocomplete="autocomplete" value="{{user.gender}}" class="form-control">
 										</div>
-										<div class="col-sm-6">
 										<div class="form-group">
-												  
-												
-										        {{form_row(form.email)}}
-												      
-													  {{form_row(form.date_naissance)}}
-													
-									
-													  {{form_row(form.phone)}}
-
-													
-                               
+											<label for="user_booking_firstName">
+												Prénom
+											</label>
+											<input type="text" id="user_booking_firstName" name="user_booking[firstName]" autocomplete="autocomplete" value="{{user.firstName}}" class="form-control">
 										</div>
-                    </div> 
-                      		
-						 </div> 
-             <div class="modal-footer">
-						  
-          			<button type="submit" class="btn btn-success">
-							                <i class="fa fa-save"></i> Confirmez votre inscription
-                      		</button>		
-								
-				   	</div>
-				
-         
-</form>
-						</div>
+										<div class="form-group">
+											<label for="user_booking_lastName">
+												Nom
+											</label>
+											<input type="text" id="user_booking_lastName" name="user_booking[lastName]" autocomplete="autocomplete" value="{{user.lastName}}" class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="user_booking_email">
+												Email
+											</label>
+											<input type="text" id="user_booking_email" name="user_booking[email]" autocomplete="autocomplete" value="{{user.email}}" class="form-control">
+										</div>
+
+										<div class="form-group">
+											<label for="user_booking_date_naissance">
+												Date Naissance
+											</label>
+											  {{form_widget(form.date_naissance)}}
+										</div>
+
+										<div class="form-group">
+											<label for="user_booking_phone">
+												Téléphone
+											</label>
+											<input type="text" id="user_booking_phone" name="user_booking[phone]" autocomplete="autocomplete" value="{{user.phone}}" class="form-control">
+										</div>
+									</div>
+
+								</div>
+								<div class="modal-footer">
+
+									<button type="submit" class="btn btn-success">
+										<i class="fa fa-save"></i>
+										Confirmez votre inscription
+									</button>
+
+								</div>
+							</div>
+
+						</form>
 					</div>
 				</div>
 			{% endblock %}

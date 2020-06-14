@@ -7,13 +7,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Service\UsersService;
+use App\Service\OptionSeanceService;
 use App\Service\FormationService;
+use App\Service\BookingService;
+use App\Service\BookingSeanceService;
 use App\Repository\UserRepository;
+use App\Repository\SeanceRepository;
+use App\Repository\SeanceOptionRepository;
 use App\Repository\FormationRepository;
 use App\Repository\BookingRepository;
 use App\Entity\User;
+use App\Entity\SeanceOption;
 use App\Entity\Formation;
- 
+
 /**
  * @Route("/admin")
  */
@@ -51,28 +58,56 @@ class AdminUserController extends AbstractController
    *
    * @return void
    */
-    public function getBookingByUser(UserRepository $userRepository) {
-      
-         $users = $userRepository->findAll();
-
-         return $this->render('admin/users/user_seance.html.twig', ['users' => $users]);
+    public function getUsersSeance(UserRepository $userRepository, SeanceRepository $seanceRepository,  OptionSeanceService $optionSeanceService, BookingSeanceService $bookingSeanceService) {
+              
+             $seances = $seanceRepository->findAll();
+            
+            
+     /*  if ($users == null)
+          {
+          $this->addFlash('info', "Aucune seance");
+                  return $this->redirectToRoute('admin_users_index');
+              } */
+       
+    
+         return $this->render('admin/users/user_seance.html.twig', [ 
+              'seances' => $seances
+              /* 'users' =>$users, */
+           
+             ]);
 
     }
 
     /**
-     *  @Route("/inscrits-formation/", name="admin_inscrits_formation") 
+     *  @Route("/inscrits-formation", name="admin_inscrits_formation") 
      */
-    public function getUsersFormation(UserRepository $userRepository){
-            $users = $userRepository->findAll();
-            foreach($users as $user) {
-                   foreach($user->getFormations() as $formation){
-                        $formation = $formation;
-                      
-                   }
-                      
-            } 
-       
+    public function getUsersFormation(FormationRepository $formationRepository){
+          
+   
+      $formations = $formationRepository->findAll();
+        
+      foreach ($formations as $formation) {
 
-            return  $this->render('admin/users/user_formation.html.twig', ['users' => $users, 'formation' => $formation]);
+           
+          $users =  $formation->getUsers() ;
+      
+
+          if ($users == null)
+          {
+          $this->addFlash('info', "Personne n'est inscrit pour la formation". $formation->getTitle());
+                  return $this->redirectToRoute('admin_users_index');
+              }
+          }
+   
+        if($formation == null) 
+            {
+                  $this->addFlash('info', "Aucune formation  pour l'instant");
+               return  $this->redirectToRoute('admin_users_index');
+                 
+            }
+             
+            return  $this->render('admin/users/user_formation.html.twig', [ 'formations' => $formations, 'users' => $users ]);
     }
+
+    
 }

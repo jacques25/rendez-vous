@@ -2,15 +2,16 @@
 
 namespace App\Notification;
 
-use App\Entity\Formation;
 use Twig\Environment;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Service\UsersService;
 use App\Repository\FormationRepository;
-
 use App\Repository\BookingRepository;
 use App\Entity\User;
+use App\Entity\Formation;
+use App\Entity\Booking;
 
 
 class FormationNotification
@@ -18,33 +19,33 @@ class FormationNotification
      private $mailer;
     private $renderer;
     private  $formation; 
-    private $booking;
-      public function __construct(  MailerInterface $mailer,  Environment $renderer,  FormationRepository $formation, BookingRepository $booking)
+      public function __construct(  MailerInterface $mailer,  Environment $renderer,  FormationRepository $formation)
       {
           $this->mailer = $mailer;
           $this->renderer = $renderer;
          $this->formation = $formation;
-         $this->booking = $booking;
+
       }
-       public  function notify($id, Formation $formation, User $user )
-       {   
+       public  function notify($id,  $formation, User $user )
+       {
+         
            
-            $contactEmail =  $user->getEmail();
-           
-             $formation = $this->formation->findOneBy(['id' => $id]);     
-            $gender = $user->getGender();
-            $firstname = $user->getFirstname();
-            $lastname = $user->getLastname();
-            $phone = $user->getPhone();
-            $name = $gender . " " . $firstname . " " . $lastname; 
+           $contactEmail =  $user->getEmail();
+        
+                  
+               $formation = $this->formation->findOneBy(['id' => $id]);
+               $gender = $user->getGender();
+               $firstname = $user->getFirstname();
+               $lastname = $user->getLastname();
+               $phone = $user->getPhone();
+               $name = $gender . " " . $firstname . " " . $lastname;
           
-           
-            $message = "Nous avons bien pris en compte votre inscription à notre prochaine formation " ;
+               $message = "Nous avons bien pris en compte votre inscription à notre prochaine formation " ;
           
-            $subject  = $formation->getTitle();
+               $subject  = $formation->getTitle();
             
          
-              $mail = (new TemplatedEmail())
+               $mail = (new TemplatedEmail())
         ->from(new Address('contact.client@rendezvous.fr', 'Rendez-vous Avec Soi'))
         ->to(new Address($contactEmail, $name))
         ->subject($subject)
@@ -59,8 +60,7 @@ class FormationNotification
            'phone' => $phone
         ]);
               
-              $this->mailer->send($mail);
-          }
-           
+               $this->mailer->send($mail);
+           }
        
 }

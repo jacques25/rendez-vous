@@ -35,11 +35,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    
+   
     getTemplate:
         class: App\Service\getTemplating
         arguments: ["@service_container"]
-    
+   
     setNewfacture:
         class: App\Service\GetFacture
         arguments: ["@service_container"]
@@ -47,6 +47,7 @@ services:
     app.security.voter.edit_commande:
         class: App\Security\Voter\EditCommande
         tags: 
-            - { name: securyty.voter }
+             - { name: security.voter }
+    
     
     

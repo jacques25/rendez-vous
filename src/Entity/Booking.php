@@ -2,12 +2,11 @@
 
 namespace App\Entity;
 
-use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\Formation;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
@@ -15,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Booking
 {
     /**
+     * @Groups("formation")
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -22,49 +22,38 @@ class Booking
     private $id;
     
     /**
-     * @ORM\Column(type="string", length=250)
+     * @ORM\Column(type="string", length=250, nullable=false)
     */
     private $title;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      * 
      */
     private $beginAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $endAt;
 
    
    /**
     * @ORM\ManyToOne(targetEntity="App\Entity\SeanceOption",  inversedBy="bookings")
+    * @ORM\JoinColumn(name="seance_option_id", referencedColumnName="id")
     */
    private $seanceOption;
 
   
-   /**
+    /** 
      * @Groups("formation")
-     * @ORM\ManyToOne(targetEntity="Formation", inversedBy="booking")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="booking")
      * @ORM\JoinColumn(name="formation_id", referencedColumnName="id")
+     * @ORM\JoinTable(name="formation_users")
      */
-    
     private $formation;
 
-    /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\User",  inversedBy="booking")
-    * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-    */
-   private $user;
-
-
-
-    public function __construct(){
-        $this->beginAt = new DateTime();
-     
-    }
-
+ 
     public function getId(): ?int
     {
         return $this->id;
@@ -121,36 +110,18 @@ class Booking
         return $this;
     }
 
-  
-   
-    public function __toString()
-    {
-         return $this->title;
-    }
 
     public function getFormation(): ?Formation
     {
         return $this->formation;
     }
 
-    public function setFormation(Formation $formation): self
+    public function setFormation(?Formation $formation): self
     {
         $this->formation = $formation;
 
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    
+ 
 }

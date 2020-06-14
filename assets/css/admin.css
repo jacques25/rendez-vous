@@ -573,20 +573,15 @@ display: flex ;
   color: #fff;
      transform: scale(1.2) ;
 }
-.badge-bijou, .badge-commandes{
-    border-radius: 50%;
-    background-color: #347bff;
-    padding: 14px;
+ .commande, .bijou, .bijoux-dispo{
+    padding: 5%;
+    background-color: #347bff !important;
     color: #fff;
+   font-size:12px;
+  margin: 2%;
 }
-.badge-bijoux-dispo {
-    border-radius: 50%;
-    background-color: #347bff;
-    padding: 14px;
-    color: #fff;
-}
-.badge-bijoux-indispo {
-      border-radius: 50%;
+
+.bijoux-indispo {
     background-color: #8d0940;
     padding: 14px;
     color: #fff;

@@ -2,23 +2,21 @@
 
 namespace App\Controller\FrontEnd;
 
-use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManager;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Entity\Booking;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\UserRepository;
-use App\Repository\FormationRepository;
+use App\Service\UsersService;
 use App\Repository\CommentRepository;
 use App\Notification\FormationNotification;
 use App\Form\UserBookingType;
-use App\Form\FormAccount\AccountType;
+
 use App\Form\CommentType;
-use App\Entity\User;
+use App\Repository\FormationRepository;
 use App\Entity\Comment;
+use App\Repository\BookingRepository;
+use App\Service\BookingService;
+use App\Service\FormationService;
 
 class FormationController extends AbstractController
 {
@@ -33,7 +31,7 @@ class FormationController extends AbstractController
    * @Route("/formation/{slug}", name="formation_show")
    *  
    */
-  public function show($slug,  Request $request, FormationRepository $repo, CommentRepository $commentRepository)
+  public function show($slug,  Request $request, FormationRepository $repo, CommentRepository $commentRepository, BookingRepository $bookingRepository)
   { 
     $user = $this->getUser();
    
@@ -42,8 +40,11 @@ class FormationController extends AbstractController
     $form->handleRequest($request);
   
     $formation = $repo->findOneBy(['slug' => $slug]);  
-    $comments = $commentRepository-> getCommentsForSeance($formation->getId());
-      $nbUsers = count($formation->getBooking());
+    $comments = $commentRepository->getCommentsForFormation($formation->getId());
+
+  
+      $usersFormation = count($formation->getUsers());
+      
       if ($form->isSubmitted() and  $form->isValid()) {
           $author = $user->getFirstName();
           $em = $this->getDoctrine()->getManager();
@@ -56,7 +57,7 @@ class FormationController extends AbstractController
       }
     return $this->render('formations/show.html.twig', [
       'formation' => $formation,
-      'nbUsers' => $nbUsers,
+      'usersFormation' => $usersFormation,
       'comments' => $comments,
       'form' => $form->createView()
     ]);
@@ -66,47 +67,49 @@ class FormationController extends AbstractController
      *
      * @return void
      */
-    public function inscriptionFormation($id, Request $request, FormationNotification $formationNotification) {
-               
-                  
-               
+    public function inscriptionFormation( $id,  Request $request, FormationNotification $formationNotification,
+                                                                                  UsersService $usersService, BookingRepository $bookingRepository) {
+                
+                   $user = $this->getUser();
+                
                      if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {  
                        $this->addFlash('warning', 'Vous devez avoir créé votre compte puis vous connectez,  afin de vous inscrire à cette formation');
                     return $this->redirectToRoute('account_login');
                      }
-
-                $user = $this->getUser();  
-               
+                  $formation =   $this->formationRepository->findOneBy(['id' => $id]);    
+                     $booking = $bookingRepository->find($id);
+           
                  $form = $this->createForm(UserBookingType::class, $user);
                  $form->handleRequest($request);
-                 
-                 $formation = $this->formationRepository->findOneBy(['id' => $id]);
-               
+            
+                    $em = $this->getDoctrine()->getManager();   
                  if ($form->isSubmitted() and $form->isValid()) {
-                 
+                      $users = $usersService->findBy();
                 
-                     $em = $this->getDoctrine()->getManager();
+                        if(in_array($user, $users))
+                        {     
+                              
+                          $this->addFlash( 'success', 'Bonjour ' .$user->getGender() .' '. $user->getFirstName(). ' ' . $user->getLastName(). " vous êtes déjà inscrit :-)");
+                          return  $this->redirectToRoute('app_homepage');
+                        }
+          
+                           $user->addRole("ROLE_FORMATION");
+                        
+                            $formation->addUser($user);
+                            $em->persist($user);
+                            $em->flush();
+                           $formationNotification->notify($id, $formation, $user);
+                           $this->addFlash('success', 'Vous vous êtes inscrit à notre formation, vous allez recevoir un mail de confirmation');
+                            return $this->redirectToRoute('app_homepage'); 
+                        }
+                        
                      
-                        if (!$this->container->get('security.authorization_checker')->isGranted('ROLE_FORMATION')) {
-                              $user->addRole("ROLE_FORMATION");
-                       }
                  
-                     
-                     $formationNotification->notify($id, $formation, $user);
-                     $this->addFlash('success', 'Votre mail à été envoyé, nous vous répondrons dans les plus bref délais.');
-                     $formation->addUser($user);
-                     $em->persist($formation);
-                     $em->flush();
-                      
-                  
-                     return $this->redirectToRoute('app_homepage');
-                 }
-             
-             
   
             return $this->render('formations/inscription.html.twig' , [
               'form' => $form->createView(),  
               'formation' => $formation, 
+              'booking' => $booking,
               'user' => $user, 
            
              ]);

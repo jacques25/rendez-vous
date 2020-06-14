@@ -20,7 +20,7 @@ class BookingType extends AbstractType
             ->add('beginAt', DateTimeType::class, [
                 'attr' => ['class' => 'beginAt'],
                 'label' => 'Début',
-                'widget' => 'single_text'
+                'widget' => 'single_text',
                 ])
         
                     ->add('endAt', DateTimeType::class, [

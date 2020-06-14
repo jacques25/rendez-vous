@@ -1,53 +1,41 @@
 {% apply inky_to_html|inline_css(source('@styles/foundation-email.css'), source('@styles/email.css') ) %}
 
 <container>
-	<spacer size="16"></spacer>
-			<row class="content">
+			<row class="header">
 				<columns>
-         <spacer size="30"></spacer>
-					<h1 class="title">	
-          <center> {{ subject }} 	</center>
-					</h1>
-					<spacer size="16"></spacer>
-
-					<callout class="secondary">
-						<row>
-							<columns>
-								<p>
-									<strong> Nom	</strong>
-
-									<br/>
-								{{ name }}
-								</p>
-              	<p>
-									<strong>Adresse Email</strong>
-									<br/>
-									{{ contactEmail}}
-								</p>
-								<p>
-									<strong> Téléphone	</strong>
-
-									<br/>
+					   <a href="{{ url('app_homepage')}}">
+              <img src="{{email.image('@img/rdv.png')}}" class="logo" alt="logo_site">
+             </a> 
+             <h2><center>{{ subject }} 	</center></h2>
+			</columns>
+			</row>
+			<row class="content">
+							<columns class="secondary">
+							<spacer size="35"></spacer>
+							<callout>
+								<p>	<strong> Nom :	</strong>
+							       {{ name }}	</p>
+              	<p><strong>Email : </strong>
+									{{ contactEmail}}</p>
+								<p><strong> Téléphone :	</strong>
 									{{ phone }}
-								</p>
-
-								
-
+								</p>	
+								</callout>
+								<spacer size="8"></spacer>
+               <h4>	<center>Message</center></h4>	
+					
+					   <p>{{ messageMail }}</p>
+						 <spacer size="10"></spacer>
 							</columns>
-						</row>
-					</callout>
-					<row>
-					<columns class="command-body">
-					<spacer size="16"></spacer>
-					<h4>	<center>Message</center></h4>
-					<p> {{ messageMail }}</p>
-					</colummns>
-				   
-           <spacer size="25"></spacer>
-				
-				</columns>
-	  	</row>
-		  <row class="footer text-center">
+						
+	  	 </row>
+		
+		  <row class="footer"> 
+			<columns>
+            <spacer size="20"></spacer>
+	      	 <p class="site-name"> Rendezvousavecsoi.fr</p>
+		 </columns>
+
 		  </row>
 </container>
 

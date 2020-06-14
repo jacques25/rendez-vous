@@ -19,32 +19,14 @@ class SeanceRepository extends ServiceEntityRepository
         parent::__construct($registry, Seance::class);
     }
 
-    // /**
-    //  * @return TarifSeance[] Returns an array of TarifSeance objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getSeanceOptionWithSeance()
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql = $this->createQueryBuilder('s');
+        $sql->select('s')
+                ->leftJoin('s.seanceOptions' , 'so')
+                ->addSelect('so')
+                ->leftJoin('so.bookings' ,'b')
+                ->addSelect('b');
+       $sql->getQuery()->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?TarifSeance
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

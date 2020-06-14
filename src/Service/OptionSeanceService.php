@@ -18,6 +18,6 @@ class OptionSeanceService
   public function findBy(Seance $seance = null)
   {
 
-    return $this->manager->createQuery('SELECT so, s FROM  App\Entity\SeanceOption so JOIN so.seance s  WHERE s.id = ' . $seance->getId())->getResult();
+    return $this->manager->createQuery('SELECT so, s  FROM  App\Entity\SeanceOption so JOIN so.seance s  WHERE s.id = ' . $seance->getId())->getResult();
   }
 }

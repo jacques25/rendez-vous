@@ -8,15 +8,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class facture
 {
-  public function __construct(ContainerInterface $container)
+ 
+  public function Facture($facture, ContainerInterface $containerInterface)
   {
-
-    $this->container = $container;
-  }
-
-  public function Facture($facture)
-  {
-    $html = $this->container->get('templating')->render('user/default/facturePDF.html.twig', ['facture' => $facture]);
+    $html = $containerInterface->get('templating')->render('user/default/facturePDF.html.twig', ['facture' => $facture]);
 
 
     $html2pdf = new Html2Pdf('P', 'A4', 'fr');

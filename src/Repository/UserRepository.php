@@ -74,13 +74,28 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
                ->getResult();
     }
 
-   public  function findUserByFormation(){
+   public  function findUserByFormation($id){
             
      $sql = $this->createQueryBuilder('u');
       $sql ->select('u')
-                ->join('u.formations', 'f')
-                ->addSelect('f');
+                ->leftJoin('u.formations', 'f')
+                ->addSelect('f')
+                ->where('f.id = :id')
+                ->setParameter('id' , $id)
+                ;
            
            $sql->getQuery() ->getResult();
+   }
+
+   public function findWithSeanceAndSeanceOption()
+   {
+        $sql = $this->createQueryBuilder('u')
+                 ->select('u')
+                 ->leftJoin('u.seances','s')
+                 ->addSelect('s')
+                 ->leftJoin('u.seanceOptions', 'so')
+                 ->addSelect('so')
+                 ->getQuery()
+                 ->getResult();
    }
 }

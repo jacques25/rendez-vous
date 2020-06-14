@@ -19,6 +19,7 @@ require("./bootstrap-tagsinput.js");
 require("./typeahead.js");
 require("./select");
 require("./menu_responsive");
+require("./compteur.js");
 
 $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
@@ -51,6 +52,7 @@ window.onload = function () {
       modal.style.display = "none";
     };
   }
+   
 
   $(function () {
     $('[data-toggle="tooltip"]').tooltip();
@@ -96,36 +98,6 @@ $(window).on("scroll", function() {
   }
 });
 
-/* $(document).ready(function () {
-  var submitIcon = $('.searchbox-icon');
-  var inputBox = $('.searchbox-input');
-  var searchBox = $('.searchbox');
-  var isOpen = false;
-  submitIcon.click(function () {
-    if (isOpen == false) {
-      searchBox.addClass('searchbox-open');
-      inputBox.focus();
-      isOpen = true;
-    } else {
-      searchBox.removeClass('searchbox-open');
-      inputBox.focusout();
-      isOpen = false;
-    }
-  });
-  submitIcon.mouseup(function () {
-    return false;
-  });
-  searchBox.mouseup(function () {
-    return false;
-  });
-  $(document).mouseup(function () {
-    if (isOpen == true) {
-      $('.searchbox-icon').css('display', 'block');
-      submitIcon.click();
-    }
-  });
-});
-  */
 
   $(".card").hover(
     function () {
@@ -165,11 +137,11 @@ btn.on("click", function () {
 		// See https://eonasdan.github.io/bootstrap-datetimepicker/
 		
 
-    $('#profile_date_naissance').datepicker({
+/*     $('#profile_date_naissance').datepicker({
     language: 'fr',
       autoclose: true,
      viewMode:  'month',
-      format: 'yyyy-mm-dd hh:ii',
+      format: 'yyyy/mm/dd',
         todayHighlight: true,
         icons: {
             time: 'fa fa-clock-o',
@@ -182,21 +154,18 @@ btn.on("click", function () {
             clear: 'fa fa-trash',
             close: 'fa fa-remove'
 				}
-         }); 
+         });  */
       
-  });
-/* $(document).ready(function () {
-  const zoneTexte = document.getElementById('comment_content');
-  const compteur = document.getElementById("compteur")
- 
+  }); 
 
-  zoneTexte.addEventListener('keyup',() => {
-    let counterContent = Number(compteur.textContent);
-    compteur.innerHTML = counterContent - zoneTexte.value.length
-    if (compteur.innerHTML < 0) {
-      zoneTexte.onkeyup = null;
-    }
-  })
-}) */
+window.onload = function () {
+  let modal = document.getElementById('modal-message');
+   modal.style.display = "block"; 
+ let  button = this.document.getElementsByClassName('close-message')
+   $(button).click(function () {
+    modal.style.display = "none";
+    }) 
+}
+
 
 console.log("Hello Webpack Encore! Edit me in assets/js/app.js");

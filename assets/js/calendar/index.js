@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       timeZone:  'Europe/Paris',
      nowIndicator:  true,
      selectable: true,
-    editable: true,
+     editable: true,
       
         eventSources: [
             {
@@ -62,19 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
             right: "timeGridWeek ,timeGridDay",
         },
       
-    views: {
-      timeGrid: {
-          
-          }
-        },
-
+  
      dateClick: (startParam) => {  
     
         
         $("input#beginAt").attr('data-date', startParam.dateStr); 
        $("#beginAt").attr('value', startParam.dateStr);
         $('#modalForm').modal('show');
-      
+       $('#modalFormation').modal('show');
       },
       
     validRange: function (nowDate) {

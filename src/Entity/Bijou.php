@@ -86,7 +86,7 @@ class Bijou
 
     /**
      * @Groups("bijou")
-     * @ORM\OneToMany(targetEntity="OptionBijou", mappedBy="bijou", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="OptionBijou", mappedBy="bijou", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"taille"="ASC"})
      */
     private $option_bijou;
@@ -101,7 +101,7 @@ class Bijou
 
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="bijou", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="bijou", cascade={"persist"}, orphanRemoval=true, fetch="EXTRA_LAZY")
      */
     private $pictures;
 
@@ -112,7 +112,6 @@ class Bijou
      *
      */
     private $pictureFiles;
-
 
 
     /**

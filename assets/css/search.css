@@ -3,17 +3,16 @@
 .dropdown-menu-search {
   left: 0;
   display: none;
-    min-width: 10rem;
-    padding: 0.5rem 0;
-    font-size: 1rem;
-    background-color: #e2e1e0;
-    z-index: 10000;
-    box-shadow: 4px 3px 8px 0px rgba(102, 100, 99, 0.71);
-    text-align: left;
-    list-style: none;
-    border-radius: .25rem;
-    height: 80px !important;
-    margin-top: 35px;
+  float: left;
+  min-width: 10rem;
+  padding: 1rem 0;
+  font-size: 1rem;
+  background-color: #e2e1e0;
+  z-index: 10000;
+  box-shadow: 4px 3px 8px 0px rgba(102, 100, 99, 0.71);
+  text-align: left;
+  list-style: none;
+  border-radius: .25rem;
 }
 
 /* line 18, ../sass/search.scss */
@@ -51,8 +50,7 @@ input[type="search"] {
 
 /* line 50, ../sass/search.scss */
 .searchbox-icon {
-  margin-top: 13px;
-  float: right;
+  top: 13px;
 }
 
 /* line 55, ../sass/search.scss */
@@ -98,5 +96,45 @@ button[type="submit"].btn-search {
   /* line 88, ../sass/search.scss */
   .searchbox {
     display: block;
+  }
+}
+@media only screen and (max-width: 900px) {
+  /* line 95, ../sass/search.scss */
+  .dropdown-menu-search {
+    left: 10px;
+    display: none;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    background-color: #e2e1e0;
+    z-index: 10000;
+    box-shadow: none;
+    text-align: left;
+    list-style: none;
+    border-radius: .25rem;
+    /* height: 80px !important; */
+    top: 0px;
+  }
+
+  /* line 111, ../sass/search.scss */
+  input[type="search"] {
+    border: none;
+    outline-style: auto;
+    outline-offset: 0.5pt;
+    outline-color: #8f725c;
+    margin-bottom: 10px;
+    margin-top: -20px;
+    vertical-align: middle;
+  }
+
+  /* line 120, ../sass/search.scss */
+  input.search {
+    margin-left: 10%;
+  }
+
+  /* line 123, ../sass/search.scss */
+  input.btn.btn-success {
+    margin-left: 25%;
+    margin-right: 15%;
   }
 }

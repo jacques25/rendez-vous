@@ -37,9 +37,10 @@ class ProfileType extends ApplicationType
       ->add('email', EmailType::class, $this->getConfiguration("Email", "Votre adresse email..."))
       ->add('date_naissance', BirthdayType::class,  [
           'label' => 'Date Naissance',
+          'attr' => ['placeholder' => 'dd/mm/yyyy'],
           'widget' => 'single_text',
           'html5' => false,
-          
+          'format' => 'dd/mm/yyyy'
       ])
       ->add('phone', TextType::class, ['label' => 'Téléphone'])
       ->add('imageFile', ImageType::class, [

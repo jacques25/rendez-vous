@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container mt-4">
-    <h1>Prendre  un  rendez-vous</h1>
+    <h1>Créer un évènement</h1>
    
     {{ include('admin/booking/_form.html.twig') }}
 
@@ -13,4 +13,11 @@
     </div>
 {% endblock %}
 
-
+{% block javacript %}
+{{ parent() }}
+	
+			{{ encore_entry_script_tags('optSelect' )}}
+			
+		
+        
+		{% endblock %}

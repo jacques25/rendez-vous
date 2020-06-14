@@ -71,7 +71,7 @@ class FooterController extends AbstractController
             $em->persist($contact);
             $em->flush(); 
             $contactNotication->notify($contact); 
-            $this->addFlash('success', 'Votre mail à été envoyé, nous vous répondrons dans les plus bref délais.');
+            $this->addFlash('success', ' Mail envoyé, nous vous répondrons dans les plus brefs délais.');
             return $this->redirectToRoute('app_homepage'); 
         }
 

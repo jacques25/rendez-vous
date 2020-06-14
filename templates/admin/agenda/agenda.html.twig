@@ -3,11 +3,11 @@
 		{% block title %}	rendez-vous		{% endblock %}
 		{% block stylesheets %}
 		 {{ parent()}}
-		   {{ encore_entry_link_tags('calendarFormation')}}
+		   {{ encore_entry_link_tags('calendar')}}
 		{% endblock %}
 		{% block body %}
 		<div class="container">
-	
+	   
 		    <div class="calendar mt-4"  id="calendar-holder" data-events-url="{{ path('fc_load_events') }}">
 		
 				</div>
@@ -19,6 +19,7 @@
 
      {% block javascripts %}
 		  {{ parent() }}
-			{{ encore_entry_script_tags('calendarFormation')}}
+		{{ encore_entry_script_tags('calendar')}}
+		 
 		 
 		 {% endblock %}

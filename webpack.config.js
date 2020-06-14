@@ -65,7 +65,6 @@ Encore
     .addEntry('booking',  './assets/js/booking.js')
     .addEntry('seance','./assets/js/seanceOption.js')
     .addEntry('calendar','./assets/js/calendar/index.js')
-    .addEntry('calendarFormation', './assets/js/calendar/calendar-index.js')
     .addEntry('select','./assets/js/select.js')
     .addEntry('promo','./assets/js/promo.js') 
     .addStyleEntry('css/font', './assets/css/font.css')

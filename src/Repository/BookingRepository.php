@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Booking;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Formation;
+use App\Entity\Booking;
 
 /**
  * @method Booking|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,22 +26,39 @@ class BookingRepository extends ServiceEntityRepository
                   ->where('b.beginAt between b.beginAt->format("Y-m-d 00:00:00") and b.endAt->format("Y-m-d 23:59:59")')
                   ->orderBy('b.beginAt ASC');
                   dd($sql);
-        $sql->getQuery()->getResult;
+        $sql->getQuery()->getResult();
           
     }
 
      public function getBooking($id) {
           $sql = $this->createQueryBuilder('b');
-               $sql   ->select('b')
-                   ->leftJoin('b.formation', 'f')
-                  ->addSelect('f')
-                  ->where('f.id = :id')
+          $sql ->select('b')
+                  ->where('b.id = :id')
                   ->setParameter('id', $id);
-              
+            
                  $sql ->getQuery() ->getResult();
      }
 
-    
+     public function getBookingsCount()
+    {
+        $qb =  $this->createQueryBuilder('b')
+            ->leftJoin('b.seanceOption', 'so')
+            ->addSelect('so')
+            ->getQuery();
+        return  (int)count($qb->getResult())  ;
+    }
+
+    public function findByFormation($formation) {
+         $qb =  $this->createQueryBuilder('b');
+         $qb->select('b') 
+                ->leftJoin('b.formation' , 'f')
+                ->addSelect('f')
+                ->where('f.id = :formation')
+                ->setParameter('formation', $formation)
+                ->getQuery()
+                ->getResult();
+        
+        }
 
     // /**
     //  * @return Booking[] Returns an array of Booking objects

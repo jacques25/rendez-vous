@@ -48,8 +48,9 @@ class AccountController extends AbstractController
          
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+        
         if ($error) {
-            $this->addFlash('danger', 'Vous devez vous inscrire pour continuer.');
+            $this->addFlash('danger', 'un problème est survenue veuillez recommencer.');
             $this->redirectToRoute('account_login');
         }
 
@@ -205,7 +206,7 @@ class AccountController extends AbstractController
 
             $mailer->send($email);
 
-            $this->addFlash('success', 'Un lien vient de vous être envoyé dans votre boite mail');
+            $this->addFlash('success', 'Un lien vient de vous être envoyé dans votre boite mail afin de réinitialiser votre mot de passe');
 
             return $this->redirectToRoute('account_login');
         }

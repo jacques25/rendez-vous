@@ -84,29 +84,16 @@ class User implements UserInterface, Serializable
 
     public $passwordConfirm;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="user")
-     *
-     */
-    private $booking;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Formation::class, inversedBy="users")
-     */
-
-    private $formations;
      /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $date_naissance;
 
-    
     /**
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Slug(fields={"firstName"})
      */
     private $slug;
-
 
     /**
      * @ORM\Column(type="string" , length=255, nullable=true)
@@ -151,15 +138,33 @@ class User implements UserInterface, Serializable
     protected $confirmToken;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserAdress", mappedBy="user", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\UserAdress", mappedBy="user", cascade={"persist"}, fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(nullable=true)
      */
     private $addresses;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commandes", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Commandes", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $commandes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Formation", inversedBy="users")
+     * @ORM\JoinTable(name="formation_users")
+     */
+    private $formations;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Seance", inversedBy="users")
+     * @ORM\JoinTable(name="seance_users")
+     */
+    private $seances;
+
+     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\SeanceOption", inversedBy="users")
+     * @ORM\JoinTable(name="user_seance_option")
+     */
+    private $seanceOptions;
 
  
 
@@ -169,8 +174,9 @@ class User implements UserInterface, Serializable
         $this->subscribedToNewsletter = false;
         $this->addresses = new ArrayCollection();
         $this->commandes = new ArrayCollection();
-        $this->booking = new ArrayCollection();
         $this->formations = new ArrayCollection();
+        $this->seances = new ArrayCollection();
+        $this->seanceOptions = new ArrayCollection();
       
   
     }
@@ -507,38 +513,7 @@ class User implements UserInterface, Serializable
 
        return $this;
    }
-
-   /**
-    * @return Collection|Booking[]
-    */
-   public function getBooking(): Collection
-   {
-       return $this->booking;
-   }
-
-   public function addBooking(Booking $booking): self
-   {
-       if (!$this->booking->contains($booking)) {
-           $this->booking[] = $booking;
-           $booking->setUser($this);
-       }
-
-       return $this;
-   }
-
-   public function removeBooking(Booking $booking): self
-   {
-       if ($this->booking->contains($booking)) {
-           $this->booking->removeElement($booking);
-           // set the owning side to null (unless already changed)
-           if ($booking->getUser() === $this) {
-               $booking->setUser(null);
-           }
-       }
-
-       return $this;
-   }
-
+ 
    /**
     * @return Collection|Formation[]
     */
@@ -563,6 +538,66 @@ class User implements UserInterface, Serializable
        }
 
        return $this;
+   }
+
+   /**
+    * @return Collection|Seance[]
+    */
+   public function getSeances(): Collection
+   {
+       return $this->seances;
+   }
+
+   public function addSeance(Seance $seance): self
+   {
+       if (!$this->seances->contains($seance)) {
+           $this->seances[] = $seance;
+       }
+
+       return $this;
+   }
+
+   public function removeSeance(Seance $seance): self
+   {
+       if ($this->seances->contains($seance)) {
+           $this->seances->removeElement($seance);
+       }
+
+       return $this;
+   }
+
+   /**
+    * @return Collection|SeanceOption[]
+    */
+   public function getSeanceOption(): Collection
+   {
+       return $this->seanceOptions;
+   }
+
+   public function addSeanceOption(SeanceOption $seanceOption): self
+   {
+       if (!$this->seanceOptions->contains($seanceOption)) {
+           $this->seanceOptions[] = $seanceOption;
+       }
+
+       return $this;
+   }
+
+   public function removeSeanceOption(SeanceOption $seanceOption): self
+   {
+       if ($this->seanceOptions->contains($seanceOption)) {
+           $this->seanceOptions->removeElement($seanceOption);
+       }
+
+       return $this;
+   }
+
+   /**
+    * @return Collection|SeanceOption[]
+    */
+   public function getSeanceOptions(): Collection
+   {
+       return $this->seanceOptions;
    }
 
   

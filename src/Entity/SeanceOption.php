@@ -39,11 +39,19 @@ class SeanceOption
      * @ORM\JoinColumn(name="seance_option_id", referencedColumnName="id")
      */
     private $seance;
+
+
+      /**
+     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="seanceOptions", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="user_seance_option")
+     * 
+     */
+     private $users;
      
 
     
      /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking",  mappedBy="seanceOption")
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking",  mappedBy="seanceOption", fetch="EXTRA_LAZY")
      */
     private $bookings;
 
@@ -53,6 +61,7 @@ class SeanceOption
     {
       
          $this->bookings = new ArrayCollection();
+         $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,6 +143,34 @@ class SeanceOption
             if ($booking->getSeanceOption() === $this) {
                 $booking->setSeanceOption(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addSeanceOption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeSeanceOption($this);
         }
 
         return $this;

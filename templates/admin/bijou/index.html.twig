@@ -37,7 +37,9 @@
 
 
 		            {% for option in bijou.optionBijou %}
-								 {% if loop.first %}
+											 {% if loop.first %}
+								<p>{% if option.disponible == true %}<span>Disponible</span>{%else%} <span>Indisponible</span> {% endif %}</p>
+					
 								 <span class="options-prix font-italic mr-2">{{option.prix|round(2)}}€ </span>
 								 {% endif %}
 					{% endfor %}

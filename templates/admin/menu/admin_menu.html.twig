@@ -41,8 +41,8 @@
 						               <a class="nav-link" href="{{path('admin_bijou_index')}}"> <i class="fa fa-list"></i>  Liste des Bijoux	</a>
 						               <a class="nav-link" href="{{path('admin_popup_taille_index')}}">Tableaux de taille</a>
 					               </div> 
-          
- 	        </ul>	
+                  <a  class="nav-link" href="{{ path('admin_promo_list' ) }}"> Les Promotions </a>
+ 	        </ul>	 
 			  </li>
       
 
@@ -72,6 +72,9 @@
 						<i class="fas fa-euro-sign"></i>
 						Les formations
 					</a>
+					<a href="{{path('admin_booking_index')}}" class="nav-link"> 
+					  <i class="fa fa-list"></i>
+						 Dates Formation
 				</li>
 			
         <li class="nav-item">
@@ -83,11 +86,7 @@
 					<a href="{{path('admin_inscrits_formation')}}" class="nav-link"> Inscrits formation</a>
 					</div>
 				</li>
-        <li class="nav-item">
-					<a href="{{path('admin_booking_calendar')}}" class="nav-link">
-						<i class="fas fa-calendar"></i> Calendrier
-			    </a>
-					</li>
+        
            <li class="nav-item">
 					<a href="{{path('admin_comments_list')}}" class="nav-link">
 						<i class="fas fa-users"></i>

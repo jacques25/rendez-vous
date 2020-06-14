@@ -16,6 +16,7 @@
   width:40px; 
   margin-top: 15px;
   margin-left:15px;
+  float:left;
   }
 
   .title {
@@ -29,6 +30,7 @@
    color:white;
    display:block; 
    margin-top:15px;
+   font-size: 22px;
   }
  
  
@@ -62,6 +64,10 @@
    margin-left:25px;
   }
 
-
+.site-name {
+  color: #fff;
+  font-size: 16px;
+  margin-left: 25px;
+}
   
  

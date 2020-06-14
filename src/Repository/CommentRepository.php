@@ -35,4 +35,19 @@ class CommentRepository extends ServiceEntityRepository
         return $qb->getQuery()
                   ->getResult();
     }
+
+    public function getCommentsForFormation($formationId, $approved = true)
+    {
+         $qb = $this->createQueryBuilder('c')
+         ->select('c')
+         ->where('c.formation = :formation_id')
+         ->addOrderBy('c.createdAt' )
+         ->setParameter('formation_id', $formationId );
+         if(false === is_null($approved)) {
+              $qb->andWhere('c.approved = :approved')
+              ->setParameter('approved', $approved);
+         }
+         return $qb->getQuery()
+         ->getResult();
+    }
 }

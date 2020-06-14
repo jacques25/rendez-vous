@@ -90,3 +90,15 @@ $(document).ready(function () {
     });
   }
 });
+
+$(document).ready(function () {
+  var select = document.getElementById('formation')
+  if (select) {
+    new SlimSelect({
+      select: select,
+      placeholder: true
+
+    });
+  }
+});
+

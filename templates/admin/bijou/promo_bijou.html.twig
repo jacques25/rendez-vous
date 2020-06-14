@@ -1,0 +1,66 @@
+{% extends "admin_base.html.twig" %}
+
+{% block title %} Les promotions {% endblock %}
+
+{% block body %}
+<div class="container">
+     <div class="row">
+         <h1 class="mx-4">Liste des Bijoux</h1>
+         <div class="float-right">
+              <a class="btn btn-info  mt-2 mb-3" href="{{ path('admin_bijou_new') }}"><i class="fas fa-plus-circle"></i> Nouveau</a>
+         </div>
+    </div>
+<div class="row">
+    {% for bijou in promos %}
+        
+ 
+  	<div class="col-sm-6 col-md-4 col-lg-3">
+		<div class="card">
+                <div class="card-header">
+                	<div class="card-title">
+           
+							<span class="sub-title uppercase mx-2">{{bijou.title}}</span>
+                     </div>
+                </div>
+					{% if bijou.filename %}
+						<img class="card-img img-responsive" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" alt="{{bijou.filename}}" width="200"/>
+	     
+				<div class="row flex-row mx-5">
+						<a class=" btn btn-info" href="{{path('admin_bijou_edit', { 'id': bijou.id })}}">
+								<i class="fa fa-edit"></i> 
+					    </a>
+                        {% include "admin/bijou/_delete_form.html.twig" %}
+				</div>
+			{% endif %}
+				
+			<div class="card-body">
+
+
+		            {% for option in bijou.optionBijou %}
+								 {% if loop.first %}
+								 <span class="options-prix font-italic mr-2">{{option.prix|round(2)}}€ </span>
+								 {% endif %}
+					{% endfor %}
+					<div id="options-taille">
+						 {% for option in bijou.optionBijou %}
+							 {% if option.taille|length != 0 %}
+							    <span class="rounded-taille" id="taille-name" data-string="{{option.taille}}">  {{option.taille}}</span>
+							 {% endif %}
+						 {% endfor %}
+					</div>
+						
+			</div>
+       </div>
+    </div>
+   {% endfor %}
+
+{# <div class="col-sm-12">
+							<div class="navigation float-right mr-5">
+                     {{ knp_pagination_render(bijous) }}
+          </div>
+</div> #}
+</div>
+
+
+
+{% endblock %}

@@ -6,13 +6,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\FormationRepository;
-use App\Repository\BookingRepository;
 use App\Form\FormationType;
-use App\Form\BookingType;
+
 use App\Entity\User;
 use App\Entity\Formation;
-use App\Entity\Booking;
+
 
 /**
  * @Route("/admin/formation")
@@ -36,18 +36,21 @@ class AdminFormationController extends AbstractController
     public function new(Request $request): Response
     {
         $formation = new Formation();
-          
+         $originalBooking= new ArrayCollection();
+   
+        foreach ($formation->getBooking() as $booking) {
+            $originalBooking->add($booking);
+        }
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);
        
         if ($form->isSubmitted() && $form->isValid()) { 
-      
-          
+            $referer =$request->getSession('referer');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($formation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_formation_index');
+            return $this->redirectToRoute('admin_formation_index', [ 'refrerer' => $referer] );
         }
 
         return $this->render('admin/formation/new.html.twig', [
@@ -70,28 +73,41 @@ class AdminFormationController extends AbstractController
      * @Route("/{id}/edit", name="admin_formation_edit", methods={"GET","POST"})
      * 
      */
-    public function edit( $id, Request $request, Formation $formation, BookingRepository $bookingRepository): Response
-    {   
+    public function edit($id, Request $request, Formation $formation): Response
+    {
         $em = $this->getDoctrine()->getManager();
-     
+        $formation = $em->getRepository('App:Formation')->findOneBy(['id' => $id]);
         
+          // original Booking entity 
+        $originalBooking= new ArrayCollection();
+   
+        foreach ($formation->getBooking() as $booking) {
+            $originalBooking->add($booking);
+        }
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);
-       
+     
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            $em->persist($formation);
-            $em->flush();
+                 
+                 foreach ($originalBooking as $booking) {
+                // check if the optionBijou is in the $bijou->getOptionBijou()
+                if ($formation->getBooking()->contains($booking) === false) {
+                    $em->remove($booking);
+                }
+            } 
+                $em->persist($formation);
+                $em->flush();
 
-            return $this->redirectToRoute('admin_formation_index');
-        }
+                return $this->redirectToRoute('admin_formation_index', ['id' => $formation->getId()]);
+            }
+        
 
-        return $this->render('admin/formation/edit.html.twig', [
+            return $this->render('admin/formation/edit.html.twig', [
             'formation' => $formation,
             'form' => $form->createView(),
-        ]);
-    }
-
+           ]);
+        }
+    
     /**
      * @Route("/{id}", name="admin_formation_delete", methods={"DELETE"})
      */
@@ -106,25 +122,6 @@ class AdminFormationController extends AbstractController
         return $this->redirectToRoute('admin_formation_index');
     }
     
-    /**
-     * @Route("/suppression/utilisateur/{id}" ,  name="admin_formation_user_delete")
-     *
-     * @return void
-     */
-    public function userDelete(Request $request, Formation $formation) : Response {
-           
-
-             $user =  $this->getUser();
-              if ($user) { 
-                 
-              $formation = $user->getFormation()->getId(); 
-                  $em = $this->getDoctrine()->getManager();
-                  $user->setFormation(null);
-                  $em->flush();
-                  return $this->redirectToRoute('admin_formation_edit', ['id' => $formation->getId()]);
-              }
-              
-
-    }
+    
  
 }

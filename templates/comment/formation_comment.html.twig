@@ -5,47 +5,59 @@
                     <p> Le {{comment.createdAt|format_date('full')}} par  {{comment.authorName}}</p>
                   </div>
               <div class="carbonads-body">
-                {{comment.content|raw}}
+                     {{comment.content|raw}}
               </div>
 					{% endif %}				   
  
-                       </div>
+             </div>
 		{% endfor %}
-    {% if is_granted("ROLE_FORMATION") %}
+      <a class="btn btn-success" href="#"  data-toggle="modal"
+       {% if is_granted("ROLE_FORMATION") %}data-target="#modalComment" 
+       {% else %} data-target="#message"{% endif %} ><i class="fa fa-comment"></i> Ecrire  un commentaire </a>
+
+
+    
                 
-          <div class="modal show" id="modalComment">
-                  <div class="modal-dialog" role="document">
+          <div class="modal" id="modalComment">
+                  <div class="modal-dialog-comment" role="document">
                        <div class="modal-content p-5">
                           <div class="modal-title">
-                              <h5>Ecrire un commentaire</h5>      
+                                <h5>Ecrire un commentaire</h5>      
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">&times;</span>
-                             </button>  
+                              </button>  
                           </div>   
 
                           <div class="modal_body">
-                          {{form_start(form)}}     
-                           <span class="help-block pull-left" id="counter"></span>
-                          {{form_widget(form.authorName, {'attr': {'class':' mb-3', 'placeholder': 'Votre prénom' }})}}
-                          {{form_widget(form.content,  {'attr': {'class':' mb-3', 'placeholder' : 'Votre message', 'rows':8, 'columns' : 10, 'maxlength' : 500}}) }}
-                          <div id="compteur" style="text-align:right"> 500</div>
-                           <input class="btn btn-success" type="submit" value="Commenter">
-                       {{form_end(form)}}
-                        </div> 
-            </div>                     
+                               
+                                    {{form_start(form)}}     
+                
+                                      {{form_widget(form.authorName, {'attr': {'class':' mb-3', 'placeholder': 'Votre prénom' }})}}
+                                          {{form_widget(form.content,  {'attr': {'class':' mb-3', 'placeholder' : 'Votre message', 'rows':8, 'columns' : 10}}) }}
+                                          <div id="compteur"></div>
+                                    <div class="btn btn-success mt-3" type="submit"> <i class="fa fa-comment"> </i> Commenter</div>
+                                     {{form_end(form)}}
+                         </div> 
+                      </div>                     
                                                   
-           </div>
-           </div>
-            <a class="btn btn-success" href="#"  data-toggle="modal" data-target="#modalComment" > Ecrire  un commentaire </a>
-                     {% else %}
-                       <div class="alert alert-warning"><strong> Attention Vous ne pouvez écrire un commentaire qu' une fois connecté  </strong> 
-                       <a href="{{path('account_login')}}" class="btn  btn-primary btn-sm" >se connecter</a>
+                  </div>
+          </div>
+     
+ 
+             <div class="modal" id="message" role="document">
+                     <div class="modal-dialog">
+                       <div class="modal-content">
+                          <div class="modal-body">
+                                  <div class="message"> Attention seules les personnes connectées peuvent écrire un commentaire </div>
+                          </div>
+                          <div class="modal-footer">
+                                <a href="{{path('account_login')}}" class="btn btn-success"> Connexion</a>
+                          </div>
+                          
                        </div>
-                    
-                     {% endif %}      
                      
-            	
-         
-      
-              
-                </div>
+            </div>
+
+   
+
+    

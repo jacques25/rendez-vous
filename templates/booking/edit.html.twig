@@ -6,24 +6,32 @@
    
 
 {% block body %}
-{% if booking.formation  != null %}
-    <div id="modalFormEdit" class="modal-form" aria-hidden="true">
+{% if booking  != null %}
+ {% for formation in booking.formation %}
+     
+
+   	<div id="modalFormation" class="modalFormation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		 <div class="modal-dialog" role="document">
 		   
 		      <div class="modal-content">
 					    <div class="modal-header">
 									 <h5 id="modal-title">  {{booking.title}} </h5>
+									  <button type="button" class="close white-text" data-dismiss="modalForm" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                                     
              </div>
              <div class="modal-body">
-                        {{ include('booking/_form.html.twig') }}
+                        {{ include('booking/_formation_form.html.twig') }}
              </div>
              <div class="modal-footer">
-                <a class="btn btn-info" href="{{path('formation_booking', {'id' : booking.formation.id})}}">s'incrire </a>
+                <a class="btn btn-info"  href="{{path('booking', {'id' : booking.formation.id})}}">s'incrire </a>
   
           </div>
 
     
    </div>
+   {% endfor %}
 {% endif %}
 {% if booking.seanceOption != null %}
   

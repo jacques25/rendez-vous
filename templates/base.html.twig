@@ -26,14 +26,7 @@
 				    
 		
 		  			  <div class="site-content">
-							  				 {% for label, messages in app.flashes %}
-                 <div class="alert alert-{{ label }} mt-2">
-                                        {% for message in messages %}
-                                         <p><strong> {{ message}} </strong></p>
-                                      {% endfor %}
-                                      </div>
-    
-                                  {% endfor %}
+							  				{{include ('messages/flash-message.html.twig')}}
 			             					<a id="button" style="display:block;">
 			             						<i class="fa fa-chevron-up"></i>
 			             						Haut de page

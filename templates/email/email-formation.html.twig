@@ -49,6 +49,10 @@
 					<columns class="command-body">
 					<spacer size="16"></spacer>
 					<h4> {{formation.title}}</h4>
+					  {% for booking in formation.booking %}
+							 <p> Le {{booking.beginAt|format_date('short')}} de {{booking.beginAt|format_time('short')}} à  {{booking.endAt|format_time('short')}} heure</p>
+						{% endfor %}
+					
 					<p> {{message}}</p>
 					<p><strong> 
 					</colummns>

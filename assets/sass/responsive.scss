@@ -1,5 +1,6 @@
 @import 'compass';
 @import '_vars';
+@import 'calendar.scss';
 
 
 
@@ -253,11 +254,17 @@
 
   }
 
-  .table{
-        margin-left: -65px;
-        width: 200px; 
-        display: inline;
-  }
+ 
+     .table-formation {
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 50px;
+    text-align: center;
+    margin-left:  -40px;
+    margin-right: auto;
+     position:relative;
+}
+
  .table-thead td {
     padding: 10px 0px 10px 0px !important;
   }
@@ -316,6 +323,16 @@
     margin-left:auto;
     margin-right: auto;
   }
+    .table .table-formation {
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 50px;
+    text-align: center;
+    margin-left: -40px;
+    margin-right: 5px;
+     display: block; 
+}
+
 
   .table-font-size tr,
   .table-tbody td,
@@ -347,6 +364,15 @@
     margin-right: 15% !important;
     
   }
+  .table .table-formation {
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 50px;
+    text-align: center;
+    margin-left: -40px;
+    margin-right: 5px;
+     display: block; 
+}
 
   .table-font-size tr,
   .table-tbody td,
@@ -372,19 +398,67 @@
 }
 
 @media only screen and (max-width: 900px) {
+  h1 {
+     font-size: 5vh !important;
+  }
+
+
+
+  form[name="profile"]{
+    width: 450px;
+    margin: 0px 0px 10px -60px;
+    vertical-align: baseline;
+    position: relative;
+}
+.card-identity{
+   margin-bottom: 30px;
+}
+.card-signin-address {
+   width:450px;
+   margin-left: 15px;
+}
+.card-address {
+  position:relative;
+  width: 400px;
+  margin-top:10px;
+}
+  
 .modal-content-body {
     padding: 0%;
     margin-top:20% !important;
     width: 350px !important;
     height:auto;
 }
+.modal-dialog {
+   margin-top: -15px;
+}
+.modal-dialog-comment {
+  margin-top: 140px;
+}
+.modal-content {
+  margin: 5% 0% 0% -15px !important;
+    min-width: 400px !important;
+}
 
 .modal {
   height: 100%;
 }
-
+.modal-form {
+  margin: 25% 0 0 -35px;
+    width: 450px;
+  
 }
-
+#modalForm {
+     overflow-x: hidden !important;
+     padding-right: 0 !important;
+}
+#modalForm .modal-header{
+   padding: 0.2em;
+}
+#modalForm  label  {
+ display:none;
+}
+}
 @media only screen and (max-width:1100px){
 select#select-taille{
   margin-bottom: 40px;

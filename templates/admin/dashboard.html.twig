@@ -12,14 +12,14 @@
                 <div class="card-header admin-header">
                     <h3 class="panel-title">
                         <span class="glyphicon glyphicon-stats"></span>
-                        Stats</h3>
+                        Bijoux</h3>
                 </div>
 
                 <div class="card-body">
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="{{path('admin_bijou_index')}}">
-                                {{'nombre de bijoux'|trans}} <span class="badge-bijou">
+                               Nombre de bijoux <span class="rounded-circle bijou">
                                 {{ bijouCount }}
                             </span> 
                             </a>
@@ -28,12 +28,12 @@
                         </li>
 
                         <li class="list-group-item">   
-                        <p>{{'nombre de bijoux disponible'|trans}}
+                        <p>
                               {% if bijouCount == publishedBijouCount %}
-                                 <span class="badge-bijoux-dispo">{{ publishedBijouCount }}</span></p>
+                                Bijoux disponibles <span class="rounded-circle bijoux-dispo">{{ publishedBijouCount }}</span></p>
                                {% else %}
                                  
-                                   <span class="badge-bijoux-indispo">{{ publishedBijouCount }}</span></p>
+                                 Bijoux indisponible  <span class="rounded-circle bijoux-indispo">{{ publishedBijouCount }}</span></p>
                               {% endif %}
                          
                          
@@ -58,10 +58,34 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="{{path('admin_commandes_index') }}">
-                                {{'nombre de commandes '|trans }}
+                                nombre de commandes
 
                             </a>
-                            <span class="badge-commandes">{{ commandesCount }}</span>
+                            <span class="rounded-circle commande">{{ commandesCount }}</span>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 mt-3 ">
+            <div class="card w-100">
+
+
+                <div class="card-header admin-header">
+
+                    <h3 class="panel-title center">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        Evènements</h3>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{{path('admin_booking_index') }}">
+                                  Nombre d'évènements</a>
+                            <span class="rounded-circle commande">{{ bookingsCount }}</span>
                         </li>
 
 

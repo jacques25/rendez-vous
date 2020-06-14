@@ -50,9 +50,6 @@ class BijouController extends AbstractController
            
           $promo = $serializer->serialize($bijou,  'json', ['attributes' => ['dateStart' , 'dateEnd', 'promoIsActive', 'multiplicate', 'port']]);
          
-          
-        
-  
         return $this->render('bijou/show.html.twig', [
 
             'bijou' => $bijou,

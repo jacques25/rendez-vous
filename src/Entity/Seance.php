@@ -36,7 +36,7 @@ class Seance
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SeanceOption", mappedBy="seance",cascade={"persist", "remove"} )
+     * @ORM\OneToMany(targetEntity="App\Entity\SeanceOption", mappedBy="seance",cascade={"persist", "remove"} , fetch="EXTRA_LAZY")
      * 
      */
     private $seanceOptions;
@@ -48,13 +48,21 @@ class Seance
 
      
       /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="seance")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="seance", fetch="EXTRA_LAZY")
      */
      private $comments;
+
+     /**
+     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="seances", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="seance_users")
+     * 
+     */
+     private $users;
     /**
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Slug(fields={"title"})
      */
+    
     private $slug;
     /**
      * @ORM\Column(type="string" , length=255)
@@ -80,6 +88,7 @@ class Seance
     {
         $this->seanceOptions = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->users = new ArrayCollection();
       
         
     }
@@ -269,6 +278,34 @@ class Seance
             if ($comment->getSeance() === $this) {
                 $comment->setSeance(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeSeance($this);
         }
 
         return $this;

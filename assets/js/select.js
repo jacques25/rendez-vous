@@ -3,7 +3,7 @@ var $collectionHolder;
 
 // Add new item (OptionBijou forms)
 
-var $addNewItem = $('<div class="col"><a href="#" class="btn btn-info mt-3 mb-3" ><i class="fa fa-plus"></i> Ajouter référence et taille ....</a></div>');
+var $addNewItem = $('<div class= "col" > <a href="#" class="btn btn-info mt-3 mb-3" ><i class="fa fa-plus"></i> Ajouter référence et taille ....</a></div > ');
 
 $(document).ready(function () {
   // get collection collectionHolder

@@ -27,7 +27,10 @@ class UserBookingType  extends AccountType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('email', EmailType::class)
-            ->add('date_naissance', BirthdayType::class)
+            ->add('date_naissance', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+            ])
             ->add('phone', TextType::class);
           
            

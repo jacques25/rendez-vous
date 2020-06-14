@@ -8,27 +8,48 @@
     <h2> Seances</h2>
    <table class="table table-fluid">
     <thead>
-       <tr>
+       <tr> 
+        
             <th>Client</th>
-            <th>Seance</th>
+           
+            <th>Durée</th>
             <th>Date de début</th>
             <th>Date de fin</th>
-            <th>Durée</th>
+              <th>Seance</th>
+            <th>Action</th>
        </tr>
     </thead>
-     <tbody> 
-      {% for user in users %}
-     {% for booking  in user.booking %}
-          <tr> 
-            <td> {{booking.user.firstName}}{{booking.user.lastName}}</td>
-            <td>  {{booking.title}}</td>
-            <td> {{booking.beginAt|format_datetime('short') }}</td>
-            <td>  {{booking.EndAt|format_datetime('short') }}</td>
-            <td> {{booking.seanceOption.duree|format_time('short')}} H </td>
+     <tbody>  
+      {% for seance in seances %} 
+  {% for user in seance.users %}  
+  {% for option in seance.seanceOptions %}    
+  {% for booking in option.bookings %}
+    <tr>
+ 
+   <td>       {{user.firstName}} {{user.lastName}} </td>
+  
+           <td> {{option.duree|format_time('short')}} Heure </td> 
+         
+        
+                  <td> {{booking.beginAt|format_datetime('short') }}</td>
+            <td>  {{booking.EndAt|format_datetime('short') }}</td>  
+          
+        
+            
+           <td>  {{seance.title}}</td> 
            
-          </tr>  
-          {% endfor %}
-           {% endfor %}
+    
+  
+           
+              
+      
+           
+               
+             </tr>        
+              {% endfor %}
+              {% endfor %}
+        {% endfor %}
+           {% endfor %} 
      </tbody>
  
    

@@ -6,7 +6,7 @@
   
    <div class="container">
       
-  
+     
    <table class="table-fluid mt-3">
         
          <thead>       
@@ -15,38 +15,39 @@
                <th>Nom</th>
                <th>Email</th>
                <th>Téléphone</th>
-               <th>Action</th>
+          
             </tr>
          </thead>
          <tbody> 
-        
-         
-                <h2>Inscrits à la {{formation.title}}</h2>
-                {% for booking in formation.booking %}
+           
+               {% for formation in formations %}
+                  {% for booking in formation.booking %}
+                     
+                 
+                   <h2>Inscrits à la {{booking.title}}</h2>
                     <p><strong> Le {{booking.beginAt|format_date('short')}} de {{booking.beginAt|format_time('short')}}
                      heure à {{booking.endAt|format_time('short')}} heure. </strong> </p>
-                {% endfor %}
-              
+                  {% endfor %}
+           
            {% for user in formation.users %}
            <tr>
              <td> {{user.lastName}} </td>
              <td>  {{user.lastname}}</td>
              <td> {{user.username}}</td>
              <td>{{user.phone}}</td>
-             <td>
-             <a href="{{path('admin_formation_user_delete', {id : user.id}) }}"><i class="fa fa-trash"></i></a>
-             </td> 
+            
                </tr>
-        {% endfor %}    
-    
+          {% endfor %}
+    {% endfor %}
          </tbody>
          <tfoot>
 
          
          </tfoot>
       </table> 
-
-   
-   </div>
   
+  
+    
+   </div>
+    
   {% endblock %}
