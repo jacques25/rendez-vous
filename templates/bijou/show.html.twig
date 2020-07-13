@@ -12,25 +12,22 @@
 	        <div class="col-md-6">
 						<div class="col">
 							<div class="column-left">
-								{% if bijou.filename %}	
- 			
-					         {% if bijou. promoIsActive == true %}
-				<div class="product-promo">
-				          <span>{{bijou.promo|capitalize}} </span> <br>
-									{% for option in bijou.optionBijou %}
-									{% if loop.first  %}
-									{% set remise = option.prix * bijou.multiplicate %}
-								   	  {% set   prixRemise = option.prix - remise %}
-											
-									   {% set percent = (prixRemise*100)/ option.prix %}
-										<span>{{percent}} %</span>
-										{% endif %}
-									{% endfor %}
-									
-				</div>
-				{% endif %}
-									
+							  		
+								    {% if bijou.promoIsActive == true %}
+		              		<div class="product-promo">
+				                <span>{{bijou.labelPromo|capitalize}} </span> <br>
+							     	    	{% for option in bijou.optionBijou %}
+								    	     {% if loop.first  %}
+								              	{% set remise = option.prix * bijou.multiplicate %}
+						                    {% set   prixRemise = option.prix - remise %}
+											          {% set percent = (prixRemise*100)/ option.prix %}
+										          <span>{{percent}} %</span>
+									     	  {% endif %}
+									        {% endfor %}
+											</div>
+									  {% endif %}
 								
+								{% if bijou.filename %}	
 									<img id="myImg" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" class="img-modal img" data-toggle="tooltip" title="Agrandir l'image">
 
 
@@ -111,7 +108,10 @@
 										</option>
 									{% endfor %}
 								</select>
+					       
 								<select id="select-taille" class="taille mr-5" name="taille"></select>
+					
+				
 								<input type="hidden" id="promo-prix" name="prixPromo" value="">
 								<button id="btn-submit-panier" class="btn btn-info btn-panier mx-3" type="submit">
 									<i class="fa fa-shopping-bag"></i>
@@ -282,7 +282,7 @@
 				/* <![DATA[ */
 var context = {{ options|raw}} ;
 
-var contextPromo = {{ promo|raw }};
+var promo = {{ promo|raw }};
 
 /*]]>*/
 			</script>

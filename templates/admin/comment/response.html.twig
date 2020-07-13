@@ -1,0 +1,63 @@
+{% extends  "admin_base.html.twig" %}
+
+		{% block title %}
+		Réponse 
+		{% endblock %}
+   
+		{% block body %}
+    <div class="container">
+			<div class="row contact">
+				
+					<div class="contact-me modal-contact"  role="dialog" style="display:block" id="modal-response">
+					<div class="card-contact">
+						<div class="card-header">
+							<h2 class="text-center font-italic">
+								Réponse  
+							</h2>
+						</div>
+						<div class="card-body-contact">
+					
+						  <form action="{{ path('admin_comment_response', {'id' : comment.id})}}"  method="POST">
+							      <h4 class="mt-3 text-center text-info"> Object du Commentaire :
+										{% if comment.formation %}
+											 {{comment.formation.title}}
+											 {% else %}
+												 {{comment.seance.title}}
+										{% endif %}
+								</h4>
+								
+					             <div class="from-group p-4">   
+											  <input  name="response[subject]" type="hidden" value="	{% if comment.formation %}
+											 {{comment.formation.title}}
+											 {% else %}
+												 {{comment.seance.title}}
+										{% endif %}" class="form-control">
+												</div>
+												<div class="form-group">
+											  <input type="text" name="response[lastname] " placeholder= "{{comment.user.firstName}}" class="form-control"  value="{{comment.user.firstName}}">
+										   </div> 
+											 <div class="form-group">
+											 	 <input type="text" name="response[firstname]" placeholder= "{{comment.user.lastName}}" class="form-control" value="{{comment.user.lastName}}">
+											 </div>
+										   <div class="form-group">
+											 <input type="email"  name="response[email]" placeholder= "{{comment.user.email}}" class="form-control" value="{{comment.user.email}}">
+											 </div>
+											  <div class="form-group">
+												<textarea   rows="8"  class="form-control" name="response[message]" ></textarea>
+											 </div>
+
+
+							<button type="submit" class="btn btn-info btn-block rounded-3 py-2 mt-5">
+								Envoyer
+							</button>
+				</form>
+						</div>
+					</div>
+				</div>
+</div>
+			</div>
+		{% endblock %}
+
+{% macro textarea(name, value, rows = 10, cols = 40) %}
+    <textarea name="{{ response.message }}" rows="{{ rows }}" cols="{{ cols }}">{{ value|e }}</textarea>
+{% endmacro %}

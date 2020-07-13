@@ -25,7 +25,7 @@ class AdminPageController extends AbstractController
          $pages = $paginatorInterface->paginate(
             $pageRepository->findAll(),
            $request->query->getInt('page' ,  1),
-                    10
+               5
      );
         return $this->render('admin/page/index.html.twig', [
             'pages' => $pages,

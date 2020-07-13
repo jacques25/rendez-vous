@@ -8,6 +8,7 @@
 @import "../css/card.css";
 @import "../css/bootstrap-datetimepicker.min.css";
 @import "../css/modal.css";
+@import "../css/rating.css";
 
 @viewport {
     width: device-width;
@@ -68,9 +69,9 @@ body {
 }
 
 .img-panier {
-    box-shadow: 4px 2px 1px rgba(136, 120, 120, 0.5);
+  box-shadow: 1px 1px 4px 0px rgba(136, 120, 120, 0.3);
     opacity: 1.5;
-    width: 120px;
+    width: 80px;
 }
 
 .images {
@@ -241,12 +242,6 @@ h1 {
       color: #888;
     opacity: .75;
 }
-.modal-message{
-    max-width: 800px;
-    width: 100%;
-    margin: 85px 0px 0px -15px;
-    position: relative;
-}
 
 button[type="button"].close-message {
      opacity: 1;
@@ -397,7 +392,7 @@ h5 {
     color: #8f725c;
 }
 
-.paragraph p, 
+.paragraph p,   
 .body-text p {
     font-size: 1.2rem;
    text-align: justify;
@@ -407,6 +402,7 @@ h5 {
 .asterix-color {
     color: red;
 }
+
 
 
 /* PAGE BIJOU SHOW */
@@ -700,7 +696,7 @@ td {
 /* TABLE PANIER COMMANDE */
 
 .table-tbody td {
-    background-color: rgb(160, 160, 160);
+    background-color: rgb(255, 247, 247);
 }
 
 /* BUTTON*/
@@ -880,12 +876,17 @@ font-size: 16px;
     color: #fff;
     background-color: #dc3545;
 }
-
+.total-left {
+    text-align: left;
+}
+.total-right {
+    text-align: right;
+}
 #total, .btn-telechargement {
     background: rgb(5, 39, 78);
     padding: 15px;
     color: #fff;
-    text-align: center;
+    
     border-radius: 16px;
     font-size: 12px;
 }
@@ -951,6 +952,11 @@ font-size: 16px;
      font-weight: 800;
 }
 /** Comments */
+.comments {
+     width: 100%;
+     padding:0;
+     left: 0;
+}
 .carbonads {
     box-shadow:  3px 3px 8px 0px rgba(136, 134, 134, 0.527);
     text-align:  justify;
@@ -966,4 +972,8 @@ font-size: 16px;
 
 #compteur {
     font-size: 14px;
+}
+.fa-star {
+     color: gold;
+     font-size: 22px;
 }

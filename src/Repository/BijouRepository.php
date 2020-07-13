@@ -33,7 +33,7 @@ class BijouRepository extends ServiceEntityRepository
      * @param SearchData $data
      * @return Bijou[]
      */
-    public function findSearch(SearchData $search): array
+   /*  public function findSearch(SearchData $search): array
     {
 
         $query = $this
@@ -57,6 +57,11 @@ class BijouRepository extends ServiceEntityRepository
                 ->andWhere('op.prix <= :max')
                 ->setParameter('max', $search->max);
         }
+        if(!empty($search->reference)) {
+              $query = $query
+              ->andWhere('op.reference LIKE :q')
+              ->setParameter('q', "%{$search->q}%");
+        }
 
         if (!empty($search->promo)) {
             $query = $query
@@ -70,7 +75,7 @@ class BijouRepository extends ServiceEntityRepository
         }
         return $query->getQuery()->getResult();
     }
-
+ */
 
     public function findAllByBoutique(array $boutique, $produit)
     {
@@ -115,7 +120,7 @@ class BijouRepository extends ServiceEntityRepository
           $qb->getQuery()->getResult();
     }
 
-    public function findAllVisibleQuery(Recherche $search): Query
+/*     public function findAllVisibleQuery(Recherche $search): Query
     {
         $query =  $this->findVisibleQuery() ;
           if($search->getReference()) {
@@ -137,9 +142,9 @@ class BijouRepository extends ServiceEntityRepository
        
        return  $query->getQuery();
           
-    }
+    } */
 
-    public function findVisibleQuery()
+    /* public function findVisibleQuery()
     {
         return $this->createQueryBuilder('b')
                        ->join('b.option_bijou', 'op')
@@ -147,7 +152,7 @@ class BijouRepository extends ServiceEntityRepository
                       ->orderBy('b.title' , 'ASC')
                       ;
                   
-    }
+    } */
     
      public function findBijousByMotCle($motcle)
     {
@@ -168,8 +173,9 @@ class BijouRepository extends ServiceEntityRepository
          ->leftJoin('b.option_bijou', 'ob')
          ->addSelect('ob')
          ->andWhere('ob.reference LIKE :ref')
+         ->orderBy('b.title', 'ASC')
         ->setParameter('ref', '%' . $motcle . '%')
-     
+        
             ->getQuery();
           
         return $query->getResult();

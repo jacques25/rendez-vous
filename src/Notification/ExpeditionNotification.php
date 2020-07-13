@@ -37,7 +37,7 @@ class ExpeditionNotification
             $dateExpedition =  $expedition->getDateExpedition();
             $message = $expedition->getMessage();
             $subject  = $expedition->getSubject();
-            
+        
           if ($dateExpedition !== null) {
               $mail = (new TemplatedEmail())
         ->from(new Address('contact.client@rendezvous.fr', 'Rendez-vous Avec Soi'))

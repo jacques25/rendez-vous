@@ -1,3 +1,6 @@
+{% set totalBijou = 0 %}
+{% set totalPromo = 0 %}
+{% set port = 0 %}
 <div class="col-md-6">
 <div class="card m-3">
     <div class="card-header">
@@ -45,7 +48,7 @@
                   <td>Réference</td>
                   <td>Taille</td> 
                   <td>Quantite</td>
-                  <td>Prix</td>
+                  <td>Prix Unitaire</td>
                  
                   <td>Sous Total</td>
                  
@@ -59,26 +62,24 @@
                  <td>{{option.reference}} </td>
                  <td> {{option.taille}} </td> 
                   <td> {{option.quantite}} </td>
-                 <td>
-                       {% if option.bijou.promoIsActive %}
+                 {% if option.bijou.promoIsActive %}
                  
-                      {{(option.prix * option.bijou.multiplicate) * option.quantite}}€
-                 {% else %}
-                    
-                 {{option.prix * option.quantite}} € 
-                   {% endif %}
-                  </td>
-
-                              {% if option.bijou.promoIsActive %}
-                 
-                    <td>    {{(option.prix * option.bijou.multiplicate) * option.quantite}}€  </td>
+                    <td>    {{(option.prix * option.bijou.multiplicate) }}€  </td>
                      
                      
                  {% else %}
                     
-                <td> {{option.prix * option.quantite}} €  </td>
+                <td> {{option.prix }}€  </td>
                    {% endif %}
-                  
+                  {% if option.bijou.promoIsActive %}
+                 
+                    <td>    {{(option.prix * option.bijou.multiplicate) * option.quantite }}€  </td>
+                     
+                     
+                 {% else %}
+                    
+                <td> {{option.prix * option.quantite }}€  </td>
+                   {% endif %}
                </tr>
             {% endfor %}  
             {% for option in commande.commande.optionBijou %}
@@ -87,11 +88,13 @@
             
                  {% if option.bijou.promoIsActive %}
                    {% set port = option.bijou.port %}
+                   {% set totalPromo =  (option.prix * option.bijou.multiplicate) * option.quantite %}
+                   
                 <tr style="background-color:#9f53fc; color:#fff;">  <td colspan="4">frais de livraison</td> <td> {{port}}  € </td>  </tr> 
                  {% endif %}
-             
+                  {% set totalBijou = option.prix * option.quantite %}
             {% endfor %}
-              <tr style="background-color:#9f53fc; color:#fff;">  <td colspan="4">Total de la Commande</td> <td> {{commande.commande.totalCommande }} € </td>
+              <tr style="background-color:#9f53fc; color:#fff;">  <td colspan="4">Total de la Commande</td> <td> {{totalBijou + totalPromo + port }} € </td>
                
              
                 

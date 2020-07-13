@@ -1,4 +1,6 @@
-
+{% set totalBijou = 0 %}
+{% set totalPromo = 0 %}
+{% set port = 0  %}
 		{% block body %}
 		
 		{% for message in app.flashes('warning') %}
@@ -39,24 +41,24 @@
 								<td>
 									{{commande.dateCommande|format_datetime('full', 'none', locale='fr')|capitalize }}	
 								</td>
-							
-								{% if  commande.commande.totalPromo is defined and commande.commande.totalPromo is not null %}
+				          {% for option in commande.commande.optionBijou %}
+									
+				         
+								{% if  commande.commande.isActive == true %}
+								  
+				            
 									<td class="col">
-										{{commande.commande.totalPromo }}
-										€
+									      {{(option.prix * option.multiplicate  * option.quantite) + option.prix * option.quantite}}
 									</td>
-									<td class="col">
-										{{commande.commande.fraisPort }}
-										€
-									</td>
-
-
-								{% endif %}
-
-								<td>
-									{{commande.commande.totalCommande}} €
+									{% else %}
+										<td> {{option.prix * option.quantite }}</td>
+								 {% endif %}
+    
+						  {% endfor %}
+   
+	 <td>
+								 €
 								</td>
-
 								<td>
 									<a class="mx-3" href="{{ path('commande_pdf',{'id': commande.id}) }}" target="_blank">
 										<i class="fas fa-upload"></i>

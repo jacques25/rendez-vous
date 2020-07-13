@@ -83,35 +83,27 @@ class BijouType extends ApplicationType
                 'expanded' => false
 
             ])
-                ->add('promo', TextType::class, [
-                  'required' => false,
-                  'attr' => [ 
-                  'placeholder'=> 'Libellé de promotion'
-                  ]
-                ])
-             ->add('date_start', null ,[
+               ->add('labelPromo', TextType::class, ['label' => 'Titre de la promotion'])
+            
+                ->add('date_start', null ,[
                  'required' => false,
                   'label' => false,
                   'widget' => 'single_text',
-                   'html5' => false,
-                   'attr' => ['class' => 'datetimepicker', 'placeholder'=> 'Date de début' ],
-                   'empty_data' => ' '
                  
-            ])
-            ->add('date_end',  null,  [
+                   'attr' => [ 'placeholder'=> 'Date de début' ],
+                   'empty_data' => ' '
+                 ])
+              ->add('date_end',  null,  [
                 'label' => 'Date de fin',
                 'required' => false,
                  'widget' => 'single_text',
-                 'html5' => false,
-                 'attr' => ['class' => 'datetimepicker2'],
+                 'attr' => [ 'placeholder' => 'Date de fin'],
                  'empty_data' => ' '
-                 
-              
-            ])
+              ])
              ->add('port', MoneyType::class,  [
                 'required' => false,
                 'label' => 'Frais de livraison',
-                'empty_data' => 2.00
+                'attr' => ['placeholder' => '2.00€']
             ])
            ->add('multiplicate', ChoiceType::class, [
                  'required' => false,
@@ -132,12 +124,13 @@ class BijouType extends ApplicationType
                    '65%' => 0.35,
                    '70%' => 0.30
                ]
-           ])
-            ->add('promoIsActive', CheckboxType::class, [
+                ])
+                  ->add('promoIsActive', CheckboxType::class, [
                  'label' => 'En promo',
-                 'required' => false
-            ])
-            
+                'required' => false,
+                'attr' => ['class' => 'checkbox']
+            ]) 
+         
             ;
     }
 

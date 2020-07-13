@@ -16,26 +16,34 @@
  
   	<div class="col-sm-6 col-md-4 col-lg-3">
 		<div class="card">
-                <div class="card-header">
-                	<div class="card-title">
+					{% if bijou.filename %}
+						<img class="card-img img-responsive" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" alt="{{bijou.filename}}" width="180"/>
+	     
+			{% endif %}
+			
+				 
+			 
+			   {% if bijou.promoIsActive == true %}
+				<div class="product-promo">
+				          <span style="font-size:12px">{{bijou.labelPromo|capitalize}} </span> <br>
+									{% for option in bijou.optionBijou %}
+									{% if loop.first  %}
+									{% set remise = option.prix * bijou.multiplicate %}
+								   	  {% set   prixRemise = option.prix - remise %}
+											
+									   {% set percent = (prixRemise * 100)/ option.prix %}
+										<span style="font-size:12px">{{percent}} %</span>
+										{% endif %}
+									{% endfor %}
+									
+				</div>
+				{% endif %}
+			
+			<div class="card-body">
+			     	<div class="card-title">
            
 							<span class="sub-title uppercase mx-2">{{bijou.title}}</span>
                      </div>
-                </div>
-					{% if bijou.filename %}
-						<img class="card-img img-responsive" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" alt="{{bijou.filename}}" width="200"/>
-	     
-				<div class="row flex-row mx-5">
-						<a class=" btn btn-info" href="{{path('admin_bijou_edit', { 'id': bijou.id })}}">
-								<i class="fa fa-edit"></i> 
-					    </a>
-                        {% include "admin/bijou/_delete_form.html.twig" %}
-				</div>
-			{% endif %}
-				
-			<div class="card-body">
-
-
 		            {% for option in bijou.optionBijou %}
 											 {% if loop.first %}
 								<p>{% if option.disponible == true %}<span>Disponible</span>{%else%} <span>Indisponible</span> {% endif %}</p>
@@ -51,6 +59,15 @@
 						 {% endfor %}
 					</div>
 						
+			</div>
+			<div class="card-footer">
+			<div class="row flex-row mx-5">
+						<a class=" btn btn-info" href="{{path('admin_bijou_edit', { 'id': bijou.id })}}">
+								<i class="fa fa-edit"></i> 
+					    </a>
+                        {% include "admin/bijou/_delete_form.html.twig" %}
+				</div>
+			
 			</div>
        </div>
     </div>

@@ -1,18 +1,17 @@
 {% extends "base.html.twig" %}
-
-
 		{% block title %}	Panier	{% endblock %}
+
 			{% set totalBijou = 0 %}
 				{% set totalPrix = 0 %}
 				{% set refReduction = { } %}
          {% set totalPromo = 0 %}
+				  {% set port = 0 %}
          {% set remise = 0 %}
 {% for item in items %}
-	{% for promo in item.bijou.promo %}
-    {% set refReduction = refReduction|merge({ ('%'~ promo.reduce.percent) : 0 }) %}
+	   {% if item.bijou.promoIsActive == true %}
+     {% set port = item.bijou.port %}
+									{% endif %}
 
-									
-  {% endfor %}
 {% endfor %}
 
         
@@ -35,7 +34,7 @@
 		  
 			{% if items|length  == 0 %} 
 			 
-				<div class="shadow-lg p-3 mb-5 bg-white rounded w-100"> Aucun article dans votre panier</div>
+				<div class="col-12 alert alert-success w-100 text-center"> Aucun article dans votre panier</div>
 			
      {% else %}
 		
@@ -75,6 +74,7 @@
 						
 						 {% if item.bijou.promoIsActive == true %}
 						  <td> {{item.prix * item.bijou.multiplicate}}	</td>
+							  
 						 {% else %}
 							 <td> {{item.prix}}</td>
 						 {% endif %}
@@ -94,6 +94,7 @@
                 <td>  
 						
 								 {% if  item.bijou.promoIsActive == true  %}
+								     
 							        	 {% set totalPromo  = ( item.prix * item.bijou.multiplicate) * panier[item.id] %}
 							          {{totalPromo}}
 											
@@ -106,7 +107,7 @@
 											 {% endif %}
 							
 										 </td> 
-				
+				             {% set port = item.bijou.port %}
 						    <td>
 						    	<a href="{{ path('panier_remove', {'id': item.id})}}" class="btn btn-sm btn-danger">
 							    	<i class="fas fa-trash"></i>
@@ -119,7 +120,9 @@
                {% if items |length != 0 %}
 					    <tr>
 				     	  {% set Total = 0 %}	
-			  	      {% set Total = totalBijou + totalPromo %}
+								
+								 
+			  	      {% set Total = totalBijou + totalPromo + port %}
 								
 				 	       <td colspan="12" class="font-weight-bold text-uppercase">
 					         <span class="float-lg-right">Total : {{ Total }}€</span>

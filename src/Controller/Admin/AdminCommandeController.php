@@ -19,6 +19,8 @@ use App\Entity\Expedition;
 use App\Entity\Commandes;
 use App\Form\Contact\ExpeditionType;
 use App\Notification\ExpeditionNotification;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @Route("/admin")
@@ -70,9 +72,12 @@ class AdminCommandeController extends AbstractController
     * @Route("/voir/commandes/{user}", name="admin_commande_show", requirements={"user"="\d+"})
     */
 
-    public function show($user){
+    public function show(Request $request, $user){ 
+       $referer = $request->headers->get('referer');
       $commandes = $this->commandesRepository->findCommandesByUser($user);
-      
+       if(! $this->isGranted("ROLE_ADMIN")) {
+            return new RedirectController($referer);
+       }
       return $this->render('admin/commande/show.html.twig', ['commandes' => $commandes]);
     }
 
@@ -109,15 +114,17 @@ class AdminCommandeController extends AbstractController
      $form = $this->createForm(ExpeditionType::class, $expedition);
      $form->handleRequest($request);
       
+ 
      if ($request->isMethod('POST')) { 
+         $dateExpedition =  $expedition->getDateExpedition();
+     
          $commande->setSendCommande(1);
          $commande->setNumeroCommande($this->getReference->reference());
-         $commande->setDateExpedition($expedition->getDateExpedition());
+         $commande->setDateExpedition($dateExpedition);
          $em= $this->getDoctrine()->getManager();
          $em->persist($commande);
          $em->flush(); 
-         if ($commande !== null) {
-           
+         if ($commande) {
              $expeditionNotification->notify($expedition, $commande);
          
              $this->addFlash('success', 'Message envoyé');

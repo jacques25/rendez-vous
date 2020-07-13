@@ -8,6 +8,7 @@ use App\Repository\CommandesRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdminController extends AbstractController
 {  
@@ -25,11 +26,12 @@ class AdminController extends AbstractController
      * @Route("/admin", name="admin")
      *  
      */
-    public function admin()
+    public function admin(Request $request)
     {    
+        $referer = $request->get('referer');
          if (!$this->isGranted('ROLE_ADMIN')) { 
               $this->addFlash('danger' , 'Seul les administrateurs ont accés au back office du site');
-              return $this->redirectToRoute('account_login');
+              return  new RedirectResponse($referer);
          }
         return $this->render('admin/dashboard.html.twig', [
             'bijouCount' => $this->bijouRepository->getBijousCount(),

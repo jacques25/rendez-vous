@@ -2,12 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\UserAdress;
-use App\Form\ApplicationType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use App\Form\ApplicationType;
+use App\Entity\UserAdress;
 
 class UserAdressType extends ApplicationType
 {
@@ -16,7 +17,7 @@ class UserAdressType extends ApplicationType
         $builder
             ->add('firstName', TextType::class, $this->getConfiguration(false, "Prénom"))
             ->add('lastName', TextType::class, $this->getConfiguration(false, "Nom"))
-            ->add('phone', TextType::class, $this->getConfiguration(false, "Téléphone"))
+            ->add('phone', TelType::class, $this->getConfiguration(false, "Téléphone"))
             ->add('street', TextType::class, $this->getConfiguration(false, "Rue"))
             ->add('complement', TextType::class, $this->getConfiguration(false, "Complément d'adresse", ['required' => false]))
             ->add('cp', TextType::class, $this->getConfiguration(false, "Code postal"))

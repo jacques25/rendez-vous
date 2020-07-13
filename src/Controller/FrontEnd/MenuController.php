@@ -22,7 +22,7 @@ class MenuController extends AbstractController
                 0
             );
         $boutiques = $boutiqueRepository->findBoutiqueWithCategory();
-
+       
         return $this->render(
             'partials/header.html.twig',
             [

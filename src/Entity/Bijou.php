@@ -14,7 +14,7 @@ use App\Entity\PropertiesBijou;
 use App\Entity\Picture;
 use App\Entity\OptionBijou;
 use DateTime;
-Use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BijouRepository")
@@ -119,15 +119,19 @@ class Bijou
      */
     private $popuptailles;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $label_promo;
+
+   
+
          /**
      * @ORM\Column(name="promoIsActive", type="boolean", nullable=true)
      *
      */
     private $promoIsActive =  false;
-   /**
-    * @ORM\Column(type="string", nullable=true)
-    */
-   private $promo;
+  
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @param DateTime|null 
@@ -151,19 +155,14 @@ class Bijou
      */
     private $multiplicate;
 
-
-   
-
-    public function __construct()
+     public function __construct()
     {
-
         $this->option_bijou = new ArrayCollection();
         $this->produits = new ArrayCollection();
         $this->boutiques = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->popuptailles = new ArrayCollection();
         $this->date_start = new DateTime();
-      
     }
 
 
@@ -231,6 +230,7 @@ class Bijou
         $this->filename = $filename;
 
         return $this;
+
     }
 
     /**
@@ -469,17 +469,27 @@ class Bijou
 
         return $this;
     }
-   
-  
 
-    public function getPromo(): ?string
+    public function getLabelPromo(): ?string
     {
-        return $this->promo;
+        return $this->label_promo;
     }
 
-    public function setPromo(?string $promo): self
+    public function setLabelPromo(?string $label_promo): self
     {
-        $this->promo = $promo;
+        $this->label_promo = $label_promo;
+
+        return $this;
+    }
+
+    public function getPromoIsActive(): ?bool
+    {
+        return $this->promoIsActive;
+    }
+
+    public function setPromoIsActive(?bool $promoIsActive): self
+    {
+        $this->promoIsActive = $promoIsActive;
 
         return $this;
     }
@@ -528,18 +538,6 @@ class Bijou
     public function setMultiplicate(?float $multiplicate): self
     {
         $this->multiplicate = $multiplicate;
-
-        return $this;
-    }
-
-    public function getPromoIsActive(): ?bool
-    {
-        return $this->promoIsActive;
-    }
-
-    public function setPromoIsActive(?bool $promoIsActive): self
-    {
-        $this->promoIsActive = $promoIsActive;
 
         return $this;
     }

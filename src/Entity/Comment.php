@@ -3,13 +3,18 @@
 namespace App\Entity;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
+ * 
  */
 class Comment
 {
@@ -25,10 +30,12 @@ class Comment
     */
     private $content;
 
-       /**
-     * @ORM\Column(type="string", length=255)
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      */
-    private $authorName;
+    private $user;
+
+ 
     /**
      * @ORM\ManyToOne(targetEntity=Seance::class, inversedBy="comments")
      */
@@ -39,6 +46,10 @@ class Comment
      */
     private $formation;
 
+    /**
+   * @ORM\column(type="boolean")
+   */
+  private $commentLu;
     /**
      * @ORM\Column(type="boolean")
      */
@@ -51,13 +62,16 @@ class Comment
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(min="1", max="5")
      */
-    private $rate;
+    private $rating;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->approved = false;
+  
+    
     }
 
     public function getId(): ?int
@@ -114,29 +128,7 @@ class Comment
         return $this;
     }
    
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('authorName', new NotBlank(array(
-            'message' => 'Vous devez entrer votre nom'
-        )));
-        $metadata->addPropertyConstraint('content', new NotBlank(array(
-            'message' => 'vous devez entrer un commentaire'
-        )));
-      
-    }
-
-    public function getAuthorName(): ?string
-    {
-        return $this->authorName;
-    }
-
-    public function setAuthorName(string $authorName): self
-    {
-        $this->authorName = $authorName;
-
-        return $this;
-    }
-
+   
     public function getFormation(): ?Formation
     {
         return $this->formation;
@@ -149,15 +141,40 @@ class Comment
         return $this;
     }
 
-    public function getRate(): ?int
+    public function getRating(): ?int
     {
-        return $this->rate;
+        return $this->rating;
     }
 
-    public function setRate(?int $rate): self
+    public function setRating(?int $rating): self
     {
-        $this->rate = $rate;
+        $this->rating = $rating;
 
         return $this;
     }
+
+    public function getCommentLu(): ?bool
+    {
+        return $this->commentLu;
+    }
+
+    public function setCommentLu(bool $commentLu): self
+    {
+        $this->commentLu = $commentLu;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 }

@@ -2,22 +2,28 @@
 
 namespace App\Controller\FrontEnd;
 
-use App\Entity\Booking;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ObjectManager;
 use App\Service\UsersService;
-use App\Repository\CommentRepository;
-use App\Notification\FormationNotification;
-use App\Form\UserBookingType;
-
-use App\Form\CommentType;
-use App\Repository\FormationRepository;
-use App\Entity\Comment;
-use App\Repository\BookingRepository;
-use App\Repository\UserRepository;
-use App\Service\BookingService;
 use App\Service\FormationService;
+use App\Service\BookingService;
+use App\Repository\UserRepository;
+
+use App\Repository\RatingRepository;
+use App\Repository\FormationRepository;
+use App\Repository\CommentRepository;
+use App\Repository\BookingRepository;
+use App\Notification\FormationNotification;
+use App\Notification\CommentNotification;
+use App\Form\UserBookingType;
+use App\Form\CommentType;
+use App\Entity\Rating;
+use App\Entity\Formation;
+use App\Entity\Comment;
+use App\Entity\Booking;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class FormationController extends AbstractController
 {
@@ -32,36 +38,55 @@ class FormationController extends AbstractController
    * @Route("/formation/{slug}", name="formation_show")
    *  
    */
-  public function show($slug,  Request $request, FormationRepository $repo, CommentRepository $commentRepository, BookingRepository $bookingRepository)
+  public function show($slug,  Request $request, FormationRepository $repo, CommentRepository $commentRepository, CommentNotification $commentNotification, BookingRepository $bookingRepository)
   { 
-    $user = $this->getUser();
+     $referer = $request->headers->get('referer');
+     
+    $user = $this->getUser(); 
+   
     $formation = $repo->findOneBy(['slug' => $slug]);  
-    $bookings = $bookingRepository->findByFormation($formation->getId()); 
+   $bookings = $bookingRepository->findByFormation($formation->getId()); 
+   $ratingsData = $commentRepository ->getRatingCommentByFormation($formation);
+   $nbComments = $commentRepository->getNumberCommentByFormation($formation);
+    $ratingsPrinted = $ratingsData['numberRatings'];
+    $averageRatings = $ratingsData['averageRatings'];
+    $ratings = $commentRepository->getRatingByComment();
+    
+    $comment = new Comment(); 
+ 
   
-    $comments = $commentRepository->getCommentsForFormation($formation->getId());
-    
-    
-    $comment = new Comment();
-    $form =  $this->createForm(CommentType::class, $comment);
+    $form =  $this->createForm(CommentType::class, $comment);    
+   
     $form->handleRequest($request);
-  
-      
+ 
+     if($form->isSubmitted() and !$form->isValid())
+     {
+        $this->addFlash('warning', 'Certains champs ne sont remplis, veuillez recommencer.' );
+        return new RedirectResponse($referer);
+     }
+     
       if ($form->isSubmitted() and  $form->isValid()) {
-          $author = $user->getFirstName();
+      
           $em = $this->getDoctrine()->getManager();
           $comment->setFormation($formation);
-          $comment->setAuthorName($author);
+          $comment->setCommentLu(false);
+          $comment->setUser($user);
           $em->persist($comment);
           $em->flush();
-                       
+          $commentNotification->notify($comment, $user);
+            $this->addFlash('success', ' Merci, ' . $user->getFirstname(). " pour votre commentaire. Votre commentaire sera publié  dès  que nous l 'aurons approuvé");
           return $this->redirectToRoute('formation_show', ['slug' => $formation->getSlug() ]);
       }
     return $this->render('formations/show.html.twig', [
       'bookings' =>$bookings,
-      'comments' => $comments,
-      
       'form' => $form->createView(),
-      'formation' => $formation
+      'formation' => $formation,
+      'nbComments' =>$nbComments ,
+      'averageRatings' => $averageRatings,
+      'ratingsPrinted' => $ratingsPrinted,
+      'ratings' => $ratings,
+     
+     
     ]);
   }
     /**
@@ -70,7 +95,7 @@ class FormationController extends AbstractController
      * @return void
      */
     public function inscriptionFormation($id,  Request $request, FormationNotification $formationNotification, Booking $booking,
-                                                                                  UserRepository $userRepository, BookingRepository $bookingRepository) {
+                                           UserRepository $userRepository, BookingRepository $bookingRepository) {
                 
                    $user = $this->getUser();
             
@@ -103,7 +128,7 @@ class FormationController extends AbstractController
                              if (!$this->container->get('security.authorization_checker')->isGranted('ROLE_FORMATION')) {
                                                   $user->addRole("ROLE_FORMATION");
                 }
-                        
+                       
                             $formation->addUser($user);
                             $booking->addUser($user);
                             $em->persist($user);
@@ -126,4 +151,6 @@ class FormationController extends AbstractController
            
              ]);
     }
+
+  
 }

@@ -1,17 +1,41 @@
-
-          <h3>	Ils ont donné leur avis	</h3> 
-            {% for comment in  formation.comments %}   
+     
+       	<h3 class="comment">		Ils ont donné leur avis .... </h3>
+         	   	 <h6 style="font-size:21px; font-weight: bold;">   Note globale : 
+												
+                               <div class="stars-outer">
+														
+                                          <div class="stars-inner" id="star-formation" data-starformation="{{averageRatings}}"></div>
+                       
+								             </div>   
+                             <div class="number-rating">     {{averageRatings|round(1, 'floor')}}		 sur  5</div>
+					     </h6>
+           
+              
+								 <h6  style="font-size:21px; font-weight: bold;">Evaluations Clients : 	<span>{{nbComments.NumberComments}}</span></h6>
+      {% for comment in  formation.comments %}      
+      
+       {% if comment.approved == true  %}
+         
+            
+              
       <div class="carbonads p-2  m-3 w-100">
-                   {% if comment.approved == true  %}
-                            <div class="carbonads-header mb-2"> <p> Le {{comment.createdAt|format_date('full')}} par  {{comment.authorName}}</p> </div>
+              
+                            <div class="carbonads-header mb-2"> 
+                            <p> Le {{comment.createdAt|format_date('full')}}    
+                                {% for i  in  1.. comment.rating %}
+                               <span class="fa fa-star right"  id="commentRatingFormation" data-commentformation="{{comment.rating}}"></span>
+                             {% endfor %} 
+                              <br> par  <span class="text">   {{comment.user.lastName}}    </span></p>
+                           
+                           
+                             
+                              </div>
                             <div class="carbonads-body">{{comment.content}}</div>
-			   {% endif %}   
-       </div>
+			
+       </div>  
+        {% endif %}   
 {% endfor %}	  
 
-
-          
-  
                
                 
               

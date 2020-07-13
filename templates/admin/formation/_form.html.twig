@@ -52,7 +52,10 @@
                      </thead>
                      <tbody>
                      
-                        {% for user in formation.users %} 
+                        {% for booking in formation.booking %} 
+                             {% for user in booking.users %}
+                               
+                           
                        <tr>
                          <td> {{user.firstname}} </td>
                          <td>  {{user.lastname}}</td>
@@ -63,7 +66,7 @@
                        
                            </tr>
                          {% endfor %} 
-                    
+                      {% endfor %}
                      </tbody>
              </table>
        </div>

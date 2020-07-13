@@ -70,8 +70,6 @@ class AdminBijouController extends AbstractController
              
             $manager = $this->getDoctrine()->getManager();
            
-        
-          
             $bijou->setCreatedAt(new DateTime());
             $bijou->setUpdatedAt(new DateTime());
           
@@ -91,7 +89,8 @@ class AdminBijouController extends AbstractController
      * @Route("/bijou/{id}", name="admin_bijou_show", methods={"GET"})
      */
     public function show(Bijou $bijou): Response
-    {
+    { 
+        
         return $this->render('admin/bijou/show.html.twig', [
             'bijou' => $bijou,
         ]);
@@ -105,6 +104,10 @@ class AdminBijouController extends AbstractController
      
         $manager = $this->getDoctrine()->getManager();
         $bijou = $manager->getRepository('App:Bijou')->findOneBy(['id' => $id]);
+      
+         
+        $form = $this->createForm(BijouType::class, $bijou);
+        $form->handleRequest($request);
         
         // original OptionBijou entity 
         $originalOptionBijou = new ArrayCollection();
@@ -112,7 +115,9 @@ class AdminBijouController extends AbstractController
         foreach ($bijou->getOptionBijou() as $optionBijou) {
             $originalOptionBijou->add($optionBijou);
         }
-
+          
+     
+      
         $form = $this->createForm(BijouType::class, $bijou);
         $form->handleRequest($request);
         
@@ -126,12 +131,6 @@ class AdminBijouController extends AbstractController
                 }
             } 
             
-           
-           if($bijou->getDateEnd() == new DateTime('now'))
-           {      
-             
-                 $bijou->getPromoIsActive(false);
-           }
             $bijou->setUpdatedAt(new DateTime());
            
             $manager->persist($bijou);
@@ -167,13 +166,17 @@ class AdminBijouController extends AbstractController
     /**
      * @Route("/promotions/liste", name="admin_promo_list")
      *
-     * @param Bijou $bijou
-     * @return void
      */
     public function BijouPromo($promoIsActive = true, BijouRepository $bijouRepository)
-    {
+    {       
+             $em = $this->getDoctrine()->getManager();
+           
              $promos = $bijouRepository->findBy(['promoIsActive' => $promoIsActive]);
-
+             
+             $promo = [];
+             if (array_key_exists('dateEnd' , $promos)){
+                      dd($promo);
+            } 
              return $this->render('admin/bijou/promo_bijou.html.twig', ['promos'=> $promos]);
     }
 }

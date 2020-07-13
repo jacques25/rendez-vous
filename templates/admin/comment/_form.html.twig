@@ -1,20 +1,30 @@
 	{{ form_start(form) }}
-<div class="row">
-     <div class="col-sm-6">
-		    	{{ form_row(form.authorName, {'attr' :{'autocomplete': 'autocomplete'}}) }}
 
+ <div class="row">
+     <div class="col-sm-6">
+		     {% if comment.user.gender == 'Madame' %}
+				  <strong>Auteure : </strong>
+					{% else %}
+					<strong>	Auteur :  </strong>
+				 {% endif %}
+		         {{comment.user.firstName }}
+          	{{ form_row(form.content) }}			
         
      
      </div>
     
-</div>
-<div class="row">
+
       <div class="col-sm-6">
-      			{{ form_row(form.content) }}		
-						{{ form_row(form.approved) }}
+		         {{form_widget(form.approved, {'attr' : {'class' : 'customCheckbox'}})}}
+      		{{form_row(form.createdAt)}}
+					{{form_row(form.rating)}}
+			
+				
       </div>
     
-</div>
+
+				
+</div> 
 
 	<div class="row mt-4 mb-3 mx-5">
 					<div class="col-sm-3 mb-4">

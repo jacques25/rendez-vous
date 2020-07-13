@@ -20,6 +20,7 @@ require("./typeahead.js");
 require("./select");
 require("./menu_responsive");
 require("./compteur.js");
+require("./rating.js")
 
 $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
@@ -54,9 +55,7 @@ window.onload = function () {
     }
   
   }
-  
 
-  
    var modal_formation = document.getElementById('modal-comment')
   var btn = document.getElementById('btn_formation');
   var body = $("html","body");
@@ -68,31 +67,47 @@ window.onload = function () {
     });
     }
   
-
   var close = document.getElementsByClassName('close-formation')[0];
   if (close !== null) {
-         close.onclick = function () {
+    $(close).click(function () {
       modal_formation.style.display = "none";
 
-    }
- 
-    
+    })
   }
- /*  var modal1 = document.getElementById("modal1");
-  var open = document.getElementById("open");
+    let message = document.getElementById('modal-message');
+    if (message !== null) {
+      message.style.display = "block";
+    }
+    let closeMessage = document.getElementsByClassName('close-message')[0];
+    if (closeMessage !== null) {
+      $(closeMessage).click(function () {
+        message.style.display = "none";
+      })
+    }
+  
 
-  if (modal1 !== null) {
-    open.onclick = function () {
-      modal1.style.display = "block";
-    }; // Get the <span> element that closes the modal
+    var modal_contact = document.getElementById('modal-response')
+    var btnClose = document.getElementById('close-contact');
+  
+    var body = $("html","body");
+    if (btnClose !== null) {
+      $(btnClose).click(function () {
+        modal_contact.style.display = "block";
+        $("html, body").animate({ scrollTop: 0 },600);
+        return false;
+      });
+    }
 
-    var span = document.getElementsByClassName("close-modal")[0]; // When the user clicks on <span> (x), close the modal
+    var closeContact = document.getElementsByClassName('close-contact')[0];
+    if (closeContact !== null) {
+      $(closeContact).click(function () {
+        modal_contact.style.display = "none";
+      })
+ 
 
-    span.onclick = function () {
-      modal1.style.display = "none";
-    };
-  }*/
-};  
+    }
+  }
+
 // Close the dropdown if the user clicks outside of it
 window.onclick = function (event) {
   if (!event.target.matches(".dropbtn")) {
@@ -152,28 +167,5 @@ btn.on("click", function () {
     btn.append('<img src="/build/images/chevron-down.png" class="img-right>');
   }
 });
-
- 	
-
-$(document).ready(function () {
-  resetStartColors();
-  $('.fa-star').mouseover(function () {
-    resetStartColors();
-    var currentIndex = parseInt($(this).data('index'));
-    console.log('hello')
-    for (var i = 0; i <= currentIndex; i++) 
-    {
-      $('.fa-star:eq(' + i + ')').css('color','green');
-      }
-  })
-  $('.fa-star').mouseleave(function () {
-    resetStartColors();
-    console.log('bye')
-  })
-})
-function resetStartColors () {
-  $('.fa-star').css('color','#cce');
-}
-
 
 console.log("Hello Webpack Encore! Edit me in assets/js/app.js");

@@ -41,7 +41,13 @@ class ProduitController extends AbstractController
         16
         );
 
-        return $this->render('produits/show.html.twig', ['produit' => $produit, 'listeBijoux' => $listeBijoux, 'description' => $description , 'form' =>$form->createView()]);
+        return $this->render('produits/show.html.twig', [
+            'produit' => $produit,
+             'listeBijoux' => $listeBijoux, 
+             'description' => $description ,
+              'form' =>$form->createView()
+              ]
+            );
     }
 
  

@@ -71,7 +71,7 @@ class RegistrationController extends AbstractController
       $mailer->send($mail);
 
       $this->addFlash('success', "Félicitation, Votre compte a bien été crée \n un lien vous a été envoyé afin d'activé votre compte dans votre boite mail");
-      return $this->redirectToRoute('account_login');
+      return $this->redirectToRoute('app_homepage');
     }
     return $this->render('account/registration.html.twig', [
       'form' => $form->createView(),

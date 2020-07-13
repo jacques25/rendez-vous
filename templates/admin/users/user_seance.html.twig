@@ -1,61 +1,76 @@
-	{% extends "admin_base.html.twig" %}
+{% extends "admin_base.html.twig" %}
 
-   {% block title %} inscrits aux seance {% endblock %}
-  
-  {% block body %}
-  
-   <div class="container">
-    <h2> Seances</h2>
-   <table class="table table-fluid">
-    <thead>
-       <tr> 
-        
-            <th>Client</th>
-           
-            <th>Durée</th>
-            <th>Date de début</th>
-            <th>Date de fin</th>
-              <th>Seance</th>
-            <th>Action</th>
-       </tr>
-    </thead>
-     <tbody>  
-      {% for seance in seances %} 
-  {% for user in seance.users %}  
-  {% for option in seance.seanceOptions %}    
-  {% for booking in option.bookings %}
-    <tr>
- 
-   <td>       {{user.firstName}} {{user.lastName}} </td>
-  
-           <td> {{option.duree|format_time('short')}} Heure </td> 
-         
-        
-                  <td> {{booking.beginAt|format_datetime('short') }}</td>
-            <td>  {{booking.EndAt|format_datetime('short') }}</td>  
-          
-        
-            
-           <td>  {{seance.title}}</td> 
-           
-    
-  
-           
-              
-      
-           
-               
-             </tr>        
-              {% endfor %}
-              {% endfor %}
-        {% endfor %}
-           {% endfor %} 
-     </tbody>
- 
-   
-   </table>
-   
-   
-   </div>
-  
-  {% endblock %}
+		{% block title %}
+			inscrits aux seance
+		{% endblock %}
+
+		{% block body %}
+
+			<div class="container">
+				<h2>
+					Seances
+				</h2>
+
+				<div class="row">
+					{% for seance in seances %}
+						<div class="col-sm-6 mb-3">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">{{seance.title}}	</h5>
+								</div>
+								<div class="card-body">
+									{% for user in seance.users %}
+										<div class="card-text">
+											<div class="row">
+												<div class="col-lg-12">
+													<span><strong>	Prénom:	</strong>	{{user.firstName}}</span>
+													<span>	<strong>	Nom : </strong>{{user.lastName}}	</span>
+													<span>	<strong>	Email :	</strong>	{{user.email}}</span>	
+                          <span>	<strong>	Téléphone:</strong>{{user.phone}}	</span>
+												</div>
+												<div class="col-lg-12">
+													<table class="table-fluid">
+														<thead>
+															<tr>
+																<th>Durée</th>
+																<th>Début</th>
+																<th>Fin</th>
+															</tr>
+														</thead>
+                            <tbody>
+													   	{% for option in seance.seanceOptions %}
+															
+																{% for booking in option.bookings %}
+																	<tr>
+																		<td>
+																			{{option.duree|format_time('short')}}
+																		
+																		</td>
+																		<td>
+																			{{booking.beginAt|format_datetime('short') }}
+																		</td>
+																		<td>
+																			{{booking.EndAt|format_datetime('short') }}
+																		</td>
+																	</tr>
+
+																{% endfor %}
+
+													
+											    			{% endfor %}	
+                            	</tbody>
+													</table>
+
+												</div>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+            </div>
+						{% endfor %}
+					</div>
+	
+				</div>
+
+			{% endblock %}

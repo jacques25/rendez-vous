@@ -57,17 +57,18 @@ class CommandesController extends AbstractController
         'reference' => $optionBijou->getReference(),
         'taille' => $optionBijou->getTaille(),
         'prix' => $optionBijou->getPrix(),
-        'quantite' => $panier[$optionBijou->getId()],
+        'date_start' => $optionBijou->getBijou()->getDateStart(),
+        'date_end' => $optionBijou->getBijou()->getDateEnd(),
+        'multiplicate' =>$optionBijou->getBijou()->getMultiplicate(),
+        'port' => $optionBijou->getBijou()->getPort(),
+         'quantite' => $panier[$optionBijou->getId()],
         'bijou' => $optionBijou->getBijou(),
-        'date_start' =>$optionBijou->getBijou()->getDateStart(),
-        'date_end' =>  $optionBijou->getBijou()->getDateEnd(),
-        'port' => $optionBijou->getBijou() ->getPort(),
-        'multiplicate' => $optionBijou->getBijou()->getMultiplicate(),
-        'isActive' => $optionBijou->getBijou()->getPromoIsActive()
+       
       ); 
-              if($optionBijou->getBijou()->getPromoIsActive() == true)
+       
+              if($optionBijou->getBijou()== true)
               {
-                 $prixPromo = ( $optionBijou->getPrix() *$optionBijou->getBijou()->getMultiplicate() ) * $panier[$optionBijou->getId()];
+                 $prixPromo = ( $optionBijou->getPrix() * $optionBijou->getBijou()->getMultiplicate() ) * $panier[$optionBijou->getId()];
                  $totalPromo += $prixPromo;
               }else {
                   $prixBijou  = $optionBijou->getPrix() * $panier[$optionBijou->getId()] ;

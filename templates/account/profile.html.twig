@@ -69,11 +69,16 @@
 
 					</div>
 					<div class="row">
-						<div class="col-7 p-3">
+						<div class="col-6 p-3">
 							<button type="submit" class="btn btn-success">
 								Mettre à jour
 							</button>
-						</div>
+			
+							{% if app.session('panier') != null %}
+						
+						    <a href="{{path('panier')}}" class="btn btn-panier"><i class="fa fa-shopping-basket"></i> Voir mon Panier</a>
+								<a href="{{path('panier_validation')}}" class="btn btn-panier"><i class="fa fa-check-circle"></i> Voir mon Panier</a>
+					 {% endif %}
 					</div>
 					{{form_end(form)}}
 

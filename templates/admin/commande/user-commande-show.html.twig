@@ -1,7 +1,9 @@
 {% extends "admin_base.html.twig" %}
 
 {% block title %} Commandes {% endblock %}
-
+{% set totalBijou = 0 %}
+{% set totalPromo = 0 %}
+{% set port = 0 %}
 {% block body %}
  
  <div class="container">
@@ -62,9 +64,13 @@
                  <td> {{option.quantite}} </td>
                  <td> {{option.prix * option.quantite}} € </td>
                </tr>
-                 
+                 {% set totalBijou = {{option.prix * option.quantite}} %}
+                 {% if option.bijou.promoIsActive == true %}
+                 {% set totaPromo = {{(option.prix * option.bijou.multiplicate) * option.quantite %}
+                 {% set port = {{option.bijou.port }}}
+                 {% endif %}
                {% endfor %}  
-               <tr style="background-color:#9f53fc; color:#fff;"> <td colspan="4">Total de la Commande</td><td> {{commande.commande.totalCommande}} € </td></tr>
+               <tr style="background-color:#9f53fc; color:#fff;"> <td colspan="4">Total de la Commande</td><td> {{totalBijou + totalPromo + port  }}}} € </td></tr>
                   
               
               

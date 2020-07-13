@@ -1,7 +1,7 @@
 {% extends 'admin_base.html.twig' %}
 
 
-     {% block title %}Edition  {{booking}} {% endblock %}
+     {% block title %}Edition  {{booking.title}} {% endblock %}
 
 
 {% block body %}
@@ -41,15 +41,19 @@
                </tr>
             </thead>
              <tbody>   
-        
+
+                            {% for user in booking.users %}
+                                
+                        
                   <tr>
-                       <td> {{booking.user.lastName}}</td>
-                       <td> {{booking.user.firstName }}</td>
-                       <td> {{booking.user.email }}</td>
-                       <td>{{ booking.user.phone }}</td>
+               
+                       <td> {{user.lastName}}</td>
+                       <td> {{user.firstName }}</td>
+                       <td> {{user.email }}</td>
+                       <td>{{ user.phone }}</td>
                        <td></td>
                   </tr>
-                  
+                      {% endfor %}
              </tbody>
          
          </table>

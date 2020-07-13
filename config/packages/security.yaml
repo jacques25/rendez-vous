@@ -30,6 +30,7 @@ security:
             form_login:
                 login_path: account_login
                 check_path: account_login
+                use_referer: true
                 csrf_token_generator: security.csrf.token_manager
                 remember_me: false
                      

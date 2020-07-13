@@ -74,6 +74,9 @@ class CommandesRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
                        ->select('c')
+                       ->leftJoin('c.user', 'u')
+                       ->addSelect('u')
+                       ->orderBy('c.numero_commande', 'ASC')
                       ->getQuery()
                       ->getResult();
           

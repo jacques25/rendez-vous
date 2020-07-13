@@ -24,7 +24,7 @@ class AdminRechercheController extends AbstractController
         $motcle = $request->get('motcle');
      
          
-        $listeBijoux = $bijouRepository->findBijousByReference($motcle);
+        $listeBijoux = $bijouRepository->findBijousByMotCle($motcle);
 
 
         if ($request->isMethod('GET')) {

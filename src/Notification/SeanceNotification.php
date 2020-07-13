@@ -24,7 +24,7 @@ class SeanceNotification
          
          $this->bookingRepository = $bookingRepository;
       }
-       public  function notify($id, Booking $booking, User $user )
+       public  function notify(Booking $booking, User $user )
        {   
            
             $contactEmail =  $user->getEmail();

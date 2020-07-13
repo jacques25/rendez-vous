@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -31,7 +32,7 @@ class UserBookingType  extends AccountType
                 'widget' => 'single_text',
                 'html5' => false,
             ])
-            ->add('phone', TextType::class);
+            ->add('phone', TelType::class);
           
            
     }

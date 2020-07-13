@@ -38,6 +38,8 @@ class PanierController extends AbstractController
     $result = [];
     $panier = $session->get('panier');
     $totalTTC = 0;
+    $totalPromo = 0 ;
+    $totalBijou = 0;
     $items = $optionBijouRepository->findArray(array_keys($session->get('panier')));
 
    
@@ -51,11 +53,30 @@ class PanierController extends AbstractController
           'quantite' => $panier[$item->getId()],
           'reference' => $item->getReference(),
           'prix' => $item->getPrix(),
+          'multiplicate' => $item->getBijou()->getMultiplicate(),
+          'promoIsActive' => $item->getBijou()->getPromoIsActive(),
           'bijou'  => $item->getBijou()
         );
-       $totalPrix = ($item->getPrix() * $panier[$item->getId()]);
-       $totalTTC += $totalPrix;
+               if($item->getBijou()->getPromoIsActive()) {
+                  
+                 $prixPromo = ($item->getPrix() * $item->getBijou()->getMultiplicate())* $panier[$item->getId()];
+                  $totalPromo +=  $prixPromo;
+
+               } else {
+                  $prixBijou  = $item->getPrix() * $panier[$item->getId()] ;
+                  $totalBijou += $prixBijou;
+               }
+           
+               
+     
+            
+                 
+            
+           
+              $totalTTC = $totalBijou+ $totalPromo ;
+             
         }
+
          $result['totalCommande'] = $totalTTC;
      return   $this->render('panier/menu.html.twig', ['itemsCount' => $itemsCount , 'result' => $result ]);
       
@@ -179,12 +200,12 @@ class PanierController extends AbstractController
     } 
     
     if ($request->getMethod() == 'POST')
-      $this->setLivraisonOnSession($request);
+    $this->setLivraisonOnSession($request);
      
       $prepareCommande = $this->forward('App\Controller\FrontEnd\CommandesController:prepareCommande');
       
       $commande = $commandesRepository->find($prepareCommande->getContent());
-    
+  
        return $this->render('panier/validation.html.twig', [
         'commande' => $commande
        ]);

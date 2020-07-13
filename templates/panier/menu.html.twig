@@ -20,7 +20,13 @@
                <div class="panier-float-right">
                   <span> Quantité  {{link.quantite}}</span> 
                   <span> Référence {{ link.reference}}</span>
-                  <span> Prix Unitaire {{ link.prix}} €</span>
+                  {% if link.promoIsActive == true %}
+                   <span> Prix Unitaire {{ link.prix * link.multiplicate}} €</span>
+                    {% else %}
+                       
+                  
+                  <span> Prix Unitaire {{ link.prix}} €</span>  
+                  {% endif %}
                </div>
              
             </div>
@@ -44,7 +50,13 @@
                <div class="panier-float-right">
                   <span> Quantité  {{link.quantite}}</span> 
                   <span> Référence {{ link.reference}}</span>
-                  <span> Prix Unitaire {{ link.prix}} €</span>
+                  {% if link.promoIsActive == true %}
+                   <span> Prix Unitaire {{ link.prix * link.multiplicate}} €</span>
+                    {% else %}
+                       
+                  
+                  <span> Prix Unitaire {{ link.prix}} €</span>  
+                  {% endif %}
                </div>
              
             </div>

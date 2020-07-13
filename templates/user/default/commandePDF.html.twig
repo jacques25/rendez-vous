@@ -232,7 +232,9 @@
  
 
     <div class="corps-body">
-       
+         {% set totalBijou = 0 %}
+      {% set totalPromo = 0 %}
+      {% set port = 0 %}
       
       {% if commande.commande.optionBijou is defined and commande.commande.optionBijou is not null %}
         <h5 class="titre">Articles</h5>
@@ -256,15 +258,15 @@
               <td class="color">{{ option.reference }}</td>
               <td class="color"> {{ option.quantite }} </td>
               <td class="color"> {{ option.taille }}</td>
-               {% if option.bijou.promoIsActive ==  true %}
+             {% if option.bijou.promoIsActive ==  true %}
          
              <td class="color">{{ (option.prix * option.bijou.multiplicate )|number_format(2) }}</td>
              {% else %}
-                    <td class="color">{{ option.prix|number_format(2)}}</td>
+                    <td class="color">{{ (option.prix)|number_format(2)}}</td>
              {% endif %}
                {% if option.bijou.promoIsActive ==  true %}
          
-             <td class="color">{{ ((option.prix * option.bijou.multiplicate ) * option.quantite)|number_format(2) }}</td>
+             <td class="color">{{ ((option.prix * option.bijou.multiplicate) * option.quantite)|number_format(2) }}</td>
              {% else %}
                     <td class="color">{{ (option.prix* option.quantite)|number_format(2) }}</td>
              {% endif %}
@@ -274,17 +276,27 @@
         </table>
 
         <table id="total" align="right">
-               {% for option in commande.commande.optionBijou %}
+            {% for option in commande.commande.optionBijou %}
+           
+                    {% set totalBijou = option.prix * option.quantite %}
             
-                 {% if option.bijou.promoIsActive %}
-                   {% set port = option.bijou.port %}
-                <tr>  <td colspan="4"> Sous Total : </td> <td class="text-right">{{(commande.commande.totalCommande - port)|number_format(2)}} € </td></tr>
-                <tr>  <td colspan="4">Frais de livraison : </td> <td class="text-right"> {{port|number_format(2)}}  € </td>  </tr>
-            {% endif %}
-                     {% endfor %}
-               <tr> <td colspan="4">Total  : </td> <td class="text-right"> {{commande.commande.totalCommande|number_format(2) }} € </td></tr>
-         
+                 {% if option.bijou.promoIsActive %} 
+                  {% set port = option.bijou.port %}
+                   {% set totalPromo = ((option.prix * option.bijou.multiplicate) * option.quantite) + port %}    
+                 
+               
+                  {% endif %}
+                  
+               <tr> 
+                 <td colspan="4"><span align="left">Port : </span><span align="right" >{{port|number_format(2)}} </span><br>
+                               <span align="left">  Total  : </span> <span align="right">{{(commande.commande.totalCommande)|number_format(2)}}€ </span>
+                 </td>
+                 </tr>
+               
+               {% endfor %}
+  
         </table>
+
 
 
       {% endif %}

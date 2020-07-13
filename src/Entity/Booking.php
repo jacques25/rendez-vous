@@ -54,7 +54,7 @@ class Booking
     private $formation;
 
       /**
-     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="bookings", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="bookings", fetch="EXTRA_LAZY", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="user_booking")
      * 
      */

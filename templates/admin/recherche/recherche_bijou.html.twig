@@ -17,20 +17,20 @@
  
   	<div class="col-sm-6 col-md-4 col-lg-3">
 		<div class="card">
-
-					{% if bijou.filename %}
-						<img class="card-img" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" alt="{{bijou.filename}}"/>
-	          {% if bijou.promo  %}
+ {% if bijou.promo  %}
 						<div class="product-promo">
-							<span>
+							<span >
 								Promo
-							</span>
+							</span><br>
 							<span>
 								15 %
 							</span>
 						</div>
 					{% endif %}
 						
+					{% if bijou.filename %}
+						<img class="card-img" src="{{ vich_uploader_asset(bijou, 'imageFile')}}" alt="{{bijou.filename}}"/>
+	         
 			{% endif %}
 				
 

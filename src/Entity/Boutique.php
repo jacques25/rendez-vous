@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BoutiqueRepository")
  * @UniqueEntity("title")
@@ -71,6 +72,14 @@ class Boutique
      * @ORM\Column(name="slug", type="string", length=128)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(name="rang", type="integer")
+     * @Assert\Range(
+     *   min=1,
+     *    max=6)
+     */
+      private $rang;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\DescriptionProduit", mappedBy="boutiques")
@@ -301,6 +310,18 @@ class Boutique
             $this->bijous->removeElement($bijou);
             $bijou->removeBoutique($this);
         }
+
+        return $this;
+    }
+
+    public function getRang(): ?int
+    {
+        return $this->rang;
+    }
+
+    public function setRang(int $rang): self
+    {
+        $this->rang = $rang;
 
         return $this;
     }

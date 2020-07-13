@@ -4,7 +4,7 @@
 {% set totalBijou = 0 %}
 {% set totalPromo = 0 %}
 {% set prixPromo  = 0   %}
-
+{% set port = 0 %}
          {% set remise = 0 %}
 				 {% set quantite = 0 %}
 {% block body %}
@@ -74,7 +74,7 @@
                                 <td> 
 														
 							             	              {% if optionBijou.bijou.promoIsActive == true%}	
-																				
+																				     {% set port = optionBijou.bijou.port %}
 							                            	 {% set totalPromo =  (optionBijou.prix * optionBijou.bijou.multiplicate) * optionBijou.quantite %}
 							                                    {{totalPromo }}
 
@@ -100,9 +100,9 @@
 													 <th> </th> 
 													 <th> </th>
 													 <th> </th>
-													 <th> </th>
+													 <th></th>
 													   
-													 <th class="">{{'Total'|upper}} {{  totalBijou+ totalPromo }}€</th>
+													 <th align="right"> Port : {{port}} € <br> {{'Total'|upper}}: {{  totalBijou+ totalPromo + port }}€</th>
 				                </tr>  
                   </tfoot>           
 			                  

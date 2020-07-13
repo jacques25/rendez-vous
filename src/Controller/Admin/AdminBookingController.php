@@ -5,20 +5,12 @@ namespace App\Controller\Admin;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use DateTimeZone;
-use DateTime;
-use App\Service\OptionSeanceService;
-use App\Repository\SeanceRepository;
-use App\Repository\SeanceOptionRepository;
 use App\Repository\FormationRepository;
 use App\Repository\BookingRepository;
-use App\Form\UserBookingType;
 use App\Form\FormationBookingType;
 use App\Form\BookingType;
-use App\Entity\SeanceOption;
-use App\Entity\Seance;
-use App\Entity\Formation;
 use App\Entity\Booking;
 
 /**
@@ -65,7 +57,7 @@ class AdminBookingController extends AbstractController
     {
         $booking = new Booking();
      
-        $form = $this->createForm(FormationBookingType::class, $booking);
+        $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -96,20 +88,20 @@ class AdminBookingController extends AbstractController
     /**
      * @Route("/{id}/editer", name="admin_booking_edit", methods={"GET","POST"})
      */
-    public function edit($id, Request $request): Response
+    public function edit(Request $request, Booking $booking): Response
     {   
-        $em = $this->getDoctrine()->getManager();
-        $booking = $em->getRepository(Booking::class)->findOneBy(['id' => $id]);
-        $form = $this->createForm(FormationBookingType::class, $booking);
+          
+          if(!$this->getUser()) {
+                   return  $this->redirectToRoute('app_homepage');
+          }
+        $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-         
-            $em->flush();
+          $this->getDoctrine()->getManager()->flush();
 
            return $this->redirectToRoute('admin_booking_index');
         }
-   
         return $this->render('admin/booking/edit.html.twig', [
             'booking' => $booking,
             'form' => $form->createView(),
@@ -121,7 +113,9 @@ class AdminBookingController extends AbstractController
      */
     public function delete(Request $request, Booking $booking): Response
     {    
-         
+         if(!$this->getUser){
+             return $this->redirectToRoute('app_homepage');
+         }
         if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
 

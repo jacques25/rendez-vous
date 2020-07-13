@@ -6,12 +6,9 @@ use Twig\Environment;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use App\Service\UsersService;
 use App\Repository\FormationRepository;
-use App\Repository\BookingRepository;
 use App\Entity\User;
-use App\Entity\Formation;
-use App\Entity\Booking;
+
 
 
 class FormationNotification
@@ -28,8 +25,7 @@ class FormationNotification
       }
        public  function notify($id,  $formation, User $user )
        {
-         
-           
+          
            $contactEmail =  $user->getEmail();
         
                   

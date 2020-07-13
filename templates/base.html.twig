@@ -26,14 +26,16 @@
 				    
 		
 		  			  <div class="site-content">
+							{% if app.request.hasPreviousSession %}
 							  				{{include ('messages/flash-message.html.twig')}}
+							{% endif %}
 			             					<a id="button" style="display:block;">
 			             						<i class="fa fa-chevron-up"></i>
 			             						Haut de page
 			             					</a>
 
 								      {% block body %}
-								
+									
 							        	{% endblock %}
 						       
 			   <div class="site-cache" id="site-cache"></div>	  		     
@@ -50,10 +52,8 @@
 				 </div>
 				{% block javascripts %}
 	        {{ encore_entry_script_tags('app' )}}
-					{#} <script src="{{asset('/build/fontawesome/js/all.js')}}"></script> #}
-					<script>
-					         
-					</script>
+					<script src="{{asset('/build/fontawesome/js/all.js')}}"></script>
+					
 				{% endblock %}
 			</body>
 

@@ -40,7 +40,7 @@ class ExpeditionType extends ApplicationType
         'widget' => 'single_text',
         'html5' => false,
         'label' => "Date d'expédition",
-         'attr' => ['class' => 'datetimepickerExpedition']
+       
       ]);
   }
 

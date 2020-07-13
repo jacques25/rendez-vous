@@ -1,12 +1,12 @@
 {% apply inky_to_html|inline_css(source('@styles/foundation-email.css'), source('@styles/email.css') ) %}
 
 <container>
-	   <spacer size="16"></spacer>
+	    <spacer size="16"></spacer>
 			<row class="header">
-				<columns large="4" small="12">
-					<a href="{{url('app_homepage') }}">
+		  		<columns large="4" small="12">
+					  <a href="{{url('app_homepage') }}">
 						<img src="{{email.image('@img/rdv.png')}}" class="logo" alt="logo_site">
-					</a>
+				 	</a>
 				</columns>
 				<columns large="8" small="12">
 				 	<h2>	Rendez-vous avec soi</h2>
@@ -14,25 +14,18 @@
 				</columns>
 			</row>
 			<row class="content">
-				<columns>
-         <spacer size="30"></spacer>
-					<h1 class="title">	
-          <center>	Bonjour {{app.user.gender}} {{ name}} 	</center>
-					</h1>
+				<columns> 
+				   <spacer size="30"></spacer>
+					<h1 class="title"> <center>	Bonjour {{ name}} 	</center></h1>
 					<spacer size="16"></spacer>
-
 					<callout class="secondary">
 						<row>
 							<columns large="7">
-								<p>
-									<strong>	Mode de paiement</strong>
-									<br/>
-									Par chèque à l'ordre de:<br/>
-                   Mme Françoise Forite
-
-								</p>
+								<p>	<strong>	Mode de paiement</strong>
+									<br/>	Par chèque à l'ordre de:<br/>
+                   Mme Françoise Forite</p>
 								<p>	<strong>commande n°	: </strong>{{numeroCommande}}</p>
-								<p><strong>Date d'expédition : </strong> 	{{dateExpedition|format_datetime('full', 'none', locale='fr')|capitalize}}</p>
+								<p><strong>Date d'expédition : </strong> 	{{dateExpedition|format_datetime('short', 'none', locale='fr')|capitalize}}</p>
 							</columns>
 							<columns large="5">
               	<p><strong>	Adresse Email</strong>
@@ -47,25 +40,20 @@
 						</row>
 					</callout>
 					<row>
-					<callout class="command-body">
-					
-					<p>	<center>{{message}}	</center>	</p>
+					<columns class="command-body">
+					    	<spacer size="16"></spacer>
+				    	<p>	<center>{{message}}	</center>
             	<spacer size="10"></spacer>
-						<center>
-							<a class="btn-url" href="{{ url('user_facture')}}"> Facture	</a>
-						</center>
-
-
-					</callout>
+						<center> <a class="btn-url" href="{{ url('account_profile')}}"> Facture	</a>
+						</center>	</p>
 				</columns>
 	  	</row>
-		  <row class="footer text-center">
-			  <columns large="3">
-				<spacer size="20"></spacer>
-			  	<a class="btn-login"  href="{{url('account_login')}}" >
-					Connexion
-				</a>
-			  </columns>
+		 	<row class="footer"> 
+	     		<columns>
+            <spacer size="20"></spacer>
+	      	    <a class="site-name" href="{{ url('app_homepage')}}" >Rendezvousavecsoi.fr</a> 
+		     </columns>
+
 		  </row>
 </container>
 

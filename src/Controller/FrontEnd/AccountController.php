@@ -20,6 +20,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -33,27 +34,29 @@ class AccountController extends AbstractController
     {
         $this->mailer = $mailer;
     }
+
     /**
      * @Route("/connexion", name="account_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('app_homepage');
         }
       
-
         $error = $authenticationUtils->getLastAuthenticationError();
-         
          
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
         
+         $referer = $request->headers->get('referer');
+      
         if ($error) {
-            $this->addFlash('danger', 'un problème est survenue veuillez recommencer.');
-            $this->redirectToRoute('account_login');
+            if (!$lastUsername instanceof User) {
+                $this->addFlash('info', 'Adresse email ou mot de passe invalide. Veuillez recommencer.');
+                return new RedirectResponse($referer);
+            } 
         }
-
         return $this->render('account/login.html.twig', [
             'error' => $error,
             'last_username' => $lastUsername,
@@ -84,7 +87,7 @@ class AccountController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $logger->debug('Vous êtes connecté en tant que ' . $this->getUser()->getUsername());
         $user = $this->getUser();
-
+        $referer = $request->headers->get('referer');
         $originalAddress = new ArrayCollection();
         
         foreach ($user->getAddresses() as $address) {
@@ -92,7 +95,7 @@ class AccountController extends AbstractController
         }
 
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return  $this->redirectToRoute('account_login');
+            return  $this->redirectToRoute('app_homepage');
             $this->addFlash('danger', " Vous n' êtes pas connecté !");
         } elseif ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $form = $this->createForm(ProfileType::class, $user);
@@ -102,7 +105,6 @@ class AccountController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($originalAddress as $address) {
                     if ($user->getAddresses()->contains($address) === false) {
-                        // remove the Task from the Tag
                         $manager->remove($address);
                     }
                 }
@@ -116,7 +118,7 @@ class AccountController extends AbstractController
                 $manager->flush();
 
                 $this->addFlash('success', 'Votre profil a bien été modifié');
-                $this->redirectToRoute('account_profile');
+                return  new RedirectResponse($referer);
             }
 
             return $this->render('account/profile.html.twig', [
@@ -127,7 +129,7 @@ class AccountController extends AbstractController
                 'commandes' => $user->getCommandes()
             ]);
         }
-        return $this->redirectToRoute('accueil');
+        return $this->redirectToRoute('app_homepage');
     }
 
 
@@ -180,7 +182,7 @@ class AccountController extends AbstractController
 
             if ($user === null) {
                 $this->addFlash('danger', "Cet email n'est pas connu de nos services");
-                return $this->redirectToRoute('account_login');
+                return $this->redirectToRoute('app_homepage');
             }
             $token = $tokenGenerator->generateToken();
 
@@ -189,7 +191,7 @@ class AccountController extends AbstractController
                 $manager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
-                return $this->redirectToRoute('account_login');
+                return $this->redirectToRoute('app_homepage');
             }
             $username = $user->getFirstName();
             $url = $this->generateUrl('app_reset_password', array('token' => $token, 'username' => $username), UrlGeneratorInterface::ABSOLUTE_URL);
@@ -208,7 +210,7 @@ class AccountController extends AbstractController
 
             $this->addFlash('success', 'Un lien vient de vous être envoyé dans votre boite mail afin de réinitialiser votre mot de passe');
 
-            return $this->redirectToRoute('account_login');
+            return $this->redirectToRoute('app_homepage');
         }
 
         return $this->render('account/forget_password.html.twig');
@@ -247,7 +249,7 @@ class AccountController extends AbstractController
                 $manager->flush();
                 $this->addFlash('success', 'Réinitialiation de votre mot de passe réussie !');
 
-                return $this->redirectToRoute('account_login');
+                return $this->redirectToRoute('app_homepage');
             }
         }
 

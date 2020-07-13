@@ -4,13 +4,10 @@ let Routes = require('./js-routing.json')
 
 Routing.setRoutingData(Routes)
 
-var promo = contextPromo;
- var dateStart = promo.dateStart;
-    var dateEnd = promo.dateEnd;
-    var isActive = promo.promoIsActive;
-    var port = promo.port;
-    var multiplicate = promo.multiplicate;
-   
+ 
+
+
+  
 context.forEach(function (index) {
   var taille = index.taille;
   var reference = index.reference;
@@ -18,9 +15,14 @@ context.forEach(function (index) {
   var disponible = index.disponible;
   var cout = index.prix;
   var id = index.id;
-  
- var prixPromo = (cout * multiplicate);
 
+
+    var isActive = promo.promoIsActive;
+    var multiplicate = promo.multiplicate;
+    
+  
+    var prixPromo = Math.round(cout * multiplicate * 100) / 100;
+    
   let form = document.getElementById("form-panier")
   
   var select = document.getElementById('select-taille');
@@ -29,7 +31,7 @@ context.forEach(function (index) {
   
   option.text = taille;
   select.add(option);
- 
+  
   var valeur = select[select.selectedIndex];
 
   if (valeur === option) {
@@ -37,6 +39,7 @@ context.forEach(function (index) {
     if (option.text === null) {
       select.display = 'none';
     } else {
+      
       document.getElementById("option-taille").innerHTML = '<strong> Taille : </strong>' + taille;
 
     }
@@ -49,7 +52,7 @@ context.forEach(function (index) {
     }
       
     
-    if (isActive ==true  ) {
+    if (isActive == true && isActive != 'undefined'  ) {
       document.getElementById("promo-prix").innerHTML = '<h4>' + prixPromo + '€</h4>';
       document.getElementById("option-prix").innerHTML = '<h4 class="line">' + cout + '€</h4>';
      
@@ -74,11 +77,11 @@ context.forEach(function (index) {
     t = taille;
     ident = id;
    
-    var prixPromo = (prix * multiplicate);
-    console.log(prixPromo)
+    var prixPromo = Math.round(prix * multiplicate* 100 ) / 100;
+   
     e.preventDefault();
  
-    if (this.value === taille && isActive ===true) {
+    if (this.value === t ) {
       url = Routing.generate('panier_add', {
         'id': ident
       })

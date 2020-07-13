@@ -1,22 +1,21 @@
-{% for label, messages in app.flashes %}
+	
+	
+	{% for label, messages in app.flashes %}
 
 			{% for message in messages %}
-				<div class="modal modal-message" id="modal-message" role="dialog">
+			<div class="modal-message" id="modal-message" role="dialog">
 
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
+						<div class="modal-message-content">
 
-							<div class="modal-body">
-								<strong>
-									{{ message}}
-								</strong>
-								<button type="button" class="close-message">
-									&times;
-								</button>
-							</div>
+						    	<div class="modal-body">
+							       	 <strong>{{ message}}</strong>
+								        <span  id="close-message" class="close-message">
+									       <i class="fas fa-times-circle"></i>
+							         	</span>
+							     </div>
 						</div>
-					</div>
-				</div>
+				
+		   </div>
 			{% endfor %}
 
 

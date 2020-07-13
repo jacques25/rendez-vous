@@ -1,0 +1,44 @@
+	{% extends "admin_base.html.twig" %}
+
+   {% block title %} inscrits aux seance {% endblock %}
+  
+  {% block body %}
+  
+   <div class="container">
+    <h2> Commandes </h2>
+    <div class="row"> 
+    {% for commande in commandes %}
+        <div class="col-4">
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                               Commande n° {{commande.numeroCommande}} </h5> 
+                             Commandée le  {{commande.dateCommande|format_date('short')}} <br>
+                             Expédiée le {{commande.dateExpedition|format_date('short')}}
+                      
+                    </div>
+                    <div class="card-body">
+                    <p class="card-text">   Client :  {{commande.user.firstName}} {{commande.user.lastName}} </p>
+                       Email :  {{commande.user.email}}
+                       Téléphone : {{commande.user.phone}}
+                       <p><strong>Total commande:  {{ commande.commande.totalCommande}} € </strong></p>
+                    </div>
+                 
+                    <div class="card-footer">
+                      <a href="{{path('admin_commande_show', {'user': commande.user.id})}}" class="btn btn-info"><i class="fa fa-eye"></i> Détail  commande</a>
+                    
+                    </div>
+                </div>
+        </div>
+   {% endfor %}
+    </div>
+  
+   <div class="col-sm-12">
+							<div class="navigation float-right mr-5">
+                     {{ knp_pagination_render(commandes) }}
+          </div>
+</div>
+   
+   </div>
+  
+  {% endblock %}

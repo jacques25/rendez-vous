@@ -26,22 +26,26 @@
 							    <img width="16" style="position:relative; margin-right:5px; margin-top:-5px;" src="{{asset('/build/img/category.png') }}">
 							   Les catégories
 					    	</a>
-
+               
 						   <a href="#link2" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link2">
-							    <img src="{{asset('/build/img/product.png')}}" width="16">	Les Produits</a>
+							    <img src="{{asset('/build/img/product.png')}}" width="16">	Les Produits 
+								</a>   
+							
                   <div class="collapse" id="link2">
-                     <a class="nav-link" href="{{path('admin_produit_index')}}">
-								      <i class="fa fa-list"></i>  Liste des produits</a>
-								      <a class="nav-link"  href="{{path('admin_description_produit_index')}}"> Description des produits</a>
-							    <div> 
-				
-					         <a  href="#link3" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link3">
+                     <a class="nav-link" href="{{path('admin_produit_index')}}"><i class="fa fa-list"></i>  Liste des produits</a>
+								      <a class="nav-link"  href="{{path('admin_description_produit_index')}}"><i class="fa fa-file-text"></i>  Description des produits</a>
+							    </div> 
+					       <a  href="#link3" class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link3">
 						  		        <i class="fas fa-gem"></i>  Les Bijoux </a>
+					    
 						              <div class="collapse" id="link3">
 						               <a class="nav-link" href="{{path('admin_bijou_index')}}"> <i class="fa fa-list"></i>  Liste des Bijoux	</a>
-						               <a class="nav-link" href="{{path('admin_popup_taille_index')}}">Tableaux de taille</a>
+						               <a class="nav-link" href="{{path('admin_popup_taille_index')}}"><i class="fa fa-thumb-tack"></i>  Tableaux de taille</a> 
+												{# 	  <a  class="nav-link" href="{{ path('admin_promo_list' ) }}">
+														<img width="24" style="position:relative; margin-right:3px; margin-top:-5px;" src="{{asset('/build/img/discount.svg') }}" >
+														 Les Promotions </a> #}
 					               </div> 
-                  <a  class="nav-link" href="{{ path('admin_promo_list' ) }}"> Les Promotions </a>
+                
  	        </ul>	 
 			  </li>
       
@@ -72,24 +76,21 @@
 						<i class="fas fa-euro-sign"></i>
 						Les formations
 					</a>
-					<a href="{{path('admin_booking_index')}}" class="nav-link"> 
-					  <i class="fa fa-list"></i>
-						 Dates Formation
 				</li>
 			
         <li class="nav-item">
 				   <a href="#link-user"  class="nav-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="link-user">
-					 	<i class="fas fa-users"></i>Utilisateurs</a>
+					 	<i class="fas fa-users"></i> Utilisateurs</a>
 				 <div class="collapse" id="link-user">
-					<a href="{{path('admin_users_index')}}" class="nav-link">	 Liste des inscrits</a>
-					<a href="{{path('admin_inscrits_seance')}}" class="nav-link"> Inscrits aux seances</a>
-					<a href="{{path('admin_inscrits_formation')}}" class="nav-link"> Inscrits formation</a>
+					<a href="{{path('admin_users_commandes')}}" class="nav-link"><i class="fa fa-shopping-cart"></i> 	Utilisateurs commandes</a>
+					<a href="{{path('admin_inscrits_seance')}}" class="nav-link"> <img width="30" style="position:relative; margin-right:3px; margin-top:-5px;" src="{{asset('/build/img/seance.svg') }}" >Inscrits aux seances</a>
+					<a href="{{path('admin_inscrits_formation')}}" class="nav-link"> <img width="25" style="position:relative; margin-right:3px; margin-top:-5px;" src="{{asset('/build/img/formation_blanc.png') }}" >Inscrits formation</a>
 					</div>
 				</li>
         
            <li class="nav-item">
 					<a href="{{path('admin_comments_list')}}" class="nav-link">
-						<i class="fas fa-users"></i>
+						<i class="fas fa-comments"></i>
 						Les commentaires
 					</a>
 				</li>
@@ -126,7 +127,7 @@
 							</a>
 							<!-- Dropdown - Messages -->
 							<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-								<form class="form-inline mr-auto w-100 navbar-search" method="get" action="{{path('admin_recherche') }}"">
+								<form class="form-inline mr-auto w-100 navbar-search" method="get" action="{{path('admin_recherche') }}">
 									<div class="input-group">
 										<input type="text" class="form-control bg-light border-0 small" placeholder="Rechercher un bijou" aria-label="Search" name="motcle"  aria-describedby="basic-addon2">
 										<div class="input-group-append">
@@ -140,7 +141,7 @@
 						</li>
 
 
-
+               	  {{ render(controller('App\\Controller\\Admin\\AdminCommentController::navComment')) }}
 						<!-- Nav Item - Alerts -->
 			
 							   {{ render(controller('App\\Controller\\Admin\\AdminCommandeController::navMenu', {'limit' : 3})) }}
@@ -161,18 +162,11 @@
 							</a>
 							<!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="{{path('account_profile')}}">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-									Profile
+									Profil
 								</a>
-								<a class="dropdown-item" href="#">
-									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-									Settings
-								</a>
-								<a class="dropdown-item" href="#">
-									<i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-									Activity Log
-								</a>
+							
 							
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{{path('account_logout')}}">

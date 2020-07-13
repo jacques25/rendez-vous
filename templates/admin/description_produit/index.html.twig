@@ -6,13 +6,13 @@
 <div class="container">
     <h1>Liste Description de Produits </h1>
 
-    <table class="table-fluid table-fluid-index">
+    <table class="table table-fluid">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Titre</th>
-                <th>Introduction</th>
-                <th>actions</th>
+                <th>Desciption</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ description_produit.id }}</td>
                 <td>{{ description_produit.title }}</td>
-                <td>{{ description_produit.introduction|raw|u.truncate(155, true, '...') }}</td>
+                <td>{{ description_produit.introduction|u.truncate(120, '...')|raw }}</td>
                 <td>
                     
                     <a class="btn btn-info"  href="{{ path('admin_description_produit_edit', {'id': description_produit.id}) }}"><i class="fa fa-edit"></i></a>

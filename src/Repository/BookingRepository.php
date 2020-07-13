@@ -24,7 +24,7 @@ class BookingRepository extends ServiceEntityRepository
           $sql = $this->createQueryBuilder('b');
           $sql ->select('b')
                   ->where('b.beginAt between b.beginAt->format("Y-m-d 00:00:00") and b.endAt->format("Y-m-d 23:59:59")')
-                  ->orderBy('b.beginAt ASC');
+                  ->orderBy('b.beginAt','ASC');
                   dd($sql);
         $sql->getQuery()->getResult();
           

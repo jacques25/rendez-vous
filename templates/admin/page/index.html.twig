@@ -5,21 +5,18 @@
 {% block body %}
 <div class="container">
 <div class="row">
-    <h1 class="mx-1">Page index</h1>
-  <div class="navigation mt-3">
-                     {{ knp_pagination_render(pages) }}
-      </div>
+    <h1 class="mx-1">Les Pages </h1>
 </div>
 <div class="row">
-    <table class="table-fluid table-fluid-index">
+    <table class="table table-fluid">
         <thead>
             <tr>
                 <th colspan="1">Id</th>
-                <th>Title</th> 
-                <th>Filename</th>
-                <th>Created_at</th>
-                <th>Updated_at</th>
-                <th>actions</th>
+                <th>Titre</th> 
+                <th>Image</th>
+                <th>Créé le</th>
+                <th>Modifié le</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -43,9 +40,15 @@
         {% endfor %}
         </tbody>
     </table>
-     </row>
+     </div>
     <div class="row">
     <a class="btn btn-primary mx-4" href="{{ path('admin_page_new') }}"><i class="fas fa-plus-circle"></i>  Nouveau</a>
+
+    <div class="col-sm-12">
+							<div class="navigation float-right mr-5">
+                     {{ knp_pagination_render(pages) }}
+             </div>
+         </div>
     </div>
     </div>
 {% endblock %}

@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
+		
+		{% set port = 0 %}
+		{% set  totalBijou = 0 %}
+		{% set totalPromo = 0 %}
 		{% block body %}
-
+     
 			
 			<div class="row flex-row mt-5">
 
@@ -98,7 +102,7 @@
 									<td>{{ option.quantite }}</td>
 									<td>	{{option.taille}}</td>
 									 {% if option.bijou.promoIsActive == true %}
-									          <td> {{(option.prix * option.bijou.multiplicate)|number_format(2)}}</td>
+									          <td> {{ option.bijou.labelPromo}} - {{(option.prix * option.bijou.multiplicate)|number_format(2)}}</td>
 								
 								    <td> {{((option.prix * option.bijou.multiplicate) * option.quantite)|number_format(2)}}</td>
 									 {% else %}
@@ -123,12 +127,28 @@
 	
 				<div class="d-flex flex-row-reverse float-right">
 					<div class="col-12 mx-4" id="total">
+					{% for option in commande.commande.optionBijou %}
+					{% if option.bijou.promoIsActive == true %}
+						 {% set port = option.bijou.port %}
+						 {% set totalPromo =  (option.prix * option.bijou.multiplicate) * option.quantite %}
+						 {% else %}
+							 	   {% set totalBijou =  option.prix * option.quantite  %}
+					{% endif %}
+					
+						
+						 
+					{% endfor %}
+					<div class="left">
+					   <span>SOUS-TOTAL:</span> <span class="float-right">{{ (totalBijou + totalPromo)|number_format(2)}} €</span><br>
+						  <span> PORT :  </span>          <span  class="float-right">  {{port|number_format(2)}} €</span><br>
+							<span>TOTAL COMMANDE : </span> <span  class="ml-5 float-right">   	{{ (totalBijou + totalPromo+ port)|number_format(2)}} €	</span>
+							</div>
+				
+					
 
-						TOTAL COMMANDE : {{(commande.commande.totalCommande)|number_format(2)}} €
-					</div>
 
 				</div>
-			 
+			 </div>
 			
 			<a class="btn btn-telechargement" href="{{ path('commande_pdf',{'id': commande.id}) }}" target="_blank">
 										<i class="fas fa-upload"></i> {{'téléchargement du bon de commande'|upper }}

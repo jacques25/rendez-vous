@@ -15,6 +15,7 @@ require("./locales/bootstrap-datetimepicker.fr");
 require('./propertiesBijou');
 require('./medias');
 require('./select');
+require('./promo')
 require('../css/admin.css');
 $(function () {
     $('.cropper').each(function () {
@@ -77,40 +78,7 @@ var modal1 = document.getElementById("modal1");
 
 
 	$(function () {
-      /*    var datetimepicker = this.getElementsByClassName('datetimepicker-input'); */
-     
-      /*    $('.beginAt').datetimepicker({
-		  	 language: 'fr',
-            autoclose: true,
-         icons: {
-             time: 'fa fa-clock-o',
-             date: 'fa fa-calendar',
-             up: 'fa fa-chevron-up',
-             down: 'fa fa-chevron-down',
-             previous: 'fa fa-chevron-left',
-             next: 'fa fa-chevron-right',
-             today: 'fa fa-check-circle-o',
-             clear: 'fa fa-trash',
-             close: 'fa fa-remove'
-         }
-          })
-        
-          $('.endAt').datetimepicker({
-		  	locale: 'fr',
-            autoclose: true,
-         icons: {
-             time: 'fa fa-clock-o',
-             date: 'fa fa-calendar',
-             up: 'fa fa-chevron-up',
-             down: 'fa fa-chevron-down',
-             previous: 'fa fa-chevron-left',
-             next: 'fa fa-chevron-right',
-             today: 'fa fa-check-circle-o',
-             clear: 'fa fa-trash',
-             close: 'fa fa-remove'
-         }  
-          })*/
-        
+  
          
         $('#dateExpedition').datetimepicker({
              	locale: 'fr',
@@ -165,13 +133,12 @@ var modal1 = document.getElementById("modal1");
             close: 'fa fa-remove'
         }
          });
+        
         var dateExpedition = document.getElementById('dateExpedition');
          $('#dateExpedition').datetimepicker({
 			 	locale: 'fr',
              autoclose: true,
-             onSelect: function () {
-                 dateExpedition = this.datetimepicker.value;
-            },
+            
             
     });
 });

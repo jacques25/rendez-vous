@@ -7,12 +7,12 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Jacques\ImageBundle\Form\Type\ImageType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use App\Form\PhotoType;
-use App\Entity\Produit;
 use App\Entity\Category;
 use App\Entity\Boutique;
 
@@ -34,7 +34,18 @@ class BoutiqueType extends AbstractType
                 'choice_label' => 'title',
                 'multiple' => false,
                 'label' => 'Categories',
-            ]);
+            ])
+            ->add('rang', ChoiceType::class,  [
+              'label' => 'Position',
+              'choices' => [
+                  ' 1' => '1',
+                  '2' => '2',
+                  '3' => '3',
+                  '4' => '4',
+                  '5' => '5'
+              ]
+            ])
+            ;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

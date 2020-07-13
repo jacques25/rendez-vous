@@ -7,7 +7,7 @@ var $addNewItem = $('<div class="col"><a href="#" class="btn btn-info mt-3 mb-3"
 
 $(document).ready(function () {
   // get collection collectionHolder
-  $collectionHolder = $('#promo_data');
+  $collectionHolder = $('#promo_list');
   // appending the addNewItem to the collectionHolder
   $collectionHolder.append($addNewItem);
 

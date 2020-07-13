@@ -21,20 +21,16 @@ class BoutiqueRepository extends ServiceEntityRepository
     }
 
 
-    private function  LatestQuery()
-    {
-        return $this->createQueryBuilder('b')
-
-            ->select('b');
-    }
-
     public function findBoutiqueWithCategory()
     {
-        return $this->createQueryBuilder('b')
+       $qb = $this->createQueryBuilder('b')
             ->leftJoin('b.produits', 'p')
             ->addSelect('p')
-            ->getQuery()
+             ->orderBy('b.rang', 'DESC')
+             ->setMaxResults(5);
+      return      $qb ->getQuery()
             ->getResult();
+            
     }
 
     public function findProduitWithBoutique($boutique, $slug)
@@ -44,6 +40,7 @@ class BoutiqueRepository extends ServiceEntityRepository
             ->leftJoin('b.produits', 'p')
             ->addSelect('p')
             ->where('b.slug = :boutique')
+            ->orderBy('b.rang')
             ->andWhere('p.slug = :slug')
             ->setParameters([
                 'boutique' => $boutique,

@@ -78,20 +78,18 @@ class Formation
 
   /**
    *  @Groups("formation")
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking",  mappedBy="formation", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking",  mappedBy="formation", cascade={"persist", "remove"})
      * @ORM\OrderBy({"beginAt" = "ASC"})
      */
     private $booking;
     
-    
-
      /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="formations")
      */
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="formation",  orphanRemoval=true, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="formation",  orphanRemoval=true)
      */
     private $comments;
 
@@ -108,8 +106,6 @@ class Formation
         $this->comments = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->booking = new ArrayCollection();
-    
-     
     }
 
     public function getId(): ?int
@@ -356,7 +352,5 @@ class Formation
 
         return $this;
     }
-
-   
-   
+    
 }

@@ -1,7 +1,7 @@
 var $ = require('jquery')
 var $collectionHolder;
 
-var $addNewItem = $('<a href="#" class="btn btn-info mt-3"><i class="fas fa-plus"></i> Ajouter une adresse</a>');
+var $addNewItem = $('<a href="#" class="btn btn-info mt-3 ml-3"><i class="fas fa-plus"></i> Ajouter une adresse</a>');
 
 $(document).ready(function () {
   // obtient la collection exp

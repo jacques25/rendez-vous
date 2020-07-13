@@ -52,8 +52,10 @@ class Seance
      */
      private $comments;
 
+ 
+
      /**
-     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="seances", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="seances", fetch="EXTRA_LAZY", cascade={"persist","remove"})
      * @ORM\JoinTable(name="seance_users")
      * 
      */
@@ -89,6 +91,7 @@ class Seance
         $this->seanceOptions = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->users = new ArrayCollection();
+     
       
         
     }
@@ -310,9 +313,5 @@ class Seance
 
         return $this;
     }
-
-    
-
-  
 
 }

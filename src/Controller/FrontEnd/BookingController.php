@@ -23,10 +23,9 @@ class BookingController extends AbstractController
     /**
      * @Route("/calendrier",  name="booking_calendar", methods ={"GET"})
      */
-    public function calendar(Booking $booking): Response
+    public function calendar(): Response
     {           
-                dd($booking);
-                 $this->removeoldBooking($booking);
+            
                return $this->render('agenda/agenda.html.twig');
     }
    
@@ -127,15 +126,5 @@ class BookingController extends AbstractController
     }
 
 
-       public function removeOldBooking(Booking $booking){
-          $em = $this->getDoctrine()->getManager();
-            $endDate = date_format($booking->getEndAt(), 'Y-m-d H:i');
-            $now = date_format(new \DateTime('now'),  'Y-m-d H:i');
-            dd($endDate);
-            if ($endDate < $now) {
-             $em->remove($booking);
-             $em->flush();
-         }
-
-    }
+     
 }

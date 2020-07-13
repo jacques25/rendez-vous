@@ -30,7 +30,7 @@ class CommandeController extends AbstractController
 
        
         $commandes = $commandesRepository->byFacture($this->getUser());
-        
+           
         return $this->render('user/default/commande.html.twig', [
             'commandes' => $commandes
         ]);
@@ -47,8 +47,7 @@ class CommandeController extends AbstractController
             'valider' => 1,
             'id' => $id
         ]);
-
-         
+    
           $this->getCommande->commande($commande);
     }
 
@@ -71,6 +70,7 @@ class CommandeController extends AbstractController
         if (!$commande) {
            
             return $this->redirectToRoute('user_commande');
+        
         }
 
           return $this->render('user/default/showCommande.html.twig', [
@@ -87,7 +87,7 @@ class CommandeController extends AbstractController
             'valider' => 1,
             'id' => $id
         ]);
-         
+   
         return $this->render('user/default/commande.html.twig', ['commande' => $commande]);
     }
 

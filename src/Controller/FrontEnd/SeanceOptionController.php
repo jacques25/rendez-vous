@@ -27,21 +27,20 @@ class SeanceOptionController extends AbstractController
                        $this->addFlash('warning', 'Vous devez être inscrit et vous connectez  pour obtenir un rendez-vous');
                     return $this->redirectToRoute('account_login');
                      }
-     
+       $em = $this->getDoctrine()->getManager();
          $user = $this->getUser();
          $seanceOption = $seanceOptionRepository->findOneBy(['id' => $id]); 
        
          $seance = $seanceOption->getSeance();
        
         $booking = new Booking();     
-        
+          
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
          $start = $request->get('booking');
   
         if($form->isSubmitted() && $form->isValid()){  
          
-      
                  $begin = strtotime($start['beginAt']);
                 $dateNow =  \strtotime(\date_format(new DateTime('now'), "Y-m-d H:i"));
               
@@ -54,7 +53,7 @@ class SeanceOptionController extends AbstractController
            elseif ($begin !== null  and $begin >= $dateNow ) {
              
            
-               $em = $this->getDoctrine()->getManager();
+             
                $titleSeance = $seanceOption->getSeance()->getTitle();
                $dateoption =  $seanceOption->getDuree();
                  
@@ -73,30 +72,26 @@ class SeanceOptionController extends AbstractController
                 if (!$this->container->get('security.authorization_checker')->isGranted('ROLE_USER_SEANCE')) {
                     $user->addRole("ROLE_USER_SEANCE");
                 }
+                $username = $user->getGender().' '. $user->getFirstName(). ' ' . $user->getLastName();
+               
                 $seance->addUser($this->getUser());
                 $seanceOption->addUser($this->getUser());
                 $booking->addUser($this->getUser());
                 $em->persist($booking);
-             
-              
                  $em->flush(); 
-                 $this->addFlash('success', ' un mail de confirmation vous a été envoyé.');
-                      $seanceNotification->notify($id, $booking, $user); 
+
+                 $this->addFlash('success', ' Merci ' . $username . ' un mail de confirmation vous a été envoyé. Nous vous confirmerons votre rendez pour par email.');
+                      $seanceNotification->notify( $booking, $user); 
                  return $this->redirectToRoute('seance_show', ['slug' => $seanceOption->getSeance()->getSlug()]);
-               
+              
               }
-               
-             
-        
-            
+      
           }
         
         return $this->render('agenda/agenda.html.twig', [
           'form' => $form->createView(),
           'seanceOption' => $seanceOption,
           'user' => $user,
-      
-         
          
         ]);
   }

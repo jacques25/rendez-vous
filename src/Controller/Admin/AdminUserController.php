@@ -20,6 +20,7 @@ use App\Repository\BookingRepository;
 use App\Entity\User;
 use App\Entity\SeanceOption;
 use App\Entity\Formation;
+use App\Repository\CommandesRepository;
 
 /**
  * @Route("/admin")
@@ -61,19 +62,28 @@ class AdminUserController extends AbstractController
     public function getUsersSeance(SeanceRepository $seanceRepository) {
               
              $seances = $seanceRepository->findAll();
-            
-            
-     /*  if ($users == null)
-          {
-          $this->addFlash('info', "Aucune seance");
-                  return $this->redirectToRoute('admin_users_index');
-              } */
-       
-    
+          
          return $this->render('admin/users/user_seance.html.twig', [ 
               'seances' => $seances
-              /* 'users' =>$users, */
-           
+             ]);
+
+    }
+    
+    /**
+   * @Route("/utilisateurs/commande", name="admin_users_commandes")
+   *
+   * @return void
+   */
+    public function getCommandesByUser(Request $request, CommandesRepository $commandesRepository, PaginatorInterface $paginatorInterface)
+    {
+             $commandes =  $paginatorInterface->paginate(
+                  $commandesRepository->findAllVisibleQuery(),
+                    $request->query->getInt('page', 1),
+                  6
+             );
+            
+              return $this->render('admin/users/user_commandes.html.twig', [ 
+              'commandes' => $commandes
              ]);
 
     }
@@ -81,10 +91,14 @@ class AdminUserController extends AbstractController
     /**
      *  @Route("/inscrits-formation", name="admin_inscrits_formation") 
      */
-    public function getUsersFormation(FormationRepository $formationRepository){
+    public function getUsersFormation(Request $request, FormationRepository $formationRepository, PaginatorInterface $paginatorInterface){
           
    
-      $formations = $formationRepository->findAll();
+      $formations =$paginatorInterface->paginate( 
+           $formationRepository->findAll(),
+           $request->query->getInt('page', 1),
+                  6
+       ) ;
         
         foreach($formations as $formation) {
 

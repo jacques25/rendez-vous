@@ -183,6 +183,7 @@
       margin-top: 50px;
       padding: 20px;
       margin-left: 435px;
+      text-align: right;
     }
 
     .footer_pdf {
@@ -232,7 +233,18 @@
 
     <div class="corps-body">
        
-      
+      {% set totalBijou = 0 %}
+      {% set totalPromo = 0 %}
+      {% set port = 0 %}
+         {% for option in facture.commande.optionBijou %}
+           
+                    {% set totalBijou = option.prix * option.quantite %}
+            
+                 {% if option.bijou.promoIsActive %} 
+                  {% set port = option.bijou.port %}
+                   {% set totalPromo = (option.prix * option.bijou.multiplicate * option.quantite) + port %}    
+                  {% endif %}
+                   {% endfor %}
       {% if facture.commande.optionBijou is defined and facture.commande.optionBijou is not null %}
         <h5 class="titre">Articles</h5>
 
@@ -273,21 +285,15 @@
         </table>
 
         <table id="total" align="right">
-            {% for option in facture.commande.optionBijou %}
-           
-           
-            
-                 {% if option.bijou.promoIsActive %}
-                   {% set port = option.bijou.port %}
-                <tr>  <td colspan="4"> Sous Total :</td> <td class="text-right">{{(facture.commande.totalCommande - port)|number_format(2)}} € </td></tr>
-                <tr>  <td colspan="4">Frais de livraison : </td> <td class="text-right"> {{port|number_format(2)}}  € </td>  </tr>
-            {% endif %}
-                     {% endfor %}
-               <tr> <td colspan="4">Total  : </td> <td class="text-right"> {{facture.commande.totalCommande|number_format(2) }} € </td></tr>
-                 
+                    
+               <tr> 
+                 <td colspan="4"><span align="left">Port : </span><span align="right" >{{port|number_format(2)}} </span><br>
+                              
+                               <span align="left">  Total  : </span> <span align="right">{{(facture.commande.totalCommande)|number_format(2)}}€ </span>
+                 </td>
+                 </tr>
+               
               
-          
-          
   
         </table>
 

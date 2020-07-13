@@ -3,6 +3,8 @@
   justify-content: center;
   align-items: center;
   min-height: 80vh;
+  width:100%;
+   z-index: 1050;
 }
 
 .user-register {
@@ -170,6 +172,14 @@ a.btn-link:hover {
 }
 
 /** USER PROFIL  */
+.btn-panier {
+  background-color: #1fbbb3b4;
+  color: #fff;
+}
+.btn-panier:hover {
+    color: #fff;
+    background-color: #02b9d6;
+}
 #profile_user img {
    width : 150px;
    float: left;

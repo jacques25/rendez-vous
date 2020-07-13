@@ -1,35 +1,28 @@
-<div class="col-12">
-			<div class="card">	
-			  <a href="#card-body" data-toggle="collapse" class="card-link text-color">
-				<div class="card-header bg-card">
-				
-					Promo 	<i class="fas fa-chevron-down float-right"></i>
-				
-				</div>
-	     </a>
-			  
-				<div class="card-body collapse" id="card-body">
-		           	  <div class="row">
-		           	  <div class="col-sm-6 mt-2 mb-3">
-		           	       {{form_widget(form.promoIsActive)}}
-		           </div>
-							 	  <div class="col-sm-6 mt-2 mb-3">
-		           	       {{form_widget(form.promo )}}
-		           </div>
-							 
-		           		 <div class="col-sm-6">
-                      	{{form_row(form.date_start, {'id': 'datetimepicker1'})}}	
-		           		      {{form_row(form.port)}}
-		           			
-		           			</div>
-		           			<div class="col-sm-6">
-					                  {{form_row(form.date_end, {'id': 'datetimepicker2'})}}	
-					                  	{{form_row(form.multiplicate)}}
-
-						            </div>
-
-				         	</div>
-			  </div>
-	
-   </div>
+   <div class="col-sm-12">
+          
+      			     
+      			       
+      		
+      						<div class="card m-3">
+      							<div class="card-header bg-card">
+      								<a class="text-dark" href="#item" data-toggle="collapse" aria-controls="#item">
+      							     Créer une promotion 	
+												<i class="fas fa-chevron-down float-right"></i>
+      								</a>
+      							</div>
+      							<div class="card-body collapse" id="item"> 
+										{{form_row(form.promoIsActive)}}
+										  {{form_row(form.labelPromo)}}
+      								{{form_row(form.date_start)}}
+											{{form_row(form.date_end)}}
+												{{form_row(form.port)}}
+													{{form_row(form.multiplicate)}}
+													
+      							</div>
+      						</div>
+      			
+      			
+      			
+      				
+     
 </div>

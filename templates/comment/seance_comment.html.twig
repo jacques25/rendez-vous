@@ -1,14 +1,29 @@
 
     
 				<h3 class="comment">		Ils ont donné leur avis .... </h3>
+             	 <h6 style="font-size:21px; font-weight: bold;">   Note globale :
+														<span  style="font-size:17px; font-weight:normal;">
+														   <div class="stars-outer">
+														
+                                          <div class="stars-inner" id="star-formation" data-starformation="{{averageRatings}}"></div>
+                             
+								             </div>
+					     {{averageRatings|round(1, 'floor')}}  sur  5 </span></h6>
+           
+								 <h6  style="font-size:21px; font-weight: bold;">Evaluation Clients : 	<span style="font-size:17px; font-weight:normal;">{{nbComments.NumberComments}}</span></h6>
             {% for comment in seance.comments %}
              {% if comment.approved == true  %}
               <div class="carbonads bg-light p-5  m-3">
                   <div class="carbonads-header mb-2">
-                    <p> Le {{comment.createdAt|format_date('full')}} par  {{comment.authorName}}</p>
+                         <h6 class="font-weight-bold"> {{comment.seance.title}}</h6>
+                            {% for i  in  1.. comment.rating %}
+                              <span class="fa fa-star right"  id="commentRatingSeance" data-comment-rating-seance="{{comment.rating}}"></span>
+                             {% endfor %} 
+                              
+                          <p>   Le {{comment.createdAt|format_date('full')}}       par  <span class="font-weight-bold">   {{comment.user.lastName}}   </span></p>
                   </div>
                  <div class="carbonads-body">{{comment.content}}</div>
-						
+						      
                </div>			 
                {% endif %}
  

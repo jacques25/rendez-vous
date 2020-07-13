@@ -84,7 +84,7 @@
 					        Me contactez 
 				       	</a>	
 							</li>
-					{#  {% include "recherche/recherche_bijou.html.twig" %}#}
+		
            	{% if is_granted("ROLE_ADMIN") %}	
 					<li class="has-sub">
 					
@@ -134,17 +134,17 @@
 
 
 					<li class="has-hub">
-						<a href="{{path('account_register')}}" class="">
+						<a  id="btn-register" href="{{path('account_register')}}">
 							Inscription
 						</a>
+				
 					</li>
 
-					<li class="has-sub">
-						<a id="btn_login" href="{{path('account_login')}}">
-							Connexion
-						</a>
-					</li>
-
+					<li class="has-sub">	
+					<a  href="{{path('account_login')}}">		Connexion</a>
+					</li>	
+	
+    
 			   	{% endif %}
 				 <li class="dropdown">
 					{{ render(controller('App\\Controller\\FrontEnd\\PanierController::menu')) }}
@@ -152,4 +152,8 @@
           </ul>
           </nav>
         </header>
-
+       		
+   
+					
+      
+		    

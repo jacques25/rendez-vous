@@ -20,6 +20,7 @@
     {{ include('admin/menu/admin_menu.html.twig') }}	
    
     <div class="page-content" id="content">
+    {% if app.request.hasPreviousSession %}
      {% for label, messages in app.flashes %}
          <div class="container" >
            <div class="alert alert-{{ label }}">
@@ -29,7 +30,7 @@
            </div>
          </div>
       {% endfor %}
-
+ {% endif %}
       
       {% block body %}{% endblock %}
    </div>
