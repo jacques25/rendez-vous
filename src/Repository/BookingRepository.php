@@ -35,7 +35,6 @@ class BookingRepository extends ServiceEntityRepository
           $sql ->select('b')
                   ->where('b.id = :id')
                   ->setParameter('id', $id);
-            
                  $sql ->getQuery() ->getResult();
      }
 
@@ -48,17 +47,22 @@ class BookingRepository extends ServiceEntityRepository
         return  (int)count($qb->getResult())  ;
     }
 
-    public function findByFormation($formation) {
+     public function findByFormation($formation) {
          $qb =  $this->createQueryBuilder('b');
          $qb->select('b') 
-                ->leftJoin('b.formation' , 'f')
+                ->InnerJoin('b.formation' , 'f')
                 ->addSelect('f')
+                ->leftJoin('b.users', 'u')
+                ->addSelect('u')
                 ->where('f.id = :formation')
-                ->setParameter('formation', $formation)
-                ->getQuery()
+                ->setParameter('formation', $formation);
+  
+       return      $qb->getQuery()
                 ->getResult();
         
-        }
+        } 
+
+   
 
     // /**
     //  * @return Booking[] Returns an array of Booking objects

@@ -166,8 +166,14 @@ class User implements UserInterface, Serializable
      */
     private $seanceOptions;
 
- 
+   
+     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Booking", inversedBy="users")
+     * @ORM\JoinTable(name="user_booking")
+     */
+    private $bookings;
 
+   
     public function __construct()
     {
         $this->enabled = false;
@@ -177,6 +183,7 @@ class User implements UserInterface, Serializable
         $this->formations = new ArrayCollection();
         $this->seances = new ArrayCollection();
         $this->seanceOptions = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
       
   
     }
@@ -598,6 +605,32 @@ class User implements UserInterface, Serializable
    public function getSeanceOptions(): Collection
    {
        return $this->seanceOptions;
+   }
+
+   /**
+    * @return Collection|Booking[]
+    */
+   public function getBookings(): Collection
+   {
+       return $this->bookings;
+   }
+
+   public function addBooking(Booking $booking): self
+   {
+       if (!$this->bookings->contains($booking)) {
+           $this->bookings[] = $booking;
+       }
+
+       return $this;
+   }
+
+   public function removeBooking(Booking $booking): self
+   {
+       if ($this->bookings->contains($booking)) {
+           $this->bookings->removeElement($booking);
+       }
+
+       return $this;
    }
 
   

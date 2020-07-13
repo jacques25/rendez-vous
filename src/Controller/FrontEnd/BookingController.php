@@ -96,7 +96,7 @@ class BookingController extends AbstractController
     
                  if ($form->isSubmitted() && $form->isValid()) {
                     $em =  $this->getDoctrine()->getManager();
-                    $booking->setUser($user);
+                    $booking->addUser($user);
                     $em->persist($booking);
                     $em->flush();
 
@@ -105,11 +105,7 @@ class BookingController extends AbstractController
              }
         return $this->render('booking/edit.html.twig', [
             'booking' => $booking,
-         /*    'seanceOption' => $seanceOption,
-             'user' => $user,
-             'formation' => $formation, */
             'form' => $form->createView(),
-         
             'user' => $user
         ]);
     } 

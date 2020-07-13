@@ -47,11 +47,12 @@
 				       	<a  href="{{ path('contact_me')}}"  data-toggle="modal"  data-target="#modal-response" >
 					          <h5  class="font-weight-bold text-uppercase mt-3 mb-4">	Me contactez !</h5>
 				       	</a>
-		      	<div class="modal modal-container" role="dialog"  id="modal-response">
+		      	<div class="modal fade"  id="modal-response" tabindex="-1" role="dialog" aria-labelledby="modalContact" aria-hidden="true">
                        	   
 		                                {{ render(controller('App\\Controller\\FrontEnd\\FooterController::contact'))}}	
 				                 
 				    </div>
+					
 				 </div>
 </div>
 

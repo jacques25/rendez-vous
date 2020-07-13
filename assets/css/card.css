@@ -5,6 +5,7 @@
     transition: 0.3s ease-out;
     height: 290px;
     margin-bottom: 25px;
+    box-shadow: 3px 3px 8px 0px #6e9ba2c7;
 }
 
 .card.animate img {
@@ -177,4 +178,107 @@ span.rounded-taille {
     -moz-transition: all 200ms ease-out;
     -o-transition: all 200ms ease-out;
     transition: all 200ms ease-out;
+}
+
+/** CARD FORMATION */
+.card-services{
+     border-bottom:   4px solid #075f92c5;
+     height: auto;
+}
+.card-services-header  {
+     padding: 1rem;
+      background: url('/build/img/vague-2.svg');
+       background-position:  40%  8%  ; 
+      height: 110px;
+}
+.card-services-header h5 {
+        color: #fff; 
+        font-size: 18px;
+        
+}
+.card-services-body{
+  padding: 0.8rem;
+  font-size: 18px;
+}
+  .card-text {
+     padding: 15px;
+ }
+ .card-text .heure, .prix {
+        margin-bottom: 12px; 
+         height: 38px;
+   
+ }
+ .card-text .heure, .prix, .dispo, .inscrits{
+     font-weight: 900;
+     line-height: 1.9em;
+    
+ }
+
+.card-services-footer{
+      padding: 1rem;
+      height: 80px;
+
+}
+
+.badge-dispo {
+    font-size: 22px;
+    font-weight: 900;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    padding: 6px 0px 20px 12px;
+    line-height: 25px;                                                                            
+    background-color: rgb(45, 211, 51);
+    box-shadow: 4px 2px 6px 0px #0f560985;
+    
+}
+
+.badge-warning {
+     font-size: 22px;
+    font-weight: 900;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    /* position: relative; */
+    padding: 6px 0px 20px 12px;
+    line-height: 25px;
+    background-color: rgb(209, 149, 39);
+    box-shadow: 4px 2px 6px 0px #684a0b85;
+   
+}
+
+.badge-dispo, .badge-warning {
+    float:right;
+}
+.inscrits {
+    margin-top: 25px;
+}
+/** -------------------------------------------------*/
+/** CARD SEANCE */
+
+  
+ .seance-genre, .duree, .prix {
+        margin-bottom: 12px; 
+         height: 38px;
+      font-weight: 900;
+     line-height: 1.9em;
+ }
+ 
+.option-genre, .option-duree, .option-prix {
+    float: right;
+    margin-right: 55px;
+}
+
+.btn-rendez-vous  {
+    background-color: #075f92c5;
+    border-color: #0b8ab1c5 ;
+    padding: 10px;
+    color: #fff;
+     transition: color .15s ease-in-out,background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.btn-rendez-vous:hover {
+     background-color: #0b8ab1c5;
+     border-color: #075f92c5;
+     color: #fff;
+     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }

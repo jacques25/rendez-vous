@@ -6,8 +6,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use App\Entity\Comment;
+
 
 class CommentType extends AbstractType
 {
@@ -20,6 +23,9 @@ class CommentType extends AbstractType
             ->add('content', TextareaType::class,  [
                 'label' => 'Votre commentaire'
             ])
+            ->add('rate',  integerType::class, []
+           
+            )
 
             
            

@@ -35,7 +35,7 @@ $(function () {
 
 
 window.onload = function () {
-  var modal = document.getElementById("myModal");
+  var modal = document.getElementById("myModalImg");
   var modalImg = document.getElementById("modal-img");
   var captionText = document.getElementById("caption");
   var img = document.getElementById("myImg");
@@ -47,17 +47,38 @@ window.onload = function () {
     }; // Get the <span> element that closes the modal
 
     var span = document.getElementsByClassName("close")[0]; // When the user clicks on <span> (x), close the modal
-
-    span.onclick = function () {
+    if (span !== null ){
+        span.onclick = function () {
       modal.style.display = "none";
     };
+    }
+  
   }
-   
+  
 
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-  var modal1 = document.getElementById("modal1");
+  
+   var modal_formation = document.getElementById('modal-comment')
+  var btn = document.getElementById('btn_formation');
+  var body = $("html","body");
+  if (btn !== null) {
+    $(btn).click(function () {
+      modal_formation.style.display = "block";
+      $("html, body").animate({ scrollTop: 0 }, 600);
+    return false;
+    });
+    }
+  
+
+  var close = document.getElementsByClassName('close-formation')[0];
+  if (close !== null) {
+         close.onclick = function () {
+      modal_formation.style.display = "none";
+
+    }
+ 
+    
+  }
+ /*  var modal1 = document.getElementById("modal1");
   var open = document.getElementById("open");
 
   if (modal1 !== null) {
@@ -70,8 +91,8 @@ window.onload = function () {
     span.onclick = function () {
       modal1.style.display = "none";
     };
-  }
-};
+  }*/
+};  
 // Close the dropdown if the user clicks outside of it
 window.onclick = function (event) {
   if (!event.target.matches(".dropbtn")) {
@@ -132,39 +153,26 @@ btn.on("click", function () {
   }
 });
 
- 	$(function () {
-    // Datetime picker initialization.
-		// See https://eonasdan.github.io/bootstrap-datetimepicker/
-		
+ 	
 
-/*     $('#profile_date_naissance').datepicker({
-    language: 'fr',
-      autoclose: true,
-     viewMode:  'month',
-      format: 'yyyy/mm/dd',
-        todayHighlight: true,
-        icons: {
-            time: 'fa fa-clock-o',
-            date: 'fa fa-calendar',
-            up: 'fa fa-chevron-up',
-            down: 'fa fa-chevron-down',
-            previous: 'fa fa-chevron-left',
-            next: 'fa fa-chevron-right',
-            today: 'fa fa-check-circle-o',
-            clear: 'fa fa-trash',
-            close: 'fa fa-remove'
-				}
-         });  */
-      
-  }); 
-
-window.onload = function () {
-  let modal = document.getElementById('modal-message');
-   modal.style.display = "block"; 
- let  button = this.document.getElementsByClassName('close-message')
-   $(button).click(function () {
-    modal.style.display = "none";
-    }) 
+$(document).ready(function () {
+  resetStartColors();
+  $('.fa-star').mouseover(function () {
+    resetStartColors();
+    var currentIndex = parseInt($(this).data('index'));
+    console.log('hello')
+    for (var i = 0; i <= currentIndex; i++) 
+    {
+      $('.fa-star:eq(' + i + ')').css('color','green');
+      }
+  })
+  $('.fa-star').mouseleave(function () {
+    resetStartColors();
+    console.log('bye')
+  })
+})
+function resetStartColors () {
+  $('.fa-star').css('color','#cce');
 }
 
 

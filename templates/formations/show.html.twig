@@ -1,86 +1,85 @@
 {% extends "base.html.twig" %}
 
-		{% block title %}
-			{{formation.title }}
-		{% endblock %}
+		{% block title %}	{{formation.title }}{% endblock %}
 
 		{% block body %}
-
-		  <div class="row content-page">
-			{% if formation.filename is defined %}
-       <div class="jumbotron" style="background:url({{ vich_uploader_asset(formation, 'imageFile')}}) no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-     background-size: cover;">   </div>
-      
-      {% endif %} 
-
-		
-			    <div class="col-md-12">
-
-						  <h1 class="mt-3"> {{formation.title }}</h1>
-						
-          </div>
-					<div class="col-md-12">	
-							<table class="table table-formation">
-								<thead class="table-thead">
-									<tr>
-									<th scope="col">	Date de la  formation</th>	
-										<th scope="col"> 	Prix de la formation</th>	
-										<th scope="col"> Places Disponible </th>
-										<th scope="col" >Inscrits</th>
-										<th scope="col">S'incrire</th>
-								
-									</tr>
-								</thead>
-					
-									<tbody class="table-body">		
-									 {% for booking in formation.booking %}
-									<tr>
-						
-									 <td>
-					             Le  {{ booking.beginAt|format_date( 'full') }} de {{booking.beginAt|format_time('medium')}} à {{booking.endAt|format_time('medium' )}}
-										</td>
-							
-                 
-										<td>
-											{{formation.prix|format_currency('EUR', {rounding_mode:'floor'} )}} 
-										</td>   
-										<td> 	<div class="badge-dispo"> {{formation.nbUsers}}</div></td>
-                     <td> 
-										 	{% if   usersFormation  == 0 %}
-								<div class="badge-dispo"> {{usersFormation}}</div>
-							{% elseif  usersFormation  != 0  and usersFormation < formation.nbUsers %}
-							  
-						 <div class="badge-warning"> {{ usersFormation}} </div>
-              {% elseif  usersFormation == formation.nbUsers %}
-								 	<div class="badge-danger">Complet </div> 
-						{% endif %}
-						</td>
-										<td>
-                            <a href="{{path('formation_booking', {'id': formation.id})}}" class="btn btn-info   mb-1">S'incrire</a>
-												
-										</td>
-
-				  </tr>
-							 {% endfor %}
-										
-								</tbody>
-							</table>
-              <div>	{{formation.description|raw}}</div>
-
-											<section class="comments" id="comments">
-        <section class="previous-comments">
-            <h3>Ils ont donné leur avis</h3>   
-					     {% include 'comment/formation_comment.html.twig' with { 'comments': formation.comments } %}
-            
-   
-      
-    </section>
-          </div>
-          </div>
-                 
-			</div>
 			
-{% endblock %}
+				<div class="row">
+				   	{% if formation.filename is defined %}
+						<div class="jumbotron" style="background:url({{ vich_uploader_asset(formation, 'imageFile')}}) no-repeat center center;
+							    -webkit-background-size: cover;
+							    -moz-background-size: cover;
+							    -o-background-size: cover;
+							     background-size: cover;">
+						</div>
+
+					  {% endif %}
+				         	<div id="modal-comment" class="modal-comment">
+                      	{% include "formations/_formation-form.html.twig" %}
+                  </div>
+					        <div class="col-md-12">
+                       <h1 class="mt-3">	{{formation.title }}</h1>
+							         <div class="paragraph-formation">{{formation.description|raw}}</div>
+					           </div>
+					</div>
+					<div class="row">	
+    								{% for booking in bookings %}
+									
+										    <div class="col-lg-6">
+												<div class="card card-services">
+												   <div class="card-services-header">
+													         <h5> {{booking.title}} du	{{ booking.beginAt|format_date( 'full') }} 
+								     			         </h5>
+													 </div>
+													 <div class="card-services-body">
+													 	     <div class="card-text">
+														              <div class="heure"> Horaire: De  {{booking.beginAt|format_time('medium')}}   à   {{booking.endAt|format_time('medium' )}} Heure</div>
+														        	  <div class="prix">	Prix: 	{{booking.formation.prix|format_currency('EUR', {rounding_mode:'floor'} )}}</div>
+														          	<div class="dispo"> Place disponibles: 	<div class="badge-dispo">	{{formation.nbUsers }}</div> </div>
+											               
+														            <div class="inscrits"> Nombre d'incrits: 	
+																       			       {% if booking.users|length == 0  %} 
+																       			        <div class="badge-inscrit"> 0 </div>
+									                                 {% elseif   booking.users|length != 0 %}    
+														             		       <div class="badge-warning">
+																       						     {{booking.users|length }}</div>
+									                        	       {% elseif  formation.nbUsers  == booking.users|length %}
+																       						<div class="badge-danger">Complet</div>
+										                             {% endif %}
+																       	</div>
+													        </div>
+													       
+                            </div>
+													  <div class="card-services-footer">
+													           	<a href="{{path('formation_booking', {'id': formation.id, 'booking' : booking.id})}}" class="btn  btn-rendez-vous">
+											                 	S'incrire </a>
+													  </div>
+												</div>	  
+										</div>
+    					
+    								{% endfor %}
+    
+
+					  	 
+ 
+							</div>
+							<div class="row">
+							<div class="col-sm-12 col-md-12 comments">
+										 	<section class="" id="comments">
+			                			<section class="previous-comments">
+							                     {% include 'comment/formation_comment.html.twig' with { 'comments': formation.comments } %}
+						               </section>
+					             </section>
+
+											     {% if is_granted("ROLE_FORMATION") %} 
+                       <button id="btn_formation" class="btn btn-success">Ecrire  un commentaire</button>	          
+                   {% else %}    
+                        <div class="alert alert-warning"> <strong>Attention Vous ne pouvez écrire un commentaire qu' une fois connecté  </strong>
+                                  <a href="{{path('account_login')}}" class="btn btn-primary btn-sm">se connecter </a>
+                       </div>
+                  {% endif %}    
+				  	  </div>  
+
+				</div>
+
+			{% endblock %}

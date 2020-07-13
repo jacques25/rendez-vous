@@ -7,7 +7,7 @@
 @import "../css/search.css";
 @import "../css/card.css";
 @import "../css/bootstrap-datetimepicker.min.css";
-
+@import "../css/modal.css";
 
 @viewport {
     width: device-width;
@@ -149,10 +149,26 @@ h1 {
 
 .modal {
     background: rgba(34, 34, 34, 0.8);
-    width: 100%;
-    padding: 50px;
-
+    
 }
+.modal-content-img {
+   width: 100%;
+    max-width: 600px;
+    margin: auto;
+    position: relative;
+        display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    pointer-events: auto;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+     top: calc(10vh - 20px);
+}
+
 
 .modal-popup {
   background: rgba(0, 0, 0, 0.9);
@@ -174,6 +190,7 @@ h1 {
   width: 600px;
   max-width: calc(100vw - 20px);
   max-height: calc(100vw - 20px);
+ 
   padding: 20px;
   background-color: #fff;
   position: relative;
@@ -182,24 +199,7 @@ h1 {
   margin-top: 80px;
 }
 
-a.close-modal {
-  border-color: #888;
-  text-decoration: none;
-  margin: 0.8em 0.3em;
-  color: #888;
-  width: 150px;
-  float: right;
-  position: relative;
-}
 
-a.close-modal:hover {
-  color: #d40707;
-  border-color: #d40707;
-}
-
-.modal-dialog a {
-  font-size: 18px;
-}
 
 .title-caption {
   margin: auto;
@@ -214,26 +214,34 @@ a.close-modal:hover {
   font-size: 30px;
 }
 .title-caption figure {
-    color: #494948;
+    color: #ffffff;
     margin-left:  -85px;
     font-size: 1.5rem;
     z-index: 1000;
+    padding-top: calc(10vh - 20px);
+   
 }
 .close {
-   color: #646362;
+   color: #948686;
     opacity: 1;
     top: 0 !important;
     font-size: 2.5rem;
     border-radius: 5px;
     padding: 10px;
     text-shadow: none;
+    float: right;
+}
+.modal-content-img, .title-caption, .close {
+     animation-name: zoom;
+    animation-duration: 0.6s;
+     
 }
 
 .close:hover {
       color: #888;
     opacity: .75;
 }
-.modal-message .modal-content{
+.modal-message{
     max-width: 800px;
     width: 100%;
     margin: 85px 0px 0px -15px;
@@ -267,26 +275,18 @@ button.close-message:focus {
   background: #888;
 }
 
-.modal-dialog, .modal-dialog-comment {
-    max-width: 600px;
-}
 .modal-dialog-comment {
     position: relative;
     width: auto;
     margin: 1.75rem auto;
-    pointer-events: none;
+    pointer-events: none;  
+    max-width: 600px;
 }
 
-.modal-content {
-  width: 100%;
-  max-width: 600px;
-  margin: 25%  0px 0px ;
-  position: relative;
-}
 
 /* Add Animation */
 
-.modal-content, .modal-content-calendar
+ .modal-content-calendar
  {
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.6s;
@@ -397,10 +397,10 @@ h5 {
     color: #8f725c;
 }
 
-.paragraph p,
+.paragraph p, 
 .body-text p {
     font-size: 1.2rem;
-
+   text-align: justify;
 }
 
 
@@ -606,12 +606,8 @@ transition: zoom  3s ease;
     margin-left: auto;
     bottom: 0;
 }
-.modal .modal-container
-{
-   display: none;
- 
-}
-.modal .modal-container .show {
+
+/* .modal-container .show {
 display: flex ;
   justify-content: center;
   align-items: center;
@@ -619,7 +615,7 @@ display: flex ;
   z-index: 1000;
   background-color: #000;
   opacity: 0.8;
-}
+} */
 .modal-backdrop {
   display:none;
    
@@ -728,7 +724,7 @@ td {
     border-color: #0b5369;
 }
 
-btn-success:not(:disabled):not(.disabled).active:focus,
+.btn-success:not(:disabled):not(.disabled).active:focus,
 .btn-success:not(:disabled):not(.disabled):active:focus,
 .show>.btn-success.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(72, 140, 180, 0.5);
@@ -762,7 +758,7 @@ h4.panier-title {
      margin-bottom: 50px;
      text-align:center;
 }
-.table-formation {
+.table-formation tbody {
      width:100%;
      background-color: #fff;
      margin-bottom: 50px;
@@ -880,32 +876,6 @@ font-size: 16px;
     border-radius: .25rem;
 }
 
-.badge-dispo {
-      font-size: 22px;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    /* position: relative; */
-    display: inline-block;
-    padding: 8px 0px 20px;
-    line-height: 25px;                                                                            
-    background-color: rgb(45, 211, 51);
-    box-shadow: 4px 2px 6px 0px #0f560985;
-    
-}
-
-.badge-warning {
-     font-size: 22px;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    /* position: relative; */
-    display: inline-block;
-    padding: 8px 0px 20px;
-    line-height: 25px;
-    background-color: rgb(209, 149, 39);
-    box-shadow: 4px 2px 6px 0px #684a0b85;
-}
 .alert .alert-danger {
     color: #fff;
     background-color: #dc3545;
@@ -969,11 +939,31 @@ font-size: 16px;
    padding-bottom: 20%;
    
 }
-
+.paragraph-formation {
+    font-size: 22px;
+}
  .td-right:nth-of-type(2) {
     text-align:right;
 }
-
+.comment {
+     color: #8f725c;
+     font-style: italic;
+     font-weight: 800;
+}
+/** Comments */
 .carbonads {
-    box-shadow:  3px 3px 8px 0px rgba(136, 134, 134, 0.527);;
+    box-shadow:  3px 3px 8px 0px rgba(136, 134, 134, 0.527);
+    text-align:  justify;
+    color: #383232;
+    font-weight: 500;
+    background-color: #fff;
+}
+.carbonads:hover {
+     background-color: rgba(212, 210, 210, 0.603);
+     box-shadow:  3px 4px 10px 2px rgba(136, 235, 250, 0.918);
+     transition: background-color 1s ease , box-shadow 0.6s ease-in;
+}
+
+#compteur {
+    font-size: 14px;
 }

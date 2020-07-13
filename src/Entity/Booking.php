@@ -53,6 +53,19 @@ class Booking
      */
     private $formation;
 
+      /**
+     * @ORM\ManyToMany(targetEntity=User::class,  mappedBy="bookings", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="user_booking")
+     * 
+     */
+     private $users;
+
+     public function __construct()
+     {
+         $this->users = new ArrayCollection();
+     }
+     
+
  
     public function getId(): ?int
     {
@@ -119,6 +132,34 @@ class Booking
     public function setFormation(?Formation $formation): self
     {
         $this->formation = $formation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addBooking($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeBooking($this);
+        }
 
         return $this;
     }

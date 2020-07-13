@@ -80,7 +80,7 @@
 				    	 </div>
          </li>
 				 	 <li class="has-sub">
-					  	<a  href="{{ path('contact_me')}}"  data-toggle="modal"  data-target="#modal-response" >
+					  	<a  href="{{ path('contact_me')}}" data-toggle="modal"  data-target="#modal-response" >
 					        Me contactez 
 				       	</a>	
 							</li>
@@ -127,7 +127,7 @@
 							<a href="{{path('account_profile')}}">
 								Mes renseignements
 							</a>
-							<a href="{{path('account_logout')}}">Déconnexion</a>
+							<a href="{{path('account_logout')}}" >Déconnexion</a>
 						</div>
 					</li>
 			  	{% else %}
@@ -140,7 +140,7 @@
 					</li>
 
 					<li class="has-sub">
-						<a href="{{path('account_login')}}" class="">
+						<a id="btn_login" href="{{path('account_login')}}">
 							Connexion
 						</a>
 					</li>

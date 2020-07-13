@@ -13,7 +13,7 @@
 		   
 		      <div class="modal-content">
 					    <div class="modal-header">
-									 <h5 id="modal-title">	Rendez-vous </h5> 
+									 <h4  id="modal-title">	Rendez-vous {{seanceOption.seance.title}} </h4> 
 									  <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                     </button>
@@ -21,12 +21,13 @@
 						  <form action ="{{path('seance_booking', {'id' :seanceOption.id})}}" method="post" >
 	
              <div class="modal-body" id="modalBody">
-						       	<ul class=" list-group list-group-horizontal mb-5">
-				               	<li class="list-group-item p-2 ml-5">	Seance :	{{ seanceOption.genre}} </li>
-				               	<li class="list-group-item  p-2 ml-5">Durée :  {{seanceOption.duree|format_time('medium') }} 	</li>
-				               	<li class="list-group-item  p-2 ml-5">Prix :	{{seanceOption.prix}} €</li>
+						       	<ul class=" list-group list-group-horizontal mb-5 ml-2">
+				               	<li class="list-group-item p-2 mr-2">	Seance :	{{ seanceOption.genre}} </li>
+				               	<li class="list-group-item  p-2 ml-2">Durée :  {{seanceOption.duree|format_time('medium') }} 	</li>
+				               	<li class="list-group-item   p-2 ml-2">Prix :	{{seanceOption.prix}} €</li>
+											   <li class="list-group-item pl-0 p-2 ml-2"> 10 seances </li>
 										</ul>
-
+	               
 						        <div class="row">
 										
 										<div class="col-sm-6 mb-2">
@@ -65,7 +66,7 @@
 	
              <div class="modal-footer">
 						 
-          			<button type="submit" class="btn btn-success">
+          			<button id="modal-submit" type="submit" class="btn btn-success">
 							                <i class="fa fa-save"></i> Confirmez
                       		</button>		
 								

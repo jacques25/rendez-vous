@@ -1,63 +1,23 @@
-      {% for comment in formation.comments %}
-       {% if comment.approved == true  %}
-              <div class="carbonads col-10 bg-light p-5  m-3">
-                  <div class="carbonads-header mb-2">
-                    <p> Le {{comment.createdAt|format_date('full')}} par  {{comment.authorName}}</p>
-                  </div>
-              <div class="carbonads-body">
-                     {{comment.content|raw}}
-              </div>
-					{% endif %}				   
- 
-             </div>
-		{% endfor %}
-      <a class="btn btn-success" href="#"  data-toggle="modal"
-       {% if is_granted("ROLE_FORMATION") %}data-target="#modalComment" 
-       {% else %} data-target="#message"{% endif %} ><i class="fa fa-comment"></i> Ecrire  un commentaire </a>
+
+          <h3>	Ils ont donné leur avis	</h3> 
+            {% for comment in  formation.comments %}   
+      <div class="carbonads p-2  m-3 w-100">
+                   {% if comment.approved == true  %}
+                            <div class="carbonads-header mb-2"> <p> Le {{comment.createdAt|format_date('full')}} par  {{comment.authorName}}</p> </div>
+                            <div class="carbonads-body">{{comment.content}}</div>
+			   {% endif %}   
+       </div>
+{% endfor %}	  
 
 
-    
+          
+  
+               
                 
-          <div class="modal" id="modalComment">
-                  <div class="modal-dialog-comment" role="document">
-                       <div class="modal-content p-5">
-                          <div class="modal-title">
-                                <h5>Ecrire un commentaire</h5>      
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                              </button>  
-                          </div>   
+              
+              
+          
 
-                          <div class="modal_body">
-                               
-                                    {{form_start(form)}}     
-                
-                                      {{form_widget(form.authorName, {'attr': {'class':' mb-3', 'placeholder': 'Votre prénom' }})}}
-                                          {{form_widget(form.content,  {'attr': {'class':' mb-3', 'placeholder' : 'Votre message', 'rows':8, 'columns' : 10}}) }}
-                                          <div id="compteur"></div>
-                                    <div class="btn btn-success mt-3" type="submit"> <i class="fa fa-comment"> </i> Commenter</div>
-                                     {{form_end(form)}}
-                         </div> 
-                      </div>                     
-                                                  
-                  </div>
-          </div>
-     
- 
-             <div class="modal" id="message" role="document">
-                     <div class="modal-dialog">
-                       <div class="modal-content">
-                          <div class="modal-body">
-                                  <div class="message"> Attention seules les personnes connectées peuvent écrire un commentaire </div>
-                          </div>
-                          <div class="modal-footer">
-                                <a href="{{path('account_login')}}" class="btn btn-success"> Connexion</a>
-                          </div>
-                          
-                       </div>
-                     
-            </div>
 
-   
 
     

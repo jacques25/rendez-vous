@@ -75,16 +75,18 @@ class SeanceOptionController extends AbstractController
                 }
                 $seance->addUser($this->getUser());
                 $seanceOption->addUser($this->getUser());
-               $em->persist($booking);
+                $booking->addUser($this->getUser());
+                $em->persist($booking);
              
-                 $seanceNotification->notify($id, $booking, $user);
-                     $this->addFlash('success', ' un mail vous a été envoyé.');
-                   
-               $em->flush(); 
-               $this->addFlash('success', 'Votre rendez-vous a éte enregistré!');
+              
+                 $em->flush(); 
+                 $this->addFlash('success', ' un mail de confirmation vous a été envoyé.');
+                      $seanceNotification->notify($id, $booking, $user); 
+                 return $this->redirectToRoute('seance_show', ['slug' => $seanceOption->getSeance()->getSlug()]);
+               
               }
                
-                return $this->redirectToRoute('seance_show', ['slug' => $seanceOption->getSeance()->getSlug()]);
+             
         
             
           }

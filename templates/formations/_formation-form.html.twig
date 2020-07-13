@@ -1,0 +1,28 @@
+<div id="modal-formation" class="modal-formation modal-formation-centered" role="dialog">	  
+		         	
+  <div class="modal-content-formation">	
+							
+									<div class="modal-header">
+									      	<h5 class="modal-title">Ecrire un commentaire</h5>
+									     	<span id="close-formation" class="close-formation"><i class="fas fa-times-circle"></i></span>	
+									</div>
+                   {{form_start(form)}}
+									<div class="modal-body">
+										      {{form_widget(form.authorName, {'attr': {'class':' mb-3', 'placeholder': 'Votre prénom' }}	)}}
+									      	 {{form_widget(form.content,  {'attr': {'class':' mb-3', 'placeholder' : 'Votre message(500 caractères max)', 'rows':8, 'columns' : 10}}) }}
+										   <div id="compteur" style="text-align:right">0</div>
+										   <div id="rate" class="mt-2 mb-2"> {{form_widget(form.rate)}}</div>
+									
+
+									</div>
+
+									<div class="modal-footer">
+										      <input class="btn btn-success" type="submit" value="Commenter">
+										   
+									</div> 
+								 	{{form_end(form)}}
+		</div>
+
+</div>
+  
+

@@ -6,7 +6,7 @@
   
    <div class="container">
       
-     
+      {% for booking in bookings %}    
    <table class="table-fluid mt-3">
         
          <thead>       
@@ -18,34 +18,35 @@
           
             </tr>
          </thead>
-         <tbody> 
            
-               {% for formation in formations %}
-                  {% for booking in formation.booking %}
-                     
-                 
-                   <h2>Inscrits à la {{booking.title}}</h2>
-                    <p><strong> Le {{booking.beginAt|format_date('short')}} de {{booking.beginAt|format_time('short')}}
+          
+              <h2>Inscrits à la {{booking.title }}</h2>   
+                
+                            <p><strong> Le {{booking.beginAt|format_date('short')}} de {{booking.beginAt|format_time('short')}}
                      heure à {{booking.endAt|format_time('short')}} heure. </strong> </p>
-                  {% endfor %}
-           
-           {% for user in formation.users %}
-           <tr>
-             <td> {{user.lastName}} </td>
-             <td>  {{user.lastname}}</td>
-             <td> {{user.username}}</td>
-             <td>{{user.phone}}</td>
+           <tbody>  
             
-               </tr>
-          {% endfor %}
-    {% endfor %}
-         </tbody>
+      
+                              {% for user in booking.users %}
+                          <tr> 
+                             <td> {{user.lastName}} </td>
+                             <td>  {{user.lastname}}</td>
+                             <td> {{user.username}}</td>
+                          <td>{{user.phone}}</td>
+                   </tr> 
+                          
+                 {% endfor %}
+       
+      
+   
+         </tbody>  
+     
          <tfoot>
 
          
          </tfoot>
       </table> 
-  
+       {% endfor %}
   
     
    </div>

@@ -6,8 +6,8 @@
    
 
 {% block body %}
-{% if booking  != null %}
- {% for formation in booking.formation %}
+
+ {% if booking.formation != null %}
      
 
    	<div id="modalFormation" class="modalFormation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -25,13 +25,13 @@
                         {{ include('booking/_formation_form.html.twig') }}
              </div>
              <div class="modal-footer">
-                <a class="btn btn-info"  href="{{path('booking', {'id' : booking.formation.id})}}">s'incrire </a>
+                <a class="btn btn-info"  href="{{path('formation_booking', {'id': booking.formation.id, 'booking' : booking.id})}}">s'incrire </a>
   
           </div>
 
     
    </div>
-   {% endfor %}
+
 {% endif %}
 {% if booking.seanceOption != null %}
   
@@ -47,10 +47,10 @@
                            
                                 
                       
-                                <legend>{{booking.user.gender}}
-                                  {{booking.user.firstName}}
-                              {{booking.user.lastName}} </legend>
-                               <fieldset><strong>Email:  </strong>{{booking.user.email}}</fieldset>
+                                <legend>{{user.gender}}
+                                  {{user.firstName}}
+                              {{user.lastName}} </legend>
+                               <fieldset><strong>Email:  </strong>{{user.email}}</fieldset>
                             
                                 
                        <div class="body-text">   <strong> Date de votre rendez-vous :  </strong> </div>

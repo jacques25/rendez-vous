@@ -24,9 +24,9 @@ class AdminFormationController extends AbstractController
      * @Route("/", name="admin_formation_index", methods={"GET"})
      */
     public function index(FormationRepository $formationRepository): Response
-    {
+    {        
         return $this->render('admin/formation/index.html.twig', [
-            'formations' => $formationRepository->findAll(),
+            'formations' => $formationRepository->findAll()
         ]);
     }
 

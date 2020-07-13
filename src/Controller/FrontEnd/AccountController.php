@@ -36,15 +36,15 @@ class AccountController extends AbstractController
     /**
      * @Route("/connexion", name="account_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('app_homepage');
         }
-
+      
 
         $error = $authenticationUtils->getLastAuthenticationError();
-       
+         
          
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -57,7 +57,7 @@ class AccountController extends AbstractController
         return $this->render('account/login.html.twig', [
             'error' => $error,
             'last_username' => $lastUsername,
-
+         
         ]);
     }
 

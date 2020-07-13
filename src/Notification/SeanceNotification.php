@@ -29,7 +29,9 @@ class SeanceNotification
            
             $contactEmail =  $user->getEmail();
             $title = $booking->getTitle();
-            $dateBegin = date_format($booking->getBeginAt(), 'd/m/Y H:i');
+            $date = date_format($booking->getBeginAt(), 'd/m/Y');
+            $begin  = date_format($booking->getBeginAt(), 'H:i');
+            $end     =  date_format($booking->getEndAt(), 'H:i');
             $gender = $user->getGender();
             $firstname = $user->getFirstname();
             $lastname = $user->getLastname();
@@ -37,7 +39,7 @@ class SeanceNotification
             $name = $gender . " " . $firstname . " " . $lastname; 
             
            
-            $message = "Nous avons pris en compte votre demande de rendez-vous pour  le ". $dateBegin  ;
+            $message = "Nous avons pris en compte votre demande de rendez-vous pour  le ". $date . ' de ' . $begin . ' à ' . $end . ' heure' ;
           
             $subject  = $title;
             

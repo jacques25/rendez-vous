@@ -49,6 +49,11 @@ class Comment
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $rate;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -140,6 +145,18 @@ class Comment
     public function setFormation(?Formation $formation): self
     {
         $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function getRate(): ?int
+    {
+        return $this->rate;
+    }
+
+    public function setRate(?int $rate): self
+    {
+        $this->rate = $rate;
 
         return $this;
     }

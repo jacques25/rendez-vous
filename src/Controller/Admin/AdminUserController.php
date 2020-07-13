@@ -58,7 +58,7 @@ class AdminUserController extends AbstractController
    *
    * @return void
    */
-    public function getUsersSeance(UserRepository $userRepository, SeanceRepository $seanceRepository,  OptionSeanceService $optionSeanceService, BookingSeanceService $bookingSeanceService) {
+    public function getUsersSeance(SeanceRepository $seanceRepository) {
               
              $seances = $seanceRepository->findAll();
             
@@ -86,27 +86,21 @@ class AdminUserController extends AbstractController
    
       $formations = $formationRepository->findAll();
         
-      foreach ($formations as $formation) {
+        foreach($formations as $formation) {
 
-           
-          $users =  $formation->getUsers() ;
-      
-
-          if ($users == null)
-          {
-          $this->addFlash('info', "Personne n'est inscrit pour la formation". $formation->getTitle());
-                  return $this->redirectToRoute('admin_users_index');
-              }
-          }
+             $bookings = $formation->getBooking();
+                 
+        }
    
-        if($formation == null) 
+    
+        if($formations == null) 
             {
                   $this->addFlash('info', "Aucune formation  pour l'instant");
                return  $this->redirectToRoute('admin_users_index');
                  
             }
              
-            return  $this->render('admin/users/user_formation.html.twig', [ 'formations' => $formations, 'users' => $users ]);
+            return  $this->render('admin/users/user_formation.html.twig', [ 'formations' => $formations, 'bookings' => $bookings]);
     }
 
     

@@ -7,6 +7,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use App\Entity\User;
 use App\Entity\Formation;
+use App\Entity\Booking;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -84,12 +85,12 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
                 ->setParameter('id' , $id)
                 ;
            
-           $sql->getQuery() ->getResult();
+     return      $sql->getQuery() ->getResult();
    }
 
    public function findWithSeanceAndSeanceOption()
    {
-        $sql = $this->createQueryBuilder('u')
+       return $this->createQueryBuilder('u')
                  ->select('u')
                  ->leftJoin('u.seances','s')
                  ->addSelect('s')
@@ -98,4 +99,18 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
                  ->getQuery()
                  ->getResult();
    }
+
+   public  function findByFormation($formation, $booking){
+      return  $this->createQueryBuilder('u')
+                ->select('u')
+                ->join('u.formations',' f')
+                ->addSelect('f')
+                ->where('f.id = :formation')
+                ->setParameter('formation', $formation)
+               ->join('u.bookings', 'b')
+               ->addSelect('b')
+               ->Andwhere('b.id = :booking')
+               ->setParameter('booking', $booking)->getQuery()->getResult();
+   }
+
 }
